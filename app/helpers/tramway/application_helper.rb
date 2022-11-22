@@ -4,8 +4,8 @@ module Tramway::ApplicationHelper
   include ::FontAwesome5::Rails::IconHelper
   include AdditionalButtonsBuilder
   include ::SmartButtons
-  include CasesHelper
-  include RussianCasesHelper
+  include ::Tramway::CasesHelper
+  include ::Tramway::RussianCasesHelper
   include ::Tramway::RecordsHelper
   include ::Tramway::SingletonHelper
   include ::Tramway::NavbarHelper
