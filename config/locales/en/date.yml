@@ -1,0 +1,16 @@
+en:
+  defaults: &defaults
+    month_names:
+      [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    formats:
+       default: "%B %d %Y"
+       short: "%m/%d/%Y"
+  date:
+    <<: *defaults
+    order:
+      - :day
+      - :month
+      - :year
+  time:
+    <<: *defaults
+

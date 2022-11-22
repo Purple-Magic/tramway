@@ -2,9 +2,11 @@
 
 require 'rails/generators'
 require 'tramway/generators'
+require 'tramway/generators/model_generator'
 
 class Tramway::Generators::InstallGenerator < ::Rails::Generators::Base
   source_root File.expand_path('templates', __dir__)
+  class_option :user_role, type: :string, default: 'admin'
 
   def run_other_generators
     generate 'audited:install'
@@ -22,6 +24,13 @@ class Tramway::Generators::InstallGenerator < ::Rails::Generators::Base
         "/#{File.dirname __dir__}/generators/templates/initializers/#{file}.rb",
         "config/initializers/#{file}.rb"
       )
+    end
+  end
+
+  def run_decorator_generators
+    project = Tramway.application.name
+    ::Tramway.available_models_for(project).map do |model|
+      generate 'tramway:model', model.to_s, "--user-role=#{options[:user_role]}"
     end
   end
 end

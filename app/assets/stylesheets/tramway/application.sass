@@ -6,6 +6,8 @@
 @import 'font_awesome5_webfont'
 @import 'font_awesome5'
 @import 'bootstrap-datepicker-1.8.0'
+@import 'tramway/user/application'
+@import 'bootstrap'
 
 .datepicker-inline
   display: none !important
@@ -17,3 +19,43 @@
 
 .circle
   border-radius: 50%
+
+.container
+  padding-top: 2rem
+
+td
+  &.actions
+    width: 8rem
+
+.icon-in-navbar
+  font-size: 15pt
+
+.notifications
+  a
+    margin-right: 25px
+    span.badge:hover
+      filter: brightness(90%)
+
+.smart_button
+  float: right
+  margin-bottom: 0
+
+.scrollable
+  height: auto
+  max-height: 30em
+  overflow-x: hidden
+
+.row-fluid.filters
+  width: 100%
+  display: flex
+
+  select
+    width: 100%
+
+  .submit
+    display: flex
+    flex-direction: row-reverse
+
+  .dates_filter
+    display: flex
+    flex-direction: row

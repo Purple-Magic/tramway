@@ -3,7 +3,10 @@
 //= require jquery3
 //= require bootstrap-datepicker-1.8.0
 //= require bootstrap-datepicker-1.8.0.ru.min
+//= require bootstrap-sprockets
 //= require font_awesome5
+//= require ckeditor/init
+//= require clipboard
 //= require_tree .
 
 window.i18n_locale = function(locale) {
@@ -43,4 +46,15 @@ $(document).ready(function() {
       }
     };
   });
+
+  let clipboard = new Clipboard('.clipboard-btn');
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+
+  const url = new URL(window.location.href);
+  const focusElementSelector = url.searchParams.get('focus');
+  if (!$(focusElementSelector).offset() == undefined) {
+    $(window).scrollTop($(focusElementSelector).offset().top);
+  }
 });

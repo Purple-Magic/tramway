@@ -1,0 +1,14 @@
+- if object.class.show_associations.map(&:to_s).include? association.name.to_s
+  %tr
+    %td
+      = model_class.human_attribute_name association.name
+      %hr
+      - association_form = object.send("add_#{association.name}_form")
+      = simple_form_for association_form, url: { controller: :has_and_belongs_to_many_records, action: :create, form: association_form.class, model_class: model_class, object_id: object.id }, method: :post do |f|
+        - association_form.associations.each do |association_name|
+          - associations = association_form.model.class.reflect_on_all_associations.map(&:name)
+          - if associations.include? association_name
+            = f.association association_name, label: false
+            = f.button :submit, "#{I18n.t('helpers.actions.add')} #{model_class.human_attribute_name(association.name).singularize.downcase}", class: 'btn-success'
+    %td{ colspan: 2 }
+      = render 'tramway/shared/show/associations/list', object: object, association: association
