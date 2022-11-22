@@ -1,0 +1,34 @@
+methods:
+  active_support:
+    - debug_missing_translation=
+    - debug_missing_translation
+  action_view: 
+    helpers:
+      - sanitized_protocol_separator
+      - sanitized_protocol_separator=
+      - sanitized_uri_attributes
+      - sanitized_uri_attributes=
+      - sanitized_bad_tags
+      - sanitized_bad_tags=
+      - sanitized_allowed_css_properties
+      - sanitized_allowed_css_properties=
+      - sanitized_allowed_css_keywords
+      - sanitized_allowed_css_keywords=
+      - sanitized_shorthand_css_properties
+      - sanitized_shorthand_css_properties=
+      - sanitized_allowed_protocols
+      - sanitized_allowed_protocols=
+      - full_sanitizer=
+      - link_sanitizer=
+      - white_list_sanitizer=
+      - full_sanitizer
+      - link_sanitizer
+      - sanitizer_vendor
+      - sanitized_allowed_tags
+      - white_list_sanitizer
+      - sanitized_allowed_attributes
+      - sanitized_allowed_tags=
+      - sanitized_allowed_attributes=
+      - safe_list_sanitizer
+      - safe_list_sanitizer=
+      - _url_for_modules

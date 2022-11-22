@@ -1,0 +1,7 @@
+ru:
+  activerecord:
+    attributes:
+      tramway/core/application_record:
+        created_at: Создан
+        updated_at: Обновлён
+        state: Статус

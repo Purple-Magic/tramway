@@ -1,0 +1,8 @@
+ru:
+  tramway:
+    core:
+      shared:
+        messages:
+          some_errors_was_found: Найдены ошибки
+  errors:
+    wrong_email_or_password: Неверный логин или пароль

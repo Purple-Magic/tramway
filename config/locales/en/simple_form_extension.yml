@@ -1,0 +1,8 @@
+en:
+  simple_form:
+    extension:
+      selectize:
+        add: Add
+      file:
+        select: Select file
+        change: Change file

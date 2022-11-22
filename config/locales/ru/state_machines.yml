@@ -1,0 +1,8 @@
+ru:
+  activerecord:
+    state_machines:
+      tramway/core/application_record:
+        state:
+          states:
+            active: Активный
+            removed: Удалённый

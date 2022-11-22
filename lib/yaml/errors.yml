@@ -1,0 +1,41 @@
+tramway:
+  collections:
+    helper:
+      collection_list_by:
+        there_no_such_collection: "There no such collection named %{name_camelize}. Please create class with self method `list` and extended of `Tramway::Collection`. You should reload your server after creating this collection."
+  core:
+    input_helper:
+      association_params:
+        defined_with_property_method: "It seems you've defined association attributes with `property` method. Please, use `association` method. `association :%{property}`"
+        use_polymorphic_association: "It seems you've used `association` input type in the Form. Please, use `polymorphic_association` type. `%{property}: :polymorphic_association`"
+    title_helper:
+      title:
+        you_should_set_tramway_core_application: "You should set Tramway::Core::Application class using `::Tramway::Core.initialize_application model_class: #{model_class_name}` in config/initializers/tramway.rb OR maybe you don't have any records of application model"
+    application_form:
+      initialize:
+        polymorphic_class_is_nil: "Polymorphic association class is nil. Maybe, you should write `assocation #{association_name}` after `properties #{association_name}_id, #{association_name}_type`"
+      validates:
+        you_need_to_set_model_class: 'You need to set `model_class` name while using validations. Just write `self.model_class = YOUR_MODEL_NAME` in the class area.'
+      submit:
+        params_should_not_be_nil: "ApplicationForm::Params should not be nil"
+      save:
+        looks_like_you_have_method: "Looks like you have method `%{method_name}` in %{model_class}. You should rename it or rename property in %{class_name}"
+        argument_error: "We have ArgumentError with message: %{message}"
+      model_class: 
+        there_is_not_model_class: "There is not model class name for %{name}. Should be %{model_class_name} or you can use another class to initialize form object or just initialize form with object."
+    concerns:
+      attribute_decorator_helper:
+        you_should_mount_photo_uploader: "You should mount PhotoUploader to your model. Just add `mount_uploader %{attribute_name}, PhotoUploader` to your model. %{message}"
+    associations:
+      object_helper:
+        please_specify_association_name: "Please, specify `%{association_name}` association class_name in %{object_class} model. For example: `has_many :%{association_name}, class_name: '%{association_class_name}'`"
+        habtm_add_class_not_defined: "You should define class `%{class}` to be able add and remove `%{association_name}`"
+      class_helper:
+        model_does_not_have_association: "Model %{object_class} does not have association named `%{association_name}`"
+    application_decorator:
+      attributes:
+        method_is_reserved_word: "Method `%{attribute_name}` is reserved word. Please, create or delegate method in %{class_name} with another name."
+      title:
+        please_implement_title: "Please, implement `title` method in a %{class_name} or delegate it to %{object_class}"
+      link:
+        method_link_uses_file_attribute: "Method `link` uses `file` attribute of the decorated object. If decorated object doesn't contain `file`, you shouldn't use `link` method."

@@ -1,0 +1,9 @@
+en:
+  activerecord:
+    attributes:
+      tramway/core/application_record:
+        created_at: Created at
+        updated_at: Updated at
+        state: State
+  errors:
+    wrong_email_or_password: Wrong email or password
