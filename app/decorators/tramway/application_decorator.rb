@@ -3,14 +3,14 @@
 require 'tramway/error'
 require 'tramway/helpers/class_name_helpers'
 
-class Tramway::Core::ApplicationDecorator
+class Tramway::ApplicationDecorator
   include ActionView::Helpers
   include ActionView::Context
   include ::FontAwesome5::Rails::IconHelper
-  include ::Tramway::Core::CopyToClipboardHelper
-  include ::Tramway::Core::Associations::ObjectHelper
-  include ::Tramway::Core::Attributes::ViewHelper
-  include ::Tramway::Core::Concerns::TableBuilder
+  include ::Tramway::CopyToClipboardHelper
+  include ::Tramway::Associations::ObjectHelper
+  include ::Tramway::Attributes::ViewHelper
+  include ::Tramway::Concerns::TableBuilder
   include ::Tramway::ClassNameHelpers
 
   def initialize(object)
@@ -23,7 +23,7 @@ class Tramway::Core::ApplicationDecorator
 
   def title
     Tramway::Error.raise_error(
-      :tramway, :core, :application_decorator, :title, :please_implement_title,
+      :tramway, :application_decorator, :title, :please_implement_title,
       class_name: self.class, object_class: object.class
     )
   end
@@ -50,9 +50,9 @@ class Tramway::Core::ApplicationDecorator
   delegate :id, to: :object
 
   class << self
-    include ::Tramway::Core::Associations::ClassHelper
-    include ::Tramway::Core::Delegating::ClassHelper
-    include ::Tramway::Core::Default::ValuesHelper
+    include ::Tramway::Associations::ClassHelper
+    include ::Tramway::Delegating::ClassHelper
+    include ::Tramway::Default::ValuesHelper
 
     def decorate(object_or_array)
       is_activerecord_relation = object_or_array.class.superclass == ActiveRecord::Relation
@@ -61,7 +61,7 @@ class Tramway::Core::ApplicationDecorator
         decorated_array = object_or_array.map do |obj|
           new obj
         end
-        Tramway::Core::ApplicationDecoratedCollection.new decorated_array, object_or_array
+        Tramway::ApplicationDecoratedCollection.new decorated_array, object_or_array
       else
         new object_or_array
       end
@@ -80,7 +80,7 @@ class Tramway::Core::ApplicationDecorator
     if object.try :file
       object.file.url
     else
-      Tramway::Error.raise_error :tramway, :core, :application_decorator, :link, :method_link_uses_file_attribute
+      Tramway::Error.raise_error :tramway, :application_decorator, :link, :method_link_uses_file_attribute
     end
   end
 
@@ -100,7 +100,7 @@ class Tramway::Core::ApplicationDecorator
     end.compact
   end
 
-  include Tramway::Core::Concerns::AttributesDecoratorHelper
+  include Tramway::Concerns::AttributesDecoratorHelper
 
   RESERVED_WORDS = ['fields'].freeze
 
@@ -108,7 +108,7 @@ class Tramway::Core::ApplicationDecorator
     object.attributes.reduce({}) do |hash, attribute|
       if attribute[0].in? RESERVED_WORDS
         Tramway::Error.raise_error(
-          :tramway, :core, :application_decorator, :attributes, :method_is_reserved_word,
+          :tramway, :application_decorator, :attributes, :method_is_reserved_word,
           attribute_name: attribute[0], class_name: self.class.name
         )
       end

@@ -12,8 +12,8 @@ Gem::Specification.new do |s|
   s.authors     = ['Pavel Kalashnikov', 'moshiaan']
   s.email       = ['kalashnikovisme@gmail.com']
   s.homepage    = 'https://github.com/purple-magic/tramway'
-  s.summary     = 'Core for all Tramway Rails Engines'
-  s.description = 'Core for all Tramway Rails Engines'
+  s.summary     = 'Tramway Rails Engine'
+  s.description = 'Tramway Rails Engine'
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
