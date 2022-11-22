@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'tramway/error'
-require 'tramway/helpers/class_name_helpers'
+require 'tramway/class_name_helpers'
 
 class Tramway::ApplicationDecorator
   include ActionView::Helpers

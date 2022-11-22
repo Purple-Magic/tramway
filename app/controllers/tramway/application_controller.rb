@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require 'tramway/helpers/class_name_helpers'
+# FIXME use default `require` method
+load "#{Tramway.root}/lib/tramway/class_name_helpers.rb"
+load "#{Tramway.root}/lib/tramway/record_routes_helper.rb"
 
 class Tramway::ApplicationController < ActionController::Base
   include Tramway::ClassNameHelpers
   include Tramway::AuthManagement
-  include RecordRoutesHelper
+  include Tramway::RecordRoutesHelper
 
   before_action :application
   before_action :load_extensions

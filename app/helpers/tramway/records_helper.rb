@@ -52,7 +52,7 @@ module Tramway
       options_for_select(collection, selected_value)
     end
 
-    def admin_index_path_of_model(model_class, tab, filter)
+    def index_path_of_model(model_class, tab, filter)
       if tab
         records_path model: model_class, filter: filter, scope: tab
       else

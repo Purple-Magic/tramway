@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Tramway::RecordsController < ::Tramway::ApplicationController
+class Tramway::RecordsController < Tramway::ApplicationController
   def index
     scope = params[:scope].present? ? params[:scope] : :all
     records = model_class.order(id: :desc).send scope
