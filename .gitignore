@@ -1,0 +1,6 @@
+log/*.log
+pkg/
+spec/dummy/
+*.gem
+coverage/
+.bundle/
