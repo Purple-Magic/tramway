@@ -28,6 +28,9 @@ class Tramway::ApplicationController < ActionController::Base
   end
 
   def check_available!
+    return if session_path?
+    return if self.class.in? [Tramway::Conference::Web::WelcomeController]
+
     raise 'Tramway - Model or Form is not available. Looks like current user does not have access to change this model. Update your tramway initializer file' if !model_given? && !form_given?
   end
 
@@ -99,7 +102,7 @@ class Tramway::ApplicationController < ActionController::Base
   end
 
   def model_given?
-    available_models_given? || singleton_models_given?
+    current_admin.present? && (available_models_given? || singleton_models_given?)
   end
 
   def form_given?
@@ -141,9 +144,13 @@ class Tramway::ApplicationController < ActionController::Base
   end
 
   def authenticate_admin!
-    if !current_admin && !request.path.in?(['/admin/session/new', '/admin/session'])
-      redirect_to '/admin/session/new'
+    if !current_admin && !session_path?
+      return redirect_to '/admin/session/new'
     end
+  end
+
+  def session_path?
+    request.path.in?(['/admin/session/new', '/admin/session', '/admin/sign_out'])
   end
 
   def application

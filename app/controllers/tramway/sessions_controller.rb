@@ -1,40 +1,39 @@
 # frozen_string_literal: true
 
-class Tramway::SessionsController < ::Tramway::ApplicationController
-  before_action :redirect_if_signed_in, except: :destroy
-  skip_before_action :check_available!
-  skip_before_action :collections_counts
+module Tramway
+  class SessionsController < Tramway::ApplicationController
+    before_action :redirect_if_signed_in, except: :destroy
 
-  def new
-    @session_form = ::Tramway::Auth::SessionForm.new admin_model.new
-  end
-
-  def create
-    @session_form = ::Tramway::Auth::SessionForm.new admin_model.find_or_initialize_by email: params[:user][:email]
-    if @session_form.validate params[:user]
-      admin_sign_in @session_form.model
-      redirect_to Tramway::Engine.routes.url_helpers.root_path
-    else
-      render :new
+    def new
     end
-  end
 
-  def destroy
-    admin_sign_out
-    redirect_to '/admin/session/new'
-  end
+    def create
+      @session_form = ::Tramway::SessionForm.new params[:model].constantize.find_by email: params[:user][:email]
+      if @session_form.model.present?
+        if @session_form.validate params[:user]
+          sign_in @session_form.model
+          redirect_to [params[:success_redirect], '?', { flash: :success_user_sign_in }.to_query].join || ::Tramway.root_path_for(@session_form.model.class)
+        else
+          redirect_to [params[:error_redirect], '?', { flash: :error_user_sign_in }.to_query].join || ::Tramway.root_path_for(@session_form.model.class)
+        end
+      else
+        redirect_to [params[:error_redirect], '?', { flash: :error_user_sign_in }.to_query].join || ::Tramway.root_path_for(params[:model].constantize)
+      end
+    end
 
-  private
+    def destroy
+      root_path = Tramway::Engine.routes.url_helpers.root_path
+      sign_out params[:model]
 
-  def redirect_if_signed_in
-    redirect_to Tramway::Engine.routes.url_helpers.root_path if current_admin
-  end
+      redirect_to params[:redirect] || root_path
+    end
 
-  def admin_sign_in(user)
-    session[:admin_id] = user.id
-  end
+    private
 
-  def admin_sign_out
-    session[:admin_id] = nil
+    def redirect_if_signed_in
+      if params[:model].present? && signed_in?(params[:model].constantize) && request.env['PATH_INFO'] != Tramway.root_path_for(current_user.class)
+        redirect_to Tramway.root_path_for(current_user.class)
+      end
+    end
   end
 end
