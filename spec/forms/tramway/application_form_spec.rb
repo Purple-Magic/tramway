@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Tramway::Core::ApplicationForm do
+RSpec.describe Tramway::ApplicationForm do
   it 'defined form class' do
     expect(defined?(described_class)).to be_truthy
   end

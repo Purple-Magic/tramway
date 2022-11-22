@@ -1,6 +1,5 @@
 en:
   tramway:
-    core:
-      shared:
-        messages:
-          some_errors_was_found: There are errors
+    shared:
+      messages:
+        some_errors_was_found: There are errors

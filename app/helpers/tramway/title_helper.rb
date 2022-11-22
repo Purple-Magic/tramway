@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Tramway::Core::TitleHelper
+module Tramway::TitleHelper
   def title(page_title = default_title)
-    @application ||= Tramway::Core.application&.model_class&.first || Tramway::Core.application
+    @application ||= Tramway.application&.model_class&.first || Tramway.application
     if @application.present?
       title_text = "#{page_title} | #{@application.try(:title) || @application.public_name}"
       content_for(:title) { title_text }
     else
-      Tramway::Error.raise_error(:tramway, :core, :title_helper, :title, :you_should_set_tramway_core_application)
+      Tramway::Error.raise_error(:tramway, :title_helper, :title, :you_should_set_tramway_core_application)
     end
   end
 

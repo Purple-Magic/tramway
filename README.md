@@ -1,22 +1,22 @@
-# ![tramway-ico](https://raw.githubusercontent.com/kalashnikovisme/kalashnikovisme/master/%D1%82%D1%80%D1%8D%D0%BC%D0%B2%D1%8D%D0%B9%D0%B1%D0%B5%D0%B7%D1%84%D0%BE%D0%BD%D0%B0-min.png) Tramway::Core [![Tests](https://github.com/Purple-Magic/tramway-core/actions/workflows/tests.yml/badge.svg)](https://github.com/Purple-Magic/tramway-core/actions/workflows/tests.yml) [![Rubocop](https://github.com/Purple-Magic/tramway-core/actions/workflows/rubocop.yml/badge.svg)](https://github.com/Purple-Magic/tramway-core/actions/workflows/rubocop.yml) [![Gem Version](https://badge.fury.io/rb/tramway-core.svg)](https://badge.fury.io/rb/tramway-core)
+# ![tramway-ico](https://raw.githubusercontent.com/kalashnikovisme/kalashnikovisme/master/%D1%82%D1%80%D1%8D%D0%BC%D0%B2%D1%8D%D0%B9%D0%B1%D0%B5%D0%B7%D1%84%D0%BE%D0%BD%D0%B0-min.png) Tramway::Core [![Tests](https://github.com/Purple-Magic/tramway/actions/workflows/tests.yml/badge.svg)](https://github.com/Purple-Magic/tramway/actions/workflows/tests.yml) [![Rubocop](https://github.com/Purple-Magic/tramway/actions/workflows/rubocop.yml/badge.svg)](https://github.com/Purple-Magic/tramway/actions/workflows/rubocop.yml) [![Gem Version](https://badge.fury.io/rb/tramway.svg)](https://badge.fury.io/rb/tramway)
 
 *If you need translation of this Readme, please message us kalashnikov@ulmic.ru. We'll translate for you and post to this page*
 
-tramway-core - это ядро проекта [tramway](https://github.com/ulmic/tramway)
+tramway - это ядро проекта [tramway](https://github.com/purple-magic/tramway)
 
-Этот гем предоставляет базовые классы и реализации для других шаблонов Tramway. Как правило, каждый шаблон Tramway должен иметь в зависимостях последнюю версию гема `tramway-core`.
+Этот гем предоставляет базовые классы и реализации для других шаблонов Tramway. Как правило, каждый шаблон Tramway должен иметь в зависимостях последнюю версию гема `tramway`.
 
 # Installation
 
 *Gemfile*
 ```ruby
-gem 'tramway-core'
+gem 'tramway'
 gem 'audited'
 gem 'clipboard-rails'
 ```
 
 ```shell
-rails g tramway:core:install
+rails g tramway:install
 ```
 
 *config/initializers/tramway.rb*
@@ -40,7 +40,7 @@ You don't need to initialize this object yourself, just configurate application 
 ## Option 1. If you want to change @application object just in the code base.
 
 ```shell
-rails g tramway:core:install
+rails g tramway:install
 ```
 
 *config/initializers/tramway.rb*
@@ -54,7 +54,7 @@ Tramway::Core.initialize_application name: :your_application_name
 #### 1. Generate model that you to use. We create Organization, for example
 
 ```shell
-rails g tramway:core:application
+rails g tramway:application
 rails db:migrate
 ```
 
@@ -102,11 +102,11 @@ Interface: `uploader(attribute_name, uploader_name, **options)`
 
 * attribute_name - ActiveRecord attribute to mount uploader
 * uploader_name - **short** uploader name. You need to connect uploaders which are compatible with Tramway. Available uploaders:
-  * :photo - you can see it [here](https://github.com/Purple-Magic/tramway-core/blob/develop/app/uploaders/photo_uploader.rb)
-  * :file - you can see it [here](https://github.com/Purple-Magic/tramway-core/blob/develop/app/uploaders/file_uploader.rb)
-  * :ico - you can see [here](https://github.com/Purple-Magic/tramway-core/blob/develop/app/uploaders/ico_uploader.rb)
+  * :photo - you can see it [here](https://github.com/Purple-Magic/tramway/blob/develop/app/uploaders/photo_uploader.rb)
+  * :file - you can see it [here](https://github.com/Purple-Magic/tramway/blob/develop/app/uploaders/file_uploader.rb)
+  * :ico - you can see [here](https://github.com/Purple-Magic/tramway/blob/develop/app/uploaders/ico_uploader.rb)
 * options - you are available to set options for uploaders exactly for this model. Available options:
-  * versions - **only for :photo**. Set needed versions for file to be cropped. If empty - 0 zero versions will be used. All versions you can see [here](https://github.com/Purple-Magic/tramway-core/blob/develop/app/uploaders/photo_uploader.rb)
+  * versions - **only for :photo**. Set needed versions for file to be cropped. If empty - 0 zero versions will be used. All versions you can see [here](https://github.com/Purple-Magic/tramway/blob/develop/app/uploaders/photo_uploader.rb)
   * extensions - whitelist of file extensions. If empty will be used default whitelist from the uploaders (links above)
 
 Example:
@@ -215,7 +215,7 @@ end
 
 ### CopyToClipboardHelper
 
-[app/helpers/tramway/core/copy_to_clipboard_helper.rb] (https://github.com/ulmic/tramway-dev/blob/develop/tramway-core/app/helpers/tramway/core/copy_to_clipboard_helper.rb)
+[app/helpers/tramway/copy_to_clipboard_helper.rb] (https://github.com/ulmic/tramway-dev/blob/develop/tramway/app/helpers/tramway/copy_to_clipboard_helper.rb)
 
 #### Install
 
@@ -229,7 +229,7 @@ It will show you in the view in bootstrap styles with font-awesome `copy` icon.
 
 Something like this:
 
-![copy_to_clipboard_button](https://raw.githubusercontent.com/ulmic/tramway-dev/develop/tramway-core/docs/copy_to_clipboard_button.png)
+![copy_to_clipboard_button](https://raw.githubusercontent.com/ulmic/tramway-dev/develop/tramway/docs/copy_to_clipboard_button.png)
 
 ```ruby
 copy_to_clipboard "some_id" # some_id is HTML id of element. Content of this element will be copied to the clipboard after pressing the button
@@ -279,8 +279,8 @@ Just create PR to develop branch
 * After merging PR you should create new release via git-flow this way
 
 ```shell
-git release start (version which you upgraded in lib/tramway-core/version.rb file)
-git release finish (version which you upgraded in lib/tramway-core/version.rb file)
+git release start (version which you upgraded in lib/tramway/version.rb file)
+git release finish (version which you upgraded in lib/tramway/version.rb file)
 git push origin develop
 git push origin master
 ```

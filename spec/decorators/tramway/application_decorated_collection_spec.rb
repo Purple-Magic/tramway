@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'kaminari'
 
-RSpec.describe Tramway::Core::ApplicationDecoratedCollection do
+RSpec.describe Tramway::ApplicationDecoratedCollection do
   it 'defined decorator class' do
     expect(defined?(described_class)).to be_truthy
   end
@@ -11,14 +11,14 @@ RSpec.describe Tramway::Core::ApplicationDecoratedCollection do
   it 'should initialize new decorated array' do
     create_list(:test_model, 20)
     test_models = TestModel.all.page(5)
-    decorated_test_models = test_models.map { |t| Tramway::Core::ApplicationDecorator.new t }
+    decorated_test_models = test_models.map { |t| Tramway::ApplicationDecorator.new t }
     expect { described_class.new decorated_test_models, test_models }.not_to raise_error(StandardError)
   end
 
   context 'Delegation checks' do
     context 'with TestModel' do
       let(:test_models) { TestModel.all.page(5) }
-      let(:decorated_test_models) { test_models.map { |t| Tramway::Core::ApplicationDecorator.new t } }
+      let(:decorated_test_models) { test_models.map { |t| Tramway::ApplicationDecorator.new t } }
       let(:decorated_collection) { described_class.new decorated_test_models, test_models }
 
       it 'delegates total_pages' do
@@ -38,7 +38,7 @@ RSpec.describe Tramway::Core::ApplicationDecoratedCollection do
   context 'Object methods checks' do
     let(:test_models) { TestModel.all.page(5) }
     let(:decorated_collection) do
-      decorated_test_models = test_models.map { |t| Tramway::Core::ApplicationDecorator.new t }
+      decorated_test_models = test_models.map { |t| Tramway::ApplicationDecorator.new t }
       described_class.new decorated_test_models, test_models
     end
 

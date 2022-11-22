@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-module Tramway::Core::ApplicationHelper
+module Tramway::ApplicationHelper
 end

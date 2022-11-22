@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'tramway/core/engine'
+require 'tramway/engine'
 require 'tramway/collection'
 require 'tramway/collections/helper'
 require 'tramway/error'
@@ -8,10 +8,10 @@ require 'font_awesome5_rails'
 require 'pg_search'
 require 'validators/presence_validator'
 
-module Tramway::Core
+module Tramway
   class << self
     def initialize_application(**options)
-      @application ||= Tramway::Core::Application.new
+      @application ||= Tramway::Application.new
       options.each do |attr, value|
         @application.send "#{attr}=", value
       end

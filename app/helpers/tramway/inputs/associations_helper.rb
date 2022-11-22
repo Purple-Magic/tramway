@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Tramway::Core::Inputs::AssociationsHelper
+module Tramway::Inputs::AssociationsHelper
   def build_collection_for_association(form_object, property)
     user = defined?(current_user) ? current_user : current_admin
     full_class_name_association = form_object.class.full_class_name_association(property)
@@ -19,13 +19,13 @@ module Tramway::Core::Inputs::AssociationsHelper
   def check_valid_association(full_class_name_association)
     unless full_class_name_association
       Tramway::Error.raise_error(
-        :tramway, :core, :inputs_helpers, :association_params, :defined_with_property_method, property: property
+        :tramway, :inputs_helpers, :association_params, :defined_with_property_method, property: property
       )
     end
     return unless full_class_name_association.is_a? Array
 
     Tramway::Error.raise_error(
-      :tramway, :core, :inputs_helpers, :association_params, :used_polymorphic_association, property: property
+      :tramway, :inputs_helpers, :association_params, :used_polymorphic_association, property: property
     )
   end
 end

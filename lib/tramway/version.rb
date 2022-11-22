@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
 module Tramway
-  module Core
-    VERSION = '5.0'
-  end
+  VERSION = '5.0'
 end

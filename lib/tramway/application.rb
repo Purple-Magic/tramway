@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Tramway::Core::Application
+class Tramway::Application
   attr_accessor :name, :url, :model_class, :title, :tagline, :found_date, :phone, :email, :main_image, :favicon,
     :short_description
 

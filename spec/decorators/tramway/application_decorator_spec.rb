@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Tramway::Core::ApplicationDecorator do
+RSpec.describe Tramway::ApplicationDecorator do
   let(:errors) { YAML.load_file(Rails.root.join('..', 'yaml', 'errors.yml')).with_indifferent_access }
   it 'defined decorator class' do
     expect(defined?(described_class)).to be_truthy
@@ -51,7 +51,7 @@ RSpec.describe Tramway::Core::ApplicationDecorator do
     end
 
     it 'returns model class' do
-      expect(described_class.model_class).to eq Tramway::Core::Application
+      expect(described_class.model_class).to eq Tramway::Application
     end
 
     it 'returns model name' do
@@ -124,7 +124,7 @@ RSpec.describe Tramway::Core::ApplicationDecorator do
       it 'returns name' do
         expect { decorated_test_model.name }.to raise_error(
           RuntimeError,
-          'Please, implement `title` method in a Tramway::Core::ApplicationDecorator or delegate it to TestModel'
+          'Please, implement `title` method in a Tramway::ApplicationDecorator or delegate it to TestModel'
         )
       end
 

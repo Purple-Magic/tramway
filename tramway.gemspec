@@ -3,15 +3,15 @@
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 
 # Maintain your gem's version:
-require 'tramway/core/version'
+require 'tramway/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = 'tramway-core'
-  s.version     = Tramway::Core::VERSION
+  s.name        = 'tramway'
+  s.version     = Tramway::VERSION
   s.authors     = ['Pavel Kalashnikov', 'moshiaan']
   s.email       = ['kalashnikovisme@gmail.com']
-  s.homepage    = 'https://github.com/purple-magic/tramway-core'
+  s.homepage    = 'https://github.com/purple-magic/tramway'
   s.summary     = 'Core for all Tramway Rails Engines'
   s.description = 'Core for all Tramway Rails Engines'
   s.license     = 'MIT'

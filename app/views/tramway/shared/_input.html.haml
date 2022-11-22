@@ -27,7 +27,7 @@
     = form.input property, **simple_params(**input_params.merge(type: type)).merge(options)
 - else
   - property_value = form_object.model.values.present? && form_object.model.values[property.to_s]
-  = render 'tramway/core/shared/input_extended', field: type[:extended_form_property], class_name: :record, value: property_value, f: form
+  = render 'tramway/shared/input_extended', field: type[:extended_form_property], class_name: :record, value: property_value, f: form
 
 - if params[:errors].present? && params[:errors][property]&.first
   .alert.alert-danger

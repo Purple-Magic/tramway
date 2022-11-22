@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Tramway::Core::Inputs::PolymorphicAssociationsHelper
+module Tramway::Inputs::PolymorphicAssociationsHelper
   def build_collection_for_polymorphic_association(form_object, property)
     user = defined?(current_user) ? current_user : current_admin
     object_names = full_class_names(form_object, property).map do |class_name|

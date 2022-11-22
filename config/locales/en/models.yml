@@ -1,7 +1,7 @@
 en:
   activerecord:
     attributes:
-      tramway/core/application_record:
+      tramway/application_record:
         created_at: Created at
         updated_at: Updated at
         state: State

@@ -2,7 +2,7 @@
 
 require 'carrierwave/orm/activerecord' if defined?(CarrierWave::Mount)
 
-class Tramway::Core::ApplicationRecord < ActiveRecord::Base
+class Tramway::ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
   audited
   extend ::Enumerize
@@ -36,7 +36,7 @@ class Tramway::Core::ApplicationRecord < ActiveRecord::Base
     def human_attribute_name(attribute_name, *_args)
       excepted_attributes = %w[created_at updated_at]
       if attribute_name.to_s.in? excepted_attributes
-        I18n.t "activerecord.attributes.tramway/core/application_record.#{attribute_name}"
+        I18n.t "activerecord.attributes.tramway/application_record.#{attribute_name}"
       else
         super attribute_name
       end

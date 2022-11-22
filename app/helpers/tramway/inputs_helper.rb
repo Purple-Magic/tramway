@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Tramway::Core::InputsHelper
-  include Tramway::Core::Inputs::AssociationsHelper
-  include Tramway::Core::Inputs::PolymorphicAssociationsHelper
+module Tramway::InputsHelper
+  include Tramway::Inputs::AssociationsHelper
+  include Tramway::Inputs::PolymorphicAssociationsHelper
 
   def association_params(form_object:, property:, value:, object:, options: {})
     full_class_name_association = form_object.class.full_class_name_association(property)

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'rails/generators'
-require 'tramway/core/generators'
+require 'tramway/generators'
 
-class Tramway::Core::Generators::InstallGenerator < ::Rails::Generators::Base
+class Tramway::Generators::InstallGenerator < ::Rails::Generators::Base
   source_root File.expand_path('templates', __dir__)
 
   def run_other_generators
