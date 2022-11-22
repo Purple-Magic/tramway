@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tramway-core (5.0)
+    tramway (5.0)
       aasm
       audited (>= 4.8.0)
       bootstrap (>= 4.1.2)
@@ -65,7 +65,7 @@ GEM
       popper_js (>= 2.11.6, < 3)
       sassc-rails (>= 2.0.0)
     builder (3.2.4)
-    carrierwave (2.2.2)
+    carrierwave (2.2.3)
       activemodel (>= 5.0.0)
       activesupport (>= 5.0.0)
       addressable (~> 2.6)
@@ -96,7 +96,7 @@ GEM
     ffi (1.15.5)
     font_awesome5_rails (1.4.0)
       railties (>= 4.2)
-    haml (6.0.9)
+    haml (6.0.10)
       temple (>= 0.8.2)
       thor
       tilt
@@ -143,6 +143,7 @@ GEM
     pg_search (2.3.6)
       activerecord (>= 5.2)
       activesupport (>= 5.2)
+    pkg-config (1.4.9)
     popper_js (2.11.6)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -169,7 +170,8 @@ GEM
       ffi (~> 1.0)
     regexp_parser (1.7.1)
     rexml (3.2.4)
-    rmagick (5.0.0)
+    rmagick (5.1.0)
+      pkg-config (~> 1.4)
     rspec-core (3.9.1)
       rspec-support (~> 3.9.1)
     rspec-expectations (3.9.1)
@@ -254,7 +256,7 @@ DEPENDENCIES
   pry
   rspec-rails
   rubocop
-  tramway-core!
+  tramway!
 
 BUNDLED WITH
    2.1.4
