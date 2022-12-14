@@ -34,8 +34,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rmagick', '~> 4.2.2'
   s.add_dependency 'sass-rails', '~> 5.0', '>= 5.0.7'
   s.add_dependency 'simple_form', '>= 5.0.0'
-  s.add_dependency 'tramway-auth', '>= 2.0.1'
-  s.add_dependency 'tramway-user', '>= 2.1.3.2'
   s.add_dependency 'bootstrap-kaminari-views', '0.0.5'
   s.add_dependency 'copyright_mafa', '~> 0.1.2', '>= 0.1.2'
   s.add_dependency 'font-awesome-rails', '~> 4.7', '>= 4.7.0.1'

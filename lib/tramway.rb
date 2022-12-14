@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'tramway/engine'
-require 'tramway/auth'
 require 'tramway/collection'
 require 'tramway/collections/helper'
 require 'font_awesome5_rails'
@@ -18,7 +17,7 @@ require 'tramway/generators/install_generator'
 require 'tramway/tramway_model_helper'
 
 module Tramway
-  Auth.layout_path = 'tramway/admin/application'
+  # Auth.layout_path = 'tramway/admin/application'
 
   class << self
     def initialize_application(**options)

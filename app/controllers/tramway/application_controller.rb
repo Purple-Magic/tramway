@@ -11,7 +11,6 @@ class Tramway::ApplicationController < ActionController::Base
 
   before_action :application
   before_action :load_extensions
-  before_action :authenticate_admin!
   before_action :application
   before_action :notifications
   before_action :notifications_count
@@ -141,12 +140,6 @@ class Tramway::ApplicationController < ActionController::Base
   def check_models_given?(model_type)
     models = ::Tramway.send("#{model_type}_models", role: current_admin.role)
     models.any? && params[:model].in?(models.map(&:to_s))
-  end
-
-  def authenticate_admin!
-    if !current_admin && !session_path?
-      return redirect_to '/admin/session/new'
-    end
   end
 
   def session_path?

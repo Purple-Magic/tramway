@@ -2,7 +2,6 @@
 
 Tramway::Engine.routes.draw do
   mount Tramway::Export::Engine, at: '/' if defined? Tramway::Export::Engine
-  mount Tramway::Auth::Engine, at: '/'
 
   root to: 'welcome#index'
 
