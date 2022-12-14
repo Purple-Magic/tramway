@@ -113,7 +113,7 @@ module Tramway
     end
 
     def auth_config
-      @@auth_config ||= [{ user_model: ::Tramway::User::User, auth_attributes: :email }]
+      @@auth_config ||= [{ user_model: ::Tramway::User, auth_attributes: :email }]
       @@auth_config
     end
 
@@ -137,6 +137,15 @@ module Tramway
       @@auth_config.reduce({}) do |hash, conf|
         hash.merge! conf[:user_model] => conf[:auth_attributes]
       end
+    end
+
+    def root_path_for=(**options)
+      @root_path ||= {}
+      @root_path.merge! options
+    end
+
+    def root_path_for(user_class)
+      @root_path&.dig(user_class) || '/'
     end
   end
 end

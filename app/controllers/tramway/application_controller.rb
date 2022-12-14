@@ -11,10 +11,10 @@ class Tramway::ApplicationController < ActionController::Base
 
   before_action :application
   before_action :load_extensions
-  before_action :application
   before_action :notifications
   before_action :notifications_count
   before_action :collections_counts, if: :model_given?
+  before_action :authenticate_user!
   before_action :check_available!
   before_action :check_available_scope!, if: :model_given?, only: :index
 
@@ -132,7 +132,7 @@ class Tramway::ApplicationController < ActionController::Base
     user = admin_model.find_by id: session[:admin_id]
     return false unless user
 
-    Tramway::User::UserDecorator.decorate user
+    Tramway::UserDecorator.decorate user
   end
 
   private

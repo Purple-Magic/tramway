@@ -6,19 +6,19 @@ module Tramway
       session[user_id_key(user.class)] = user.id
     end
 
-    def sign_out(user_class = ::Tramway::User::User)
+    def sign_out(user_class = ::Tramway::User)
       session[user_id_key(user_class.constantize)] = nil if user_class.present?
     end
 
-    def signed_in?(user_class = ::Tramway::User::User)
+    def signed_in?(user_class = ::Tramway::User)
       current_user(user_class)
     end
 
-    def authenticate_user!(user_class = ::Tramway::User::User)
+    def authenticate_user!(user_class = ::Tramway::User)
       redirect_to new_session_path unless signed_in?(user_class)
     end
 
-    def current_user(user_class = ::Tramway::User::User)
+    def current_user(user_class = ::Tramway::User)
       user = user_class.find_by id: session[user_id_key(user_class)]
       return false unless user
 

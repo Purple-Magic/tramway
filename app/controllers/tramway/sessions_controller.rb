@@ -5,6 +5,7 @@ module Tramway
     before_action :redirect_if_signed_in, except: :destroy
 
     def new
+      @session_form = Tramway::SessionForm.new Tramway::User.new
     end
 
     def create
