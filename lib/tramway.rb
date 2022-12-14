@@ -15,6 +15,7 @@ require 'tramway/navbar'
 require 'tramway/error'
 require 'tramway/generators/install_generator'
 require 'tramway/tramway_model_helper'
+require 'tramway/class_name_helpers'
 
 module Tramway
   # Auth.layout_path = 'tramway/admin/application'

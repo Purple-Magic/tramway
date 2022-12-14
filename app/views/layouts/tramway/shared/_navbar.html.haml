@@ -1,15 +1,15 @@
 %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
-  - if ::Tramway.customized_admin_navbar.present?
-    = ::Tramway.customized_admin_navbar
+  - if Tramway.customized_admin_navbar.present?
+    = Tramway.customized_admin_navbar
   - else
     .container-fluid
       = link_to @application&.try(:title) || @application&.public_name || t('aplication.title'), ::Tramway::Engine.routes.url_helpers.root_path, class: 'navbar-brand'
       %button.navbar-toggler.collapsed{ aria: { controls: :navbar, expanded: "false", label: 'Toggle Navigation' }, data: { bs: { target: "#navbar" , toggle: :collapse } }, type: :button }
         %span.navbar-toggler-icon
       .navbar-collapse.collapse#navbar
-        - if current_admin
+        - if current_user
           %ul.navbar-nav
-            - ::Tramway.navbar_items_for(@application_engine || @application.name, role: current_admin.role)&.each do |item|
+            - ::Tramway.navbar_items_for(@application_engine || @application.name, role: current_user.role)&.each do |item|
               - case item.keys.first
               - when Class, String
                 - model = item.keys.first.is_a?(String) ? item.keys.first.constantize : item.keys.first
@@ -31,10 +31,10 @@
                         = dropdown_model_item model: model, route: ::Tramway::Engine.routes.url_helpers.records_path(model: model, scope: decorator_class(model).collections.first), pluralize: plural(model.constantize.model_name).capitalize
 
       %ul.nav.navbar-nav.ml-auto.justify-content-end.navbar-collapse.collapse
-        - if current_admin
+        - if current_user
           %li.nav-item
             %span.nav-link
-              = "#{current_admin.first_name} #{current_admin.last_name}"
+              = "#{current_user.first_name} #{current_user.last_name}"
           - if @notifications_count.present?
             - if @notifications_count > 0
               %li.nav-item.dropdown.notifications
