@@ -25,7 +25,7 @@ class Tramway::RecordsController < Tramway::ApplicationController
         end
       end
     end
-    records = records.send "#{current_admin.role}_scope", current_admin.id
+    records = records.send "#{current_user.role}_scope", current_user.id
     @records = decorator_class.decorate records.page params[:page]
   end
 

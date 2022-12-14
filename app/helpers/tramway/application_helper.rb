@@ -26,11 +26,4 @@ module Tramway::ApplicationHelper
                         end
     ::Tramway.available_models_for(@application_engine || @application.name).map(&:to_s).include?(object_class_name) ? :record : :singleton
   end
-
-  def current_admin
-    user = Tramway.admin_model.find_by id: session[:admin_id]
-    return false unless user
-
-    Tramway::UserDecorator.decorate user
-  end
 end

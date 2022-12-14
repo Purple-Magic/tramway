@@ -43,7 +43,7 @@ class Tramway::ApplicationController < ActionController::Base
   def collections_counts
     @counts = decorator_class.collections.reduce({}) do |hash, collection|
       records = model_class.send(collection)
-      records = records.send "#{current_admin.role}_scope", current_admin.id
+      records = records.send "#{current_user.role}_scope", current_user.id
       records = records.ransack(params[:filter]).result if params[:filter].present?
       params[:list_filters]&.each do |filter, value|
         case decorator_class.list_filters[filter.to_sym][:type]
@@ -59,7 +59,7 @@ class Tramway::ApplicationController < ActionController::Base
           end
         end
       end
-      hash.merge! collection => records.send("#{current_admin.role}_scope", current_admin.id).count
+      hash.merge! collection => records.send("#{current_user.role}_scope", current_user.id).count
     end
   end
 
@@ -70,9 +70,9 @@ class Tramway::ApplicationController < ActionController::Base
   end
 
   def notifications
-    if current_admin
+    if current_user
       @notifications ||= Tramway.notificable_queries&.reduce({}) do |hash, notification|
-        hash.merge! notification[0] => notification[1].call(current_admin)
+        hash.merge! notification[0] => notification[1].call(current_user)
       end
     end
     @notifications
@@ -95,16 +95,16 @@ class Tramway::ApplicationController < ActionController::Base
   end
 
   def admin_form_class
-    class_name = "::#{current_admin.role.camelize}::#{model_class}Form"
+    class_name = "::#{current_user.role.camelize}::#{model_class}Form"
     if defined? class_name
       class_name.constantize
     else
-      raise "Tramway - you should create form for role `#{current_admin.role}` to edit #{model_class} model. It should be named #{class_name}"
+      raise "Tramway - you should create form for role `#{current_user.role}` to edit #{model_class} model. It should be named #{class_name}"
     end
   end
 
   def model_given?
-    current_admin.present? && (available_models_given? || singleton_models_given?)
+    current_user.present? && (available_models_given? || singleton_models_given?)
   end
 
   def form_given?
@@ -113,7 +113,7 @@ class Tramway::ApplicationController < ActionController::Base
     #  :tramway, :admin, :application_controller, :form_given, :model_not_included_to_tramway_admin,
     #  model: params[:model]
     # )
-    # raise "Looks like model #{params[:model]} is not included to tramway-admin for `#{current_admin.role}` role. Add it in the `config/initializers/tramway.rb`. This way `Tramway.set_available_models(#{params[:model]})`"
+    # raise "Looks like model #{params[:model]} is not included to tramway-admin for `#{current_user.role}` role. Add it in the `config/initializers/tramway.rb`. This way `Tramway.set_available_models(#{params[:model]})`"
     if params[:form].present?
       Tramway.forms.include? params[:form].underscore.sub(%r{^admin/}, '').sub(/_form$/, '')
     end
@@ -131,17 +131,10 @@ class Tramway::ApplicationController < ActionController::Base
     check_models_given? :singleton
   end
 
-  def current_admin
-    user = admin_model.find_by id: session[:admin_id]
-    return false unless user
-
-    Tramway::UserDecorator.decorate user
-  end
-
   private
 
   def check_models_given?(model_type)
-    models = ::Tramway.send("#{model_type}_models", role: current_admin.role)
+    models = ::Tramway.send("#{model_type}_models", role: current_user.role)
     models.any? && params[:model].in?(models.map(&:to_s))
   end
 
@@ -164,6 +157,6 @@ class Tramway::ApplicationController < ActionController::Base
   end
 
   def authenticated_user
-    (defined?(current_user) && current_user.try(:model)) || (defined?(current_admin) && current_admin.model)
+    (defined?(current_user) && current_user.try(:model)) || (defined?(current_user) && current_user.model)
   end
 end

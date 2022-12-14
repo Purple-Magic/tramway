@@ -6,7 +6,7 @@ module Tramway::ActionsHelper
       association_object,
       project: (@application_engine || @application.name),
       model_name: association_object.model.class.name,
-      role: current_admin.role,
+      role: current_user.role,
       action: :destroy
     )
   end
@@ -16,7 +16,7 @@ module Tramway::ActionsHelper
       association_object,
       project: (@application_engine || @application.name),
       model_name: association_object.model.class.name,
-      role: current_admin.role,
+      role: current_user.role,
       action: :update
     )
   end
@@ -26,7 +26,7 @@ module Tramway::ActionsHelper
       nil,
       project: (@application_engine || @application.name),
       model_name: association_class,
-      role: current_admin.role,
+      role: current_user.role,
       action: :create
     )
   end
