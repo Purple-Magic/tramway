@@ -4,6 +4,9 @@
 load "#{Tramway.root}/lib/tramway/class_name_helpers.rb"
 load "#{Tramway.root}/lib/tramway/record_routes_helper.rb"
 
+# FIXME configurate load_path
+load "#{Tramway.root}/app/controllers/concerns/auth_management.rb"
+
 class Tramway::ApplicationController < ActionController::Base
   include Tramway::ClassNameHelpers
   include Tramway::AuthManagement

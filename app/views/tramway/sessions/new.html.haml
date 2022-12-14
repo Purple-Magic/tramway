@@ -1,7 +1,7 @@
 - title
 .row
   .col-md-6
-    = simple_form_for @session_form.model, url: '/session', method: :post, html: { class: 'form-horizontal' } do |f|
+    = simple_form_for @session_form.model, url: Tramway::Engine.routes.url_helpers.session_path, method: :post, html: { class: 'form-horizontal' } do |f|
       = f.input :email, as: :string
       = f.input :password
       = hidden_field_tag :model, @session_form.model.class.to_s
