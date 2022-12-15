@@ -1,0 +1,11 @@
+en:
+  tramway:
+    admin:
+      welcome:
+        index:
+          title: Admin panel
+    auth:
+      web:
+        sessions:
+          new:
+            title: Sign In

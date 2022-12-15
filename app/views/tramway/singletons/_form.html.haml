@@ -1,0 +1,15 @@
+- current_title = page_title(action, model_class)
+- title current_title
+.page-header
+  %h1= current_title
+%hr
+.row
+  .col-lg-12
+    = render 'tramway/shared/messages', object: @singleton_form
+.row
+  .col-lg-12
+    = simple_form_for @singleton_form.model, url: { controller: :singletons, action: action, model: @singleton_form.model.class }, input_html: { class: 'form-horizontal' } do |f|
+      - @singleton_form.properties.each do |property, type|
+        = render 'tramway/shared/input', property: property, object: :singleton, type: type, form: f, destination: :admin, value: value_from_params(model_class: model_class, property: property, type: type)
+      = f.button :submit, t('helpers.links.save'), class: 'btn btn-success'
+      = link_to t('helpers.links.back'), singleton_path, class: 'btn btn-secondary'

@@ -1,0 +1,32 @@
+%html
+  %head
+    %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
+    %meta{ content: "width=device-width, initial-scale=1, maximum-scale=0.8", name: "viewport" }
+    %title
+      = yield :title
+    = stylesheet_link_tag    'tramway/application', media: :all
+    = javascript_include_tag 'tramway/application'
+    - if File.exists?("#{Rails.root}/app/assets/javascripts/application.js") || File.exists?("#{Rails.root}/app/assets/javascripts/application.js.coffee")
+      = javascript_include_tag 'application'
+    - if File.exists?("#{Rails.root}/app/assets/stylesheets/application.css") || File.exists?("#{Rails.root}/app/assets/stylesheets/application.scss")
+      = stylesheet_link_tag 'application'
+    - if File.exists?("#{Rails.root}/app/javascript/packs/application.js")
+      = javascript_pack_tag 'application'
+    = csrf_meta_tags
+    - if @application.favicon.present?
+      = favicon_link_tag @application.favicon
+  %body
+    = render 'layouts/tramway/shared/navbar'
+    %main.container{ role: :main }
+      .row
+        - if content_for?(:sidebar)
+          .col-lg-9
+            = yield
+          .col-lg-3.sidebar-canvas
+            = yield :sidebar
+        - else
+          .col-lg-12
+            = yield
+    %footer
+      .container
+        = copyright '2017', 'Tramway'

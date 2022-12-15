@@ -1,0 +1,30 @@
+- default_page_title ||= nil; on_site_link ||= nil
+- current_title = default_page_title || plural(model_class).capitalize
+- title current_title
+- state_method ||= :state
+- tabs = get_collection
+.page-header
+  .row
+    - search_render_show = searchable_model?(model_class) || is_there_any_filters?(model_class)
+    %div{ class: "col-md-#{search_render_show ? 4 : 12}" }
+      %h1
+        = current_title
+        = link_to fa_icon(:plus), new_current_model_record_path, class: 'btn btn-primary'
+        - if defined? Tramway::Export::Engine
+          = render 'tramway/export/button'
+    .col
+      = render 'search', model_class: model_class
+%hr
+%ul.nav.nav-tabs.mb-3
+  - if params[:search].present?
+    %li.nav-item
+      = link_to search_tab_title(@records.total_count), '#', class: 'nav-link active'
+    %li.nav-item
+      = link_to t('helpers.actions.reset'), records_path(model: params[:model], filter: params[:filter]), class: 'nav-link'
+  - else
+    - tabs.each_with_index do |tab, index|
+      %li.nav-item
+        = link_to index_path_of_model(model_class, tab, (params[:filter].present? ? params[:filter] : nil)&.permit!), class: "#{active_tab(tab, index)} nav-link" do
+          != tab_title(model_class, tab, @counts[tab], state_method)
+%div{ id: (params[:search] ? :search : params[:scope]) }
+  = render 'list'

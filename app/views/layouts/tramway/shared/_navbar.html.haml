@@ -1,0 +1,63 @@
+%nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+  - if Tramway.customized_admin_navbar.present?
+    = Tramway.customized_admin_navbar
+  - else
+    .container-fluid
+      = link_to @application&.try(:title) || @application&.public_name || t('aplication.title'), ::Tramway::Engine.routes.url_helpers.root_path, class: 'navbar-brand'
+      %button.navbar-toggler.collapsed{ aria: { controls: :navbar, expanded: "false", label: 'Toggle Navigation' }, data: { bs: { target: "#navbar" , toggle: :collapse } }, type: :button }
+        %span.navbar-toggler-icon
+      .navbar-collapse.collapse#navbar
+        - if current_user
+          %ul.navbar-nav
+            - ::Tramway.navbar_items_for(@application_engine || @application.name, role: current_user.role)&.each do |item|
+              - case item.keys.first
+              - when Class, String
+                - model = item.keys.first.is_a?(String) ? item.keys.first.constantize : item.keys.first
+                - case item.values.first
+                - when :singleton
+                  = model_menu_item model: model, route: ::Tramway::Engine.routes.url_helpers.singleton_path(model: model)
+                - when :record
+                  = model_menu_item model: model, route: ::Tramway::Engine.routes.url_helpers.records_path(model: model, scope: decorator_class(model).collections.first), pluralize: plural(model.model_name).capitalize
+              - when Symbol, String
+                = dropdown t("admin.navbar.links.#{item.keys.first}") do
+                  - item.values.first.each do |sub_item|
+                    - if sub_item == :divider
+                      = dropdown_divider
+                    - else
+                      - model = sub_item.keys.first
+                      - if sub_item.values.first == :singleton
+                        = dropdown_model_item model: model, route: ::Tramway::Engine.routes.url_helpers.singleton_path(model: model)
+                      - if sub_item.values.first == :record
+                        = dropdown_model_item model: model, route: ::Tramway::Engine.routes.url_helpers.records_path(model: model, scope: decorator_class(model).collections.first), pluralize: plural(model.constantize.model_name).capitalize
+
+      %ul.nav.navbar-nav.ml-auto.justify-content-end.navbar-collapse.collapse
+        - if current_user
+          %li.nav-item
+            %span.nav-link
+              = "#{current_user.first_name} #{current_user.last_name}"
+          - if @notifications_count.present?
+            - if @notifications_count > 0
+              %li.nav-item.dropdown.notifications
+                = link_to '#', class: 'nav-link icon-in-navbar dropdown-toggle', id: :notifications_dropdown, role: :button, aria: { haspopup: true, expanded: false }, data: { toggle: :dropdown } do
+                  %span.badge.badge-light
+                    = @notifications_count
+                .dropdown-menu.dropdown-menu-right.scrollable{ aria: { labelledby: :notifications_dropdown } }
+                  - @notifications.each_with_index do |collection, index|
+                    - collection[1].each do |item|
+                      = link_to decorator_class(item.class).decorate(item).title, record_path(item, model: item.class), class: 'dropdown-item'
+                    - if index < @notifications.count - 1
+                      .dropdown-divider
+            - else
+              %li.nav-item.notifications
+                = link_to '#', class: 'nav-link icon-in-navbar' do
+                  %span.badge.badge-light
+                    = @notifications_count
+          %li.nav-item
+            = link_to '/admin/sign_out', class: 'nav-link' do
+              = fa_icon 'sign-out-alt'
+              = t('helpers.links.sign_out')
+        - else
+          %li.nav-item
+            = link_to new_session_path, class: 'nav-link' do
+              = fa_icon 'sign-in-alt'
+              = t('helpers.links.enter')
