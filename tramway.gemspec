@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
+  s.add_dependency 'rails', '5.1.7'
+
   s.add_dependency 'aasm'
   s.add_dependency 'audited', '>= 4.8.0'
   s.add_dependency 'bootstrap', '>= 4.1.2'
