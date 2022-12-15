@@ -15,7 +15,7 @@ module Tramway
     end
 
     def authenticate_user!
-      redirect_to new_session_path if !session_path && !signed_in?
+      redirect_to Tramway::Engine.routes.url_helpers.new_session_path if !session_path? && !signed_in?
     end
 
     def current_user

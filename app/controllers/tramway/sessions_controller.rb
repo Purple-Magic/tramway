@@ -39,7 +39,7 @@ class Tramway::SessionsController < Tramway::ApplicationController
   private
 
   def redirect_if_signed_in
-    if params[:model].present? && signed_in?(params[:model].constantize) && request.env['PATH_INFO'] != Tramway.root_path_for(current_user.class)
+    if params[:model].present? && signed_in? && request.env['PATH_INFO'] != Tramway.root_path_for(current_user.class)
       redirect_to Tramway.root_path_for(current_user.class)
     end
   end
