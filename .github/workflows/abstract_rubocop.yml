@@ -1,0 +1,26 @@
+name: Abstract Rubocop
+
+on: [workflow_call]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.6
+
+      - name: Clone current repo
+        uses: actions/checkout@master
+        with:
+          repository: purple-magic/tramway
+
+      - name: Bundle
+        run: |
+          gem install bundler -v '2.1.2'
+          bundle install --jobs 4 --retry 3
+
+      - name: Rubocop
+        run: |
+          rubocop
