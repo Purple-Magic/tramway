@@ -110,7 +110,6 @@ GEM
     concurrent-ruby (1.1.10)
     copyright_mafa (0.1.2)
     crass (1.0.6)
-    date (3.3.1)
     diff-lcs (1.5.0)
     enumerize (2.5.0)
       activesupport (>= 3.2)
@@ -159,26 +158,14 @@ GEM
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.8.0)
+    mail (2.7.1)
       mini_mime (>= 0.1.1)
-      net-imap
-      net-pop
-      net-smtp
     marcel (1.0.2)
     method_source (1.0.0)
     mini_magick (4.12.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.16.3)
-    net-imap (0.3.2)
-      date
-      net-protocol
-    net-pop (0.1.2)
-      net-protocol
-    net-protocol (0.2.1)
-      timeout
-    net-smtp (0.3.3)
-      net-protocol
     nio4r (2.5.8)
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
@@ -314,7 +301,6 @@ GEM
     thor (1.2.1)
     thread_safe (0.3.6)
     tilt (2.0.11)
-    timeout (0.3.1)
     trap (4.0)
     tzinfo (1.2.10)
       thread_safe (~> 0.1)
@@ -330,6 +316,7 @@ DEPENDENCIES
   aasm
   better_errors
   factory_bot_rails
+  mail (~> 2.7.1)
   paranoia (~> 2.2)
   pg
   pry
@@ -338,4 +325,4 @@ DEPENDENCIES
   tramway!
 
 BUNDLED WITH
-   2.1.4
+   2.2.15

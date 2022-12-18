@@ -235,6 +235,34 @@ Something like this:
 copy_to_clipboard "some_id" # some_id is HTML id of element. Content of this element will be copied to the clipboard after pressing the button
 ```
 
+# Development
+
+To start developing you should:
+
+#### 1. install gems
+
+```shell
+bundle install
+```
+
+Also need to install [ImageMagick](https://imagemagick.org) for [rmagick](https://github.com/rmagick/rmagick). You can read the manual for your OS [here](https://github.com/rmagick/rmagick#prerequisites)
+
+#### 2. Create a test database
+
+```shell
+cd spec/dummy
+rails db:create db:migrate RAILS_ENV=test
+cd ../../
+```
+
+#### 3. Run tests
+
+```shell
+rspec
+```
+
+All tests should be green =)
+
 ## In Russian
 
 # Базовые классы

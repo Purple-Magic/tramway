@@ -5,6 +5,7 @@ gemspec
 
 gem 'aasm'
 gem 'paranoia', '~> 2.2'
+gem 'mail', '~> 2.7.1'
 
 group :development do
   gem 'better_errors'
