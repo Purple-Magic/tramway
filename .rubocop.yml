@@ -1,2 +1,5 @@
 Gemspec/RequiredRubyVersion:
   Enabled: false
+Style/GuardClause:
+  Exclude:
+    - lib/tramway/generators/model_generator.rb # rubocop bug
