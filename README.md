@@ -13,6 +13,20 @@ tramway - это ядро проекта [tramway](https://github.com/purple-mag
 gem 'tramway'
 gem 'audited'
 gem 'clipboard-rails'
+gem 'bcrypt'
+gem 'haml-rails'
+gem 'bootstrap'
+gem 'jquery-rails'
+gem 'copyright_mafa'
+gem 'trap'
+gem 'kaminari'
+gem 'bootstrap-kaminari-views', github: 'kalashnikovisme/bootstrap-kaminari-views', branch: :master
+gem 'state_machine_buttons'
+gem 'ckeditor', '4.2.4'
+gem 'ransack'
+gem 'smart_buttons'
+gem 'carrierwave'
+gem 'validates'
 ```
 
 ```shell
@@ -299,26 +313,6 @@ Create admin panel for your application FAST!
 How to use my plugin.
 
 #### 1. Add this gems to Gemfile
-
-*Gemfile*
-```ruby
-gem 'tramway-admin'
-gem 'tramway-user'
-gem 'bcrypt'
-gem 'haml-rails'
-gem 'bootstrap'
-gem 'jquery-rails'
-gem 'copyright_mafa'
-gem 'trap'
-gem 'kaminari'
-gem 'bootstrap-kaminari-views', github: 'kalashnikovisme/bootstrap-kaminari-views', branch: :master
-gem 'state_machine_buttons'
-gem 'ckeditor', '4.2.4'
-gem 'ransack'
-gem 'smart_buttons'
-gem 'carrierwave'
-gem 'validates'
-```
 
 #### 2. You should remove gem `turbolinks` from your application and from app/assets/javascripts/application.js
 
