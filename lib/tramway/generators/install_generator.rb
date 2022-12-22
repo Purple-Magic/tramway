@@ -28,7 +28,9 @@ class Tramway::Generators::InstallGenerator < ::Rails::Generators::Base
   end
 
   def run_decorator_generators
-    raise 'Initialize Tramway application before running generators. Add `Tramway.initialize_application name: :your_application_name` to `config/initializers/tramway.rb`' unless Tramway.application.present?
+    unless Tramway.application.present?
+      raise 'Initialize Tramway application before running generators. Add `Tramway.initialize_application name: :your_application_name` to `config/initializers/tramway.rb`'
+    end
 
     project = Tramway.application.name
     ::Tramway.available_models_for(project).map do |model|
