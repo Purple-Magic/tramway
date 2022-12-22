@@ -5,6 +5,6 @@ FactoryBot.define do
     book
     reader
     begin_date { DateTime.now }
-    begin_date { DateTime.now + 1.day }
+    end_date { DateTime.now + 1.day }
   end
 end
