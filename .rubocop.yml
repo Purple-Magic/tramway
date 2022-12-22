@@ -1,3 +1,5 @@
+require:
+  - rubocop-rspec
 Documentation:
   Enabled: false
 Metrics/MethodLength:
@@ -47,6 +49,9 @@ Naming/MethodParameterName:
     - app/decorators/tramway/core/associations/class_helper.rb
 Style/MultilineBlockChain:
   Enabled: false
+Style/GuardClause:
+  Exclude:
+    - lib/tramway/generators/model_generator.rb # rubocop bug
 AllCops:
   Include:
     - app/**/*.rb

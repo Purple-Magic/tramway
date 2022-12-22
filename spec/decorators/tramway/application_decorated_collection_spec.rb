@@ -8,7 +8,7 @@ RSpec.describe Tramway::ApplicationDecoratedCollection do
     expect(defined?(described_class)).to be_truthy
   end
 
-  it 'should initialize new decorated array' do
+  it 'initializes new decorated array' do
     create_list(:test_model, 20)
     test_models = TestModel.all.page(5)
     decorated_test_models = test_models.map { |t| Tramway::ApplicationDecorator.new t }

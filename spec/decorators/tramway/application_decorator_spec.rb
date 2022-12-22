@@ -4,11 +4,12 @@ require 'rails_helper'
 
 RSpec.describe Tramway::ApplicationDecorator do
   let(:errors) { YAML.load_file(Rails.root.join('..', 'yaml', 'errors.yml')).with_indifferent_access }
+
   it 'defined decorator class' do
     expect(defined?(described_class)).to be_truthy
   end
 
-  it 'should initialize new decorated object' do
+  it 'initializes new decorated object' do
     obj = 'it can be any object'
     expect { described_class.new obj }.not_to raise_error(StandardError)
   end
@@ -68,33 +69,33 @@ RSpec.describe Tramway::ApplicationDecorator do
     end
 
     context 'with TestModel' do
-      it 'should have 10 items' do
+      it 'has 10 items' do
         create_list :test_model, 10
         models = TestModel.limit(10)
         expect(described_class.decorate(models).count).to eq 10
       end
 
-      it 'should decorate all items' do
+      it 'decorates all items' do
         create_list :test_model, 10
         models = TestModel.limit(10)
         expect(described_class.decorate(models)).to all be_a(described_class)
       end
 
-      it 'should decorate association models' do
+      it 'decorates association models' do
         test_model = create :test_model
         create_list :association_model, 10, test_model_id: test_model.id
         decorated_test_model = TestModelDecorator.decorate test_model
         expect(decorated_test_model.association_models).to all be_a(AssociationModelDecorator)
       end
 
-      it 'should create `association_as` method after decorating association' do
+      it 'creates `association_as` method after decorating association' do
         test_model = create :test_model
         create_list :association_model, 10, test_model_id: test_model.id
         decorated_test_model = TestModelDecorator.decorate test_model
         expect(decorated_test_model.association_models_as).to eq :record
       end
 
-      it 'should raise error about specify class_name of association' do
+      it 'raises error about specify class_name of association' do
         test_model = create :test_model
         create_list :another_association_model, 10, test_model_id: test_model.id
         decorated_test_model = TestModelDecorator.decorate test_model

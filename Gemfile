@@ -9,4 +9,5 @@ gem 'paranoia', '~> 2.2'
 group :development do
   gem 'better_errors'
   gem 'rubocop'
+  gem 'rubocop-rspec'
 end

@@ -270,6 +270,8 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.24.0)
       parser (>= 3.1.1.0)
+    rubocop-rspec (2.16.0)
+      rubocop (~> 1.33)
     ruby-progressbar (1.11.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
@@ -335,6 +337,7 @@ DEPENDENCIES
   pry
   rspec-rails
   rubocop
+  rubocop-rspec
   tramway!
 
 BUNDLED WITH
