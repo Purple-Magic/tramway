@@ -14,7 +14,6 @@ class Tramway::SessionsController < Tramway::ApplicationController
   end
 
   def create
-    # FIXME: remove last `/` another way
     root_path = Tramway::Engine.routes.url_helpers.root_path[0..-2]
     @session_form = ::Tramway::SessionForm.new params[:model].constantize.find_by email: params[:user][:email]
     if @session_form.model.present?
