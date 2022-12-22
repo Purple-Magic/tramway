@@ -33,8 +33,8 @@ module Tramway::ActionsHelper
 
   # delete_button is in smart-buttons gem
 
-  def edit_button(url:, button_options:)
-    link_to(url, **button_options) { yield }
+  def edit_button(url:, button_options:, &block)
+    link_to(url, **button_options, &block)
   end
 
   def habtm_destroy_is_available?(association_object, main_object)

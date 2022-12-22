@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-# FIXME use default `require` method
+# FIXME: use default `require` method
 load "#{Tramway.root}/lib/tramway/class_name_helpers.rb"
 load "#{Tramway.root}/lib/tramway/record_routes_helper.rb"
 
-# FIXME configurate load_path
+# FIXME: configurate load_path
 load "#{Tramway.root}/app/controllers/concerns/auth_management.rb"
 
 class Tramway::ApplicationController < ActionController::Base
@@ -33,7 +33,9 @@ class Tramway::ApplicationController < ActionController::Base
     return if session_path?
     return if self.class.in? [Tramway::Conference::Web::WelcomeController]
 
-    raise 'Tramway - Model or Form is not available. Looks like current user does not have access to change this model. Update your tramway initializer file' if !model_given? && !form_given?
+    return unless !model_given? && !form_given?
+
+    raise 'Tramway - Model or Form is not available. Looks like current user does not have access to change this model. Update your tramway initializer file'
   end
 
   def check_available_scope!
@@ -52,10 +54,8 @@ class Tramway::ApplicationController < ActionController::Base
         when :dates
           begin_date = params[:list_filters][filter.to_sym][:begin_date]
           end_date = params[:list_filters][filter.to_sym][:end_date]
-          if begin_date.present? && end_date.present?
-            if value.present?
-              records = decorator_class.list_filters[filter.to_sym][:query].call(records, begin_date, end_date)
-            end
+          if begin_date.present? && end_date.present? && value.present?
+            records = decorator_class.list_filters[filter.to_sym][:query].call(records, begin_date, end_date)
           end
         end
       end
@@ -64,9 +64,9 @@ class Tramway::ApplicationController < ActionController::Base
   end
 
   def application
-    if ::Tramway.application
-      @application = Tramway.application&.model_class&.first || Tramway.application
-    end
+    return unless ::Tramway.application
+
+    @application = Tramway.application&.model_class&.first || Tramway.application
   end
 
   def notifications
@@ -96,11 +96,11 @@ class Tramway::ApplicationController < ActionController::Base
 
   def admin_form_class
     class_name = "::#{current_user.role.camelize}::#{model_class}Form"
-    if defined? class_name
-      class_name.constantize
-    else
+    unless defined? class_name
       raise "Tramway - you should create form for role `#{current_user.role}` to edit #{model_class} model. It should be named #{class_name}"
     end
+
+    class_name.constantize
   end
 
   def model_given?
@@ -114,9 +114,7 @@ class Tramway::ApplicationController < ActionController::Base
     #  model: params[:model]
     # )
     # raise "Looks like model #{params[:model]} is not included to tramway-admin for `#{current_user.role}` role. Add it in the `config/initializers/tramway.rb`. This way `Tramway.set_available_models(#{params[:model]})`"
-    if params[:form].present?
-      Tramway.forms.include? params[:form].underscore.sub(%r{^admin/}, '').sub(/_form$/, '')
-    end
+    Tramway.forms.include? params[:form].underscore.sub(%r{^admin/}, '').sub(/_form$/, '') if params[:form].present?
   end
 
   def available_scope_given?

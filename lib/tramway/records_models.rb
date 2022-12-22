@@ -6,9 +6,9 @@ module Tramway::RecordsModels
     @available_models[project] ||= {}
     @available_models[project][role] ||= {}
     models.each do |model|
-      if model.class == Class || model.class == String
+      if model.instance_of?(Class) || model.instance_of?(String)
         @available_models[project][role].merge! model.to_s => %i[index show update create destroy]
-      elsif model.class == Hash
+      elsif model.instance_of?(Hash)
         @available_models[project][role].merge! model
       end
     end
@@ -21,7 +21,7 @@ module Tramway::RecordsModels
     if project_is_engine?(project)
       models += engine_class(project).dependencies.map do |dependency|
         if @available_models&.dig(dependency, role).present?
-          @available_models&.dig(dependency, role).keys
+          @available_models&.dig(dependency, role)&.keys
         else
           error = Tramway::Error.new(
             plugin: :admin,
@@ -34,7 +34,7 @@ module Tramway::RecordsModels
     end
     # TODO: somehow cache results?
     models.map do |model|
-      model.class == String ? model.constantize : model
+      model.instance_of?(String) ? model.constantize : model
     end
   end
 

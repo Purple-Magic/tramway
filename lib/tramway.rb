@@ -44,7 +44,7 @@ module Tramway
       File.dirname __dir__
     end
 
-    attr_reader :application
+    attr_reader :application, :customized_admin_navbar
 
     include ::Tramway::RecordsModels
     include ::Tramway::SingletonModels
@@ -52,8 +52,6 @@ module Tramway
     include ::Tramway::Notifications
     include ::Tramway::WelcomePageActions
     include ::Tramway::Navbar
-
-    attr_reader :customized_admin_navbar
 
     def engine_class(project)
       class_name = "::Tramway::#{project.to_s.camelize}"

@@ -17,7 +17,7 @@ module Tramway::ApplicationForms::AssociationObjectHelpers
       if value.present?
         if association_class(value).nil?
           Tramway::Error.raise_error :tramway, :application_form, :initialize, :polymorphic_class_is_nil,
-            association_name: association
+                                     association_name: association
         else
           model.send "#{association}=", association_class(value).find(value.split('_')[-1])
           send "#{association}_type=", association_class(value).to_s

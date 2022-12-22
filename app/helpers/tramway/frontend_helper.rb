@@ -6,7 +6,8 @@ module Tramway::FrontendHelper
           else
             Tramway::Engine.routes.url_helpers.record_path(form.model.id, model: form.model.class)
           end
-    form.properties.reduce({ action: url, method: method, authenticity_token: form_authenticity_token }) do |hash, property|
+    form.properties.each_with_object({ action: url, method: method,
+                                       authenticity_token: form_authenticity_token }) do |property, hash|
       case property[1]
       when :association
         hash.merge!(
@@ -15,7 +16,6 @@ module Tramway::FrontendHelper
           }
         )
       end
-      hash
     end.merge model: form.model.attributes
   end
 end

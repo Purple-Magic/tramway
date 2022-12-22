@@ -16,7 +16,7 @@ module Tramway
         uuid: :string,
         float: :float,
         integer: :integer,
-        boolean: :boolean,
+        boolean: :boolean
       }
       DEFAULT_FIELD_TYPE = :string
       READ_ONLY_ATTRIBUTES = %w[id uuid created_at updated_at]
@@ -24,14 +24,14 @@ module Tramway
       def run_decorator_generator
         template(
           'decorator.rb.erb',
-          Rails.root.join("app/decorators/#{file_path}_decorator.rb"),
+          Rails.root.join("app/decorators/#{file_path}_decorator.rb")
         )
       end
 
       def run_forms_generator
         template(
           'form.rb.erb',
-          Rails.root.join("app/forms/#{user_role}/#{file_path}_form.rb"),
+          Rails.root.join("app/forms/#{user_role}/#{file_path}_form.rb")
         )
       end
 

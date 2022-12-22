@@ -6,9 +6,7 @@ class Tramway::RecordsController < Tramway::ApplicationController
     records = model_class.order(id: :desc).send scope
     records = records.full_text_search params[:search] if params[:search].present?
     if params[:filter].present?
-      if params[:filter].is_a? String
-        params[:filter] = JSON.parse params[:filter]
-      end
+      params[:filter] = JSON.parse params[:filter] if params[:filter].is_a? String
       records = records.ransack(params[:filter]).result(distinct: true)
     end
     params[:list_filters]&.each do |filter, value|
@@ -18,10 +16,8 @@ class Tramway::RecordsController < Tramway::ApplicationController
       when :dates
         begin_date = params[:list_filters][filter.to_sym][:begin_date]
         end_date = params[:list_filters][filter.to_sym][:end_date]
-        if begin_date.present? && end_date.present?
-          if value.present?
-            records = decorator_class.list_filters[filter.to_sym][:query].call(records, begin_date, end_date)
-          end
+        if begin_date.present? && end_date.present? && value.present?
+          records = decorator_class.list_filters[filter.to_sym][:query].call(records, begin_date, end_date)
         end
       end
     end
@@ -57,12 +53,10 @@ class Tramway::RecordsController < Tramway::ApplicationController
         @record_form.model.send("#{params[:record][:aasm_event]}!")
         redirect_to params[:redirect].present? ? params[:redirect] : record_path(@record_form.model)
       end
+    elsif @record_form.submit params[:record]
+      redirect_to params[:redirect].present? ? params[:redirect] : record_path(@record_form.model)
     else
-      if @record_form.submit params[:record]
-        redirect_to params[:redirect].present? ? params[:redirect] : record_path(@record_form.model)
-      else
-        render :edit
-      end
+      render :edit
     end
   end
 

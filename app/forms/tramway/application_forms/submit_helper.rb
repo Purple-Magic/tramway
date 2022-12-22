@@ -21,6 +21,6 @@ module Tramway::ApplicationForms::SubmitHelper
     raise e unless e.try :name
 
     Tramway::Error.raise_error :tramway, :application_form, :save, :looks_like_you_have_method,
-      method_name: e.name.to_s.gsub('=', ''), model_class: model.class, class_name: self.class
+                               method_name: e.name.to_s.gsub('=', ''), model_class: model.class, class_name: self.class
   end
 end

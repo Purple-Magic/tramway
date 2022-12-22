@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-# FIXME configurate load_path
+# FIXME: configurate load_path
 load "#{Tramway.root}/app/controllers/concerns/auth_management.rb"
 
 class Tramway::SessionsController < Tramway::ApplicationController
   before_action :redirect_if_signed_in, except: :destroy
 
-  # FIXME should be included in Tramway::ApplicationController
+  # FIXME: should be included in Tramway::ApplicationController
   include Tramway::AuthManagement
 
   def new
@@ -14,7 +14,7 @@ class Tramway::SessionsController < Tramway::ApplicationController
   end
 
   def create
-    # FIXME remove last `/` another way
+    # FIXME: remove last `/` another way
     root_path = Tramway::Engine.routes.url_helpers.root_path[0..-2]
     @session_form = ::Tramway::SessionForm.new params[:model].constantize.find_by email: params[:user][:email]
     if @session_form.model.present?
