@@ -38,3 +38,5 @@ tramway:
       please_implement_title: "Please, implement `title` method in a %{class_name} or delegate it to %{object_class}"
     link:
       method_link_uses_file_attribute: "Method `link` uses `file` attribute of the decorated object. If decorated object doesn't contain `file`, you shouldn't use `link` method."
+  generators:
+    install: 'Initialize Tramway application before running generators. Add `Tramway.initialize_application name: :your_application_name` to `config/initializers/tramway.rb`'
