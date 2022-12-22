@@ -11,15 +11,19 @@ module Tramway
                        else
                          params[form_class.associated_as]
                        end
-      path = params[:redirect].present? ? params[:redirect] : record_path(base_object, model: base_object.class)
       redirect_to path
     end
 
     def destroy
       base_object = params[:model_class].constantize.find params[:object_id]
       record_form = params[:form].constantize.new base_object
-      redirect_to params[:redirect].present? ? params[:redirect] : record_path(base_object,
-                                                                               model: base_object.class)
+      redirect_to path
+    end
+
+    private
+
+    def path
+      params[:redirect].present? ? params[:redirect] : record_path(base_object, model: base_object.class)
     end
   end
 end

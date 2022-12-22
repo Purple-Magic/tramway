@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails/generators/named_base'
 
 module Tramway
@@ -17,9 +19,9 @@ module Tramway
         float: :float,
         integer: :integer,
         boolean: :boolean
-      }
+      }.freeze
       DEFAULT_FIELD_TYPE = :string
-      READ_ONLY_ATTRIBUTES = %w[id uuid created_at updated_at]
+      READ_ONLY_ATTRIBUTES = %w[id uuid created_at updated_at].freeze
 
       def run_decorator_generator
         template(
@@ -72,9 +74,9 @@ module Tramway
       def redundant_attributes_for(relationship)
         case association_type(relationship)
         when :polymorphic
-          [relationship + '_id', relationship + '_type']
+          ["#{relationship}_id", "#{relationship}_type"]
         when :belongs_to
-          relationship + '_id'
+          "#{relationship}_id"
         end
       end
 

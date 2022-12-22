@@ -1,29 +1,31 @@
 # frozen_string_literal: true
 
-module Tramway::ApplicationHelper
-  include FontAwesome5::Rails::IconHelper
-  include Tramway::AdditionalButtonsBuilder
-  include SmartButtons
-  include Tramway::CasesHelper
-  include Tramway::RussianCasesHelper
-  include Tramway::RecordsHelper
-  include Tramway::SingletonHelper
-  include Tramway::NavbarHelper
-  include Tramway::InputsHelper
-  include Tramway::FocusGeneratorHelper
-  include Tramway::ActionsHelper
-  include Tramway::Collections::Helper
-  include Tramway::CopyToClipboardHelper
-  include Tramway::TramwayModelHelper
-  include Tramway::FrontendHelper
-  include Tramway::AuthManagement
+module Tramway
+  module ApplicationHelper
+    include FontAwesome5::Rails::IconHelper
+    include Tramway::AdditionalButtonsBuilder
+    include SmartButtons
+    include Tramway::CasesHelper
+    include Tramway::RussianCasesHelper
+    include Tramway::RecordsHelper
+    include Tramway::SingletonHelper
+    include Tramway::NavbarHelper
+    include Tramway::InputsHelper
+    include Tramway::FocusGeneratorHelper
+    include Tramway::ActionsHelper
+    include Tramway::Collections::Helper
+    include Tramway::CopyToClipboardHelper
+    include Tramway::TramwayModelHelper
+    include Tramway::FrontendHelper
+    include Tramway::AuthManagement
 
-  def object_type(object)
-    object_class_name = if object.class.ancestors.include? ::Tramway::ApplicationDecorator
-                          object.class.model_class.name
-                        else
-                          object.class.name
-                        end
-    ::Tramway.available_models_for(@application_engine || @application.name).map(&:to_s).include?(object_class_name) ? :record : :singleton
+    def object_type(object)
+      object_class_name = if object.class.ancestors.include? ::Tramway::ApplicationDecorator
+                            object.class.model_class.name
+                          else
+                            object.class.name
+                          end
+      ::Tramway.available_models_for(@application_engine || @application.name).map(&:to_s).include?(object_class_name) ? :record : :singleton
+    end
   end
 end

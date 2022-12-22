@@ -84,9 +84,10 @@ module Tramway
       project = project.underscore.to_sym unless project.is_a? Symbol
       actions = select_actions(project: project, role: role, model_name: model_name)
       availability = actions&.select do |a|
-        if a.is_a? Symbol
+        case a
+        when Symbol
           a == action.to_sym
-        elsif a.is_a? Hash
+        when Hash
           a.keys.first.to_sym == action.to_sym
         end
       end&.first
@@ -117,9 +118,10 @@ module Tramway
     end
 
     def auth_config=(params)
-      if params.is_a? Hash
+      case params
+      when Hash
         @@auth_config = [params]
-      elsif params.is_a? Array
+      when Array
         @@auth_config = params
       end
     end
@@ -151,6 +153,8 @@ end
 
 # HACK: FIXME
 
-class ActiveModel::Errors
-  def merge!(*args); end
+module ActiveModel
+  class Errors
+    def merge!(*args); end
+  end
 end

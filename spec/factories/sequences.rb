@@ -52,6 +52,6 @@ FactoryBot.define do
     rand(10..100).year.ago
   end
   sequence :zipcode do |n|
-    "#{n}000"[0, 3] + 'AH'
+    "#{"#{n}000"[0, 3]}AH"
   end
 end

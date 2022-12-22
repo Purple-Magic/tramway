@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-module Tramway::Collections
+module Tramway
+  module Collections
+  end
 end

@@ -75,7 +75,7 @@ module Tramway
     end
 
     def active_tab(tab, index)
-      return :active if params[:scope].nil? && index == 0
+      return :active if params[:scope].nil? && index.zero?
       return :active if params[:search].nil? && params[:scope].to_s == tab.to_s
     end
 
