@@ -40,3 +40,5 @@ tramway:
       method_link_uses_file_attribute: "Method `link` uses `file` attribute of the decorated object. If decorated object doesn't contain `file`, you shouldn't use `link` method."
   generators:
     install: 'Initialize Tramway application before running generators. Add `Tramway.initialize_application name: :your_application_name` to `config/initializers/tramway.rb`'
+  records:
+    there_is_no_dependency: "There is no dependency `%{dependency}` for plugin: %{project}. Please, check file `tramway-%{project}/lib/tramway/%{project}/%{project}.rb`"

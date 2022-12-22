@@ -23,11 +23,12 @@ module Tramway::RecordsModels
         if @available_models&.dig(dependency, role).present?
           @available_models&.dig(dependency, role)&.keys
         else
-          error = Tramway::Error.new(
-            method: :available_models_for,
-            message: "There is no dependency `#{dependency}` for plugin: #{project}. Please, check file `tramway-#{project}/lib/tramway/#{project}/#{project}.rb`"
+          Tramway::Error.raise_error(
+            :records,
+            :there_is_no_dependency,
+            dependency: dependency,
+            project: project
           )
-          raise error
         end
       end.flatten.compact
     end
