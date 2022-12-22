@@ -1,0 +1,3 @@
+messages:
+  returns_link_error: "Method `link` uses `file` attribute of the decorated object. If decorated object doesn't contain `file`, you shouldn't use `link` method."
+  returns_name: 'Please, implement `title` method in a Tramway::ApplicationDecorator or delegate it to TestModel'

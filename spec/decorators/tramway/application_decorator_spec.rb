@@ -121,29 +121,34 @@ RSpec.describe Tramway::ApplicationDecorator do
     context 'with TestModel' do
       let(:test_model) { create :test_model }
       let(:decorated_test_model) { described_class.decorate test_model }
+      let(:messages) { YAML.load_file('spec/yaml/errors.yml') }
 
       it 'returns name' do
-        expect { decorated_test_model.name }.to raise_error(
-          RuntimeError,
-          'Please, implement `title` method in a Tramway::ApplicationDecorator or delegate it to TestModel'
-        )
+        expect { decorated_test_model.name }.to raise_error(RuntimeError, messages['returns_name'])
       end
 
       it 'returns link' do
-        expect { decorated_test_model.link }.to(
-          raise_error("Method `link` uses `file` attribute of the decorated object. If decorated object doesn't contain `file`, you shouldn't use `link` method.")
-        )
+        expect { decorated_test_model.link }.to raise_error(messages['returns_link_error'])
       end
 
       it 'returns model' do
         expect(decorated_test_model.model).to eq test_model
       end
 
-      it 'returns associations' do
+      it 'returns has_many association' do
         expect(decorated_test_model.associations(:has_many).map(&:name).should =~
                %i[association_models another_association_models]).to be_truthy
+      end
+
+      it 'returns belongs_to association' do
         expect(decorated_test_model.associations(:belongs_to).map(&:name).should =~ []).to be_truthy
+      end
+
+      it 'returns has_and_belongs_to_many association' do
         expect(decorated_test_model.associations(:has_and_belongs_to_many).map(&:name).should =~ []).to be_truthy
+      end
+
+      it 'returns has_one association' do
         expect(decorated_test_model.associations(:has_one).map(&:name).should =~ []).to be_truthy
       end
     end

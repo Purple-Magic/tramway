@@ -13,7 +13,7 @@ RSpec.describe Tramway::ApplicationForm do
     expect(test_model_form).to be_a described_class
   end
 
-  context 'Submit' do
+  context 'when it has submit method' do
     it 'returns error if params is nil' do
       test_model = create :test_model
       test_model_form = described_class.new test_model
@@ -24,7 +24,7 @@ RSpec.describe Tramway::ApplicationForm do
     end
   end
 
-  context 'Properties' do
+  context 'with properties' do
     it 'set form_properties' do
       test_model = create :test_model
       test_model_form = described_class.new test_model
@@ -33,7 +33,7 @@ RSpec.describe Tramway::ApplicationForm do
     end
   end
 
-  context 'Associations' do
+  context 'with associations' do
     context 'with setted class_name' do
       it 'adds new association to form' do
         class_name = 'TestingAssociationWithSettedClassName'
@@ -56,7 +56,7 @@ RSpec.describe Tramway::ApplicationForm do
       end
     end
 
-    context 'full_class_name_association' do
+    context 'with full_class_name_association' do
       context 'with setted class_name' do
         it 'return full_class_name_association' do
           class_name = 'NameAssociationAssociationWithSettedClassName'
@@ -77,7 +77,7 @@ RSpec.describe Tramway::ApplicationForm do
     end
   end
 
-  context 'Enumerized' do
+  context 'when it has enumerized attributes' do
     it 'returns list of enumerized attributes' do
       class_name = 'TestingEnumerizedAttributesClassName'
       Object.const_set(class_name, Class.new(described_class))
@@ -87,7 +87,7 @@ RSpec.describe Tramway::ApplicationForm do
     end
   end
 
-  context 'Model' do
+  context 'when it\'s about model' do
     context 'with existed object' do
       it 'returns model class name' do
         class_name = 'TestingModelClassName'
@@ -108,8 +108,8 @@ RSpec.describe Tramway::ApplicationForm do
       it 'raises error because model doesn\'t exist' do
         class_name = 'NotExistedForm'
         Object.const_set(class_name, Class.new(described_class))
-        class_name.constantize.class_variable_set :@@model_class, nil
-        expect { class_name.constantize.model_class }.to raise_error
+        class_name.constantize.class_variable_set :@@model_class, nil # rubocop:disable Style/ClassVars
+        expect { class_name.constantize.model_class }.to raise_error(RuntimeError)
       end
     end
   end

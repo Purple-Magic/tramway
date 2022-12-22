@@ -52,6 +52,13 @@ Style/MultilineBlockChain:
 Style/GuardClause:
   Exclude:
     - lib/tramway/generators/model_generator.rb # rubocop bug
+RSpec/DescribeClass:
+  Exclude:
+    - spec/test_env_spec.rb
+RSpec/NestedGroups:
+  Max: 4
+RSpec/ExampleLength:
+  Max: 10
 AllCops:
   Include:
     - app/**/*.rb
