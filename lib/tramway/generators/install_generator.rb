@@ -7,6 +7,7 @@ require 'tramway/generators/model_generator'
 class Tramway::Generators::InstallGenerator < ::Rails::Generators::Base
   source_root File.expand_path('templates', __dir__)
   class_option :user_role, type: :string, default: 'admin'
+  include Rails::Generators::Migration
 
   def run_other_generators
     generate 'audited:install'
@@ -24,6 +25,16 @@ class Tramway::Generators::InstallGenerator < ::Rails::Generators::Base
         "/#{File.dirname __dir__}/generators/templates/initializers/#{file}.rb",
         "config/initializers/#{file}.rb"
       )
+    end
+  end
+
+  def copy_migrations
+    migrations = %i[
+      create_tramway_users
+    ]
+
+    migrations.each do |migration|
+      migration_template "#{migration}.rb", "db/migrate/#{migration}.rb"
     end
   end
 

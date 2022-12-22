@@ -5,3 +5,8 @@ coverage/
 .bundle/
 spec/tmp
 spec/tramway/tmp
+spec/dummy/log/
+spec/dummy/config/initializers/simple_form.rb
+spec/dummy/config/initializers/simple_form_bootstrap.rb
+spec/dummy/db/migrate/*install_audited.rb
+spec/dummy/db/migrate/*create_tramway_users.rb

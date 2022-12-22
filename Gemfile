@@ -7,6 +7,7 @@ gem 'aasm'
 gem 'paranoia', '~> 2.2'
 
 group :test do
+  gem 'bcrypt'
   gem 'better_errors'
   gem 'generator_spec'
   gem 'rubocop'
