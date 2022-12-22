@@ -29,7 +29,7 @@ gem 'validates'
 Tramway.initialize_application name: :your_application_name
 
 # Initialize application name with model_class. Model class must be a singlethon
-Tramway.initialize_application model_class: ::Tramway::Conference::Unity # example was taken from tramway-conference gem
+Tramway.initialize_application model_class: MyApplication
 ```
 
 ```shell
