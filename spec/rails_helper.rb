@@ -3,6 +3,7 @@
 require 'spec_helper'
 require 'factory_bot'
 require 'rspec/rails'
+require 'web_driver_helper'
 
 RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers

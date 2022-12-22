@@ -10,6 +10,7 @@ class CreateTramwayUsers < ActiveRecord::Migration[5.1]
       t.text :avatar
       t.text :role
       t.text :phone
+      t.datetime :deleted_at
 
       t.timestamps null: false
     end
