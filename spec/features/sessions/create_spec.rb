@@ -9,7 +9,7 @@ describe 'Sign in' do
     Tramway::User.find_each { |u| u.password = '123', u.save! }
   end
 
-  it 'should create event' do
+  it 'should sign_in' do
     visit '/admin'
     fill_in 'Email', with: user[:email]
     fill_in 'Password', with: "123"
