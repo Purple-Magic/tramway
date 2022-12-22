@@ -127,6 +127,9 @@ GEM
     font_awesome5_rails (1.5.0)
       nokogiri (>= 1.11.3)
       railties (>= 4.2)
+    generator_spec (0.9.4)
+      activesupport (>= 3.0.0)
+      railties (>= 3.0.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     haml (6.1.1)
@@ -332,6 +335,7 @@ DEPENDENCIES
   aasm
   better_errors
   factory_bot_rails
+  generator_spec
   paranoia (~> 2.2)
   pg
   pry

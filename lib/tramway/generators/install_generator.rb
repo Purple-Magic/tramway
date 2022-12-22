@@ -28,6 +28,8 @@ class Tramway::Generators::InstallGenerator < ::Rails::Generators::Base
   end
 
   def run_decorator_generators
+    raise 'Initialize Tramway application before running generators. Add `Tramway.initialize_application name: :your_application_name` to `config/initializers/tramway.rb`' unless Tramway.application.present?
+
     project = Tramway.application.name
     ::Tramway.available_models_for(project).map do |model|
       generate 'tramway:model', model.to_s, "--user-role=#{options[:user_role]}"
