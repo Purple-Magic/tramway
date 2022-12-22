@@ -1,10 +1,4 @@
-# ![tramway-ico](https://raw.githubusercontent.com/kalashnikovisme/kalashnikovisme/master/%D1%82%D1%80%D1%8D%D0%BC%D0%B2%D1%8D%D0%B9%D0%B1%D0%B5%D0%B7%D1%84%D0%BE%D0%BD%D0%B0-min.png) Tramway::Core [![Tests](https://github.com/Purple-Magic/tramway/actions/workflows/tests.yml/badge.svg)](https://github.com/Purple-Magic/tramway/actions/workflows/tests.yml) [![Rubocop](https://github.com/Purple-Magic/tramway/actions/workflows/rubocop.yml/badge.svg)](https://github.com/Purple-Magic/tramway/actions/workflows/rubocop.yml) [![Gem Version](https://badge.fury.io/rb/tramway.svg)](https://badge.fury.io/rb/tramway)
-
-*If you need translation of this Readme, please message us kalashnikov@ulmic.ru. We'll translate for you and post to this page*
-
-tramway - это ядро проекта [tramway](https://github.com/purple-magic/tramway)
-
-Этот гем предоставляет базовые классы и реализации для других шаблонов Tramway. Как правило, каждый шаблон Tramway должен иметь в зависимостях последнюю версию гема `tramway`.
+# ![tramway-ico](https://raw.githubusercontent.com/kalashnikovisme/kalashnikovisme/master/%D1%82%D1%80%D1%8D%D0%BC%D0%B2%D1%8D%D0%B9%D0%B1%D0%B5%D0%B7%D1%84%D0%BE%D0%BD%D0%B0-min.png) Tramway [![Tests](https://github.com/Purple-Magic/tramway/actions/workflows/tests.yml/badge.svg)](https://github.com/Purple-Magic/tramway/actions/workflows/tests.yml) [![Rubocop](https://github.com/Purple-Magic/tramway/actions/workflows/rubocop.yml/badge.svg)](https://github.com/Purple-Magic/tramway/actions/workflows/rubocop.yml) [![Gem Version](https://badge.fury.io/rb/tramway.svg)](https://badge.fury.io/rb/tramway)
 
 # Installation
 
