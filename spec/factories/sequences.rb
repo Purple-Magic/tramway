@@ -16,7 +16,7 @@ FactoryBot.define do
     "str#{n}"
   end
   sequence :password do |n|
-    "password#{n}"
+    "123"
   end
   sequence :integer do |n|
     n
