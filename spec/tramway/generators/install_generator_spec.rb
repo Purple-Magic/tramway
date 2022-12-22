@@ -5,7 +5,7 @@ require 'generator_spec'
 describe Tramway::Generators::InstallGenerator, type: :generator do
   destination File.expand_path('../tmp', __dir__)
 
-  before(:all) do
+  before do
     Tramway.initialize_application name: :test
     prepare_destination
     run_generator
