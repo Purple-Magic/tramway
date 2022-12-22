@@ -55,6 +55,7 @@ Style/GuardClause:
 RSpec/DescribeClass:
   Exclude:
     - spec/test_env_spec.rb
+    - spec/features/**/*.rb
 RSpec/NestedGroups:
   Max: 4
 RSpec/ExampleLength:
