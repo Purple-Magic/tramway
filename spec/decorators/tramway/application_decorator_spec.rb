@@ -15,7 +15,7 @@ RSpec.describe Tramway::ApplicationDecorator do
     expect { described_class.new obj }.not_to raise_error(StandardError)
   end
 
-  context 'Class check' do
+  context 'with class' do
     let(:class_methods) do
       described_class.methods -
         described_class.superclass.methods -

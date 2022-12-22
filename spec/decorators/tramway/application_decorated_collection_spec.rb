@@ -15,7 +15,7 @@ RSpec.describe Tramway::ApplicationDecoratedCollection do
     expect { described_class.new decorated_test_models, test_models }.not_to raise_error(StandardError)
   end
 
-  context 'Delegation checks' do
+  context 'with delegation' do
     context 'with TestModel' do
       let(:test_models) { TestModel.all.page(5) }
       let(:decorated_test_models) { test_models.map { |t| Tramway::ApplicationDecorator.new t } }
@@ -35,7 +35,7 @@ RSpec.describe Tramway::ApplicationDecoratedCollection do
     end
   end
 
-  context 'Object methods checks' do
+  context 'with object methods' do
     let(:test_models) { TestModel.all.page(5) }
     let(:decorated_collection) do
       decorated_test_models = test_models.map { |t| Tramway::ApplicationDecorator.new t }
