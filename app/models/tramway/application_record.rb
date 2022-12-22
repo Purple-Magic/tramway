@@ -14,16 +14,6 @@ class Tramway::ApplicationRecord < ActiveRecord::Base
   }
   scope :admin_scope, ->(_arg) { all }
 
-  # FIXME: remove this after testing soft-deletion
-  aasm column: :state do
-    state :active, initial: true
-    state :removed
-
-    event :remove do
-      transitions from: :active, to: :removed
-    end
-  end
-
   include ::PgSearch::Model
 
   def creator
