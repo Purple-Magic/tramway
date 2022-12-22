@@ -1,6 +1,4 @@
 # frozen_string_literal: true
 
-module Tramway
-  module Generators
-  end
+module Tramway::Generators
 end

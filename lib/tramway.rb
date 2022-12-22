@@ -153,8 +153,6 @@ end
 
 # HACK: FIXME
 
-module ActiveModel
-  class Errors
-    def merge!(*args); end
-  end
+class ActiveModel::Errors
+  def merge!(*args); end
 end
