@@ -3,10 +3,10 @@
 # include ActionDispatch::TestProcess
 
 FactoryBot.define do
-  sequence :string, aliases: [ :title, :description ] do |n|
+  sequence :string, aliases: %i[title description] do |n|
     "string#{n}"
   end
-  sequence :name, aliases: [ :username ] do |n|
+  sequence :name, aliases: [:username] do |n|
     "name#{n}"
   end
   sequence :address do |n|
