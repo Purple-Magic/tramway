@@ -4,3 +4,4 @@ pkg/
 coverage/
 .bundle/
 spec/tmp
+spec/tramway/tmp
