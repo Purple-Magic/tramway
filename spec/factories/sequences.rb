@@ -15,8 +15,8 @@ FactoryBot.define do
   sequence :short_string do |n|
     "str#{n}"
   end
-  sequence :password do |n|
-    "123"
+  sequence :password do |_n|
+    '123'
   end
   sequence :integer do |n|
     n

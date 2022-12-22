@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Sign in' do
@@ -9,10 +11,10 @@ describe 'Sign in' do
     Tramway::User.find_each { |u| u.password = '123', u.save! }
   end
 
-  it 'should sign_in' do
+  it 'sign_ins' do
     visit '/admin'
     fill_in 'Email', with: user[:email]
-    fill_in 'Password', with: "123"
+    fill_in 'Password', with: '123'
     click_on 'Sign In', class: 'btn-success'
 
     expect(page).to have_content "#{user.first_name} #{user.last_name}"
