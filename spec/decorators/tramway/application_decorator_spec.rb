@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Tramway::ApplicationDecorator do
-  let(:errors) { YAML.load_file(Rails.root.join('..', 'yaml', 'errors.yml')).with_indifferent_access }
+  let(:errors) { YAML.load_file('spec/yaml/errors.yml') }
+  let(:methods) { YAML.load_file('spec/yaml/methods.yml')['methods'] }
 
   it 'defined decorator class' do
     expect(defined?(described_class)).to be_truthy
@@ -23,20 +24,7 @@ RSpec.describe Tramway::ApplicationDecorator do
     end
 
     it 'class should have only this methods list' do
-      expect(class_methods.should =~ %i[
-        decorate_association
-        decorate_associations
-        define_main_association_method
-        delegate_attributes
-        list_attributes
-        decorate
-        model_class
-        model_name
-        show_attributes
-        show_associations
-        collections
-        list_filters
-      ]).to be_truthy
+      expect(class_methods.should =~ methods['class_methods'].map(&:to_sym)).to be_truthy
     end
 
     it 'returns list attributes' do
@@ -100,13 +88,13 @@ RSpec.describe Tramway::ApplicationDecorator do
         create_list :another_association_model, 10, test_model_id: test_model.id
         decorated_test_model = TestModelDecorator.decorate test_model
         expect { decorated_test_model.another_association_models }.to raise_error(
-          "Please, specify `another_association_models` association class_name in TestModel model. For example: `has_many :another_association_models, class_name: 'AnotherAssociationModel'`"
+          errors['raises_error_about_specify_class_name_of_association']
         )
       end
     end
   end
 
-  context 'Delegation checks' do
+  context 'with delegation' do
     context 'with TestModel' do
       let(:test_model) { create :test_model }
       let(:decorated_test_model) { described_class.decorate test_model }
@@ -117,18 +105,17 @@ RSpec.describe Tramway::ApplicationDecorator do
     end
   end
 
-  context 'Object methods checks' do
+  context 'with object methods' do
     context 'with TestModel' do
       let(:test_model) { create :test_model }
       let(:decorated_test_model) { described_class.decorate test_model }
-      let(:messages) { YAML.load_file('spec/yaml/errors.yml') }
 
       it 'returns name' do
-        expect { decorated_test_model.name }.to raise_error(RuntimeError, messages['returns_name'])
+        expect { decorated_test_model.name }.to raise_error(RuntimeError, errors['returns_name'])
       end
 
       it 'returns link' do
-        expect { decorated_test_model.link }.to raise_error(messages['returns_link_error'])
+        expect { decorated_test_model.link }.to raise_error(errors['returns_link_error'])
       end
 
       it 'returns model' do
