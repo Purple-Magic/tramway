@@ -56,37 +56,37 @@ RSpec.describe Tramway::ApplicationDecorator do
       expect(described_class.decorate(obj)).to be_a described_class
     end
 
-    context 'with TestModel' do
+    context 'with Book' do
       it 'has 10 items' do
         create_list :test_model, 10
-        models = TestModel.limit(10)
+        models = Book.limit(10)
         expect(described_class.decorate(models).count).to eq 10
       end
 
       it 'decorates all items' do
         create_list :test_model, 10
-        models = TestModel.limit(10)
+        models = Book.limit(10)
         expect(described_class.decorate(models)).to all be_a(described_class)
       end
 
       it 'decorates association models' do
         test_model = create :test_model
         create_list :association_model, 10, test_model_id: test_model.id
-        decorated_test_model = TestModelDecorator.decorate test_model
+        decorated_test_model = BookDecorator.decorate test_model
         expect(decorated_test_model.association_models).to all be_a(AssociationModelDecorator)
       end
 
       it 'creates `association_as` method after decorating association' do
         test_model = create :test_model
         create_list :association_model, 10, test_model_id: test_model.id
-        decorated_test_model = TestModelDecorator.decorate test_model
+        decorated_test_model = BookDecorator.decorate test_model
         expect(decorated_test_model.association_models_as).to eq :record
       end
 
       it 'raises error about specify class_name of association' do
         test_model = create :test_model
         create_list :another_association_model, 10, test_model_id: test_model.id
-        decorated_test_model = TestModelDecorator.decorate test_model
+        decorated_test_model = BookDecorator.decorate test_model
         expect { decorated_test_model.another_association_models }.to raise_error(
           errors['raises_error_about_specify_class_name_of_association']
         )
@@ -95,7 +95,7 @@ RSpec.describe Tramway::ApplicationDecorator do
   end
 
   context 'with delegation' do
-    context 'with TestModel' do
+    context 'with Book' do
       let(:test_model) { create :test_model }
       let(:decorated_test_model) { described_class.decorate test_model }
 
@@ -106,7 +106,7 @@ RSpec.describe Tramway::ApplicationDecorator do
   end
 
   context 'with object methods' do
-    context 'with TestModel' do
+    context 'with Book' do
       let(:test_model) { create :test_model }
       let(:decorated_test_model) { described_class.decorate test_model }
 
