@@ -38,6 +38,8 @@ module Tramway::ActionsHelper
   end
 
   def habtm_destroy_is_available?(association_object, main_object)
-    Tramway.forms&.include?("#{main_object.model.class.to_s.underscore.pluralize}/remove_#{association_object.model.class.to_s.underscore}")
+    main_model_name = main_object.model.class.to_s.underscore.pluralize
+
+    Tramway.forms&.include?("#{main_model_name}/remove_#{association_object.model.class.to_s.underscore}")
   end
 end

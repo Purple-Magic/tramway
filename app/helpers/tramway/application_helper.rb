@@ -18,6 +18,10 @@ module Tramway::ApplicationHelper
                         else
                           object.class.name
                         end
-    ::Tramway.available_models_for(@application_engine || @application.name).map(&:to_s).include?(object_class_name) ? :record : :singleton
+    if Tramway.available_models_for(@application_engine || @application.name).map(&:to_s).include?(object_class_name)
+      :record
+    else
+      :singleton
+    end
   end
 end
