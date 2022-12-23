@@ -11,11 +11,11 @@ module Tramway::ActionsHelper
     )
   end
 
-  def update_is_available?(association_object, _main_object)
+  def update_is_available?(object)
     Tramway.action_is_available?(
-      association_object,
+      object,
       project: (@application_engine || @application.name),
-      model_name: association_object.model.class.name,
+      model_name: object.model.class.name,
       role: current_user.role,
       action: :update
     )
