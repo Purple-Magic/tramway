@@ -26,7 +26,7 @@ describe 'Records update' do
       end
     end
 
-    context 'at all' do
+    context 'with permissions to update all records' do
       before do
         Tramway.set_available_models Book, project: :dummy
       end
@@ -50,7 +50,7 @@ describe 'Records update' do
       end
     end
 
-    context 'at records with title starting with Asya' do
+    context 'with permissions to update records with title starting with Asya' do
       before do
         Tramway.set_available_models Book => {
           update: lambda do |record|

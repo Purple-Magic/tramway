@@ -19,7 +19,7 @@ describe 'Records destroy' do
       end
     end
 
-    context 'at all' do
+    context 'with permissions to destroy all records' do
       before do
         Tramway.clear_available_models!
         Tramway.set_available_models Book, project: :dummy
@@ -39,7 +39,7 @@ describe 'Records destroy' do
       end
     end
 
-    context 'at records with titles starting with Asya' do
+    context 'with permissions to destroy records with titles starting with Asya' do
       before do
         Tramway.set_available_models Book => {
           destroy: lambda do |record|
