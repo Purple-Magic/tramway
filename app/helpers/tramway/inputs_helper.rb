@@ -7,10 +7,7 @@ module Tramway::InputsHelper
   def association_params(form_object:, property:, value:, object:, options: {})
     full_class_name_association = form_object.class.full_class_name_association(property)
 
-    if full_class_name_association.to_s == 'Tramway::User'
-      user = defined?(current_user) ? current_user : current_user
-      value = user.id
-    end
+    value = current_user&.id if full_class_name_association.to_s == 'Tramway::User'
 
     build_input_attributes(object: object, property: property, options: options,
       value: build_value_for_association(form_object, property, value),

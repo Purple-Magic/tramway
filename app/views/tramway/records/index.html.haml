@@ -2,7 +2,7 @@
 - current_title = default_page_title || plural(model_class).capitalize
 - title current_title
 - state_method ||= :state
-- tabs = get_collection
+- tabs = decorator_class.collections
 .page-header
   .row
     - search_render_show = searchable_model?(model_class) || there_any_filters?(model_class)

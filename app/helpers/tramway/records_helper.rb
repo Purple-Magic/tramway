@@ -30,10 +30,6 @@ module Tramway::RecordsHelper
     "#{model_name || model_class}Decorator".constantize
   end
 
-  def get_collection
-    decorator_class.collections
-  end
-
   def to_path(constant)
     constant.name.underscore.gsub '/', '_'
   end
