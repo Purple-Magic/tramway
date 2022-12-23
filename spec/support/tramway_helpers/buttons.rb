@@ -21,12 +21,28 @@ module TramwayHelpers::Buttons
     form.find('button[type="submit"]').click
   end
 
+  def edit_path(object, redirect_to: nil)
+    if redirect_to.present?
+      association_path = Tramway::Engine.routes.url_helpers.record_path(
+        object.public_send(redirect_to).id,
+        model: object.public_send(redirect_to).class
+      )
+      Tramway::Engine.routes.url_helpers.edit_record_path(object.id, model: object.class, redirect: association_path)
+    else
+      Tramway::Engine.routes.url_helpers.edit_record_path(object.id, model: object.class)
+    end
+  end
+
   def delete_path(object)
     Tramway::Engine.routes.url_helpers.record_path(object.id, model: object.class)
   end
 
   def destroy_record_button_selector(object)
     "form[action='#{delete_path(object)}']"
+  end
+
+  def click_on_association_edit_button(object, redirect_to)
+    find("a#{EDIT_RECORD_BUTTON_SELECTOR}[href='#{edit_path(object, redirect_to: redirect_to)}']").click
   end
 
   def click_on_association_delete_button(object)
