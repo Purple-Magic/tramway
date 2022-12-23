@@ -2,21 +2,15 @@
 
 module Tramway::ApplicationHelper
   include FontAwesome5::Rails::IconHelper
-  include Tramway::AdditionalButtonsBuilder
   include SmartButtons
-  include Tramway::CasesHelper
-  include Tramway::RussianCasesHelper
-  include Tramway::RecordsHelper
-  include Tramway::SingletonHelper
-  include Tramway::NavbarHelper
-  include Tramway::InputsHelper
-  include Tramway::FocusGeneratorHelper
-  include Tramway::ActionsHelper
-  include Tramway::Collections::Helper
-  include Tramway::CopyToClipboardHelper
-  include Tramway::TramwayModelHelper
-  include Tramway::FrontendHelper
   include Tramway::AuthManagement
+
+  helpers = Dir[Tramway.root + '/app/helpers/tramway/*_helper.rb']
+  helpers.each do |helper|
+    module_name = helper.split('/')[-2..-1].join('/')[0..-4].camelize.constantize
+
+    include module_name unless Tramway::ApplicationHelper
+  end
 
   def object_type(object)
     object_class_name = if object.class.ancestors.include? ::Tramway::ApplicationDecorator

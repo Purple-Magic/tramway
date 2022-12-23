@@ -43,7 +43,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'sass-rails', '~> 5.0', '>= 5.0.7'
   s.add_dependency 'simple_form', '>= 5.0.0'
   s.add_dependency 'smart_buttons', '>= 1.0'
-  s.add_dependency 'state_machine_buttons', '>= 1.0'
   s.add_dependency 'trap', '~> 4.0'
 
   s.add_development_dependency 'factory_bot_rails'

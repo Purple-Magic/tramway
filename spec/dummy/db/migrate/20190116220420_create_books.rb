@@ -3,6 +3,7 @@ class CreateBooks < ActiveRecord::Migration[5.1]
     create_table :books do |t|
       t.text :title
       t.text :description
+      t.text :state
       t.datetime :deleted_at
 
       t.timestamps

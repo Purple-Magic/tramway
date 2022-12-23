@@ -6,7 +6,7 @@ class Tramway::ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
   audited
   extend ::Enumerize
-  include ::AASM
+  include AASM
   acts_as_paranoid
 
   scope :created_by_user, lambda { |user_id|

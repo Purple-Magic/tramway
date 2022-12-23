@@ -6,13 +6,31 @@ describe 'Records Create' do
   let!(:user) do
     Tramway::User.create! password: '123', **attributes_for(:user)
   end
+  let(:attributes) { attributes_for :book }
+  let(:user_actions) do
+    lambda do
+      pass_authorization user
+
+      visit index_page_for model: Book
+
+      click_on_new_record
+
+      fill_in 'record[title]', with: attributes[:title]
+      fill_in 'record[description]', with: attributes[:description]
+
+      click_on_submit
+    end
+  end
 
   before do
     Tramway.set_available_models Book, project: :dummy
   end
 
   it 'creates new record' do
-    pass_authorization user
-    visit index_page_for model: Book
+    count = Book.count
+
+    user_actions.call
+
+    expect(count).to eq(Book.count - 1)
   end
 end

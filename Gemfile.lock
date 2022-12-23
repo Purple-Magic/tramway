@@ -35,7 +35,6 @@ PATH
       sass-rails (~> 5.0, >= 5.0.7)
       simple_form (>= 5.0.0)
       smart_buttons (>= 1.0)
-      state_machine_buttons (>= 1.0)
       trap (~> 4.0)
 
 GEM
@@ -337,8 +336,6 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     ssrf_filter (1.1.1)
-    state_machine_buttons (2.0)
-      smart_buttons
     temple (0.9.1)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
