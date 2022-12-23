@@ -6,7 +6,7 @@ class Tramway::RecordsController < Tramway::ApplicationController
     records = full_text_search records
     records = filtering records
     records = list_filtering records
-    records = records.public_send "#{current_user.role}_scope", current_user.id
+    records = records.public_send current_user_role_scope, current_user.id
     @records = decorator_class.decorate records.page params[:page]
   end
 
@@ -71,6 +71,10 @@ class Tramway::RecordsController < Tramway::ApplicationController
 
   def scope
     params[:scope].present? ? params[:scope] : :all
+  end
+
+  def current_user_role_scope
+    "#{current_user.role}_scope"
   end
 
   def full_text_search(records)
