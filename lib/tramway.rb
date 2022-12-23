@@ -14,7 +14,6 @@ require 'tramway/welcome_page_actions'
 require 'tramway/navbar'
 require 'tramway/error'
 require 'tramway/generators/install_generator'
-require 'tramway/tramway_model_helper'
 require 'tramway/class_name_helpers'
 
 module Tramway
