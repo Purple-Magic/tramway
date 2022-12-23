@@ -1,4 +1,4 @@
-module Tramway::StateMachineButtons
+module Tramway::StateMachineButtonsHelper
   def state_events_buttons(object, state_method: :state, controller:, action:, parameters: {}, without: nil, namespace: nil, model_param_name: nil, button_options: {})
     model_name = object.model.model_name.name.underscore
     model_param_name ||= model_name

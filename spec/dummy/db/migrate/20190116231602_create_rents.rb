@@ -6,7 +6,7 @@ class CreateRents < ActiveRecord::Migration[5.1]
       t.datetime :begin_date
       t.datetime :end_date
       t.datetime :deleted_at
-      t.text :state
+      t.string :state
 
       t.timestamps
     end
