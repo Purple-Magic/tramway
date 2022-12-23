@@ -5,9 +5,9 @@ module Tramway::ApplicationHelper
   include SmartButtons
   include Tramway::AuthManagement
 
-  helpers = Dir[Tramway.root + '/app/helpers/tramway/*_helper.rb']
+  helpers = Dir["#{Tramway.root}/app/helpers/tramway/*_helper.rb"]
   helpers.each do |helper|
-    module_name = helper.split('/')[-2..-1].join('/')[0..-4].camelize.constantize
+    module_name = helper.split('/')[-2..].join('/')[0..-4].camelize.constantize
 
     include module_name unless Tramway::ApplicationHelper
   end

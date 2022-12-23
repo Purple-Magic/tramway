@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module TramwayHelpers::Paths
   def index_page_for(model:)
     "#{path_prefix}/records?model=#{model}"
   end
 
   def path_prefix
-    "/admin"
+    '/admin'
   end
 
   alias home_page path_prefix

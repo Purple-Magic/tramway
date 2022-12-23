@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TramwayHelpers::Authorization
   def pass_authorization(user)
     visit home_page

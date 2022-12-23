@@ -41,7 +41,7 @@ describe 'Records update' do
   it 'shows page with updated record' do
     user_actions.call
 
-    attributes.each do |(attr, value)|
+    attributes.each do |(_attr, value)|
       expect(page).to have_content value
     end
   end

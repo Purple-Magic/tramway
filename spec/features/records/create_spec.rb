@@ -47,7 +47,7 @@ describe 'Records Create' do
   it 'shows page with new record' do
     user_actions.call
 
-    attributes.each do |(attr, value)|
+    attributes.each do |(_attr, value)|
       expect(page).to have_content value
     end
   end

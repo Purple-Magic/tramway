@@ -5,7 +5,7 @@ require 'factory_bot'
 require 'rspec/rails'
 require 'web_driver_helper'
 
-helpers = Dir[Tramway.root + '/spec/support/**/*.rb']
+helpers = Dir["#{Tramway.root}/spec/support/**/*.rb"]
 helpers.each { |helper| require helper }
 
 RSpec.configure do |config|

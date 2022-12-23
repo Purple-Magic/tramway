@@ -13,7 +13,7 @@ describe 'Records Index' do
 
   context 'without records' do
     before do
-      Book.find_each &:destroy
+      Book.find_each(&:destroy)
     end
 
     it 'shows index page of available model' do

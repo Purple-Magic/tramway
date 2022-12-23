@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module Tramway::StateMachineButtonsHelper
-  def state_events_buttons(object, state_method: :state, controller:, action:, parameters: {}, without: nil, namespace: nil, model_param_name: nil, button_options: {})
+  def state_events_buttons(object, controller:, action:, state_method: :state, parameters: {}, without: nil,
+                           namespace: nil, model_param_name: nil, button_options: {})
     model_name = object.model.model_name.name.underscore
     model_param_name ||= model_name
     excepted_actions = without.is_a?(Array) ? without.map(&:to_sym) : [without.to_sym] if without
@@ -26,7 +29,8 @@ module Tramway::StateMachineButtonsHelper
 
   private
 
-  def button(event:, model_name:, object:, state_method:, controller:, action:, namespace:, parameters:, model_param_name:, form_options:)
+  def button(event:, model_name:, object:, state_method:, controller:, action:, namespace:, parameters:,
+             model_param_name:, form_options:)
     attributes = { aasm_event: event }
     concat(
       patch_button(
@@ -39,7 +43,9 @@ module Tramway::StateMachineButtonsHelper
         button_options: { class: "btn btn-sm btn-xs btn-#{object.send("#{state_method}_button_color", event)}" },
         form_options: form_options
       ) do
-        I18n.t("state_machines.#{object.model.class.name.underscore}.#{state_method}.events.#{object.model.aasm(state_method).events.select { |ev| ev.name == event }.first.name}")
+        I18n.t("state_machines.#{object.model.class.name.underscore}.#{state_method}.events.#{object.model.aasm(state_method).events.select do |ev|
+                                                                                                ev.name == event
+                                                                                              end.first.name}")
       end
     )
   end
