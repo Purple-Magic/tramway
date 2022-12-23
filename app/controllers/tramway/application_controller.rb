@@ -31,7 +31,6 @@ class Tramway::ApplicationController < ActionController::Base
 
   def check_available!
     return if session_path?
-    return if self.class.in? [Tramway::Conference::Web::WelcomeController]
 
     return unless !model_given? && !form_given?
 

@@ -8,6 +8,7 @@ group :test do
   gem 'bcrypt'
   gem 'better_errors'
   gem 'bootstrap', '>= 4.1.2'
+  gem 'bootstrap-kaminari-views', github: 'kalashnikovisme/bootstrap-kaminari-views', branch: :master
   gem 'capybara'
   gem 'ckeditor', '4.2.4'
   gem 'clipboard-rails'
@@ -17,6 +18,7 @@ group :test do
   gem 'generator_spec'
   gem 'haml-rails'
   gem 'jquery-rails'
+  gem 'kaminari'
   gem 'paranoia', '~> 2.2'
   gem 'rubocop'
   gem 'rubocop-rspec'

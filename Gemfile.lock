@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/kalashnikovisme/bootstrap-kaminari-views.git
+  revision: 7e83dedb208b0c46da309ca754efc96fc07ff472
+  branch: master
+  specs:
+    bootstrap-kaminari-views (0.0.5)
+      kaminari (>= 0.13)
+      rails (>= 3.1)
+
 PATH
   remote: .
   specs:
@@ -88,9 +97,6 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 2.11.6, < 3)
       sassc-rails (>= 2.0.0)
-    bootstrap-kaminari-views (0.0.5)
-      kaminari (>= 0.13)
-      rails (>= 3.1)
     builder (3.2.4)
     capybara (3.38.0)
       addressable
@@ -362,6 +368,7 @@ DEPENDENCIES
   bcrypt
   better_errors
   bootstrap (>= 4.1.2)
+  bootstrap-kaminari-views!
   capybara
   ckeditor (= 4.2.4)
   clipboard-rails
@@ -372,6 +379,7 @@ DEPENDENCIES
   generator_spec
   haml-rails
   jquery-rails
+  kaminari
   paranoia (~> 2.2)
   pg
   pry
