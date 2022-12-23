@@ -39,16 +39,16 @@ describe 'Records destroy' do
       end
     end
 
-    context 'at records with titles starting with Elon' do
+    context 'at records with titles starting with Asya' do
       before do
         Tramway.set_available_models Book => {
           destroy: lambda do |record|
-            record.title[0..3] == 'Elon'
+            record.title[0..3] == 'Asya'
           end
         }, project: :dummy
       end
 
-      let!(:book) { create :book, title: 'Elon Musk' }
+      let!(:book) { create :book, title: 'Asya' }
 
       it 'deletes record' do
         user_actions.call

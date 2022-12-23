@@ -2,6 +2,7 @@
 
 module TramwayHelpers::Buttons
   NEW_RECORD_BUTTON_SELECTOR = '.btn.btn-primary'
+  EDIT_RECORD_BUTTON_SELECTOR = '.btn.btn-warning'
 
   def click_on_new_record
     find(NEW_RECORD_BUTTON_SELECTOR, match: :first).click
@@ -12,7 +13,7 @@ module TramwayHelpers::Buttons
   end
 
   def click_on_edit_record
-    find('.btn.btn-warning', match: :first).click
+    find(EDIT_RECORD_BUTTON_SELECTOR, match: :first).click
   end
 
   def click_on_delete_button(object)
