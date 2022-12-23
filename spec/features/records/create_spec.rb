@@ -12,11 +12,13 @@ describe 'Records Create' do
   end
 
   it 'creates new record' do
-      visit '/admin'
-      fill_in 'Email', with: user[:email]
-      fill_in 'Password', with: '123'
-      click_on 'Sign In', class: 'btn-success'
+    visit home_page
+    fill_in 'Email', with: user[:email]
+    fill_in 'Password', with: '123'
+    click_on 'Sign In', class: 'btn-success'
 
-      visit '/admin/records?model=Book'
+    visit index_page_for model: Book
+
+    
   end
 end

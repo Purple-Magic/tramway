@@ -4,7 +4,9 @@ require 'spec_helper'
 require 'factory_bot'
 require 'rspec/rails'
 require 'web_driver_helper'
-require 'support/tramway_path_helpers'
+
+helpers = Dir[Tramway.root + '/spec/support/**/*.rb']
+helpers.each { |helper| require helper }
 
 RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
@@ -12,7 +14,6 @@ RSpec.configure do |config|
     FactoryBot.reload
   end
   config.include FactoryBot::Syntax::Methods
-  config.include TramwayPathHelpers
   config.infer_spec_type_from_file_location!
 
   ActiveRecord::Base.logger.level = 1
