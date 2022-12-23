@@ -17,26 +17,15 @@ require 'tramway/generators/install_generator'
 require 'tramway/class_name_helpers'
 
 module Tramway
-  # Auth.layout_path = 'tramway/admin/application'
-
   class << self
     def initialize_application(**options)
       @application ||= Tramway::Application.new
-      options.each do |attr, value|
-        @application.send "#{attr}=", value
-      end
+
+      options.each { |attr, value| @application.send "#{attr}=", value }
     end
 
     def application_object
-      if @application&.model_class.present?
-        begin
-          @application.model_class.first
-        rescue StandardError
-          nil
-        end
-      else
-        @application
-      end
+      @application&.model_class.present? ? @application.model_class.first : @application
     end
 
     def root
@@ -53,7 +42,7 @@ module Tramway
     include Tramway::Navbar
 
     def engine_class(project)
-      class_name = "::Tramway::#{project.to_s.camelize}"
+      class_name = "Tramway::#{project.to_s.camelize}"
       class_name.classify.safe_constantize
     end
 
@@ -63,20 +52,19 @@ module Tramway
 
     def get_models_by_key(checked_models, project, role)
       unless project.present?
-        error = Tramway::Error.new(
-          plugin: :admin,
-          method: :get_models_by_key,
-          message: "Looks like you have not create at least one instance of #{Tramway.application.model_class} model OR Tramway Application Model is nil"
+        Tramway::Error.raise_error(
+          :tramway,
+          :project,
+          :no_instance_of_application_class,
+          application_class: Tramway.application.model_class
         )
-        raise error.message
       end
+
       checked_models && checked_models[project]&.dig(role)&.keys || []
     end
 
     def models_array(models_type:, role:)
-      instance_variable_get("@#{models_type}_models")&.map do |projects|
-        projects.last[role]&.keys
-      end&.flatten || []
+      instance_variable_get("@#{models_type}_models")&.map { |projects| projects.last[role]&.keys }&.flatten || []
     end
 
     def action_is_available?(record, project:, role:, model_name:, action:)
@@ -100,17 +88,12 @@ module Tramway
     end
 
     def select_actions(project:, role:, model_name:)
-      stringify = lambda do |models|
-        stringify_keys(models&.dig(project, role))&.dig(model_name)
-      end
-
+      stringify = ->(models) { stringify_keys(models&.dig(project, role))&.dig(model_name) }
       stringify.call(@singleton_models) || stringify.call(@available_models)
     end
 
     def stringify_keys(hash)
-      hash&.reduce({}) do |new_hash, pair|
-        new_hash.merge! pair[0].to_s => pair[1]
-      end
+      hash&.reduce({}) { |new_hash, pair| new_hash.merge! pair[0].to_s => pair[1] }
     end
 
     def admin_model
@@ -118,7 +101,7 @@ module Tramway
     end
 
     def auth_config
-      @@auth_config ||= [{ user_model: ::Tramway::User, auth_attributes: :email }]
+      @@auth_config ||= [{ user_model: Tramway::User, auth_attributes: :email }]
       @@auth_config
     end
 

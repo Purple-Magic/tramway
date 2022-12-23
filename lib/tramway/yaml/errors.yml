@@ -1,4 +1,6 @@
 tramway:
+  project:
+    no_instance_of_application_class: "Looks like you have not create at least one instance of %{application_class} model OR Tramway Application Model is nil"
   collections:
     helper:
       collection_list_by:
