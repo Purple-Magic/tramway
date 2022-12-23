@@ -83,7 +83,7 @@ module Tramway::RecordsHelper
       raise "You should set `class_name` for #{association.name} association"
     end
 
-    new_record_path(**hash)
+    new_record_path(**new_record_path_options(object, association, as))
   end
 
   def new_record_path_options(object, association, as)
@@ -93,17 +93,29 @@ module Tramway::RecordsHelper
     }
 
     if association.options[:as].present? # polymorphic? conditiion
-      hash.merge! association.options[:class_name].underscore => {
-        association.options[:as] => object.id,
-        association.type => object.class.model_name
-      }
+      hash.merge! options_for_polymorphic_link object, association
     else
-      hash.merge! association.options[:class_name].underscore => {
-        as || object.model.class.name.underscore.gsub('/', '_') => object.id
-      }
+      hash.merge! options_for_isomorphic_link object, association, as
     end
 
     hash
+  end
+
+  def options_for_polymorphic_link(object, association)
+    {
+      association.options[:class_name].underscore => {
+        association.options[:as] => object.id,
+        association.type => object.class.model_name
+      }
+    }
+  end
+
+  def options_for_isomorphic_link(object, association, as)
+    {
+      association.options[:class_name].underscore => {
+        as || object.model.class.name.underscore.gsub('/', '_') => object.id
+      }
+    }
   end
 
   def there_any_filters?(model_class)
