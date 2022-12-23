@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 module Tramway::StateMachineButtonsHelper
-  def state_events_buttons(object, controller:, action:, state_method: :state, parameters: {}, without: nil,
-                           namespace: nil, model_param_name: nil, button_options: {})
+  def state_events_buttons(object, **options)
+    options.each do |(_key, value)|
+      define_method(key) { value }
+    end
     model_name = object.model.model_name.name.underscore
     model_param_name ||= model_name
     excepted_actions = without.is_a?(Array) ? without.map(&:to_sym) : [without.to_sym] if without
@@ -31,24 +33,30 @@ module Tramway::StateMachineButtonsHelper
 
   def button(**options)
     event = options[:event]
-    attributes = { aasm_event: event }
-    css_class = "btn btn-sm btn-xs btn-#{options[:object].send("#{options[:state_method]}_button_color", event)}"
 
     concat(
-      patch_button(
-        record: options[:object].model,
-        controller: options[:controller],
-        action: options[:action],
-        parameters: options[:parameters],
-        attributes: attributes,
-        model_name: options[:model_param_name],
-        button_options: { class: css_class },
-        form_options: options[:form_options]
-      ) do
-        class_name = options[:object].model.class.name.underscore
-        actual_event = options[:object].model.aasm(options[:state_method]).events.select { |ev| ev.name == event }
+      patch_button(patch_button_options(event, options)) do
+        model = options[:object].model
+        class_name = model.class.name.underscore
+        actual_event = model.aasm(options[:state_method]).events.select { |ev| ev.name == event }
         I18n.t("state_machines.#{class_name}.#{options[:state_method]}.events.#{actual_event}")
       end
     )
+  end
+
+  def patch_button_options(event, options)
+    attributes = { aasm_event: event }
+    css_class = "btn btn-sm btn-xs btn-#{options[:object].send("#{options[:state_method]}_button_color", event)}"
+
+    {
+      record: options[:object].model,
+      controller: options[:controller],
+      action: options[:action],
+      parameters: options[:parameters],
+      attributes: attributes,
+      model_name: options[:model_param_name],
+      button_options: { class: css_class },
+      form_options: options[:form_options]
+    }
   end
 end
