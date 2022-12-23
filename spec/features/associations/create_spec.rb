@@ -16,7 +16,7 @@ describe 'Associations Create' do
 
       click_on book.title
       click_on 'Add rent'
-      
+
       fill_in 'record[begin_date]', with: attributes[:begin_date]
       fill_in 'record[end_date]', with: attributes[:end_date]
 
@@ -43,7 +43,7 @@ describe 'Associations Create' do
       rent = Rent.last
 
       attributes.each do |(attr, value)|
-        if attr.in? [ :begin_date, :end_date ]
+        if attr.in? %i[begin_date end_date]
           expect(rent.public_send(attr).strftime('%d.%m.%Y %H:%M:%S')).to eq value.strftime('%d.%m.%Y %H:%M:%S')
         else
           expect(rent.public_send(attr)).to eq value
