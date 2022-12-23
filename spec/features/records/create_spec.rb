@@ -33,4 +33,22 @@ describe 'Records Create' do
 
     expect(count).to eq(Book.count - 1)
   end
+
+  it 'creates new record with needed attributes' do
+    user_actions.call
+
+    book = Book.last
+
+    attributes.each do |(attr, value)|
+      expect(book.public_send(attr)).to eq value
+    end
+  end
+
+  it 'shows page with new record' do
+    user_actions.call
+
+    attributes.each do |(attr, value)|
+      expect(page).to have_content value
+    end
+  end
 end
