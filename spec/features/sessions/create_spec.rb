@@ -12,10 +12,7 @@ describe 'Sign in' do
   end
 
   it 'sign_ins' do
-    visit '/admin'
-    fill_in 'Email', with: user[:email]
-    fill_in 'Password', with: '123'
-    click_on 'Sign In', class: 'btn-success'
+    pass_authorization user
 
     expect(page).to have_content "#{user.first_name} #{user.last_name}"
   end
