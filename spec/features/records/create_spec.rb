@@ -56,7 +56,7 @@ describe 'Records Create' do
 
   context 'without permission to create' do
     before do
-      Tramway.set_available_models Book => [ :index ], project: :dummy
+      Tramway.set_available_models Book => [:index], project: :dummy
     end
 
     it 'does not create new record' do

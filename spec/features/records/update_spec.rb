@@ -75,7 +75,7 @@ describe 'Records update' do
 
   context 'without permissions to update at all' do
     before do
-      Tramway.set_available_models Book => [ :index ], project: :dummy
+      Tramway.set_available_models Book => [:index], project: :dummy
     end
 
     it 'does not update record' do
