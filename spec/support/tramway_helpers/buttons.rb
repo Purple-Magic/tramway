@@ -27,9 +27,9 @@ module TramwayHelpers::Buttons
         object.public_send(redirect_to).id,
         model: object.public_send(redirect_to).class
       )
-      Tramway::Engine.routes.url_helpers.edit_record_path(object.id, model: object.class, redirect: association_path)
+      edit_page_for object, redirect: association_path
     else
-      Tramway::Engine.routes.url_helpers.edit_record_path(object.id, model: object.class)
+      edit_page_for object
     end
   end
 

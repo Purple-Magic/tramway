@@ -9,6 +9,10 @@ module TramwayHelpers::Paths
     '/admin'
   end
 
+  def edit_page_for(object, **options)
+    Tramway::Engine.routes.url_helpers.edit_record_path(object.id, model: object.class, **options)
+  end
+
   alias home_page path_prefix
 end
 

@@ -43,11 +43,9 @@ describe 'Associations Create' do
       rent = Rent.last
 
       attributes.each do |(attr, value)|
-        if attr.in? %i[begin_date end_date]
-          expect(rent.public_send(attr).strftime('%d.%m.%Y %H:%M:%S')).to eq value.strftime('%d.%m.%Y %H:%M:%S')
-        else
-          expect(rent.public_send(attr)).to eq value
-        end
+        next unless attr.in? %i[begin_date end_date]
+
+        expect(rent.public_send(attr).strftime('%d.%m.%Y %H:%M:%S')).to eq value.strftime('%d.%m.%Y %H:%M:%S')
       end
     end
 
