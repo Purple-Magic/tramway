@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 module TramwayHelpers::Buttons
+  NEW_RECORD_BUTTON_SELECTOR = '.btn.btn-primary'
+
   def click_on_new_record
-    find('.btn.btn-primary', match: :first).click
+    find(NEW_RECORD_BUTTON_SELECTOR, match: :first).click
   end
 
   def click_on_submit
