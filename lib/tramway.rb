@@ -82,24 +82,28 @@ module Tramway
     def action_is_available?(record, project:, role:, model_name:, action:)
       project = project.underscore.to_sym unless project.is_a? Symbol
       actions = select_actions(project: project, role: role.to_sym, model_name: model_name)
-      availability = case actions
-                     when Array
-                       actions&.select do |a|
-                         case a
-                         when Symbol, String
-                           a.to_sym == action.to_sym
-                         when Hash
-                           a.keys.first.to_sym == action.to_sym
-                         end
-                       end&.first
-                     when Hash
-                       actions[action.to_sym]
-                     end
+      availability = compute_availability actions, action
 
       return false unless availability.present?
       return true if availability.is_a? Symbol
 
       availability.call record
+    end
+
+    def compute_availability(actions, action)
+      case actions
+      when Array
+        actions&.select do |a|
+          case a
+          when Symbol, String
+            a.to_sym == action.to_sym
+          when Hash
+            a.keys.first.to_sym == action.to_sym
+          end
+        end&.first
+      when Hash
+        actions[action.to_sym]
+      end
     end
 
     def select_actions(project:, role:, model_name:)
