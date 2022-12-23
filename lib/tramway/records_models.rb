@@ -18,21 +18,8 @@ module Tramway::RecordsModels
   def available_models_for(project, role: :admin)
     project = project.underscore.to_sym unless project.is_a? Symbol
     models = get_models_by_key(@available_models, project, role)
-    if project_is_engine?(project)
-      models += engine_class(project).dependencies.map do |dependency|
-        if @available_models&.dig(dependency, role).present?
-          @available_models&.dig(dependency, role)&.keys
-        else
-          Tramway::Error.raise_error(
-            :records,
-            :there_is_no_dependency,
-            dependency: dependency,
-            project: project
-          )
-        end
-      end.flatten.compact
-    end
-    # TODO: somehow cache results?
+    models = available_models_for_engine(project, role, models) if project_is_engine?(project)
+
     models.map do |model|
       model.instance_of?(String) ? model.constantize : model
     end
@@ -40,5 +27,22 @@ module Tramway::RecordsModels
 
   def available_models(role:)
     models_array models_type: :available, role: role
+  end
+
+  private
+
+  def available_models_for_engine(project, role, models)
+    models + engine_class(project).dependencies.map do |dependency|
+      if @available_models&.dig(dependency, role).present?
+        @available_models&.dig(dependency, role)&.keys
+      else
+        Tramway::Error.raise_error(
+          :records,
+          :there_is_no_dependency,
+          dependency: dependency,
+          project: project
+        )
+      end
+    end.flatten.compact
   end
 end

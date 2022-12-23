@@ -45,12 +45,12 @@ module Tramway
 
     attr_reader :application, :customized_admin_navbar
 
-    include ::Tramway::RecordsModels
-    include ::Tramway::SingletonModels
-    include ::Tramway::Forms
-    include ::Tramway::Notifications
-    include ::Tramway::WelcomePageActions
-    include ::Tramway::Navbar
+    include Tramway::RecordsModels
+    include Tramway::SingletonModels
+    include Tramway::Forms
+    include Tramway::Notifications
+    include Tramway::WelcomePageActions
+    include Tramway::Navbar
 
     def engine_class(project)
       class_name = "::Tramway::#{project.to_s.camelize}"
