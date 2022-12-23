@@ -16,10 +16,16 @@ module TramwayHelpers::Buttons
   end
 
   def click_on_delete_button(object)
-    delete_path = ::Tramway::Engine.routes.url_helpers.record_path(object.id, model: object.class)
-
-    form = find("form[action='#{delete_path}']")
+    form = find destroy_record_button_selector object
     form.find('button[type="submit"]').click
+  end
+
+  def delete_path(object)
+    Tramway::Engine.routes.url_helpers.record_path(object.id, model: object.class)
+  end
+
+  def destroy_record_button_selector(object)
+    "form[action='#{delete_path(object)}']"
   end
 end
 

@@ -28,6 +28,10 @@ module Tramway::RecordsModels
     models_array models_type: :available, role: role
   end
 
+  def clear_available_models!
+    @available_models = {}
+  end
+
   private
 
   def initialize_available_models_for(project, role)
