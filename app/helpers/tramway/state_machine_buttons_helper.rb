@@ -29,23 +29,25 @@ module Tramway::StateMachineButtonsHelper
 
   private
 
-  def button(event:, model_name:, object:, state_method:, controller:, action:, namespace:, parameters:,
-             model_param_name:, form_options:)
+  def button(**options)
+    event = options[:event]
     attributes = { aasm_event: event }
+    css_class = "btn btn-sm btn-xs btn-#{options[:object].send("#{options[:state_method]}_button_color", event)}"
+
     concat(
       patch_button(
-        record: object.model,
-        controller: controller,
-        action: action,
-        parameters: parameters,
+        record: options[:object].model,
+        controller: options[:controller],
+        action: options[:action],
+        parameters: options[:parameters],
         attributes: attributes,
-        model_name: model_param_name,
-        button_options: { class: "btn btn-sm btn-xs btn-#{object.send("#{state_method}_button_color", event)}" },
-        form_options: form_options
+        model_name: options[:model_param_name],
+        button_options: { class: css_class },
+        form_options: options[:form_options]
       ) do
-        I18n.t("state_machines.#{object.model.class.name.underscore}.#{state_method}.events.#{object.model.aasm(state_method).events.select do |ev|
-                                                                                                ev.name == event
-                                                                                              end.first.name}")
+        class_name = options[:object].model.class.name.underscore
+        actual_event = options[:object].model.aasm(options[:state_method]).events.select { |ev| ev.name == event }
+        I18n.t("state_machines.#{class_name}.#{options[:state_method]}.events.#{actual_event}")
       end
     )
   end
