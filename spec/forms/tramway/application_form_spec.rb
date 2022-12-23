@@ -110,7 +110,7 @@ describe Tramway::ApplicationForm do
       it 'raises error because model doesn\'t exist' do
         class_name = 'NotExistedForm'
         Object.const_set(class_name, Class.new(described_class))
-        class_name.constantize.class_variable_set :@@model_class, nil # rubocop:disable Style/ClassVars
+        class_name.constantize.class_variable_set :@@model_class, nil
         expect { class_name.constantize.model_class }.to raise_error(RuntimeError)
       end
     end

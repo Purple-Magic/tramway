@@ -6,15 +6,15 @@ Metrics/MethodLength:
   Max: 12
   Exclude:
     - spec/dummy/db/migrate/*.rb
-    - app/forms/tramway/core/extendable_forms_helpers/class_builder.rb
+    - app/forms/tramway/extendable_forms_helpers/class_builder.rb
 Metrics/MethodLength:
   Max: 13
   Include:
-    - app/decorators/tramway/core/associations/class_helper.rb
+    - app/decorators/tramway/associations/class_helper.rb
 Metrics/LineLength:
   Max: 120
   Exclude:
-    - spec/decorators/tramway/core/application_decorator_spec.rb
+    - spec/decorators/tramway/application_decorator_spec.rb
 Metrics/BlockLength:
   Enabled: false
   Include:
@@ -23,13 +23,13 @@ Metrics/AbcSize:
   Max: 18
   Exclude:
     - spec/dummy/db/migrate/*.rb
-    - app/forms/tramway/core/extendable_forms_helpers/class_builder.rb
+    - app/forms/tramway/extendable_forms_helpers/class_builder.rb
 Style/ClassAndModuleChildren:
   EnforcedStyle: compact
   Exclude:
     - spec/dummy/config/application.rb
-    - lib/tramway/core/version.rb
-    - lib/tramway/core/generators.rb
+    - lib/tramway/version.rb
+    - lib/tramway/generators.rb
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 Style/MixinUsage:
@@ -40,13 +40,14 @@ Metrics/PerceivedComplexity:
   Max: 10
 Style/ClassVars:
   Exclude:
-    - app/forms/tramway/core/extended_application_form.rb
-    - app/forms/tramway/core/application_form.rb
-    - app/decorators/tramway/core/associations/class_helper.rb
-    - spec/forms/tramway/core/application_form_spec.rb
+    - app/forms/tramway/extended_application_form.rb
+    - app/forms/tramway/application_form.rb
+    - app/decorators/tramway/associations/class_helper.rb
+    - lib/tramway.rb
+    - spec/forms/tramway/application_form_spec.rb
 Naming/MethodParameterName:
   Exclude:
-    - app/decorators/tramway/core/associations/class_helper.rb
+    - app/decorators/tramway/associations/class_helper.rb
 Style/MultilineBlockChain:
   Enabled: false
 Style/GuardClause:
