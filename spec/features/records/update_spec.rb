@@ -15,7 +15,7 @@ describe 'Records update' do
       visit index_page_for model: Book
 
       click_on book.title
-      find('.btn.btn-warning', match: :first).click
+      click_on_edit_record
 
       fill_in 'record[title]', with: attributes[:title], fill_options: { clear: :backspace }
       fill_in 'record[description]', with: attributes[:description]
