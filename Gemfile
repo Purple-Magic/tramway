@@ -24,5 +24,6 @@ group :test do
   gem 'rubocop'
   gem 'rubocop-rspec'
   gem 'smart_buttons', '>= 1.0'
+  gem 'trap'
   gem 'webdrivers', '4.2.0'
 end

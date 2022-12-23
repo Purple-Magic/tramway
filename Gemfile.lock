@@ -388,6 +388,7 @@ DEPENDENCIES
   rubocop-rspec
   smart_buttons (>= 1.0)
   tramway!
+  trap
   webdrivers (= 4.2.0)
 
 BUNDLED WITH
