@@ -17,10 +17,7 @@ describe 'Records Index' do
     end
 
     it 'shows index page of available model' do
-      visit home_page
-      fill_in 'Email', with: user[:email]
-      fill_in 'Password', with: '123'
-      click_on 'Sign In', class: 'btn-success'
+      pass_authorization user
 
       visit index_page_for model: Book
 
@@ -32,10 +29,7 @@ describe 'Records Index' do
     let!(:books) { create_list :book, 5 }
 
     it 'shows index page of available model' do
-      visit home_page
-      fill_in 'Email', with: user[:email]
-      fill_in 'Password', with: '123'
-      click_on 'Sign In', class: 'btn-success'
+      pass_authorization user
 
       visit index_page_for model: Book
 
