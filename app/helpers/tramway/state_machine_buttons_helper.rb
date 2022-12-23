@@ -2,14 +2,13 @@
 
 module Tramway::StateMachineButtonsHelper
   def state_events_buttons(object, **options)
-    options.each do |(_key, value)|
+    options.each do |(key, value)|
       define_method(key) { value }
     end
     model_name = object.model.model_name.name.underscore
     model_param_name ||= model_name
-    excepted_actions = without.is_a?(Array) ? without.map(&:to_sym) : [without.to_sym] if without
     transitions = object.model.aasm(state_method).permitted_transitions.reject do |t|
-      excepted_actions.present? && excepted_actions.include?(t[:event])
+      excepted_actions(without).present? && excepted_actions(without).include?(t[:event])
     end
     content_tag(:div, class: 'btn-group-vertical') do
       transitions.each do |event|
@@ -30,6 +29,12 @@ module Tramway::StateMachineButtonsHelper
   end
 
   private
+
+  def excepted_actions(without)
+    return unless without
+
+    without.is_a?(Array) ? without.map(&:to_sym) : [without.to_sym]
+  end
 
   def button(**options)
     event = options[:event]
