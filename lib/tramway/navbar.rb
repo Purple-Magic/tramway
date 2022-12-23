@@ -11,7 +11,7 @@ module Tramway::Navbar
 
     return [] unless @navbar_structure&.dig(project).present?
 
-    (@navbar_structure[project].map { |item| add_to_navbar item, project, role }.compact) || []
+    @navbar_structure[project].map { |item| add_to_navbar item, project, role }.compact || []
   end
 
   private
