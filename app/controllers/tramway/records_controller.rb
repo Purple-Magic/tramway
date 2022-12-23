@@ -48,13 +48,14 @@ class Tramway::RecordsController < Tramway::ApplicationController
 
   def update
     @record_form = admin_form_class.new model_class.find params[:id]
-    if params[:record][:aasm_event].present?
-      if @record_form.model.send("may_#{params[:record][:aasm_event]}?")
-        @record_form.model.send("#{params[:record][:aasm_event]}!")
-        redirect_to params[:redirect].present? ? params[:redirect] : record_path(@record_form.model)
+    if state_event.present?
+      if record_state_event?
+        record_make_state_event!
+
+        default_redirect
       end
     elsif @record_form.submit params[:record]
-      redirect_to params[:redirect].present? ? params[:redirect] : record_path(@record_form.model)
+      default_redirect
     else
       render :edit
     end
@@ -64,5 +65,23 @@ class Tramway::RecordsController < Tramway::ApplicationController
     record = model_class.find params[:id]
     record.destroy
     redirect_to params[:redirect].present? ? params[:redirect] : records_path
+  end
+
+  private
+
+  def default_redirect
+    redirect_to params[:redirect].present? ? params[:redirect] : record_path(@record_form.model)
+  end
+
+  def record_state_event?
+    @record_form.model.public_send("may_#{state_event}?")
+  end
+
+  def record_make_state_event!
+    @record_form.model.send("#{state_event}!")
+  end
+
+  def state_event
+    params[:record][:aasm_event]
   end
 end
