@@ -2,9 +2,8 @@
 
 module Tramway::RecordsModels
   def set_available_models(*models, project:, role: :admin)
-    @available_models ||= {}
-    @available_models[project] ||= {}
-    @available_models[project][role] ||= {}
+    initialize_available_models_for project, role
+
     models.each do |model|
       if model.instance_of?(Class) || model.instance_of?(String)
         @available_models[project][role].merge! model.to_s => %i[index show update create destroy]
@@ -31,17 +30,18 @@ module Tramway::RecordsModels
 
   private
 
+  def initialize_available_models_for(project, role)
+    @available_models ||= {}
+    @available_models[project] ||= {}
+    @available_models[project][role] ||= {}
+  end
+
   def available_models_for_engine(project, role, models)
     models + engine_class(project).dependencies.map do |dependency|
       if @available_models&.dig(dependency, role).present?
         @available_models&.dig(dependency, role)&.keys
       else
-        Tramway::Error.raise_error(
-          :records,
-          :there_is_no_dependency,
-          dependency: dependency,
-          project: project
-        )
+        Tramway::Error.raise_error :records, :there_is_no_dependency, dependency: dependency, project: project
       end
     end.flatten.compact
   end
