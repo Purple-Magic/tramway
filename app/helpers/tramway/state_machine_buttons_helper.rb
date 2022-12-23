@@ -5,24 +5,13 @@ module Tramway::StateMachineButtonsHelper
     options.each do |(key, value)|
       define_method(key) { value }
     end
-    model_name = object.model.model_name.name.underscore
-    model_param_name ||= model_name
-    transitions = object.model.aasm(state_method).permitted_transitions.reject do |t|
-      excepted_actions(without).present? && excepted_actions(without).include?(t[:event])
-    end
     content_tag(:div, class: 'btn-group-vertical') do
-      transitions.each do |event|
+      transitions(object, state_method, without).each do |event|
         button(
           event: event[:event],
-          model_name: model_name,
-          object: object,
-          state_method: state_method,
-          controller: controller,
-          action: action,
-          namespace: namespace,
-          parameters: parameters,
-          model_param_name: model_param_name,
-          form_options: button_options
+          model_name: object.model.model_name.name.underscore,
+          form_options: button_options,
+          **options
         )
       end
     end
@@ -34,6 +23,12 @@ module Tramway::StateMachineButtonsHelper
     return unless without
 
     without.is_a?(Array) ? without.map(&:to_sym) : [without.to_sym]
+  end
+
+  def transitions(object, state_method, without)
+    object.model.aasm(state_method).permitted_transitions.reject do |t|
+      excepted_actions(without).present? && excepted_actions(without).include?(t[:event])
+    end
   end
 
   def button(**options)
@@ -59,7 +54,7 @@ module Tramway::StateMachineButtonsHelper
       action: options[:action],
       parameters: options[:parameters],
       attributes: attributes,
-      model_name: options[:model_param_name],
+      model_name: options[:model_name],
       button_options: { class: css_class },
       form_options: options[:form_options]
     }
