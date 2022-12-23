@@ -98,7 +98,11 @@ module Tramway
     end
 
     def select_actions(project:, role:, model_name:)
-      stringify_keys(@singleton_models&.dig(project, role))&.dig(model_name) || stringify_keys(@available_models&.dig(project, role))&.dig(model_name)
+      stringify = lambda do |models|
+        stringify_keys(models&.dig(project, role))&.dig(model_name)
+      end
+
+      stringify.call(@singleton_models) || stringify.call(@available_models)
     end
 
     def stringify_keys(hash)
