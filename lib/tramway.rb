@@ -93,14 +93,7 @@ module Tramway
     def compute_availability(actions, action)
       case actions
       when Array
-        actions&.select do |a|
-          case a
-          when Symbol, String
-            a.to_sym == action.to_sym
-          when Hash
-            a.keys.first.to_sym == action.to_sym
-          end
-        end&.first
+        actions.select { |a| a.to_sym == action.to_sym }.first
       when Hash
         actions[action.to_sym]
       end
