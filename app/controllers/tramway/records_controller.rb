@@ -2,26 +2,11 @@
 
 class Tramway::RecordsController < Tramway::ApplicationController
   def index
-    scope = params[:scope].present? ? params[:scope] : :all
     records = model_class.order(id: :desc).send scope
-    records = records.full_text_search params[:search] if params[:search].present?
-    if params[:filter].present?
-      params[:filter] = JSON.parse params[:filter] if params[:filter].is_a? String
-      records = records.ransack(params[:filter]).result(distinct: true)
-    end
-    params[:list_filters]&.each do |filter, value|
-      case decorator_class.list_filters[filter.to_sym][:type]
-      when :select
-        records = decorator_class.list_filters[filter.to_sym][:query].call(records, value) if value.present?
-      when :dates
-        begin_date = params[:list_filters][filter.to_sym][:begin_date]
-        end_date = params[:list_filters][filter.to_sym][:end_date]
-        if begin_date.present? && end_date.present? && value.present?
-          records = decorator_class.list_filters[filter.to_sym][:query].call(records, begin_date, end_date)
-        end
-      end
-    end
-    records = records.send "#{current_user.role}_scope", current_user.id
+    records = full_text_search records
+    records = filtering records
+    records = list_filtering records
+    records = records.public_send "#{current_user.role}_scope", current_user.id
     @records = decorator_class.decorate records.page params[:page]
   end
 
@@ -51,7 +36,6 @@ class Tramway::RecordsController < Tramway::ApplicationController
     if state_event.present?
       if record_state_event?
         record_make_state_event!
-
         default_redirect
       end
     elsif @record_form.submit params[:record]
@@ -83,5 +67,39 @@ class Tramway::RecordsController < Tramway::ApplicationController
 
   def state_event
     params[:record][:aasm_event]
+  end
+
+  def scope
+    params[:scope].present? ? params[:scope] : :all
+  end
+
+  def full_text_search(records)
+    params[:search].present? ? records.full_text_search(params[:search]) : records
+  end
+
+  def filtering(records)
+    if params[:filter].present?
+      params[:filter] = JSON.parse params[:filter] if params[:filter].is_a? String
+      records.ransack(params[:filter]).result(distinct: true)
+    else
+      records
+    end
+  end
+
+  def list_filtering(records)
+    params[:list_filters]&.each do |filter, value|
+      case decorator_class.list_filters[filter.to_sym][:type]
+      when :select
+        records = decorator_class.list_filters[filter.to_sym][:query].call(records, value) if value.present?
+      when :dates
+        begin_date = params[:list_filters][filter.to_sym][:begin_date]
+        end_date = params[:list_filters][filter.to_sym][:end_date]
+        if begin_date.present? && end_date.present? && value.present?
+          records = decorator_class.list_filters[filter.to_sym][:query].call(records, begin_date, end_date)
+        end
+      end
+    end
+
+    records
   end
 end
