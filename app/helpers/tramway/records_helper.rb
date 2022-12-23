@@ -99,7 +99,7 @@ module Tramway::RecordsHelper
     end
   end
 
-  def is_there_any_filters?(model_class)
+  def there_any_filters?(model_class)
     decorator_class(model_class).list_filters&.any?
   end
 end

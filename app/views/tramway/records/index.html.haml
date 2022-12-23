@@ -5,7 +5,7 @@
 - tabs = get_collection
 .page-header
   .row
-    - search_render_show = searchable_model?(model_class) || is_there_any_filters?(model_class)
+    - search_render_show = searchable_model?(model_class) || there_any_filters?(model_class)
     %div{ class: "col-md-#{search_render_show ? 4 : 12}" }
       %h1
         = current_title
