@@ -10,6 +10,7 @@ group :test do
   gem 'bootstrap', '>= 4.1.2'
   gem 'bootstrap-kaminari-views', github: 'kalashnikovisme/bootstrap-kaminari-views', branch: :master
   gem 'capybara'
+  gem 'capybara_helpers'
   gem 'ckeditor', '4.2.4'
   gem 'clipboard-rails'
   gem 'copyright_mafa'

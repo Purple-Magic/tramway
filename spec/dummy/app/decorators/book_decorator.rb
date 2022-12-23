@@ -12,7 +12,7 @@ class BookDecorator < Tramway::ApplicationDecorator
     end
 
     def show_associations
-      [:feeds, :rents]
+      [:rents]
     end
   end
 end

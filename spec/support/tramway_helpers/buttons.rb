@@ -28,6 +28,11 @@ module TramwayHelpers::Buttons
   def destroy_record_button_selector(object)
     "form[action='#{delete_path(object)}']"
   end
+
+  def click_on_association_delete_button(object)
+    row = find("td[colspan='2'] td a[href='#{delete_path(object)}']").parent_node(level: 2)
+    row.find('td button.delete[type="submit"]').click
+  end
 end
 
 RSpec.configure do |config|

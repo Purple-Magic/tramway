@@ -70,7 +70,6 @@ describe 'Associations Create' do
       visit index_page_for model: Book
       click_on book.title
 
-      expect(page).not_to have_selector TramwayHelpers::Buttons::NEW_RECORD_BUTTON_SELECTOR
       expect(page).not_to have_content 'Add rent'
     end
   end

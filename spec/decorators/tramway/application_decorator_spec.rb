@@ -70,10 +70,10 @@ RSpec.describe Tramway::ApplicationDecorator do
       end
 
       it 'decorates association models' do
-        reader = create :reader
-        create_list :rent, 10, reader_id: reader.id
-        decorated_reader = ReaderDecorator.decorate reader
-        expect(decorated_reader.rents).to all be_a(RentDecorator)
+        book = create :book
+        create_list :rent, 10, book_id: book.id
+        decorated_book = BookDecorator.decorate book
+        expect(decorated_book.rents).to all be_a(RentDecorator)
       end
 
       it 'creates `association_as` method after decorating association' do
@@ -84,10 +84,10 @@ RSpec.describe Tramway::ApplicationDecorator do
       end
 
       it 'raises error about specify class_name of association' do
-        book = create :book
-        create_list :rent, 10, book_id: book.id
-        decorated_book = BookDecorator.decorate book
-        expect { decorated_book.rents }.to raise_error(
+        reader = create :reader
+        create_list :rent, 10, reader_id: reader.id
+        decorated_reader = ReaderDecorator.decorate reader
+        expect { decorated_reader.rents }.to raise_error(
           errors['raises_error_about_specify_class_name_of_association']
         )
       end

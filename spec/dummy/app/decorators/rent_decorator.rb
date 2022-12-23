@@ -1,5 +1,5 @@
 class RentDecorator < Tramway::ApplicationDecorator
-  decorate_association :reader
+  decorate_associations :reader, :book
 
   def title
     reader.title

@@ -3,6 +3,10 @@
 require 'rails_helper'
 
 describe 'Records Create' do
+  before do
+    Tramway.clear_available_models!
+  end
+
   let!(:user) do
     Tramway::User.create! password: '123', **attributes_for(:user)
   end

@@ -106,6 +106,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    capybara_helpers (0.1.0)
     carrierwave (2.2.3)
       activemodel (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -369,6 +370,7 @@ DEPENDENCIES
   bootstrap (>= 4.1.2)
   bootstrap-kaminari-views!
   capybara
+  capybara_helpers
   ckeditor (= 4.2.4)
   clipboard-rails
   copyright_mafa
