@@ -10,5 +10,9 @@ class BookDecorator < Tramway::ApplicationDecorator
     def list_attributes
       [ :description ]
     end
+
+    def show_associations
+      [:feeds, :rents]
+    end
   end
 end

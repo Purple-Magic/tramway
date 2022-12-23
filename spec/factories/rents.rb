@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :rent do
     book
     reader
-    begin_date { DateTime.now }
-    end_date { DateTime.now + 1.day }
+    begin_date { Time.zone.now }
+    end_date { Time.zone.now + 1.day }
   end
 end

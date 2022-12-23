@@ -11,10 +11,10 @@
           - unless state_method == 'default'
             = state_events_buttons association_object, state_method: state_method, model_param_name: :record, controller: 'tramway/records', action: :update, parameters: { redirect: current_model_record_path(object.id), model: association_object.class.model_name }, button_options: { class: :smart_button }
     %td{ style: 'display: flex; justify-content: space-evenly' }
-      - if update_is_available? association_object, object
+      - if update_is_available? association_object
         = edit_button url: edit_record_path(association_object.id, model: association.options[:class_name], redirect: current_model_record_path(object.id)), button_options: { class: 'btn btn-xs btn-warning edit', style: 'height: max-content' } do
           = fa_icon 'pencil-alt'
-      - if destroy_is_available? association_object, object
+      - if destroy_is_available? association_object
         = delete_button url: record_path(association_object.id, model: association.options[:class_name], redirect: current_model_record_path(object.id)), button_options: { class: 'btn btn-xs btn-danger delete' } do
           = fa_icon 'trash-alt'
       - if habtm_destroy_is_available? association_object, object
