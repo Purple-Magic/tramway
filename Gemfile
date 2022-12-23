@@ -13,6 +13,7 @@ group :test do
   gem 'ckeditor', '4.2.4'
   gem 'clipboard-rails'
   gem 'copyright_mafa'
+  gem 'faker'
   gem 'font_awesome5_rails'
   gem 'font-awesome-rails', '>= 4.7.0.1'
   gem 'generator_spec'
