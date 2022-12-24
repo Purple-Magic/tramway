@@ -72,4 +72,4 @@ jobs:
 
       - name: Tests
         run: |
-          rake
+          bundle exec rake
