@@ -6,6 +6,7 @@ load "#{Tramway.root}/lib/tramway/record_routes_helper.rb"
 
 # FIXME: configurate load_path
 load "#{Tramway.root}/app/controllers/concerns/auth_management.rb"
+load "#{Tramway.root}/app/controllers/concerns/filtering.rb"
 
 class Tramway::ApplicationController < ActionController::Base
   include Tramway::ClassNameHelpers
