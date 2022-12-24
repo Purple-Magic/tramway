@@ -73,10 +73,6 @@ class Tramway::RecordsController < Tramway::ApplicationController
     params[:scope].present? ? params[:scope] : :all
   end
 
-  def current_user_role_scope
-    "#{current_user.role}_scope"
-  end
-
   def full_text_search(records)
     params[:search].present? ? records.full_text_search(params[:search]) : records
   end
@@ -88,36 +84,5 @@ class Tramway::RecordsController < Tramway::ApplicationController
     else
       records
     end
-  end
-
-  def list_filtering(records)
-    params[:list_filters]&.each do |filter, _value|
-      case decorator_class.list_filters[filter.to_sym][:type]
-      when :select
-        records = list_filtering_select records, filter
-      when :dates
-        records = list_filtering_dates records, filter
-      end
-    end
-
-    records
-  end
-
-  def list_filtering_select(records, filter)
-    value.present? ? decorator_class.list_filters[filter.to_sym][:query].call(records, value) : records
-  end
-
-  def list_filtering_dates(records, filter)
-    begin_date = date_filter :begin, filter
-    end_date = date_filter :end, filter
-    if begin_date.present? && end_date.present? && value.present?
-      decorator_class.list_filters[filter.to_sym][:query].call(records, begin_date, end_date)
-    else
-      records
-    end
-  end
-
-  def date_filter(type, filter)
-    params[:list_filters][filter.to_sym]["#{type}_date".to_sym]
   end
 end

@@ -44,3 +44,5 @@ tramway:
     install: 'Initialize Tramway application before running generators. Add `Tramway.initialize_application name: :your_application_name` to `config/initializers/tramway.rb`'
   records:
     there_is_no_dependency: "There is no dependency `%{dependency}` for plugin: %{project}. Please, check file `tramway-%{project}/lib/tramway/%{project}/%{project}.rb`"
+  application_controller:
+    create_form_for_role: "Tramway - you should create form for role `%{role}` to edit %{model_class} model. It should be named %{class_name}"

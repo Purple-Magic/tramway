@@ -43,29 +43,12 @@ class Tramway::ApplicationController < ActionController::Base
 
   def collections_counts
     @counts = decorator_class.collections.reduce({}) do |hash, collection|
-      records = model_class.send(collection)
-      records = records.send "#{current_user.role}_scope", current_user.id
+      records = model_class.public_send(collection)
       records = records.ransack(params[:filter]).result if params[:filter].present?
-      params[:list_filters]&.each do |filter, value|
-        case decorator_class.list_filters[filter.to_sym][:type]
-        when :select
-          records = decorator_class.list_filters[filter.to_sym][:query].call(records, value) if value.present?
-        when :dates
-          begin_date = params[:list_filters][filter.to_sym][:begin_date]
-          end_date = params[:list_filters][filter.to_sym][:end_date]
-          if begin_date.present? && end_date.present? && value.present?
-            records = decorator_class.list_filters[filter.to_sym][:query].call(records, begin_date, end_date)
-          end
-        end
-      end
-      hash.merge! collection => records.send("#{current_user.role}_scope", current_user.id).count
+      records = list_filtering records
+
+      hash.merge! collection => records.public_send(current_user_role_scope, current_user.id).count
     end
-  end
-
-  def application
-    return unless ::Tramway.application
-
-    @application = Tramway.application&.model_class&.first || Tramway.application
   end
 
   def notifications
@@ -79,7 +62,7 @@ class Tramway::ApplicationController < ActionController::Base
 
   def notifications_count
     @notifications_count = notifications&.reduce(0) do |count, notification|
-      count += notification[1].count
+      count += notification[1].count # rubocop:disable Lint/UselessAssignment
     end
   end
 
@@ -95,8 +78,16 @@ class Tramway::ApplicationController < ActionController::Base
 
   def admin_form_class
     class_name = "::#{current_user.role.camelize}::#{model_class}Form"
+
     unless defined? class_name
-      raise "Tramway - you should create form for role `#{current_user.role}` to edit #{model_class} model. It should be named #{class_name}"
+      Tramway::Error.raise_error(
+        :tramway,
+        :application,
+        :create_form_for_role,
+        role: current_user.role,
+        model_class: model_class,
+        class_name: class_name
+      )
     end
 
     class_name.constantize
@@ -107,12 +98,6 @@ class Tramway::ApplicationController < ActionController::Base
   end
 
   def form_given?
-    # FIXME: add tramway error locales to the tramway admin gem
-    # Tramway::Error.raise_error(
-    #  :tramway, :admin, :application_controller, :form_given, :model_not_included_to_tramway_admin,
-    #  model: params[:model]
-    # )
-    # raise "Looks like model #{params[:model]} is not included to tramway-admin for `#{current_user.role}` role. Add it in the `config/initializers/tramway.rb`. This way `Tramway.set_available_models(#{params[:model]})`"
     Tramway.forms.include? params[:form].underscore.sub(%r{^admin/}, '').sub(/_form$/, '') if params[:form].present?
   end
 
@@ -131,7 +116,7 @@ class Tramway::ApplicationController < ActionController::Base
   private
 
   def check_models_given?(model_type)
-    models = ::Tramway.send("#{model_type}_models", role: current_user.role)
+    models = Tramway.send("#{model_type}_models", role: current_user.role)
     models.any? && params[:model].in?(models.map(&:to_s))
   end
 
@@ -140,20 +125,51 @@ class Tramway::ApplicationController < ActionController::Base
   end
 
   def application
-    return unless ::Tramway.application
+    return unless Tramway.application
 
     @application ||= Tramway.application&.model_class&.first || Tramway.application
   end
 
   def load_extensions
-    ::Tramway::Extensions.load if defined? ::Tramway::Extensions
-  end
-
-  def model_class
-    params[:model].constantize
+    Tramway::Extensions.load if defined? Tramway::Extensions
   end
 
   def authenticated_user
     (defined?(current_user) && current_user.try(:model)) || (defined?(current_user) && current_user.model)
+  end
+
+  def list_filtering(records)
+    params[:list_filters]&.each do |filter, _value|
+      case decorator_class.list_filters[filter.to_sym][:type]
+      when :select
+        records = list_filtering_select records, filter
+      when :dates
+        records = list_filtering_dates records, filter
+      end
+    end
+
+    records
+  end
+
+  def list_filtering_select(records, filter)
+    value.present? ? decorator_class.list_filters[filter.to_sym][:query].call(records, value) : records
+  end
+
+  def list_filtering_dates(records, filter)
+    begin_date = date_filter :begin, filter
+    end_date = date_filter :end, filter
+    if begin_date.present? && end_date.present? && value.present?
+      decorator_class.list_filters[filter.to_sym][:query].call(records, begin_date, end_date)
+    else
+      records
+    end
+  end
+
+  def date_filter(type, filter)
+    params[:list_filters][filter.to_sym]["#{type}_date".to_sym]
+  end
+
+  def current_user_role_scope
+    "#{current_user.role}_scope"
   end
 end
