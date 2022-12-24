@@ -26,10 +26,6 @@ class Tramway::ApplicationController < ActionController::Base
 
   protected
 
-  def admin_model
-    ::Tramway.admin_model
-  end
-
   def check_available!
     return if session_path?
 
