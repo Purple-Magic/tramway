@@ -19,6 +19,7 @@ jobs:
       - name: Install
         run: |
           gem install rubocop
+          gem install rubocop-rspec
 
       - name: Rubocop
         run: |
