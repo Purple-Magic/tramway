@@ -76,13 +76,4 @@ class Tramway::RecordsController < Tramway::ApplicationController
   def full_text_search(records)
     params[:search].present? ? records.full_text_search(params[:search]) : records
   end
-
-  def filtering(records)
-    if params[:filter].present?
-      params[:filter] = JSON.parse params[:filter] if params[:filter].is_a? String
-      records.ransack(params[:filter]).result(distinct: true)
-    else
-      records
-    end
-  end
 end

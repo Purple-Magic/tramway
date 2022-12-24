@@ -34,7 +34,7 @@ class Tramway::ApplicationController < ActionController::Base
 
     return unless !model_given? && !form_given?
 
-    raise 'Tramway - Model or Form is not available. Looks like current user does not have access to change this model. Update your tramway initializer file'
+    Tramway::Error.raise_error :tramway, :application_controller, :model_or_form_not_available
   end
 
   def check_available_scope!
@@ -44,7 +44,7 @@ class Tramway::ApplicationController < ActionController::Base
   def collections_counts
     @counts = decorator_class.collections.reduce({}) do |hash, collection|
       records = model_class.public_send(collection)
-      records = records.ransack(params[:filter]).result if params[:filter].present?
+      records = filtering records
       records = list_filtering records
 
       hash.merge! collection => records.public_send(current_user_role_scope, current_user.id).count
@@ -171,5 +171,14 @@ class Tramway::ApplicationController < ActionController::Base
 
   def current_user_role_scope
     "#{current_user.role}_scope"
+  end
+
+  def filtering(records)
+    if params[:filter].present?
+      params[:filter] = JSON.parse params[:filter] if params[:filter].is_a? String
+      records.ransack(params[:filter]).result(distinct: true)
+    else
+      records
+    end
   end
 end

@@ -46,3 +46,4 @@ tramway:
     there_is_no_dependency: "There is no dependency `%{dependency}` for plugin: %{project}. Please, check file `tramway-%{project}/lib/tramway/%{project}/%{project}.rb`"
   application_controller:
     create_form_for_role: "Tramway - you should create form for role `%{role}` to edit %{model_class} model. It should be named %{class_name}"
+    model_or_form_not_available: 'Tramway - Model or Form is not available. Looks like current user does not have access to change this model. Update your tramway initializer file'
