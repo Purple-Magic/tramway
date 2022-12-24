@@ -47,6 +47,7 @@ jobs:
 
       - name: Setup app
         run: |
+          echo "Tramway.initialize_application name: :dummy" > spec/dummy/config/initializers/tramway.rb
           cd spec/dummy && bundle exec rails g tramway:install
         env:
           RAILS_ENV: test
