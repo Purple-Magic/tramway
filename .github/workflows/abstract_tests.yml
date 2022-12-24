@@ -47,7 +47,7 @@ jobs:
 
       - name: Setup app
         run: |
-          bundle exec rails g tramway:install
+          cd spec/dummy && bundle exec rails g tramway:install
         env:
           RAILS_ENV: test
           POSTGRES_USER: runner
