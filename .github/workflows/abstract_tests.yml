@@ -45,6 +45,10 @@ jobs:
           gem install bundler -v '2.1.2'
           bundle install --jobs 4 --retry 3
 
+      - name: Setup app
+        run: |
+          bundle exec rails g tramway:install
+
       - name: Setup Database
         run: |
           cp spec/dummy/config/database.yml.github-actions spec/dummy/config/database.yml
