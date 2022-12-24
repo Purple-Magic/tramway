@@ -51,7 +51,7 @@ module Tramway::Concerns::AttributesDecoratorHelper
 
   def src_thumb(original, thumb)
     thumb ||= original.is_a?(CarrierWave::Uploader::Base) ? original.small : nil
-    if thumb&.is_a?(CarrierWave::Uploader::Base)
+    if thumb.is_a?(CarrierWave::Uploader::Base)
       thumb.url
     elsif thumb&.match(BASE64_REGEXP)
       "data:image/jpeg;base64,#{thumb}"
@@ -61,9 +61,10 @@ module Tramway::Concerns::AttributesDecoratorHelper
   end
 
   def src_original(original)
-    if original.is_a?(CarrierWave::Uploader::Base)
+    case original
+    when CarrierWave::Uploader::Base
       original.url
-    elsif original.match(BASE64_REGEXP)
+    when BASE64_REGEXP
       "data:image/jpeg;base64,#{original}"
     else
       original

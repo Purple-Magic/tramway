@@ -1,4 +1,6 @@
 tramway:
+  project:
+    no_instance_of_application_class: "Looks like you have not create at least one instance of %{application_class} model OR Tramway Application Model is nil"
   collections:
     helper:
       collection_list_by:
@@ -38,3 +40,10 @@ tramway:
       please_implement_title: "Please, implement `title` method in a %{class_name} or delegate it to %{object_class}"
     link:
       method_link_uses_file_attribute: "Method `link` uses `file` attribute of the decorated object. If decorated object doesn't contain `file`, you shouldn't use `link` method."
+  generators:
+    install: 'Initialize Tramway application before running generators. Add `Tramway.initialize_application name: :your_application_name` to `config/initializers/tramway.rb`'
+  records:
+    there_is_no_dependency: "There is no dependency `%{dependency}` for plugin: %{project}. Please, check file `tramway-%{project}/lib/tramway/%{project}/%{project}.rb`"
+  application_controller:
+    create_form_for_role: "Tramway - you should create form for role `%{role}` to edit %{model_class} model. It should be named %{class_name}"
+    model_or_form_not_available: 'Tramway - Model or Form is not available. Looks like current user does not have access to change this model. Update your tramway initializer file'

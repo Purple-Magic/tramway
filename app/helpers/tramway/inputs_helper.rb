@@ -7,31 +7,28 @@ module Tramway::InputsHelper
   def association_params(form_object:, property:, value:, object:, options: {})
     full_class_name_association = form_object.class.full_class_name_association(property)
 
-    if full_class_name_association.to_s == 'Tramway::User'
-      user = defined?(current_user) ? current_user : current_user
-      value = user.id
-    end
+    value = current_user&.id if full_class_name_association.to_s == 'Tramway::User'
 
     build_input_attributes(object: object, property: property, options: options,
-                           value: build_value_for_association(form_object, property, value),
-                           collection: build_collection_for_association(form_object, property),
-                           include_blank: true,
-                           selected: form_object.model.send("#{property}_id") || value)
+      value: build_value_for_association(form_object, property, value),
+      collection: build_collection_for_association(form_object, property),
+      include_blank: true,
+      selected: form_object.model.send("#{property}_id") || value)
   end
 
   def polymorphic_association_params(object:, form_object:, property:, value:, options: {})
     build_input_attributes object: object, property: property,
-                           selected: build_value_for_polymorphic_association(form_object, property, value),
-                           value: build_value_for_polymorphic_association(form_object, property, value),
-                           collection: build_collection_for_polymorphic_association(form_object, property),
-                           options: options.merge(
-                             as: :select,
-                             include_blank: true,
-                             label_method: ->(obj) { "#{obj.class.model_name.human} | #{obj.name}" },
-                             value_method: lambda { |obj|
-                               "#{obj.class.to_s.underscore.sub(/_decorator$/, '')}_#{obj.id}"
-                             }
-                           )
+      selected: build_value_for_polymorphic_association(form_object, property, value),
+      value: build_value_for_polymorphic_association(form_object, property, value),
+      collection: build_collection_for_polymorphic_association(form_object, property),
+      options: options.merge(
+        as: :select,
+        include_blank: true,
+        label_method: ->(obj) { "#{obj.class.model_name.human} | #{obj.name}" },
+        value_method: lambda { |obj|
+          "#{obj.class.to_s.underscore.sub(/_decorator$/, '')}_#{obj.id}"
+        }
+      )
   end
 
   def build_input_attributes(**options)
@@ -91,7 +88,7 @@ module Tramway::InputsHelper
 
   def merge_with_user_options(builded_options, options)
     if options[:options].present?
-      options[:options].dig(:input_html)&.delete(:value)
+      options[:options][:input_html]&.delete(:value)
       builded_options.merge!(options) || {}
     end
     builded_options

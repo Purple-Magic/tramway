@@ -22,9 +22,11 @@
           %td
             = record.send attribute
         %td.actions
-          = link_to fa_icon('pencil-alt'), edit_current_model_record_path(record.id, redirect: current_model_records_path(record.id)), class: 'btn btn-warning btn-xs'
-          = delete_button url: current_model_record_path(record.id), form_options: { class: :smart_button }, button_options: { class: 'btn btn-xs btn-danger' } do
-            = fa_icon 'trash-alt'
+          - if update_is_available? record
+            = link_to fa_icon('pencil-alt'), edit_current_model_record_path(record.id, redirect: current_model_records_path(record.id)), class: 'btn btn-warning btn-xs'
+          - if destroy_is_available?(record)
+            = delete_button url: current_model_record_path(record.id), form_options: { class: :smart_button }, button_options: { class: 'btn btn-xs btn-danger' } do
+              = fa_icon 'trash-alt'
           - if tramway_model?(model_class)
             %br
             %br

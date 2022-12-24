@@ -5,4 +5,4 @@ default: &default
 
 test:
   <<: *default
-  database: tramway_core_test
+  database: tramway_test

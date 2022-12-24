@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Tramway::ApplicationForms::Frontend
-  def react_component(on = false)
+  def react_component(on: false)
     @react_component = on
   end
 

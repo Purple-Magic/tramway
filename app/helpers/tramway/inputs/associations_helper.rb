@@ -2,10 +2,9 @@
 
 module Tramway::Inputs::AssociationsHelper
   def build_collection_for_association(form_object, property)
-    user = defined?(current_user) ? current_user : current_user
     full_class_name_association = form_object.class.full_class_name_association(property)
     check_valid_association full_class_name_association
-    full_class_name_association.send("#{user.role}_scope", user.id).map do |obj|
+    full_class_name_association.send("#{current_user.role}_scope", current_user.id).map do |obj|
       decorator_class(full_class_name_association).decorate obj
     end.sort_by do |association|
       association.name || "#{association.class.name} ##{association.id}"

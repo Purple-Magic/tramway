@@ -6,9 +6,9 @@ module Tramway::SingletonModels
     @singleton_models[project] ||= {}
     @singleton_models[project][role] ||= {}
     models.each do |model|
-      if model.class == Class
+      if model.instance_of?(Class)
         @singleton_models[project][role].merge! model.to_s => %i[index show update create destroy]
-      elsif model.class == Hash
+      elsif model.instance_of?(Hash)
         @singleton_models[project][role].merge! model.to_s
       end
     end

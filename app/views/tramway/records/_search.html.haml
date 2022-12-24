@@ -1,4 +1,4 @@
-- if searchable_model?(model_class) || is_there_any_filters?(model_class)
+- if searchable_model?(model_class) || there_any_filters?(model_class)
   .search
     .d-flex.flex-row-reverse.filters
       = form_tag records_path, class: 'form-inline', method: :get do |f|
