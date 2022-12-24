@@ -19,14 +19,6 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Cache gems
-        uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gem-bundler-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gem-bundler-
-
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
