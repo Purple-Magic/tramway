@@ -3,17 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe Tramway::ApplicationDecorator do
-  let(:errors) { YAML.load_file(Rails.root.join('..', 'yaml', 'errors.yml')).with_indifferent_access }
+  let(:errors) { YAML.load_file('spec/yaml/errors.yml') }
+  let(:methods) { YAML.load_file('spec/yaml/methods.yml')['methods'] }
+
   it 'defined decorator class' do
     expect(defined?(described_class)).to be_truthy
   end
 
-  it 'should initialize new decorated object' do
+  it 'initializes new decorated object' do
     obj = 'it can be any object'
     expect { described_class.new obj }.not_to raise_error(StandardError)
   end
 
-  context 'Class check' do
+  context 'with class' do
     let(:class_methods) do
       described_class.methods -
         described_class.superclass.methods -
@@ -22,20 +24,7 @@ RSpec.describe Tramway::ApplicationDecorator do
     end
 
     it 'class should have only this methods list' do
-      expect(class_methods.should =~ %i[
-        decorate_association
-        decorate_associations
-        define_main_association_method
-        delegate_attributes
-        list_attributes
-        decorate
-        model_class
-        model_name
-        show_attributes
-        show_associations
-        collections
-        list_filters
-      ]).to be_truthy
+      expect(class_methods.should =~ methods['class_methods'].map(&:to_sym)).to be_truthy
     end
 
     it 'returns list attributes' do
@@ -67,83 +56,87 @@ RSpec.describe Tramway::ApplicationDecorator do
       expect(described_class.decorate(obj)).to be_a described_class
     end
 
-    context 'with TestModel' do
-      it 'should have 10 items' do
-        create_list :test_model, 10
-        models = TestModel.limit(10)
+    context 'with Book' do
+      it 'has 10 items' do
+        create_list :book, 10
+        models = Book.limit(10)
         expect(described_class.decorate(models).count).to eq 10
       end
 
-      it 'should decorate all items' do
-        create_list :test_model, 10
-        models = TestModel.limit(10)
+      it 'decorates all items' do
+        create_list :book, 10
+        models = Book.limit(10)
         expect(described_class.decorate(models)).to all be_a(described_class)
       end
 
-      it 'should decorate association models' do
-        test_model = create :test_model
-        create_list :association_model, 10, test_model_id: test_model.id
-        decorated_test_model = TestModelDecorator.decorate test_model
-        expect(decorated_test_model.association_models).to all be_a(AssociationModelDecorator)
+      it 'decorates association models' do
+        book = create :book
+        create_list :rent, 10, book_id: book.id
+        decorated_book = BookDecorator.decorate book
+        expect(decorated_book.rents).to all be_a(RentDecorator)
       end
 
-      it 'should create `association_as` method after decorating association' do
-        test_model = create :test_model
-        create_list :association_model, 10, test_model_id: test_model.id
-        decorated_test_model = TestModelDecorator.decorate test_model
-        expect(decorated_test_model.association_models_as).to eq :record
+      it 'creates `association_as` method after decorating association' do
+        book = create :book
+        create_list :feed, 10, associated_id: book.id, associated_type: 'Book'
+        decorated_book = BookDecorator.decorate book
+        expect(decorated_book.feeds_as).to eq :associated
       end
 
-      it 'should raise error about specify class_name of association' do
-        test_model = create :test_model
-        create_list :another_association_model, 10, test_model_id: test_model.id
-        decorated_test_model = TestModelDecorator.decorate test_model
-        expect { decorated_test_model.another_association_models }.to raise_error(
-          "Please, specify `another_association_models` association class_name in TestModel model. For example: `has_many :another_association_models, class_name: 'AnotherAssociationModel'`"
+      it 'raises error about specify class_name of association' do
+        reader = create :reader
+        create_list :rent, 10, reader_id: reader.id
+        decorated_reader = ReaderDecorator.decorate reader
+        expect { decorated_reader.rents }.to raise_error(
+          errors['raises_error_about_specify_class_name_of_association']
         )
       end
     end
   end
 
-  context 'Delegation checks' do
-    context 'with TestModel' do
-      let(:test_model) { create :test_model }
-      let(:decorated_test_model) { described_class.decorate test_model }
+  context 'with delegation' do
+    context 'with Book' do
+      let(:book) { create :book }
+      let(:decorated_book) { described_class.decorate book }
 
       it 'delegates ID to object' do
-        expect(decorated_test_model.id).to eq test_model.id
+        expect(decorated_book.id).to eq book.id
       end
     end
   end
 
-  context 'Object methods checks' do
-    context 'with TestModel' do
-      let(:test_model) { create :test_model }
-      let(:decorated_test_model) { described_class.decorate test_model }
+  context 'with object methods' do
+    context 'with Reader' do
+      let(:reader) { create :reader }
+      let(:decorated_reader) { described_class.decorate reader }
 
       it 'returns name' do
-        expect { decorated_test_model.name }.to raise_error(
-          RuntimeError,
-          'Please, implement `title` method in a Tramway::ApplicationDecorator or delegate it to TestModel'
-        )
+        expect { decorated_reader.name }.to raise_error(RuntimeError, errors['returns_name'])
       end
 
       it 'returns link' do
-        expect { decorated_test_model.link }.to(
-          raise_error("Method `link` uses `file` attribute of the decorated object. If decorated object doesn't contain `file`, you shouldn't use `link` method.")
-        )
+        expect { decorated_reader.link }.to raise_error(errors['returns_link_error'])
       end
 
       it 'returns model' do
-        expect(decorated_test_model.model).to eq test_model
+        expect(decorated_reader.model).to eq reader
       end
 
-      it 'returns associations' do
-        expect(decorated_test_model.associations(:has_many).map(&:name).should =~
-               %i[association_models another_association_models]).to be_truthy
-        expect(decorated_test_model.associations(:belongs_to).map(&:name).should =~ []).to be_truthy
-        expect(decorated_test_model.associations(:has_and_belongs_to_many).map(&:name).should =~ []).to be_truthy
-        expect(decorated_test_model.associations(:has_one).map(&:name).should =~ []).to be_truthy
+      it 'returns has_many association' do
+        expect(decorated_reader.associations(:has_many).map(&:name).should =~
+               %i[feeds rents]).to be_truthy
+      end
+
+      it 'returns belongs_to association' do
+        expect(decorated_reader.associations(:belongs_to).map(&:name).should =~ []).to be_truthy
+      end
+
+      it 'returns has_and_belongs_to_many association' do
+        expect(decorated_reader.associations(:has_and_belongs_to_many).map(&:name).should =~ []).to be_truthy
+      end
+
+      it 'returns has_one association' do
+        expect(decorated_reader.associations(:has_one).map(&:name).should =~ []).to be_truthy
       end
     end
   end

@@ -14,49 +14,35 @@ require 'tramway/welcome_page_actions'
 require 'tramway/navbar'
 require 'tramway/error'
 require 'tramway/generators/install_generator'
-require 'tramway/tramway_model_helper'
 require 'tramway/class_name_helpers'
 
 module Tramway
-  # Auth.layout_path = 'tramway/admin/application'
-
   class << self
     def initialize_application(**options)
       @application ||= Tramway::Application.new
-      options.each do |attr, value|
-        @application.send "#{attr}=", value
-      end
+
+      options.each { |attr, value| @application.send "#{attr}=", value }
     end
 
     def application_object
-      if @application&.model_class.present?
-        begin
-          @application.model_class.first
-        rescue StandardError
-          nil
-        end
-      else
-        @application
-      end
+      @application&.model_class.present? ? @application.model_class.first : @application
     end
 
     def root
       File.dirname __dir__
     end
 
-    attr_reader :application
+    attr_reader :application, :customized_admin_navbar
 
-    include ::Tramway::RecordsModels
-    include ::Tramway::SingletonModels
-    include ::Tramway::Forms
-    include ::Tramway::Notifications
-    include ::Tramway::WelcomePageActions
-    include ::Tramway::Navbar
-
-    attr_reader :customized_admin_navbar
+    include Tramway::RecordsModels
+    include Tramway::SingletonModels
+    include Tramway::Forms
+    include Tramway::Notifications
+    include Tramway::WelcomePageActions
+    include Tramway::Navbar
 
     def engine_class(project)
-      class_name = "::Tramway::#{project.to_s.camelize}"
+      class_name = "Tramway::#{project.to_s.camelize}"
       class_name.classify.safe_constantize
     end
 
@@ -66,47 +52,48 @@ module Tramway
 
     def get_models_by_key(checked_models, project, role)
       unless project.present?
-        error = Tramway::Error.new(
-          plugin: :admin,
-          method: :get_models_by_key,
-          message: "Looks like you have not create at least one instance of #{Tramway.application.model_class} model OR Tramway Application Model is nil"
+        Tramway::Error.raise_error(
+          :tramway,
+          :project,
+          :no_instance_of_application_class,
+          application_class: Tramway.application.model_class
         )
-        raise error.message
       end
+
       checked_models && checked_models[project]&.dig(role)&.keys || []
     end
 
     def models_array(models_type:, role:)
-      instance_variable_get("@#{models_type}_models")&.map do |projects|
-        projects.last[role]&.keys
-      end&.flatten || []
+      instance_variable_get("@#{models_type}_models")&.map { |projects| projects.last[role]&.keys }&.flatten || []
     end
 
     def action_is_available?(record, project:, role:, model_name:, action:)
       project = project.underscore.to_sym unless project.is_a? Symbol
-      actions = select_actions(project: project, role: role, model_name: model_name)
-      availability = actions&.select do |a|
-        if a.is_a? Symbol
-          a == action.to_sym
-        elsif a.is_a? Hash
-          a.keys.first.to_sym == action.to_sym
-        end
-      end&.first
+      actions = select_actions(project: project, role: role.to_sym, model_name: model_name)
+      availability = compute_availability actions, action
 
       return false unless availability.present?
       return true if availability.is_a? Symbol
 
-      availability.values.first.call record
+      availability.call record
+    end
+
+    def compute_availability(actions, action)
+      case actions
+      when Array
+        actions.select { |a| a.to_sym == action.to_sym }.first
+      when Hash
+        actions[action.to_sym]
+      end
     end
 
     def select_actions(project:, role:, model_name:)
-      stringify_keys(@singleton_models&.dig(project, role))&.dig(model_name) || stringify_keys(@available_models&.dig(project, role))&.dig(model_name)
+      stringify = ->(models) { stringify_keys(models&.dig(project, role))&.dig(model_name) }
+      stringify.call(@singleton_models) || stringify.call(@available_models)
     end
 
     def stringify_keys(hash)
-      hash&.reduce({}) do |new_hash, pair|
-        new_hash.merge! pair[0].to_s => pair[1]
-      end
+      hash&.reduce({}) { |new_hash, pair| new_hash.merge! pair[0].to_s => pair[1] }
     end
 
     def admin_model
@@ -114,14 +101,15 @@ module Tramway
     end
 
     def auth_config
-      @@auth_config ||= [{ user_model: ::Tramway::User, auth_attributes: :email }]
+      @@auth_config ||= [{ user_model: Tramway::User, auth_attributes: :email }]
       @@auth_config
     end
 
     def auth_config=(params)
-      if params.is_a? Hash
+      case params
+      when Hash
         @@auth_config = [params]
-      elsif params.is_a? Array
+      when Array
         @@auth_config = params
       end
     end

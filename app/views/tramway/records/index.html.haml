@@ -2,14 +2,15 @@
 - current_title = default_page_title || plural(model_class).capitalize
 - title current_title
 - state_method ||= :state
-- tabs = get_collection
+- tabs = decorator_class.collections
 .page-header
   .row
-    - search_render_show = searchable_model?(model_class) || is_there_any_filters?(model_class)
+    - search_render_show = searchable_model?(model_class) || there_any_filters?(model_class)
     %div{ class: "col-md-#{search_render_show ? 4 : 12}" }
       %h1
         = current_title
-        = link_to fa_icon(:plus), new_current_model_record_path, class: 'btn btn-primary'
+        - if create_is_available?(model_class.name)
+          = link_to fa_icon(:plus), new_current_model_record_path, class: 'btn btn-primary'
         - if defined? Tramway::Export::Engine
           = render 'tramway/export/button'
     .col

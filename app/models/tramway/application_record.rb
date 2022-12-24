@@ -6,23 +6,13 @@ class Tramway::ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
   audited
   extend ::Enumerize
-  include ::AASM
+  include AASM
   acts_as_paranoid
 
   scope :created_by_user, lambda { |user_id|
     joins(:audits).where('audits.action = \'create\' AND audits.user_id = ?', user_id)
   }
   scope :admin_scope, ->(_arg) { all }
-
-  # FIXME: remove this after testing soft-deletion
-  aasm column: :state do
-    state :active, initial: true
-    state :removed
-
-    event :remove do
-      transitions from: :active, to: :removed
-    end
-  end
 
   include ::PgSearch::Model
 

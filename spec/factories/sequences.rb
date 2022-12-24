@@ -3,10 +3,10 @@
 # include ActionDispatch::TestProcess
 
 FactoryBot.define do
-  sequence :string do |n|
+  sequence :string, aliases: %i[title description] do |n|
     "string#{n}"
   end
-  sequence :name do |n|
+  sequence :name, aliases: [:username] do |n|
     "name#{n}"
   end
   sequence :address do |n|
@@ -15,8 +15,8 @@ FactoryBot.define do
   sequence :short_string do |n|
     "str#{n}"
   end
-  sequence :password do |n|
-    "password#{n}"
+  sequence :password do |_n|
+    '123'
   end
   sequence :integer do |n|
     n
@@ -52,6 +52,6 @@ FactoryBot.define do
     rand(10..100).year.ago
   end
   sequence :zipcode do |n|
-    "#{n}000"[0, 3] + 'AH'
+    "#{"#{n}000"[0, 3]}AH"
   end
 end

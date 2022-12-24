@@ -6,8 +6,8 @@ module Tramway::ExtendableFormsHelpers::Submit::ClassHelpers
       model.values ||= {}
       extended_params = extended(simple_properties, more_properties, params)
       every_attribute_set params
-      model.values = extended_params.reduce(model.values) do |hash, pair|
-        hash.merge! pair[0] => pair[1]
+      model.values = extended_params.reduce(model.values) do |hash, (key, value)|
+        hash.merge! key => value
       end
 
       return unless model.errors.empty?

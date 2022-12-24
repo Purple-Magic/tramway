@@ -2,9 +2,8 @@
 
 module Tramway::Inputs::PolymorphicAssociationsHelper
   def build_collection_for_polymorphic_association(form_object, property)
-    user = defined?(current_user) ? current_user : current_user
     object_names = full_class_names(form_object, property).map do |class_name|
-      class_name.send("#{user.role}_scope", user.id).map do |obj|
+      class_name.send("#{current_user.role}_scope", current_user.id).map do |obj|
         decorator_class(class_name).decorate obj
       end
     end.flatten
