@@ -48,6 +48,9 @@ jobs:
       - name: Setup app
         run: |
           bundle exec rails g tramway:install
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: runner
 
       - name: Setup Database
         run: |
