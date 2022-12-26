@@ -8,7 +8,7 @@ services:
       - POSTGRES_PASSWORD=postgres
   rails:
     build: .
-    command: /bin/bash -lic 'bundle exec rspec spec/'
+    command: /bin/bash -lic 'bundle exec rspec ./spec/features/sessions/create_spec.rb:14'
     entrypoint: ./docker-entrypoint.sh
     tty: true
     stdin_open: true
@@ -17,6 +17,11 @@ services:
       - .:/app
     depends_on:
       - db
+    links:
+      - chrome-server
+  chrome-server:
+    image: selenium/standalone-chrome:96.0
+
 volumes:
   app:
   db:
