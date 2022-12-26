@@ -2,8 +2,7 @@ install:
 	cd spec/dummy && rails g tramway:install
 
 test:
-	cd spec/dummy && rails db:create db:migrate
-	bundle exec rake
+	docker-compose up --build --abort-on-container-exit
 
 rubocop:
 	bundle exec rubocop -A
