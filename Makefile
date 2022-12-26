@@ -1,9 +1,6 @@
-install:
-	cd spec/dummy && rails g tramway:install
-
 test:
-	cd spec/dummy && rails db:create db:migrate
-	bundle exec rake
+	docker-compose up --build --abort-on-container-exit
 
 rubocop:
-	bundle exec rubocop -A
+	docker pull kalashnikovisme/docker-rubocop:ruby-2.7.7
+	docker run --rm --volume "${PWD}:/app" kalashnikovisme/docker-rubocop:ruby-2.7.7

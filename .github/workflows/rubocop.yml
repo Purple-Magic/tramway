@@ -1,0 +1,10 @@
+name: Rubocop
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  build:
+    uses: ./.github/workflows/abstract_rubocop.yml

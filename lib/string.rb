@@ -4,7 +4,8 @@ require 'active_support/inflector/methods'
 
 class String
   def pluralize(count = nil, locale = :en)
-    if locale == :ru
+    case locale
+    when :ru
       case count
       when :many
         I18n.t('cases.')
