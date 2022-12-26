@@ -12,11 +12,7 @@ describe 'Sign in' do
   end
 
   it 'sign_ins' do
-    begin
-      pass_authorization user
-    rescue
-      puts page.html
-    end
+    pass_authorization user
 
     expect(page).to have_content "#{user.first_name} #{user.last_name}"
   end
