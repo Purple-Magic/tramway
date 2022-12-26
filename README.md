@@ -891,5 +891,19 @@ Tramway::Admin.set_navbar_structure(
 rails g tramway:admin:model Audited::Audit
 ```
 
+## Development
+
+### Tests
+
+```
+make test
+```
+
+### Rubocop
+
+```
+make rubocop
+```
+
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
