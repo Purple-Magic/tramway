@@ -16,4 +16,15 @@ describe 'Sign in' do
 
     expect(page).to have_content "#{user.first_name} #{user.last_name}"
   end
+
+  it 'does not sign in' do
+    visit home_page
+
+    fill_in 'Email', with: 'not_existed_user@email.com'
+    fill_in 'Password', with: '123'
+
+    click_on 'Sign In', class: 'btn-success'
+
+    expect(page).to have_content 'Wrong email or password'
+  end
 end

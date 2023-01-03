@@ -14,17 +14,13 @@ class Tramway::SessionsController < Tramway::ApplicationController
   end
 
   def create
-    if find_object_by_email.present?
-      @session_form = Tramway::SessionForm.new find_object_by_email
+    @session_form = Tramway::SessionForm.new find_object_by_email
 
-      if @session_form.validate params[:user]
-        sign_in @session_form.model
-        redirect_to redirect_params_for status: :success
-      else
-        redirect_to redirect_params_for status: :error
-      end
+    if @session_form.validate params[:user]
+      sign_in @session_form.model
+      redirect_to redirect_params_for status: :success
     else
-      redirect_to redirect_params_for status: :error
+      render :new
     end
   end
 
@@ -52,6 +48,6 @@ class Tramway::SessionsController < Tramway::ApplicationController
   end
 
   def redirect_params_for(status:)
-    [(params["#{status}_redirect".to_sym] || root_path), '?', { flash: "#{status}_user_sign_in".to_sym }.to_query].join
+    Tramway::Engine.routes.url_helpers.new_session_path flash: "#{status}_user_sign_in".to_sym 
   end
 end
