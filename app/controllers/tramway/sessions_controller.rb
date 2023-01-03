@@ -14,7 +14,7 @@ class Tramway::SessionsController < Tramway::ApplicationController
   end
 
   def create
-    @session_form = Tramway::SessionForm.new find_object_by_email
+    @session_form = Tramway::SessionForm.new record
 
     if @session_form.validate params[:user]
       sign_in @session_form.model
@@ -39,8 +39,8 @@ class Tramway::SessionsController < Tramway::ApplicationController
     end
   end
 
-  def find_object_by_email
-    @object ||= params[:model].constantize.find_by email: params[:user][:email]
+  def record
+    @record ||= params[:model].constantize.find_by email: params[:user][:email]
   end
 
   def root_path
@@ -48,6 +48,6 @@ class Tramway::SessionsController < Tramway::ApplicationController
   end
 
   def redirect_params_for(status:)
-    Tramway::Engine.routes.url_helpers.new_session_path flash: "#{status}_user_sign_in".to_sym 
+    Tramway::Engine.routes.url_helpers.new_session_path flash: "#{status}_user_sign_in".to_sym
   end
 end
