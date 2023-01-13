@@ -45,6 +45,10 @@ module TramwayHelpers::Buttons
     find("a#{EDIT_RECORD_BUTTON_SELECTOR}[href='#{edit_path(object, redirect_to: redirect_to)}']").click
   end
 
+  def click_on_sign_out
+    find('a.nav-link[href="/admin/sign_out"]').click
+  end
+
   def click_on_association_delete_button(object)
     row = find("td[colspan='2'] td a[href='#{delete_path(object)}']").parent_node(level: 2)
     row.find('td button.delete[type="submit"]').click
