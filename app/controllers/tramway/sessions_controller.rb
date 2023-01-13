@@ -18,7 +18,7 @@ class Tramway::SessionsController < Tramway::ApplicationController
 
     if @session_form.validate params[:user]
       sign_in @session_form.model
-      redirect_to redirect_params_for status: :success
+      redirect_to root_path
     else
       render :new
     end
@@ -26,7 +26,7 @@ class Tramway::SessionsController < Tramway::ApplicationController
 
   def destroy
     root_path = Tramway::Engine.routes.url_helpers.root_path
-    sign_out params[:model]
+    sign_out
 
     redirect_to params[:redirect] || root_path
   end
@@ -45,9 +45,5 @@ class Tramway::SessionsController < Tramway::ApplicationController
 
   def root_path
     Tramway::Engine.routes.url_helpers.root_path[0..-2]
-  end
-
-  def redirect_params_for(status:)
-    Tramway::Engine.routes.url_helpers.new_session_path flash: "#{status}_user_sign_in".to_sym
   end
 end
