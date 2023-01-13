@@ -11,7 +11,7 @@ class Tramway::SessionForm < Tramway::ApplicationForm
   end
 
   def validate(params)
-    add_wrong_email_or_password_error if model.new_record?
+    (add_wrong_email_or_password_error && return) if model.new_record?
 
     (!model.new_record? && model.authenticate(params[:password])).tap do |result|
       add_wrong_email_or_password_error unless result
