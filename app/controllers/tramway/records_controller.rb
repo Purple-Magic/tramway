@@ -20,7 +20,7 @@ class Tramway::RecordsController < Tramway::ApplicationController
 
   def create
     @record_form = admin_form_class.new model_class.new
-    if @record_form.submit params[:record]
+    if @record_form.submit params[attributes_key]
       redirect_to params[:redirect].present? ? params[:redirect] : record_path(@record_form.model)
     else
       render :new
@@ -38,7 +38,7 @@ class Tramway::RecordsController < Tramway::ApplicationController
         record_make_state_event!
         default_redirect
       end
-    elsif @record_form.submit params[:record]
+    elsif @record_form.submit params[attributes_key]
       default_redirect
     else
       render :edit
@@ -66,7 +66,7 @@ class Tramway::RecordsController < Tramway::ApplicationController
   end
 
   def state_event
-    params[:record][:aasm_event]
+    params[attributes_key][:aasm_event]
   end
 
   def scope
@@ -75,5 +75,11 @@ class Tramway::RecordsController < Tramway::ApplicationController
 
   def full_text_search(records)
     params[:search].present? ? records.full_text_search(params[:search]) : records
+  end
+
+  def attributes_key
+    key = model_class.to_s.underscore
+
+    params[key].present? ? key : :record
   end
 end

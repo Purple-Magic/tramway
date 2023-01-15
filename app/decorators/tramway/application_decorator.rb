@@ -6,12 +6,12 @@ require 'tramway/class_name_helpers'
 class Tramway::ApplicationDecorator
   include ActionView::Helpers
   include ActionView::Context
-  include ::FontAwesome5::Rails::IconHelper
-  include ::Tramway::CopyToClipboardHelper
-  include ::Tramway::Associations::ObjectHelper
-  include ::Tramway::Attributes::ViewHelper
-  include ::Tramway::Concerns::TableBuilder
-  include ::Tramway::ClassNameHelpers
+  include FontAwesome5::Rails::IconHelper
+  include Tramway::CopyToClipboardHelper
+  include Tramway::Associations::ObjectHelper
+  include Tramway::Attributes::ViewHelper
+  include Tramway::Concerns::TableBuilder
+  include Tramway::ClassNameHelpers
 
   def initialize(object)
     @object = object
@@ -50,9 +50,9 @@ class Tramway::ApplicationDecorator
   delegate :id, to: :object
 
   class << self
-    include ::Tramway::Associations::ClassHelper
-    include ::Tramway::Delegating::ClassHelper
-    include ::Tramway::Default::ValuesHelper
+    include Tramway::Associations::ClassHelper
+    include Tramway::Delegating::ClassHelper
+    include Tramway::Default::ValuesHelper
 
     def decorate(object_or_array)
       is_activerecord_relation = object_or_array.class.superclass == ActiveRecord::Relation
