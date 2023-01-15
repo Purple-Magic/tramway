@@ -13,7 +13,10 @@
         - buttons = object.additional_buttons&.dig :show
         - buttons&.each do |button|
           = link_to button[:url], method: button[:method], class: "btn btn-#{button[:color]}" do
-            = button[:inner].call
+            - if button[:text].present?
+              = button[:text]
+            - if button[:inner].present?
+              = button[:inner].call
 %hr
 .row
   %table.table.table-striped.table-bordered
