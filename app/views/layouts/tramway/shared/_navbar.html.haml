@@ -35,23 +35,6 @@
           %li.nav-item
             %span.nav-link
               = "#{current_user.first_name} #{current_user.last_name}"
-          - if @notifications_count.present?
-            - if @notifications_count > 0
-              %li.nav-item.dropdown.notifications
-                = link_to '#', class: 'nav-link icon-in-navbar dropdown-toggle', id: :notifications_dropdown, role: :button, aria: { haspopup: true, expanded: false }, data: { toggle: :dropdown } do
-                  %span.badge.badge-light
-                    = @notifications_count
-                .dropdown-menu.dropdown-menu-right.scrollable{ aria: { labelledby: :notifications_dropdown } }
-                  - @notifications.each_with_index do |collection, index|
-                    - collection[1].each do |item|
-                      = link_to decorator_class(item.class).decorate(item).title, record_path(item, model: item.class), class: 'dropdown-item'
-                    - if index < @notifications.count - 1
-                      .dropdown-divider
-            - else
-              %li.nav-item.notifications
-                = link_to '#', class: 'nav-link icon-in-navbar' do
-                  %span.badge.badge-light
-                    = @notifications_count
           %li.nav-item
             = link_to '/admin/sign_out', class: 'nav-link' do
               = fa_icon 'sign-out-alt'
