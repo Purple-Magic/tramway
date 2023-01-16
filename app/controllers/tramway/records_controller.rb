@@ -78,8 +78,9 @@ class Tramway::RecordsController < Tramway::ApplicationController
   end
 
   def attributes_key
-    key = model_class.to_s.underscore
+    actual_key_name = model_class.to_s.underscore
+    old_key_name = :record
 
-    params[key].present? ? key : :record
+    params[actual_key_name].present? ? actual_key_name : old_key_name
   end
 end
