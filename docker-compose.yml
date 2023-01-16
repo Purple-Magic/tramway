@@ -1,0 +1,28 @@
+version: '3.5'
+services:
+  db:
+    image: postgres:14-alpine
+    volumes:
+      - 'db:/var/lib/postgresql/data'
+    environment:
+      - POSTGRES_PASSWORD=postgres
+  rails:
+    build: .
+    command: /bin/bash -lic 'bundle exec rspec'
+    entrypoint: ./docker-entrypoint.sh
+    tty: true
+    stdin_open: true
+    volumes:
+      - bundle:/bundle
+      - .:/app
+    depends_on:
+      - db
+    links:
+      - chrome-server
+  chrome-server:
+    image: selenium/standalone-chrome:96.0
+
+volumes:
+  app:
+  db:
+  bundle:

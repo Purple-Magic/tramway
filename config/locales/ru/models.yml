@@ -1,7 +1,21 @@
 ru:
   activerecord:
+    models:
+      tramway/user/user: Пользователь
     attributes:
-      tramway/core/application_record:
+      tramway/application_record:
         created_at: Создан
         updated_at: Обновлён
         state: Статус
+      tramway/user:
+        password: Пароль
+    errors:
+      models:
+        tramway/user/user:
+          attributes:
+            email:
+              email: имеет неверный формат
+  cases:
+    tramway/user:
+      plural: пользователи
+      genitive: пользователя

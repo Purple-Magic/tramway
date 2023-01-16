@@ -1,0 +1,35 @@
+- default_page_title ||= nil; on_site_link ||= nil
+- current_title = default_page_title || "#{object.name} | #{model_class.model_name.human.pluralize(I18n.locale)}"
+- title current_title
+.page-header
+  .row
+    .col-md-12
+      %h2
+        = current_title
+        - edit_path = object_type(object) == :singleton ? edit_current_model_singleton_path : edit_current_model_record_path(object.id)
+        = link_to fa_icon('pencil-alt'), edit_path, class: 'btn btn-warning btn-xs'
+        - if public_path(object)
+          = link_to fa_icon(:share), public_path(object), class: 'btn btn-primary btn-xs'
+        - buttons = object.additional_buttons&.dig :show
+        - buttons&.each do |button|
+          = link_to button[:url], method: button[:method], class: "btn btn-#{button[:color]}" do
+            - if button[:text].present?
+              = button[:text]
+            - if button[:inner].present?
+              = button[:inner].call
+%hr
+.row
+  %table.table.table-striped.table-bordered
+    - if object.class.show_attributes.any?
+      - object.class.show_attributes.each do |attribute_name|
+        - value = object.send attribute_name
+        = render 'tramway/shared/show/attribute_tr', attribute_name: attribute_name, value: value, object: object
+    - else
+      - object.attributes.each do |attribute_name, value|
+        = render 'tramway/shared/show/attribute_tr', attribute_name: attribute_name, value: value, object: object
+    - object.associations(:has_one).each do |association|
+      = render 'tramway/shared/show/associations/row', object: object, association: association
+    - object.associations(:has_many).each do |association|
+      = render 'tramway/shared/show/associations/row', object: object, association: association
+    - object.associations(:has_and_belongs_to_many).each do |association|
+      = render 'tramway/shared/show/associations/habtm_row', object: object, association: association

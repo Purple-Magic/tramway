@@ -1,11 +1,9 @@
-first_test:
-	rm -rf spec/dummy
-	git clone git@github.com:purple-magic/tramway_test spec/dummy/
-	cd spec/dummy && bundle install && rails db:create db:migrate
-	rake
-
 test:
-	bundle exec rake
+	docker-compose up --build --abort-on-container-exit
 
 rubocop:
-	bundle exec rubocop -a
+	docker pull kalashnikovisme/docker-rubocop:ruby-2.7.7
+	docker run --rm --volume "${PWD}:/app" kalashnikovisme/docker-rubocop:ruby-2.7.7
+
+attach:
+	sh ./docker_attach_web_container.sh

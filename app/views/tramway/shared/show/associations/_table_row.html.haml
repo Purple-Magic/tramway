@@ -1,0 +1,21 @@
+- if (!association_object.is_a?(Array) || !association_object.empty?) && association_object.present?
+  %tr{ id: "#{association.name}_#{association_object.id}" }
+    %td
+      = association_object.id
+    %td
+      = link_to association_object.name, record_path(association_object.id, model: association.options[:class_name])
+    - if association_object.model.class.state_machines_names.any?
+      - state_machine_names = association_object.listed_state_machines || association_object.model.class.state_machines_names
+      %td
+        - state_machine_names.each do |state_method|
+          = state_events_buttons association_object, state_method: state_method, model_param_name: :record, parameters: { redirect: current_model_record_path(object.id), model: association_object.class.model_name }, button_options: { class: :smart_button }
+    %td{ style: 'display: flex; justify-content: space-evenly' }
+      - if update_is_available? association_object
+        = edit_button url: edit_record_path(association_object.id, model: association.options[:class_name], redirect: current_model_record_path(object.id)), button_options: { class: 'btn btn-xs btn-warning edit', style: 'height: max-content' } do
+          = fa_icon 'pencil-alt'
+      - if destroy_is_available? association_object
+        = delete_button url: record_path(association_object.id, model: association.options[:class_name], redirect: current_model_record_path(object.id)), button_options: { class: 'btn btn-xs btn-danger delete' } do
+          = fa_icon 'trash-alt'
+      - if habtm_destroy_is_available? association_object, object
+        = delete_button url: has_and_belongs_to_many_record_path(association_object.id, model_class: object.model.class, object_id: object.id, form: "Admin::#{object.model.class.to_s.pluralize}::Remove#{association_object.model.class.to_s}Form", redirect: current_model_record_path(object.id)), button_options: { class: 'btn btn-xs btn-danger delete' } do
+          = fa_icon 'trash-alt'

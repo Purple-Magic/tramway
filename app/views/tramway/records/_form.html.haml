@@ -1,0 +1,22 @@
+- current_title = page_title(action, model_class)
+- title current_title
+.page-header
+  %h1= current_title
+%hr
+.row
+  .col-lg-12
+    = render 'tramway/shared/messages', object: @record_form
+.row
+  .col-lg-12
+    - if @record_form.class.react_component?
+      = react_component "#{@record_form.class.name.gsub('::', '/')}", react_params(@record_form, action, method)
+    - else
+      = simple_form_for @record_form, url: { controller: :records, action: action, model: @record_form.model.class }, method: method, input_html: { class: 'form-horizontal' } do |f|
+        - @record_form.properties.each do |property, type|
+          = render 'tramway/shared/input', property: property, object: :record, type: type, form: f, destination: :admin, value: value_from_params(model_class: model_class, property: property, type: type)
+        = hidden_field_tag :redirect, params[:redirect]
+        = f.button :submit, t('helpers.links.save'), class: 'btn btn-success'
+        = link_to t('helpers.links.back'), current_model_records_path, class: 'btn btn-secondary'
+
+-# NOTES
+-# * value_from_params helper is in tramway gem app/helpers/inputs_helpers.rb

@@ -32,3 +32,16 @@ methods:
       - safe_list_sanitizer
       - safe_list_sanitizer=
       - _url_for_modules
+  class_methods:
+    - decorate_association
+    - decorate_associations
+    - define_main_association_method
+    - delegate_attributes
+    - list_attributes
+    - decorate
+    - model_class
+    - model_name
+    - show_attributes
+    - show_associations
+    - collections
+    - list_filters
