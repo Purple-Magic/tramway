@@ -13,6 +13,7 @@
         = t 'helpers.links.actions'
   %tbody
     - @records.each_with_index do |record, index|
+      - model_name = record.class.model_name.name
       %tr
         %th{ scope: :row }
           = link_to record.id, current_model_record_path(record.id)
@@ -33,6 +34,5 @@
             .btn-group{ data: { toggle: :buttons } }
               - state_machine_names = record.listed_state_machines || record.model.class.state_machines_names
               - state_machine_names.each do |state_machine_name|
-                - unless state_machine_name == 'default'
-                  = state_events_buttons record, state_method: state_machine_name, model_param_name: :record, controller: 'tramway/records', action: :update, parameters: { redirect: current_model_records_path(page: params[:page], scope: params[:scope], filter: params[:filter], focus: focus_selector(index)), model: record.class.model_name }, button_options: { class: :smart_button }
+                = state_events_buttons record, state_method: state_machine_name, model_param_name: :record, parameters: { redirect: current_model_records_path(page: params[:page], scope: params[:scope], filter: params[:filter], focus: focus_selector(index)), model: model_name }, button_options: { class: :smart_button }
 = paginate @records, theme: 'twitter-bootstrap-4'

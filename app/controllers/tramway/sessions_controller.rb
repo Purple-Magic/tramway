@@ -14,23 +14,19 @@ class Tramway::SessionsController < Tramway::ApplicationController
   end
 
   def create
-    if find_object_by_email.present?
-      @session_form = Tramway::SessionForm.new find_object_by_email
+    @session_form = Tramway::SessionForm.new record
 
-      if @session_form.validate params[:user]
-        sign_in @session_form.model
-        redirect_to redirect_params_for status: :success
-      else
-        redirect_to redirect_params_for status: :error
-      end
+    if @session_form.validate params[:user]
+      sign_in @session_form.model
+      redirect_to root_path
     else
-      redirect_to redirect_params_for status: :error
+      render :new
     end
   end
 
   def destroy
     root_path = Tramway::Engine.routes.url_helpers.root_path
-    sign_out params[:model]
+    sign_out
 
     redirect_to params[:redirect] || root_path
   end
@@ -43,15 +39,11 @@ class Tramway::SessionsController < Tramway::ApplicationController
     end
   end
 
-  def find_object_by_email
-    @object ||= params[:model].constantize.find_by email: params[:user][:email]
+  def record
+    @record ||= params[:model].constantize.find_by email: params[:user][:email]
   end
 
   def root_path
     Tramway::Engine.routes.url_helpers.root_path[0..-2]
-  end
-
-  def redirect_params_for(status:)
-    [(params["#{status}_redirect".to_sym] || root_path), '?', { flash: "#{status}_user_sign_in".to_sym }.to_query].join
   end
 end

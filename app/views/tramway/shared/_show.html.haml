@@ -12,7 +12,11 @@
           = link_to fa_icon(:share), public_path(object), class: 'btn btn-primary btn-xs'
         - buttons = object.additional_buttons&.dig :show
         - buttons&.each do |button|
-          - build_button button
+          = link_to button[:url], method: button[:method], class: "btn btn-#{button[:color]}" do
+            - if button[:text].present?
+              = button[:text]
+            - if button[:inner].present?
+              = button[:inner].call
 %hr
 .row
   %table.table.table-striped.table-bordered
