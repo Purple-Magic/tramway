@@ -3,6 +3,8 @@
 require 'carrierwave/orm/activerecord' if defined?(CarrierWave::Mount)
 
 class Tramway::ApplicationRecord < ActiveRecord::Base
+  primary_abstract_class
+
   self.abstract_class = true
   audited
   extend ::Enumerize

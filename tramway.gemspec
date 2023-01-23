@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
-  s.add_dependency 'rails', '5.1.7'
+  s.add_dependency 'rails', '~> 7'
 
   s.add_dependency 'aasm'
   s.add_dependency 'audited', '>= 4.8.0'
@@ -35,12 +35,12 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari', '>= 1.1.1'
   s.add_dependency 'loofah', '>= 2.3.1'
   s.add_dependency 'mini_magick', '~> 4.8', '>= 4.8.0'
-  s.add_dependency 'nokogiri', '1.13.10'
+  s.add_dependency 'nokogiri'
   s.add_dependency 'paranoia', '~> 2.2'
   s.add_dependency 'pg_search'
   s.add_dependency 'ransack'
   s.add_dependency 'rmagick', '~> 4.2.2'
-  s.add_dependency 'sass-rails', '~> 5.0', '>= 5.0.7'
+  s.add_dependency 'sass-rails', '~> 6'
   s.add_dependency 'simple_form', '>= 5.0.0'
   s.add_dependency 'smart_buttons', '>= 1.0'
   s.add_dependency 'trap', '~> 4.0'
