@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 module Tramway::RecordsModels
-  def set_available_models(*models, project:, role: :admin)
+  def set_available_models(models, project:, role: :admin)
     initialize_available_models_for project, role
+
+    if !models.is_a?(Array) && !models.is_a?(Hash)
+      Tramway::Error.raise_error :records, :wrong_available_models_type
+    end
 
     models.each do |model|
       if model.instance_of?(Class) || model.instance_of?(String)

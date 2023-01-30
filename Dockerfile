@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ruby:3.2
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends postgresql-client
