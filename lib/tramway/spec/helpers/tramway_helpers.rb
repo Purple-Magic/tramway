@@ -11,11 +11,11 @@ module TramwayHelpers
   end
 
   def click_on_tab(text)
-    find('li.nav-item a.nav-link', text: text).click
+    find('li.nav-item a.nav-link', text:).click
   end
 
   def click_on_table_item(text)
-    find('table td a', text: text).click
+    find('table td a', text:).click
   end
 
   def click_on_delete_button(object)

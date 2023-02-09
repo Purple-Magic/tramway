@@ -51,7 +51,7 @@ module Tramway::StateMachineButtonsHelper
 
     {
       record: object.model,
-      attributes: attributes,
+      attributes:,
       model_name: options[:model_name],
       button_options: { class: css_class },
       form_options: options[:form_options],

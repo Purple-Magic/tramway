@@ -18,13 +18,13 @@ module Tramway::Inputs::AssociationsHelper
   def check_valid_association(full_class_name_association)
     unless full_class_name_association
       Tramway::Error.raise_error(
-        :tramway, :inputs_helpers, :association_params, :defined_with_property_method, property: property
+        :tramway, :inputs_helpers, :association_params, :defined_with_property_method, property:
       )
     end
     return unless full_class_name_association.is_a? Array
 
     Tramway::Error.raise_error(
-      :tramway, :inputs_helpers, :association_params, :used_polymorphic_association, property: property
+      :tramway, :inputs_helpers, :association_params, :used_polymorphic_association, property:
     )
   end
 end

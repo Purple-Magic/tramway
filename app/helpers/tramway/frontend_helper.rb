@@ -2,7 +2,7 @@
 
 module Tramway::FrontendHelper
   def react_params(form, action, method)
-    form.properties.each_with_object({ action: react_params_url(form, action), method: method,
+    form.properties.each_with_object({ action: react_params_url(form, action), method:,
                                        authenticity_token: form_authenticity_token }) do |property, hash|
       case property[1]
       when :association

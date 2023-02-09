@@ -83,8 +83,8 @@ class Tramway::ApplicationController < ActionController::Base
         :application,
         :create_form_for_role,
         role: current_user.role,
-        model_class: model_class,
-        class_name: class_name
+        model_class:,
+        class_name:
       )
     end
 

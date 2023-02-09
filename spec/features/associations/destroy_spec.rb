@@ -10,7 +10,7 @@ describe 'Associations destroy' do
     create :book
   end
   let!(:rent) do
-    create :rent, book: book
+    create :rent, book:
   end
 
   context 'with permissions to destroy' do
@@ -58,7 +58,7 @@ describe 'Associations destroy' do
       end
 
       let!(:book) { create :book, title: "Asya-#{DateTime.now.strftime('%H:%M:%s')}" }
-      let!(:rent) { create :rent, book: book }
+      let!(:rent) { create :rent, book: }
 
       it 'deletes record' do
         user_actions.call

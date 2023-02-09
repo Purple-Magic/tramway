@@ -6,15 +6,7 @@ module Tramway::RecordsModels
 
     Tramway::Error.raise_error :records, :wrong_available_models_type if !models.is_a?(Array) && !models.is_a?(Hash)
 
-    if models.is_a? Array
-      models.each do |model|
-        if model.instance_of?(Class) || model.instance_of?(String)
-          @available_models[project][role].merge! model.to_s => %i[index show update create destroy]
-        elsif model.instance_of?(Hash)
-          @available_models[project][role].merge! model
-        end
-      end
-    end
+    handle_array_of_models(models, project:, role:) if models.is_a? Array
 
     @available_models[project][role].merge! models if models.is_a? Hash
     @available_models = @available_models.with_indifferent_access
@@ -31,7 +23,7 @@ module Tramway::RecordsModels
   end
 
   def available_models(role:)
-    models_array models_type: :available, role: role
+    models_array models_type: :available, role:
   end
 
   def clear_available_models!
@@ -39,6 +31,16 @@ module Tramway::RecordsModels
   end
 
   private
+
+  def handle_array_of_models(models, project:, role:)
+    models.each do |model|
+      if model.instance_of?(Class) || model.instance_of?(String)
+        @available_models[project][role].merge! model.to_s => %i[index show update create destroy]
+      elsif model.instance_of?(Hash)
+        @available_models[project][role].merge! model
+      end
+    end
+  end
 
   def initialize_available_models_for(project, role)
     @available_models ||= {}
@@ -51,7 +53,7 @@ module Tramway::RecordsModels
       if @available_models&.dig(dependency, role).present?
         @available_models&.dig(dependency, role)&.keys
       else
-        Tramway::Error.raise_error :records, :there_is_no_dependency, dependency: dependency, project: project
+        Tramway::Error.raise_error(:records, :there_is_no_dependency, dependency:, project:)
       end
     end.flatten.compact
   end
