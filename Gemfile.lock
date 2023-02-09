@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    tramway (0.1.1.1)
+    tramway (0.1.2)
       aasm
       audited (>= 4.8.0)
       bootstrap (>= 4.1.2)
@@ -284,7 +284,7 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    ransack (3.2.1)
+    ransack (4.0.0)
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n

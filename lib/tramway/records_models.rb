@@ -8,12 +8,18 @@ module Tramway::RecordsModels
       Tramway::Error.raise_error :records, :wrong_available_models_type
     end
 
-    models.each do |model|
-      if model.instance_of?(Class) || model.instance_of?(String)
-        @available_models[project][role].merge! model.to_s => %i[index show update create destroy]
-      elsif model.instance_of?(Hash)
-        @available_models[project][role].merge! model
+    if models.is_a? Array
+      models.each do |model|
+        if model.instance_of?(Class) || model.instance_of?(String)
+          @available_models[project][role].merge! model.to_s => %i[index show update create destroy]
+        elsif model.instance_of?(Hash)
+          @available_models[project][role].merge! model
+        end
       end
+    end
+
+    if models.is_a? Hash
+      @available_models[project][role].merge! models
     end
     @available_models = @available_models.with_indifferent_access
   end
