@@ -12,7 +12,7 @@ PATH
   specs:
     tramway (0.1.2)
       aasm
-      audited (>= 4.8.0)
+      audited (>= 5.2.0)
       bootstrap (>= 4.1.2)
       bootstrap-kaminari-views (= 0.0.5)
       carrierwave
@@ -411,4 +411,4 @@ DEPENDENCIES
   webdrivers (= 4.2.0)
 
 BUNDLED WITH
-   2.1.4
+   2.4.6
