@@ -22,7 +22,7 @@ describe 'Records destroy' do
     context 'with permissions to destroy all records' do
       before do
         Tramway.clear_available_models!
-        Tramway.set_available_models Book, project: :dummy
+        Tramway.set_available_models [Book], project: :dummy
       end
 
       it 'deletes record' do
@@ -41,11 +41,13 @@ describe 'Records destroy' do
 
     context 'with permissions to destroy records with titles starting with Asya' do
       before do
-        Tramway.set_available_models Book => {
-          destroy: lambda do |record|
-            record.title[0..3] == 'Asya'
-          end
-        }, project: :dummy
+        Tramway.set_available_models({
+          Book => {
+            destroy: -> (record) {
+              record.title[0..3] == 'Asya'
+            }
+          }
+        }, project: :dummy)
       end
 
       let!(:book) { create :book, title: 'Asya' }
@@ -61,7 +63,7 @@ describe 'Records destroy' do
 
   context 'without permissions to destroy at all' do
     before do
-      Tramway.set_available_models Book => [:index], project: :dummy
+      Tramway.set_available_models({ Book => [:index] }, project: :dummy)
     end
 
     it 'does not delete record' do

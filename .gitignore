@@ -12,3 +12,4 @@ spec/dummy/db/migrate/*install_audited.rb
 spec/dummy/db/migrate/*create_tramway_users.rb
 spec/dummy/db/schema.rb
 spec/dummy/tmp/
+db/

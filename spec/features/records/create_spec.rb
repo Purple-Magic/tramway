@@ -28,7 +28,7 @@ describe 'Records Create' do
 
   context 'with permission to create' do
     before do
-      Tramway.set_available_models Book, project: :dummy
+      Tramway.set_available_models [Book], project: :dummy
     end
 
     it 'creates new record' do
