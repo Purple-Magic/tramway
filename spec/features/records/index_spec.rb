@@ -8,7 +8,7 @@ describe 'Records Index' do
   end
 
   before do
-    Tramway.set_available_models [ Book ], project: :dummy
+    Tramway.set_available_models [Book], project: :dummy
   end
 
   context 'without records' do

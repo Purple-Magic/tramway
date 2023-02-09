@@ -43,7 +43,7 @@ describe 'Records destroy' do
       before do
         Tramway.set_available_models({
           Book => {
-            destroy: -> (record) {
+            destroy: lambda { |record|
               record.title[0..3] == 'Asya'
             }
           }

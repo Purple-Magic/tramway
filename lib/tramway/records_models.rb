@@ -4,9 +4,7 @@ module Tramway::RecordsModels
   def set_available_models(models, project:, role: :admin)
     initialize_available_models_for project, role
 
-    if !models.is_a?(Array) && !models.is_a?(Hash)
-      Tramway::Error.raise_error :records, :wrong_available_models_type
-    end
+    Tramway::Error.raise_error :records, :wrong_available_models_type if !models.is_a?(Array) && !models.is_a?(Hash)
 
     if models.is_a? Array
       models.each do |model|
@@ -18,9 +16,7 @@ module Tramway::RecordsModels
       end
     end
 
-    if models.is_a? Hash
-      @available_models[project][role].merge! models
-    end
+    @available_models[project][role].merge! models if models.is_a? Hash
     @available_models = @available_models.with_indifferent_access
   end
 

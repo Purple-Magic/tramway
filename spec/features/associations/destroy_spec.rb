@@ -71,7 +71,7 @@ describe 'Associations destroy' do
 
   context 'without permissions to destroy at all' do
     before do
-      Tramway.set_available_models [ Book ], project: :dummy
+      Tramway.set_available_models [Book], project: :dummy
       Tramway.set_available_models({ Rent => [:index] }, project: :dummy)
     end
 

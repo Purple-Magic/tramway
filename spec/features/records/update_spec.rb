@@ -28,7 +28,7 @@ describe 'Records update' do
 
     context 'with permissions to update all records' do
       before do
-        Tramway.set_available_models [ Book ], project: :dummy
+        Tramway.set_available_models [Book], project: :dummy
       end
 
       it 'updates new record with needed attributes' do
@@ -54,7 +54,7 @@ describe 'Records update' do
       before do
         Tramway.set_available_models({
           Book => {
-            update: -> (record) {
+            update: lambda { |record|
               record.title[0..3] == 'Asya'
             }
           }
