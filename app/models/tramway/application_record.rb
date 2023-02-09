@@ -6,7 +6,7 @@ class Tramway::ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
 
   self.abstract_class = true
-  audited
+  has_paper_trail
   extend ::Enumerize
   include AASM
   acts_as_paranoid

@@ -96,7 +96,7 @@ class Tramway::ApplicationDecorator
 
   def associations(associations_type)
     object.class.reflect_on_all_associations(associations_type).map do |association|
-      association unless association.name == :audits
+      association unless association.name == :versions
     end.compact
   end
 

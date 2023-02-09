@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '~> 7'
 
   s.add_dependency 'aasm'
-  s.add_dependency 'audited', '>= 5.2.0'
   s.add_dependency 'bootstrap', '>= 4.1.2'
   s.add_dependency 'bootstrap-kaminari-views', '0.0.5'
   s.add_dependency 'carrierwave'
@@ -36,6 +35,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'loofah', '>= 2.3.1'
   s.add_dependency 'mini_magick', '~> 4.8', '>= 4.8.0'
   s.add_dependency 'nokogiri'
+  s.add_dependency 'paper_trail'
   s.add_dependency 'paranoia', '~> 2.2'
   s.add_dependency 'pg_search'
   s.add_dependency 'ransack'
