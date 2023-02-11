@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Tramway::Filtering
+module Tramway::Concerns::Filtering
   def list_filtering(records)
     params[:list_filters]&.each do |filter, _value|
       case decorator_class.list_filters[filter.to_sym][:type]

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Tramway::User < ::Tramway::ApplicationRecord
+class Tramway::User < Tramway::ApplicationRecord
   has_secure_password
 
   scope :admins, -> { where role: :admin }
