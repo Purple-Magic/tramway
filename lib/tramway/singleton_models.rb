@@ -27,6 +27,6 @@ module Tramway::SingletonModels
   end
 
   def singleton_models(role:)
-    models_array models_type: :singleton, role: role
+    models_array models_type: :singleton, role:
   end
 end

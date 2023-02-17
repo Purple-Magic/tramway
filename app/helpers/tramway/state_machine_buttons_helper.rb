@@ -36,7 +36,7 @@ module Tramway::StateMachineButtonsHelper
     event = options[:event]
 
     concat(
-      patch_button(patch_button_options(object, event, options)) do
+      patch_button(**patch_button_options(object, event, options)) do
         model = object.model
         class_name = model.class.name.underscore
         actual_event = model.aasm(options[:state_method]).events.select { |ev| ev.name == event }.first.name
@@ -51,7 +51,7 @@ module Tramway::StateMachineButtonsHelper
 
     {
       record: object.model,
-      attributes: attributes,
+      attributes:,
       model_name: options[:model_name],
       button_options: { class: css_class },
       form_options: options[:form_options],

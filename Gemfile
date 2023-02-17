@@ -21,6 +21,7 @@ group :test do
   gem 'haml-rails'
   gem 'jquery-rails'
   gem 'kaminari'
+  gem 'paper_trail'
   gem 'paranoia', '~> 2.2'
   gem 'rubocop'
   gem 'rubocop-rspec'

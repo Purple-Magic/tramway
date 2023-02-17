@@ -9,7 +9,7 @@ module Tramway::InputsHelper
 
     value = current_user&.id if full_class_name_association.to_s == 'Tramway::User'
 
-    build_input_attributes(object: object, property: property, options: options,
+    build_input_attributes(object:, property:, options:,
       value: build_value_for_association(form_object, property, value),
       collection: build_collection_for_association(form_object, property),
       include_blank: true,
@@ -17,7 +17,7 @@ module Tramway::InputsHelper
   end
 
   def polymorphic_association_params(object:, form_object:, property:, value:, options: {})
-    build_input_attributes object: object, property: property,
+    build_input_attributes object:, property:,
       selected: build_value_for_polymorphic_association(form_object, property, value),
       value: build_value_for_polymorphic_association(form_object, property, value),
       collection: build_collection_for_polymorphic_association(form_object, property),

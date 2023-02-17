@@ -49,9 +49,9 @@ module Tramway::RecordsHelper
 
   def index_path_of_model(model_class, tab, filter)
     if tab
-      records_path model: model_class, filter: filter, scope: tab
+      records_path model: model_class, filter:, scope: tab
     else
-      records_path model: model_class, filter: filter
+      records_path model: model_class, filter:
     end
   end
 

@@ -97,7 +97,7 @@ class Tramway::ApplicationForm
           @@model_class = model_class_name.constantize
         rescue StandardError
           Tramway::Error.raise_error :tramway, :application_form, :model_class, :there_is_not_model_class,
-            name: name, model_class_name: model_class_name
+            name:, model_class_name:
         end
       end
     end

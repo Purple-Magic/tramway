@@ -26,7 +26,7 @@ describe 'Associations Create' do
 
   context 'with permission to create' do
     before do
-      Tramway.set_available_models Book, Rent, project: :dummy
+      Tramway.set_available_models [Book, Rent], project: :dummy
     end
 
     it 'creates new record' do
@@ -59,7 +59,7 @@ describe 'Associations Create' do
 
   context 'without permission to create' do
     before do
-      Tramway.set_available_models Book, { Rent => [:index] }, project: :dummy
+      Tramway.set_available_models [Book, { Rent => [:index] }], project: :dummy
     end
 
     it 'does not create new record' do

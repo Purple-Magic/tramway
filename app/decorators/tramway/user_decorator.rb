@@ -33,7 +33,7 @@ class Tramway::UserDecorator < Tramway::ApplicationDecorator
     content_tag(:pre) do
       id = "credential_text_#{object.id}"
 
-      concat(content_tag(:span, id: id) do
+      concat(content_tag(:span, id:) do
         text = "URL: #{ENV['PROJECT_URL']}\n"
         text += "Email: #{object.email}\n"
         "#{text}Password: "

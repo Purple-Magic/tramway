@@ -17,7 +17,7 @@ module Tramway::Concerns::AttributesDecoratorHelper
   end
 
   BASE64_REGEXP = %r{^(?:[a-zA-Z0-9+/]{4})*(?:|(?:[a-zA-Z0-9+/]{3}=)|
-                                            (?:[a-zA-Z0-9+/]{2}==)|(?:[a-zA-Z0-9+/]{1}===))$}x.freeze
+                                            (?:[a-zA-Z0-9+/]{2}==)|(?:[a-zA-Z0-9+/]{1}===))$}x
 
   def image_view(original, thumb: nil, filename: nil)
     return unless original.present?
@@ -35,7 +35,7 @@ module Tramway::Concerns::AttributesDecoratorHelper
     content_tag(:div) do
       concat filename
       concat ' '
-      concat download_button(filename: filename, original: original) if filename
+      concat download_button(filename:, original:) if filename
     end
   end
 
@@ -81,10 +81,10 @@ module Tramway::Concerns::AttributesDecoratorHelper
     rescue NoMethodError => e
       Tramway::Error.raise_error(
         :tramway, :concerns, :attributes_decorator_helper, :you_should_mount_photo_uploader,
-        message: e.message, attribute_name: attribute_name
+        message: e.message, attribute_name:
       )
     end
-    concat download_button(filename: filename, original: original) if filename
+    concat download_button(filename:, original:) if filename
   end
 
   def download_button(filename:, original:)

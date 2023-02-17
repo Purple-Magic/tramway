@@ -10,7 +10,7 @@ describe 'Associations destroy' do
     create :book
   end
   let!(:rent) do
-    create :rent, book: book
+    create :rent, book:
   end
 
   context 'with permissions to destroy' do
@@ -28,7 +28,7 @@ describe 'Associations destroy' do
     context 'with permissions to destroy all associations' do
       before do
         Tramway.clear_available_models!
-        Tramway.set_available_models Book, Rent, project: :dummy
+        Tramway.set_available_models [Book, Rent], project: :dummy
       end
 
       it 'deletes record' do
@@ -47,16 +47,18 @@ describe 'Associations destroy' do
 
     context 'with permissions to destroy associations with titles starting with Asya' do
       before do
-        Tramway.set_available_models Book, project: :dummy
-        Tramway.set_available_models Rent => {
-          destroy: lambda do |record|
-            record.book.title[0..3] == 'Asya'
-          end
-        }, project: :dummy
+        Tramway.set_available_models [Book], project: :dummy
+        Tramway.set_available_models({
+          Rent => {
+            destroy: lambda do |record|
+              record.book.title[0..3] == 'Asya'
+            end
+          }
+        }, project: :dummy)
       end
 
       let!(:book) { create :book, title: "Asya-#{DateTime.now.strftime('%H:%M:%s')}" }
-      let!(:rent) { create :rent, book: book }
+      let!(:rent) { create :rent, book: }
 
       it 'deletes record' do
         user_actions.call
@@ -69,8 +71,8 @@ describe 'Associations destroy' do
 
   context 'without permissions to destroy at all' do
     before do
-      Tramway.set_available_models Book, project: :dummy
-      Tramway.set_available_models Rent => [:index], project: :dummy
+      Tramway.set_available_models [Book], project: :dummy
+      Tramway.set_available_models({ Rent => [:index] }, project: :dummy)
     end
 
     it 'does not delete record' do

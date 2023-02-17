@@ -17,9 +17,9 @@ module Tramway::Navbar
   private
 
   def should_be_in_navbar_as(item, project, role)
-    if singleton_models_for(project, role: role).map(&:to_s).include?(item.to_s)
+    if singleton_models_for(project, role:).map(&:to_s).include?(item.to_s)
       { item.to_s => :singleton }
-    elsif available_models_for(project, role: role).map(&:to_s).include?(item.to_s)
+    elsif available_models_for(project, role:).map(&:to_s).include?(item.to_s)
       { item.to_s => :record }
     elsif item.is_a? Symbol
       :divider

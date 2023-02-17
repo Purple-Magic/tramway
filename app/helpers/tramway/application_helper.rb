@@ -3,7 +3,7 @@
 module Tramway::ApplicationHelper
   include FontAwesome5::Rails::IconHelper
   include SmartButtons
-  include Tramway::AuthManagement
+  include Tramway::Concerns::AuthManagement
 
   helpers = Dir["#{Tramway.root}/app/helpers/tramway/*_helper.rb"]
   helpers.each do |helper|

@@ -73,4 +73,4 @@ AllCops:
     - spec/dummy/Rakefile
   Exclude:
     - spec/dummy/**/*.rb
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.2

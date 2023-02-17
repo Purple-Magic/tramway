@@ -6,11 +6,11 @@
       = yield :title
     = stylesheet_link_tag    'tramway/application', media: :all
     = javascript_include_tag 'tramway/application'
-    - if File.exists?("#{Rails.root}/app/assets/javascripts/application.js") || File.exists?("#{Rails.root}/app/assets/javascripts/application.js.coffee")
+    - if File.exist?("#{Rails.root}/app/assets/javascripts/application.js") || File.exist?("#{Rails.root}/app/assets/javascripts/application.js.coffee")
       = javascript_include_tag 'application'
-    - if File.exists?("#{Rails.root}/app/assets/stylesheets/application.css") || File.exists?("#{Rails.root}/app/assets/stylesheets/application.scss")
+    - if File.exist?("#{Rails.root}/app/assets/stylesheets/application.css") || File.exist?("#{Rails.root}/app/assets/stylesheets/application.scss")
       = stylesheet_link_tag 'application'
-    - if File.exists?("#{Rails.root}/app/javascript/packs/application.js")
+    - if File.exist?("#{Rails.root}/app/javascript/packs/application.js")
       = javascript_pack_tag 'application'
     = csrf_meta_tags
     - if @application.favicon.present?

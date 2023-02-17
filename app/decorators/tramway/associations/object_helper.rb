@@ -21,7 +21,7 @@ module Tramway::Associations::ObjectHelper
 
     Tramway::Error.raise_error(
       :tramway, :associations, :class_helper, :model_does_not_have_association,
-      object_class: object.class, association_name: association_name
+      object_class: object.class, association_name:
     )
   end
 
@@ -43,7 +43,7 @@ module Tramway::Associations::ObjectHelper
     rescue StandardError
       Tramway::Error.raise_error(
         :tramway, :associations, :object_helper, :habtm_add_class_not_defined,
-        class: form_class, association_name: association_name
+        class: form_class, association_name:
       )
     end
   end

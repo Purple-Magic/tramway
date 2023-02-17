@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 # FIXME: configurate load_path
-load "#{Tramway.root}/app/controllers/concerns/auth_management.rb"
+load "#{Tramway.root}/app/controllers/tramway/concerns/auth_management.rb"
 
 class Tramway::SessionsController < Tramway::ApplicationController
   before_action :redirect_if_signed_in, except: :destroy
 
   # FIXME: should be included in Tramway::ApplicationController
-  include Tramway::AuthManagement
+  include Tramway::Concerns::AuthManagement
 
   def new
     @session_form = Tramway::SessionForm.new Tramway::User.new
