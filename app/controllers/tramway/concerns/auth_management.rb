@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Tramway::AuthManagement
+module Tramway::Concerns::AuthManagement
   def sign_in(user)
     session[:tramway_user_id] = user.id
   end

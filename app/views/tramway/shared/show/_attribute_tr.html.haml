@@ -5,5 +5,5 @@
     = value
   %td
     - if tramway_model?(model_class)
-      - if attribute_name.to_s != 'state' && object.model.class.aasm.states.map(&:name).include?(attribute_name.to_sym)
+      - if object.model.class.aasm.states.map(&:name).include?(attribute_name.to_sym)
         = state_events_buttons object, state_method: attribute_name, model_param_name: :record, controller: 'tramway/records', action: :update, parameters: { model: object.class.model_name }, button_options: { class: :smart_button }

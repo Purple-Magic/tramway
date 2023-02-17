@@ -42,7 +42,7 @@ module TramwayHelpers::Buttons
   end
 
   def click_on_association_edit_button(object, redirect_to)
-    find("a#{EDIT_RECORD_BUTTON_SELECTOR}[href='#{edit_path(object, redirect_to: redirect_to)}']").click
+    find("a#{EDIT_RECORD_BUTTON_SELECTOR}[href='#{edit_path(object, redirect_to:)}']").click
   end
 
   def click_on_sign_out

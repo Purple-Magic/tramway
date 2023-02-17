@@ -19,7 +19,7 @@ module Tramway::ExtendableFormsHelpers::Validators
       property_name,
       I18n.t(
         "activerecord.errors.models.#{model.class.name.underscore}.attributes.default.#{validation[0]}",
-        value: value
+        value:
       )
     )
   end
@@ -33,7 +33,7 @@ module Tramway::ExtendableFormsHelpers::Validators
       property_name,
       I18n.t(
         "activerecord.errors.models.#{model.class.name.underscore}.attributes.default.#{validation[0]}",
-        value: value
+        value:
       )
     )
   end

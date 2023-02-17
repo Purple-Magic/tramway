@@ -9,7 +9,7 @@ module Tramway::ApplicationForms::SubmitHelper
         collecting_associations_errors unless result
       end
     else
-      Tramway::Error.raise_error(:tramway, :application_form, :submit, :params_should_not_be_nil)
+      Tramway::Error.raise_error(:application_form, :submit, :params_should_not_be_nil)
     end
   end
 

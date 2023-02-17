@@ -9,7 +9,7 @@ describe 'Navbar' do
   let!(:book) { create :book }
 
   before do
-    Tramway.set_available_models Book, project: :dummy
+    Tramway.set_available_models [Book], project: :dummy
     Tramway.navbar_structure Book, project: :dummy
   end
 

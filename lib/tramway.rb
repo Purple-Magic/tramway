@@ -69,7 +69,7 @@ module Tramway
 
     def action_is_available?(record, project:, role:, model_name:, action:)
       project = project.underscore.to_sym unless project.is_a? Symbol
-      actions = select_actions(project: project, role: role.to_sym, model_name: model_name)
+      actions = select_actions(project:, role: role.to_sym, model_name:)
       availability = compute_availability actions, action
 
       return false unless availability.present?

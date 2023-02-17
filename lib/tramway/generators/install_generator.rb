@@ -10,7 +10,7 @@ class Tramway::Generators::InstallGenerator < ::Rails::Generators::Base
   include Rails::Generators::Migration
 
   def run_other_generators
-    generate 'audited:install'
+    generate 'paper_trail:install --with-changes'
   end
 
   def self.next_migration_number(path)

@@ -19,7 +19,7 @@ class Tramway::Error < RuntimeError
 
   class << self
     def raise_error(*coordinates, **options)
-      @errors ||= YAML.load_file("#{Tramway.root}/lib/tramway/yaml/errors.yml").with_indifferent_access
+      @errors ||= YAML.load_file("#{Tramway.root}/lib/tramway/yaml/errors.yml").with_indifferent_access[:tramway]
       error = @errors.dig(*coordinates)
       raise 'Error is not defined in YAML' unless error
 
