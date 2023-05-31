@@ -1,7 +1,0 @@
-en:
-  tramway:
-    shared:
-      messages:
-        some_errors_was_found: There are errors
-  errors:
-    wrong_email_or_password: Wrong email or password

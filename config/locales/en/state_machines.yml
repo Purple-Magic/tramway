@@ -1,8 +1,0 @@
-en:
-  activerecord:
-    state_machines:
-      tramway/application_record:
-        state:
-          states:
-            active: Active
-            removed: Removed

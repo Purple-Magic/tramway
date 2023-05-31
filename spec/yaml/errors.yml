@@ -1,8 +1,0 @@
-messages:
-  returns_link_error: "Method `link` uses `file` attribute of the decorated object. If decorated object doesn't contain `file`, you shouldn't use `link` method."
-  returns_name: 'Please, implement `title` method in a Tramway::ApplicationDecorator or delegate it to TestModel'
-  raises_error_about_specify_class_name_of_association: "Please, specify `another_association_models` association class_name in TestModel model. For example: `has_many :another_association_models, class_name: 'AnotherAssociationModel'`"
-  generators:
-    without_initialized_tramway_application:
-      raises_runtime_error: 'Initialize Tramway application before running generators. Add `Tramway.initialize_application name: :your_application_name` to `config/initializers/tramway.rb`'
-

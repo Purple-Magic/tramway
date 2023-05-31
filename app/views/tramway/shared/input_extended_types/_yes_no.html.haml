@@ -1,4 +1,0 @@
-- if value.present?
-  = f.input field.title.to_sym, as: :select, input_html: { class: class_name, id: "#{class_name}_#{field.title}", name: "#{class_name}[#{field.title}]" }, selected: value
-- else
-  = f.input field.title.to_sym, as: :select, input_html: { class: class_name, id: "#{class_name}_#{field.title}", name: "#{class_name}[#{field.title}]" }
