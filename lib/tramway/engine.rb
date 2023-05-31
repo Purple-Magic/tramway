@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
-class Tramway::Engine < ::Rails::Engine
-  isolate_namespace Tramway
+module Tramway
+  # Tramway gem is a Rails Engine, so we need this class
+  #
+  class Engine < ::Rails::Engine
+    isolate_namespace Tramway
+  end
 end

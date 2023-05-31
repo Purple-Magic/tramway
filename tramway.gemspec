@@ -7,7 +7,7 @@ require 'tramway/version'
 Gem::Specification.new do |s|
   s.name        = 'tramway'
   s.version     = Tramway::VERSION
-  s.authors     = ['kalashnikovisme', 'moshiaan']
+  s.authors     = %w[kalashnikovisme moshiaan]
   s.email       = ['kalashnikovisme@gmail.com']
   s.homepage    = 'https://github.com/purple-magic/tramway'
   s.summary     = 'Tramway Rails Engine'
