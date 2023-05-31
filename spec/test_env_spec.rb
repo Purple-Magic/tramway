@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe 'Testing environment' do
   describe 'working' do
     it 'justs run test' do
