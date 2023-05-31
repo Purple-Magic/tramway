@@ -1,0 +1,14 @@
+ pre-push:
+   commands:
+     tests:
+       tags: backend
+       run: bundle exec rspec
+
+ pre-commit:
+   parallel: true
+   commands:
+     rubocop:
+       tags: backend style
+       glob: "*.rb"
+       exclude: "application.rb|routes.rb"
+       run: bundle exec rubocop --force-exclusion {all_files}
