@@ -1,9 +1,11 @@
 name: "Run Rubocop"
 on:
+  push:
+    branches:
+      - init_tramway
   pull_request:
     branches:
       - main
-      - init_tramway
 
 jobs:
   build:
