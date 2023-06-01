@@ -1,0 +1,10 @@
+name: "Run Rubocop"
+on:
+  pull_request:
+    branches:
+      - main
+      - init_tramway
+
+jobs:
+  build:
+    uses: ./.github/workflows/rubocop.yml

@@ -1,0 +1,10 @@
+name: "Run Test"
+on:
+  pull_request:
+    branches:
+      - main
+      - init_tramway
+
+jobs:
+  build:
+    uses: ./.github/workflows/tests.yml
