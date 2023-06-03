@@ -1,12 +1,16 @@
-# frozen_string_literal: true
+source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-source 'https://rubygems.org'
+# Specify your gem's dependencies in tramway.gemspec.
 gemspec
 
-group :development do
-  gem 'rubocop'
-end
+gem "puma"
 
-group :test do
-  gem 'rspec'
+gem "sqlite3"
+
+# Start debugger with binding.b [https://github.com/ruby/debug]
+# gem "debug", ">= 1.0.0"
+
+group :development, :test do
+  gem 'pry'
 end

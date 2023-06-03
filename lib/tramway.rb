@@ -1,8 +1,6 @@
-# frozen_string_literal: true
+require "tramway/version"
+require "tramway/railtie"
 
-require 'tramway/engine'
-
-# Root module for the whole gem
-#
 module Tramway
+  # Your code goes here...
 end

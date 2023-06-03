@@ -1,22 +1,28 @@
-# New Tramway
+# Tramway
+Short description and motivation.
 
-# Contributing
+## Usage
+How to use my plugin.
 
-## Install environment
+## Installation
+Add this line to your application's Gemfile:
 
-```
-bundle
-lefthook install
-```
-
-## Run Tests
-
-```
-bundle exec rspec
+```ruby
+gem "tramway"
 ```
 
-## Run Linter
+And then execute:
+```bash
+$ bundle
+```
 
+Or install it yourself as:
+```bash
+$ gem install tramway
 ```
-bundle exec rubocop
-```
+
+## Contributing
+Contribution directions go here.
+
+## License
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
