@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", "~> 7"
+  spec.add_dependency "haml-rails"
   spec.add_dependency "view_component"
   
   spec.add_development_dependency "rspec-rails"
