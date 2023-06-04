@@ -1,1 +1,6 @@
-= button_to @text, @href, class: 'text-white hover:bg-red-300 px-4 py-2 rounded'
+- if @action.present?
+  = button_to @action, class: @style, **@options do
+    = content
+- else
+  = link_to @href, class: @style, **@options do
+    = content
