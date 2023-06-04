@@ -1,6 +1,11 @@
+# frozen_string_literal: true
+
+# rubocop:disable Lint/MissingSuper
 module Tailwinds
   module Navbar
-    class ButtonComponent < TailwindComponent
+    # Renders tailwind styled button using `button_to`
+    #
+    class ButtonComponent < ViewComponent::Base
       def initialize(text:, href:)
         @href = href
         @text = text
@@ -8,3 +13,4 @@ module Tailwinds
     end
   end
 end
+# rubocop:enable Lint/MissingSuper
