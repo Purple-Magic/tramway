@@ -5,7 +5,7 @@ require 'tramway/engine'
 require 'view_component/compiler'
 require 'view_component/engine'
 
-# Root Tramway module
-#
+# Core module for the whole gem
 module Tramway
+  # Your code goes here...
 end
