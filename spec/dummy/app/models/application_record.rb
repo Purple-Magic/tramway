@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class ApplicationRecord < Tramway::ApplicationRecord
-  self.abstract_class = true
+class ApplicationRecord < ActiveRecord::Base
+  primary_abstract_class
 end

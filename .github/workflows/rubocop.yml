@@ -1,10 +1,26 @@
 name: Rubocop
 
-on:
-  push:
-    branches-ignore:
-      - master
+on: [workflow_call]
 
 jobs:
   build:
-    uses: ./.github/workflows/abstract_rubocop.yml
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.1
+
+      - name: Clone current repo
+        uses: actions/checkout@master
+        with:
+          repository: purple-magic/tramway
+
+      - name: Install
+        run: |
+          gem install rubocop
+          gem install rubocop-rspec
+
+      - name: Rubocop
+        run: |
+          rubocop

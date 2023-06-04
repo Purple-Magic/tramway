@@ -1,0 +1,10 @@
+name: Lint
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  build:
+    uses: ./.github/workflows/rubocop.yml
