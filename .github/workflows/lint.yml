@@ -1,9 +1,6 @@
 name: Lint
 
-on:
-  push:
-    branches-ignore:
-      - main
+on: [push]
 
 jobs:
   build:
