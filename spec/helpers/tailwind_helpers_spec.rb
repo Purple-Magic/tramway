@@ -13,6 +13,7 @@ describe Tramway::Helpers::TailwindHelpers, type: :view do
 
   let(:path) { '/test' }
   let(:text) { 'Button Text' }
+  let(:block) { proc { text } }
 
   describe '#tailwind_clickable' do
     context 'with link rendering checks' do
@@ -29,8 +30,6 @@ describe Tramway::Helpers::TailwindHelpers, type: :view do
 
       context 'when a block is given' do
         it 'renders the Navbar::ButtonComponent with the provided options and block' do
-          block = proc { text }
-
           fragment = view.tailwind_clickable(**options, &block)
 
           expect(fragment).to have_content 'Button Text'
@@ -60,6 +59,26 @@ describe Tramway::Helpers::TailwindHelpers, type: :view do
           expect(fragment).to have_content 'Button Text'
           expect(fragment).to have_css "form[action='#{path}']"
         end
+      end
+    end
+
+    context 'with raising errors' do
+      it 'raises error in case there are text and block in the same time' do
+        expect { view.tailwind_clickable(text, &block) }.to(
+          raise_error 'You can not provide argument and code block in the same time'
+        )
+      end
+
+      it 'raises error in case there is only text without options' do
+        expect { view.tailwind_clickable(text) }.to(
+          raise_error 'You should provide `action` or `href` option'
+        )
+      end
+
+      it 'raises error in case there is only block without options' do
+        expect { view.tailwind_clickable(&block) }.to(
+          raise_error 'You should provide `action` or `href` option'
+        )
       end
     end
   end

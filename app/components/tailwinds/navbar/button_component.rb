@@ -6,8 +6,6 @@ module Tailwinds
     #
     class ButtonComponent < TailwindComponent
       def initialize(**options)
-        raise 'You should provide `action` or `href` option' if !options[:action].present? && !options[:href].present?
-
         if options[:action].present?
           @action = options[:action]
         else

@@ -7,6 +7,7 @@ module Tramway
     module TailwindHelpers
       def tailwind_clickable(text = nil, **options, &block)
         raise 'You can not provide argument and code block in the same time' if text.present? && block_given?
+        raise 'You should provide `action` or `href` option' if !options[:action].present? && !options[:href].present?
 
         if text.present?
           render(Tailwinds::Navbar::ButtonComponent.new(**options)) { text }
