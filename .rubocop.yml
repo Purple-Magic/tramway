@@ -8,3 +8,6 @@ Metrics/BlockLength:
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
+
+AllCops:
+  TargetRubyVersion: 3.2

@@ -5,19 +5,17 @@ module Tramway
     # ActionView helpers for tailwind
     #
     module TailwindHelpers
-      def tailwind_clickable(text = nil, **options, &block)
-        raise 'You can not provide argument and code block in the same time' if text.present? && block_given?
-        raise 'You should provide `action` or `href` option' if !options[:action].present? && !options[:href].present?
+      def tailwind_link_to(text_or_url, url = nil, **options, &block)
+        raise 'You can not provide argument and code block in the same time' if url.present? && block_given?
 
-        if text.present?
-          render(Tailwinds::Navbar::ButtonComponent.new(**options)) { text }
+        if url.present?
+          options.merge! href: url
+          render(Tailwinds::Navbar::ButtonComponent.new(**options)) { text_or_url }
         else
+          options.merge! href: text_or_url
           render(Tailwinds::Navbar::ButtonComponent.new(**options), &block)
         end
       end
-
-      alias tailwind_button_to tailwind_clickable
-      alias tailwind_link_to tailwind_clickable
     end
   end
 end
