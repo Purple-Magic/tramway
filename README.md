@@ -19,21 +19,39 @@ Tramway use [Tailwind](https://tailwindcss.com/) by default. All UI helpers impl
 
 #### Button
 
-Tramway provides `Tailwinds::Navbar::ButtonComponent`, that uses `button_to` or `link_to`
+##### tailwind_button_to
+
+Tramway provides `tailwind_button_to` method, that uses `button_to` or `link_to`
 
 ```haml
-= render(Tailwinds::Navbar::ButtonComponent.new(href: "/users/sign_in")) do
+= tailwind_button_to href: "/users/sign_in" do
   Sign In
+```
+
+OR
+
+```haml
+= tailwind_button_to 'Sign In', href: "/users/sign_in"
 ```
 
 will render [this](https://play.tailwindcss.com/RT3Vvauu78)
 
 ```haml
-= render(Tailwinds::Navbar::ButtonComponent.new(action: "/users/sign_out", method: :delete)) do
+= tailwind_button_to action: "/users/sign_out", method: :delete)) do
   Sign Out
 ```
 
+OR
+
+```
+= tailwind_button_to 'Sign Out', action: "/users/sign_out", method: :delete))
+```
+
 will render [this](https://play.tailwindcss.com/pJ8450tV21)
+
+#### tailwind_link_to
+
+Tramway provides `tailwind_link_to` that is the alias of `tailwind_button_to`
 
 ## Contributing
 
