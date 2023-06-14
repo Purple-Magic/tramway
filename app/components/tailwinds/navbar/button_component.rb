@@ -8,7 +8,7 @@ module Tailwinds
       def initialize(**options)
         @href = options[:href]
         @style = 'text-white hover:bg-red-300 px-4 py-2 rounded'
-        @options = prepare options:
+        @options = prepare(options:)
       end
 
       private
