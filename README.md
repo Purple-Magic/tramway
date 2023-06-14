@@ -37,14 +37,14 @@ OR
 will render [this](https://play.tailwindcss.com/RT3Vvauu78)
 
 ```haml
-= tailwind_button_to action: "/users/sign_out", method: :delete)) do
+= tailwind_button_to action: "/users/sign_out", method: :delete do
   Sign Out
 ```
 
 OR
 
 ```
-= tailwind_button_to 'Sign Out', action: "/users/sign_out", method: :delete))
+= tailwind_button_to 'Sign Out', action: "/users/sign_out", method: :delete
 ```
 
 will render [this](https://play.tailwindcss.com/pJ8450tV21)
