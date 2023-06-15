@@ -2,5 +2,12 @@ Lint/MissingSuper:
   Exclude:
     - app/components/**/*.rb
 
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
 Gemspec/RequiredRubyVersion:
   Enabled: false
+
+AllCops:
+  TargetRubyVersion: 3.2
