@@ -1,0 +1,11 @@
+%nav.bg-red-500.py-4.px-8.flex.justify-between.items-center
+  .flex
+    .text-xl.text-white.font-bold
+      RED MAGIC
+    %ul.flex.items-center.space-x-4
+      - @left_items.each do |item|
+        = item
+  %ul.flex.items-center.space-x-4
+    -# FIXME Sign out button makes navbar wider because of form
+    - @right_items.each do |item|
+      = item
