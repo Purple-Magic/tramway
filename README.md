@@ -17,35 +17,55 @@ Tramway use [Tailwind](https://tailwindcss.com/) by default. All UI helpers impl
 
 ### Navbar
 
-#### tailwind_link_to
+Tramway provides DSL for rendering Tailwind Navgiation bar.
 
-Tramway provides `tailwind_link_to` method, that uses `link_to`
+```ruby
+tramway_navbar brand: 'Purple Magic' do |nav|
+  nav.left do
+    nav.item 'Users', '/users'
+    nav.item 'Podcasts', '/podcasts'
+  end
 
-```haml
-= tailwind_link_to "/users/sign_in" do
-  Sign In
+  nav.right do
+    nav.item 'Sign out', '/users/sessions', method: :delete, confirm: 'Wanna quit?'
+  end
+end
 ```
 
-OR
+will render [this](https://play.tailwindcss.com/UZPTCudFw5)
 
-```haml
-= tailwind_link_to 'Sign In', "/users/sign_in"
+#### nav.left and nav.right
+
+Tramway navbar provides `left` and `right` methods that puts items to left and right part of navbar.
+
+#### nav.item
+
+Item in navigation is rendered `li a` inside navbar `ul` tag on the left or right sides. `nav.item` uses the same approach as `link_to` method with syntax sugar.
+
+```ruby
+tramway_navbar brand: 'Purple Magic' do |nav|
+  nav.left do
+    nav.item 'Users', '/users'
+
+    # NOTE you can achieve the same with
+
+    nav.item '/users' do
+      'Users'
+    end
+
+    # NOTE nav.item supports turbo-method and turbo-confirm attributes
+
+    nav.item 'Delete user', '/users/destroy', method: :delete, confirm: 'Are you sure?'
+    
+    # will render this
+    # <li>
+    #   <a data-turbo-method="delete" data-turbo-confirm="Are you sure?" href="/users/sign_out" class="text-white hover:bg-red-300 px-4 py-2 rounded">
+    #     Sign out
+    #   </a>
+    # </li>
+  end
+end
 ```
-
-will render [this](https://play.tailwindcss.com/RT3Vvauu78)
-
-```haml
-= tailwind_link_to "/users/sign_out", method: :delete, confirm: 'Wanna quit?' do
-  Sign Out
-```
-
-OR
-
-```
-= tailwind_link_to 'Sign Out', "/users/sign_out", method: :delete, confirm: 'Wanna quit?'
-```
-
-will render [this](https://play.tailwindcss.com/7qPmG4ltEU))
 
 ## Contributing
 
