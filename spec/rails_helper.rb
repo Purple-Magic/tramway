@@ -7,7 +7,9 @@ require 'rspec/rails'
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 require 'capybara/rspec'
-require 'tramway/helpers/tailwind_helpers'
+require 'faker'
+require 'tramway/helpers/navbar_helper'
+require 'tramway/navbar'
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 

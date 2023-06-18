@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tailwinds::Navbar::ButtonComponent, type: :component do
+describe Tailwinds::Nav::ItemComponent, type: :component do
   it 'renders with button_to' do
     render_inline(described_class.new(href: '/test_page')) { 'Sign In' }
 
