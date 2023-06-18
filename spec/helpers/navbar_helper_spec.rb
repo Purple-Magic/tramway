@@ -9,7 +9,7 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
     view.extend Tramway::Helpers::NavbarHelper
   end
 
-  let(:brand) { Faker::Company.name }
+  let(:title) { Faker::Company.name }
 
   describe '#tramway_navbar' do
     context 'with success' do
@@ -26,10 +26,10 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
         expect(fragment).to have_css 'nav.bg-red-500.py-4.px-8.flex.justify-between.items-center'
       end
 
-      it 'renders navbar with brand' do
-        fragment = view.tramway_navbar(brand:)
+      it 'renders navbar with title' do
+        fragment = view.tramway_navbar(title:)
 
-        expect(fragment).to have_content brand
+        expect(fragment).to have_content title
       end
 
       context 'with left and right items checks' do

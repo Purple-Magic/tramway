@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 describe Tailwinds::NavbarComponent, type: :component do
-  it 'renders brand' do
-    render_inline(described_class.new(brand: 'Purple Magic'))
+  it 'renders title' do
+    render_inline(described_class.new(title: 'Purple Magic'))
 
     expect(page).to have_text 'Purple Magic'
   end

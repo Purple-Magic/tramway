@@ -1,9 +1,9 @@
 %nav.bg-red-500.py-4.px-8.flex.justify-between.items-center
-  - if @brand.present? || @left_items.present?
+  - if @title.present? || @left_items.present?
     .flex
-      - if @brand.present?
+      - if @title.present?
         .text-xl.text-white.font-bold
-          = @brand
+          = @title
       - if @left_items.present?
         %ul.flex.items-center.space-x-4
           - @left_items.each do |item|

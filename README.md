@@ -20,7 +20,7 @@ Tramway use [Tailwind](https://tailwindcss.com/) by default. All UI helpers impl
 Tramway provides DSL for rendering Tailwind Navgiation bar.
 
 ```ruby
-tramway_navbar brand: 'Purple Magic' do |nav|
+tramway_navbar title: 'Purple Magic' do |nav|
   nav.left do
     nav.item 'Users', '/users'
     nav.item 'Podcasts', '/podcasts'
@@ -43,7 +43,7 @@ Tramway navbar provides `left` and `right` methods that puts items to left and r
 Item in navigation is rendered `li a` inside navbar `ul` tag on the left or right sides. `nav.item` uses the same approach as `link_to` method with syntax sugar.
 
 ```ruby
-tramway_navbar brand: 'Purple Magic' do |nav|
+tramway_navbar title: 'Purple Magic' do |nav|
   nav.left do
     nav.item 'Users', '/users'
 
