@@ -12,6 +12,12 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
   let(:brand) { Faker::Company.name }
 
   describe '#tramway_navbar' do
+    it 'renders navbar with tailwind styles' do
+      fragment = view.tramway_navbar
+
+      expect(fragment).to have_css 'nav.bg-red-500.py-4.px-8.flex.justify-between.items-center'
+    end
+
     it 'renders navbar with brand' do
       fragment = view.tramway_navbar(brand:)
 
