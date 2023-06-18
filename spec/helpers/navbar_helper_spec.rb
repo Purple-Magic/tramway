@@ -30,19 +30,64 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
       expect(fragment).to have_content brand
     end
 
-    it 'renders navbar with left items' do
-      fragment = view.tramway_navbar do |nav|
-        nav.left do
-          items.each do |(name, path)|
-            nav.item name, path
+    context 'with left and right items checks' do
+      let(:left_items_css) { 'nav .flex ul.flex.items-center.space-x-4' }
+      let(:right_items_css) { 'nav ul.flex.items-center.space-x-4' }
+
+      it 'renders navbar with left items' do
+        fragment = view.tramway_navbar do |nav|
+          nav.left do
+            items.each do |(name, path)|
+              nav.item name, path
+            end
           end
+        end
+
+        expect(fragment).to have_css left_items_css
+
+        items.each do |(name, path)|
+          expect(fragment).to have_css "a[href='#{path}']", text: name
         end
       end
 
-      expect(fragment).to have_css 'nav .flex ul.flex.items-center.space-x-4'
+      it 'renders navbar with right items' do
+        fragment = view.tramway_navbar do |nav|
+          nav.right do
+            items.each do |(name, path)|
+              nav.item name, path
+            end
+          end
+        end
 
-      items.each do |(name, path)|
-        expect(fragment).to have_css "a[href='#{path}']", text: name
+        expect(fragment).to have_css right_items_css
+
+        items.each do |(name, path)|
+          expect(fragment).to have_css "a[href='#{path}']", text: name
+        end
+      end
+
+      it 'renders navbar with left and right items' do
+        fragment = view.tramway_navbar do |nav|
+          nav.left do
+            items.each do |(name, path)|
+              nav.item name, path
+            end
+          end
+
+          nav.right do
+            items.each do |(name, path)|
+              nav.item name, path
+            end
+          end
+        end
+
+        expect(fragment).to have_css left_items_css
+        expect(fragment).to have_css right_items_css
+
+        items.each do |(name, path)|
+          expect(fragment).to have_css "#{left_items_css} a[href='#{path}']", text: name
+          expect(fragment).to have_css "#{right_items_css} a[href='#{path}']", text: name
+        end
       end
     end
 
