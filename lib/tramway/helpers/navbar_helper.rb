@@ -15,8 +15,6 @@ module Tramway
 
           options[:left_items] = @navbar.items[:left]
           options[:right_items] = @navbar.items[:right]
-
-          set_trace_func(nil)
         end
 
         render(Tailwinds::NavbarComponent.new(**options))
