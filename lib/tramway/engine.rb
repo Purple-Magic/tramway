@@ -9,9 +9,7 @@ module Tramway
     initializer 'tramway.load_helpers' do
       ActiveSupport.on_load(:action_view) do
         require 'tramway/helpers/navbar_helper'
-        require 'tramway/helpers/tailwind_helpers'
 
-        ActionView::Base.include Tramway::Helpers::TailwindHelpers
         ActionView::Base.include Tramway::Helpers::NavbarHelper
       end
     end

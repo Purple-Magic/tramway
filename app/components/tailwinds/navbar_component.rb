@@ -6,8 +6,8 @@ module Tailwinds
   class NavbarComponent < TailwindComponent
     def initialize(**options)
       @brand = options[:brand]
-      @left_items = []
-      @right_items = []
+      @left_items = options[:left_items]
+      @right_items = options[:right_items]
     end
   end
 end
