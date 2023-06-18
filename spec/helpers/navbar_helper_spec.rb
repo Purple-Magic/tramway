@@ -10,6 +10,12 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
   end
 
   let(:brand) { Faker::Company.name }
+  let(:items) do
+    {
+      'Users' => '/users',
+      'Podcasts' => '/podcasts'
+    }
+  end
 
   describe '#tramway_navbar' do
     it 'renders navbar with tailwind styles' do
@@ -22,6 +28,22 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
       fragment = view.tramway_navbar(brand:)
 
       expect(fragment).to have_content brand
+    end
+
+    it 'renders navbar with left items' do
+      fragment = view.tramway_navbar do |nav|
+        nav.left do
+          items.each do |(name, path)|
+            nav.item name, path
+          end
+        end
+      end
+
+      expect(fragment).to have_css 'nav .flex ul.flex.items-center.space-x-4'
+
+      items.each do |(name, path)|
+        expect(fragment).to have_css "a[href='#{path}']", text: name
+      end
     end
 
     # context 'with raising errors' do
