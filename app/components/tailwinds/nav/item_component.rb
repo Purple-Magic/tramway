@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Tailwinds
-  module Navbar
+  module Nav
     # Render button styled with Tailwind using button_to or link_to methods
     #
-    class ButtonComponent < TailwindComponent
+    class ItemComponent < TailwindComponent
       def initialize(**options)
         @href = options[:href]
         @style = 'text-white hover:bg-red-300 px-4 py-2 rounded'

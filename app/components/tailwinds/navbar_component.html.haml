@@ -1,0 +1,15 @@
+%nav.bg-red-500.py-4.px-8.flex.justify-between.items-center
+  - if @title.present? || @left_items.present?
+    .flex
+      - if @title.present?
+        .text-xl.text-white.font-bold
+          = @title
+      - if @left_items.present?
+        %ul.flex.items-center.space-x-4
+          - @left_items.each do |item|
+            = item
+
+  - if @right_items.present?
+    %ul.flex.items-center.space-x-4
+      - @right_items.each do |item|
+        = item
