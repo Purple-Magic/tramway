@@ -23,7 +23,7 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
       it 'renders navbar with tailwind styles' do
         fragment = view.tramway_navbar
 
-        expect(fragment).to have_css 'nav.bg-red-500.py-4.px-8.flex.justify-between.items-center'
+        expect(fragment).to have_css 'nav.bg-purple-700.py-4.px-8.flex.justify-between.items-center'
       end
 
       it 'renders navbar with title' do

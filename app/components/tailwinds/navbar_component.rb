@@ -22,7 +22,7 @@ module Tailwinds
       color = options.dig(:background, :color) || :purple
       intensity = options.dig(:background, :intensity) || 700
 
-      unless (MIN_COLOR_INTENSITY..MAX_COLOR_INTENSITY).cover?(intensity)
+      unless (MIN_INTENSITY..MAX_INTENSITY).cover?(intensity)
         raise "Navigation Background Color intensity should be between #{MIN_INTENSITY} and #{MAX_INTENSITY}"
       end
 
