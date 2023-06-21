@@ -69,5 +69,16 @@ describe Tailwinds::NavbarComponent, type: :component do
       navbar_class = page.native.children[1].children[0].children[0].attribute_nodes[0].value
       expect(navbar_class).to include("bg-[#{color}]")
     end
+
+    it 'raises error with not suitable intensity' do
+      color = Tailwinds::NavbarComponent::CSS_COLORS.sample
+      intensity = 951
+
+      expect do
+        render_inline(described_class.new(background: { color:, intensity: }))
+      end.to raise_error(
+        'Navigation Background Color intensity should be between 100 and 950'
+      )
+    end
   end
 end
