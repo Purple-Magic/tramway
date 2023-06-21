@@ -20,7 +20,7 @@ Tramway use [Tailwind](https://tailwindcss.com/) by default. All UI helpers impl
 Tramway provides DSL for rendering Tailwind Navgiation bar.
 
 ```ruby
-tramway_navbar title: 'Purple Magic' do |nav|
+tramway_navbar title: 'Purple Magic', background: { color: :red, intensity: 500 } do |nav|
   nav.left do
     nav.item 'Users', '/users'
     nav.item 'Podcasts', '/podcasts'
@@ -33,6 +33,17 @@ end
 ```
 
 will render [this](https://play.tailwindcss.com/UZPTCudFw5)
+
+#### tramway_navbar
+
+This helper provides several options. Here is YAML view of `tramway_navbar` options structure
+
+```yaml
+title: String that will be added to the left side of the navbar
+background:
+  color: Css-color. Supports all named CSS colors and HEX colors
+  intensity: Color intensity. Range: **100..950**. Used by Tailwind. Not supported in case of using HEX color in the background.color
+```
 
 #### nav.left and nav.right
 
