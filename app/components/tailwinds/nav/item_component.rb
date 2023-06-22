@@ -13,6 +13,7 @@ module Tailwinds
 
       private
 
+      # :reek:UtilityFunction
       def prepare(options:)
         options.reduce({}) do |hash, (key, value)|
           case key
