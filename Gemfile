@@ -18,6 +18,7 @@ gem 'haml-rails'
 # gem "debug", ">= 1.0.0"
 
 group :development do
+  gem 'reek'
   gem 'rubocop'
 end
 

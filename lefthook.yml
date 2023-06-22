@@ -3,6 +3,10 @@ pre-push:
     test:
       tags: backend tests
       run: bundle exec rspec
+    reek:
+      tags: backend style
+      glob: "*.rb"
+      run: bundle exec reek --force-exclusion {all_files}
 
 pre-commit:
   parallel: true
@@ -10,5 +14,4 @@ pre-commit:
     rubocop:
       tags: backend style
       glob: "*.rb"
-      exclude: "application.rb|routes.rb"
       run: bundle exec rubocop --force-exclusion {all_files}
