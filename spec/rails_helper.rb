@@ -20,5 +20,6 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :component
   config.include Capybara::RSpecMatchers, type: :view
   config.include Capybara::RSpecMatchers, type: :controller
+  config.include Capybara::RSpecMatchers, type: :decorator
   config.include FactoryBot::Syntax::Methods
 end

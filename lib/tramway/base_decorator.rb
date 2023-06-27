@@ -7,8 +7,6 @@ module Tramway
   #
   class BaseDecorator
     include Tramway::Decorators::CollectionDecorators
-    include ActionView::Context
-    include ActionView::Helpers
 
     attr_reader :object, :context
 
@@ -25,7 +23,7 @@ module Tramway
       include Tramway::Decorators::CollectionDecorators
 
       def decorate(object_or_array, context)
-        if object_or_array.is_a? ActiveRecord::Relation
+        if object_or_array.class.name.in? ['ActiveRecord::Relation', 'Array']
           decorate_collection(collection: object_or_array, context:)
         else
           new(object_or_array, context)
