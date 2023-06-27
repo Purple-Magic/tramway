@@ -10,6 +10,7 @@ Bundler.require(*Rails.groups)
 require 'tramway'
 
 module Dummy
+  # We use dummy application for the test purpose
   class Application < Rails::Application
     config.load_defaults Rails::VERSION::STRING.to_f
 
