@@ -24,7 +24,7 @@ jobs:
         run: bundle install --jobs 4 --retry 3 --path vendor/bundle
 
       - name: Initialize db
-        environment:
+        env:
           RAILS_ENV: test
         run: bundle exec rails db:create db:migrate
 
