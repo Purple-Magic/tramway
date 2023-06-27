@@ -6,14 +6,10 @@ module Tramway
     #
     module DecorateHelper
       def tramway_decorate(object_or_array, decorator: nil)
-        execute_decoration(object_or_array, lookup_context, decorator:)
+        decorator_class(object_or_array, decorator).decorate object_or_array, self
       end
 
       private
-
-      def execute_decoration(object_or_array, _context, decorator: nil)
-        decorator_class(object_or_array, decorator).decorate object_or_array, self
-      end
 
       def decorator_class(object_or_array, decorator)
         if decorator.present?

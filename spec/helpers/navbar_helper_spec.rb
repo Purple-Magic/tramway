@@ -6,7 +6,7 @@ require 'support/view_helpers'
 describe Tramway::Helpers::NavbarHelper, type: :view do
   before do
     described_class.include ViewHelpers
-    view.extend Tramway::Helpers::NavbarHelper
+    view.extend described_class
   end
 
   let(:title) { Faker::Company.name }

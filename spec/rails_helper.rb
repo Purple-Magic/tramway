@@ -18,4 +18,5 @@ RSpec.configure do |config|
   config.include ViewComponent::SystemTestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
   config.include Capybara::RSpecMatchers, type: :view
+  config.include Capybara::RSpecMatchers, type: :controller
 end
