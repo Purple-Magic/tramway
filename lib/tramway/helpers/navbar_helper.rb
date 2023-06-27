@@ -5,18 +5,40 @@ require 'tramway/navbar'
 module Tramway
   module Helpers
     # Providing navbar helpers for ActionView
-    #
     module NavbarHelper
       def tramway_navbar(**options)
         if block_given?
-          @navbar = Tramway::Navbar.new self
+          initialize_navbar
 
           yield @navbar
 
-          options[:left_items] = @navbar.items[:left]
-          options[:right_items] = @navbar.items[:right]
+          assign_navbar_items(options)
         end
 
+        render_navbar_component(options)
+      end
+
+      private
+
+      def initialize_navbar
+        @navbar = Tramway::Navbar.new(self)
+      end
+
+      def assign_navbar_items(options)
+        navbar_items = @navbar.items
+        navbar_items.each do |(key, value)|
+          key_to_merge = case key
+                         when :left, :right
+                           "#{key}_items".to_sym
+                         else
+                           key
+                         end
+
+          options.merge! key_to_merge => value
+        end
+      end
+
+      def render_navbar_component(options)
         render(Tailwinds::NavbarComponent.new(**options))
       end
     end
