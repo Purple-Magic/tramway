@@ -19,7 +19,7 @@ module Tramway
 
       def decorate(object_or_array)
         if object_or_array.is_a? ActiveRecord::Relation
-          decorate_collection object_or_array
+          decorate_collection collection: object_or_array
         else
           new(object_or_array)
         end
@@ -31,6 +31,8 @@ module Tramway
         end
       end
     end
+
+    delegate_attributes :id
 
     def to_partial_path
       underscored_class_name = object.class.name.underscore
