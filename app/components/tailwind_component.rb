@@ -2,7 +2,6 @@
 
 require 'view_component'
 
-# Base Tailwind component with base attributes
-#
+# Base TailwindComponent. Contains base features for all tailwind components
 class TailwindComponent < ViewComponent::Base
 end
