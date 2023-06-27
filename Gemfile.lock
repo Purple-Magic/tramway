@@ -93,6 +93,11 @@ GEM
     date (3.3.3)
     diff-lcs (1.5.0)
     erubi (1.12.0)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
     globalid (1.1.0)
@@ -244,6 +249,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  factory_bot_rails
   faker
   haml-rails
   pry
