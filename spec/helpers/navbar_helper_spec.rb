@@ -95,7 +95,7 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
     end
 
     context 'with raising errors' do
-      it 'raises error in case there are text and block in the same time' do
+      it 'raises error in case there are text and block at the same time' do
         expect do
           view.tramway_navbar do |nav|
             nav.right do
@@ -105,7 +105,7 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
             end
           end
         end.to(
-          raise_error 'You can not provide argument and code block in the same time'
+          raise_error 'You cannot provide an argument and a code block at the same time'
         )
       end
     end
