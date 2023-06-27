@@ -7,10 +7,16 @@ module Tramway
     isolate_namespace Tramway
 
     initializer 'tramway.load_helpers' do
-      ActiveSupport.on_load(:action_view) do
+      ActiveSupport.on_load(:action_view) do |loaded_class|
         require 'tramway/helpers/navbar_helper'
 
-        ActionView::Base.include Tramway::Helpers::NavbarHelper
+        loaded_class.include Tramway::Helpers::NavbarHelper
+      end
+
+      ActiveSupport.on_load(:action_controller) do |loaded_class|
+        require 'tramway/helpers/decorate_helper'
+
+        loaded_class.include Tramway::Helpers::DecorateHelper
       end
     end
   end
