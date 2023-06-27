@@ -20,11 +20,9 @@ module Tramway
     end
 
     class << self
-      include Tramway::Decorators::CollectionDecorators
-
       def decorate(object_or_array, context)
-        if object_or_array.class.name.in? ['ActiveRecord::Relation', 'Array']
-          decorate_collection(collection: object_or_array, context:)
+        if Tramway::Decorators::CollectionDecorators.collection?(object_or_array)
+          Tramway::Decorators::CollectionDecorators.decorate_collection(collection: object_or_array, context:)
         else
           new(object_or_array, context)
         end

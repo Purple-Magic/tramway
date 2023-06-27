@@ -15,8 +15,9 @@ RSpec.describe Tramway::BaseDecorator do
   end
 
   describe '#render' do
+    let(:args) { %i[arg1 arg2] }
+
     it 'calls the context render method with the provided arguments' do
-      args = %i[arg1 arg2]
       expect(context).to receive(:render).with(*args, layout: false)
       subject.render(*args)
     end
@@ -30,7 +31,8 @@ RSpec.describe Tramway::BaseDecorator do
       end
 
       it 'calls decorate_collection with the collection and context' do
-        expect(described_class).to receive(:decorate_collection).with(collection: relation, context:)
+        expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection).with(collection: relation,
+                                                                                                context:)
         described_class.decorate(relation, context)
       end
     end
@@ -42,7 +44,8 @@ RSpec.describe Tramway::BaseDecorator do
       end
 
       it 'calls decorate_collection with the collection and context' do
-        expect(described_class).to receive(:decorate_collection).with(collection: relation, context:)
+        expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection).with(collection: relation,
+                                                                                                context:)
         described_class.decorate(relation, context)
       end
     end

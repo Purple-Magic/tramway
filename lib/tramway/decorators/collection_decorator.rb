@@ -5,10 +5,16 @@ module Tramway
     # Provides functions for collection decorating
     #
     module CollectionDecorators
+      module_function
+
       def decorate_collection(collection:, context:)
         collection.map do |item|
-          decorate item, context
+          Tramway::Decorators::BaseDecorator.decorate item, context
         end
+      end
+
+      def collection?(object)
+        object.class.name.in? ['ActiveRecord::Relation', 'Array']
       end
     end
   end

@@ -15,7 +15,7 @@ module Tramway
         if decorator.present?
           decorator
         else
-          klass = if object_or_array.class.name.in? ['ActiveRecord::Relation', 'Array']
+          klass = if Tramway::Decorators::CollectionDecorators.collection?(object_or_array)
                     object_or_array.first.class
                   else
                     object_or_array.class
