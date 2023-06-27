@@ -11,20 +11,40 @@ describe Tramway::Helpers::DecorateHelper, type: :controller do
 
   describe '#tramway_decorate' do
     context 'with success' do
-      it 'decorates object' do
-        user = create :user
+      context 'with default decorator' do
+        it 'decorates object' do
+          user = create :user
 
-        expect(Tramway::BaseDecorator).to receive(:decorate).with(user, controller)
+          expect(UserDecorator).to receive(:decorate).with(user, controller)
 
-        controller.tramway_decorate user
+          controller.tramway_decorate user
+        end
+
+        it 'decorates collection of objects' do
+          users = create_list :user, 5
+
+          expect(UserDecorator).to receive(:decorate).with(users, controller)
+
+          controller.tramway_decorate users
+        end
       end
 
-      it 'decorates collection of objects' do
-        users = create_list :user, 5
+      context 'with specific decorator' do
+        it 'decorates object' do
+          user = create :user
 
-        expect(Tramway::BaseDecorator).to receive(:decorate).with(users, controller)
+          expect(UserSpecificDecorator).to receive(:decorate).with(user, controller)
 
-        controller.tramway_decorate users
+          controller.tramway_decorate user, decorator: UserSpecificDecorator
+        end
+
+        it 'decorates collection of objects' do
+          users = create_list :user, 5
+
+          expect(UserSpecificDecorator).to receive(:decorate).with(users, controller)
+
+          controller.tramway_decorate users, decorator: UserSpecificDecorator
+        end
       end
     end
   end
