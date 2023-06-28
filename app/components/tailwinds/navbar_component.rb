@@ -33,7 +33,7 @@ module Tailwinds
     include Tailwinds::BackgroundHelper
 
     def initialize(**options)
-      @title = options[:title]
+      @title = { text: options[:title], link: options[:title_link] || '/' }
       @left_items = options[:left_items]
       @right_items = options[:right_items]
       @color = BackgroundHelper.background(options)

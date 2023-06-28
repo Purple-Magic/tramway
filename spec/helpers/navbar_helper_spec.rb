@@ -26,10 +26,30 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
         expect(fragment).to have_css 'nav.bg-purple-700.py-4.px-8.flex.justify-between.items-center'
       end
 
-      it 'renders navbar with title' do
-        fragment = view.tramway_navbar(title:)
+      context 'with title checks' do
+        it 'renders navbar with title' do
+          fragment = view.tramway_navbar(title:)
 
-        expect(fragment).to have_content title
+          expect(fragment).to have_content title
+        end
+
+        it 'renders navbar with default title link' do
+          fragment = view.tramway_navbar(title:)
+
+          expect(fragment).to have_css "a[href='/']"
+        end
+
+        it 'renders navbar with specific title link' do
+          fragment = view.tramway_navbar(title:, title_link: '/home')
+
+          expect(fragment).to have_css "a[href='/home']"
+        end
+
+        it 'does not renders title in case user did not provide it' do
+          fragment = view.tramway_navbar(title_link: '/home')
+
+          expect(fragment).not_to have_css "a[href='/home']"
+        end
       end
 
       context 'with left and right items checks' do
