@@ -23,5 +23,10 @@ jobs:
       - name: Install dependencies
         run: bundle install --jobs 4 --retry 3 --path vendor/bundle
 
+      - name: Initialize db
+        run: |
+          cd spec/dummy
+          bundle exec rails db:create db:migrate
+
       - name: Run RSpec tests
         run: bundle exec rspec

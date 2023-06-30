@@ -1,0 +1,24 @@
+# frozen_string_literal: true
+
+module Tramway
+  module Decorators
+    # Provides method to determine decorators classes
+    module ClassHelper
+      module_function
+
+      def decorator_class(object_or_array, decorator)
+        if decorator.present?
+          decorator
+        else
+          klass = if Tramway::Decorators::CollectionDecorators.collection?(object_or_array)
+                    object_or_array.first.class
+                  else
+                    object_or_array.class
+                  end
+
+          "#{klass}Decorator".constantize
+        end
+      end
+    end
+  end
+end

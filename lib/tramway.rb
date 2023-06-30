@@ -2,6 +2,7 @@
 
 require 'tramway/version'
 require 'tramway/engine'
+require 'tramway/base_decorator'
 require 'view_component/compiler'
 require 'view_component/engine'
 

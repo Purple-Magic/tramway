@@ -13,7 +13,58 @@ gem "view_component"
 
 ### Tailwind components
 
-Tramway use [Tailwind](https://tailwindcss.com/) by default. All UI helpers implemented with [ViewComponent](https://github.com/viewcomponent/view_component).
+Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are implemented with [ViewComponent](https://github.com/viewcomponent/view_component).
+
+### Decorators
+
+Tramway provides convenient decorators for your objects. **NOTE:** This is not the decorator pattern in its usual representation.
+
+*app/controllers/users_controller.rb*
+```ruby
+def index
+  # this line of code decorates the users collection with the default UserDecorator
+  @users = tramway_decorate User.all 
+end
+```
+
+*app/decorators/user_decorator.rb*
+```ruby
+class UserDecorator < Tramway::BaseDecorator
+  # delegates attributes to decorated object
+  delegate_attributes :email, :first_name, :last_name
+
+  # you can provide your own methods with access to decorated object attributes with the method `object`
+  def created_at
+    I18n.l object.created_at
+  end
+
+  # you can provide representations with ViewComponent to avoid implementing views with Rails Helpers
+  def posts_table
+    render TableComponent.new(object.posts)
+  end
+end
+```
+
+#### Decorate single object
+
+You can use the same method to decorate a single object either
+
+```ruby
+def show
+  @user = tramway_decorate User.find params[:id]
+end
+```
+
+#### Decorate with a specific decorator
+
+You can implement a specific decorator and ask Tramway to decorate with it
+
+```ruby
+def show
+  @user = tramway_decorate User.find(params[:id]), decorator: Users::ShowDecorator
+end
+```
+
 
 ### Navbar
 

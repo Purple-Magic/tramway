@@ -1,0 +1,10 @@
+directories:
+  "spec/dummy/db/migrate/":
+    FeatureEnvy: 
+      enabled: false
+    IrresponsibleModule:
+      enabled: false
+    TooManyStatements:
+      enabled: false
+    UncommunicativeVariableName:
+      enabled: false
