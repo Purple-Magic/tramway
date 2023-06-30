@@ -27,15 +27,10 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
       end
 
       context 'with title checks' do
-        it 'renders navbar with title' do
+        it 'renders navbar with title and default link' do
           fragment = view.tramway_navbar(title:)
 
           expect(fragment).to have_content title
-        end
-
-        it 'renders navbar with default title link' do
-          fragment = view.tramway_navbar(title:)
-
           expect(fragment).to have_css "a[href='/']"
         end
 
