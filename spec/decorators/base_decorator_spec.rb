@@ -5,6 +5,7 @@ require 'rails_helper' # or 'spec_helper' if not using Rails
 RSpec.describe Tramway::BaseDecorator do
   let(:object) { double('object') }
   let(:context) { double('context') }
+  let(:decorator) { Tramway::BaseDecorator }
   subject { described_class.new(object, context) }
 
   describe '#initialize' do
@@ -31,8 +32,8 @@ RSpec.describe Tramway::BaseDecorator do
       end
 
       it 'calls decorate_collection with the collection and context' do
-        expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection).with(collection: relation,
-                                                                                                context:)
+        expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection)
+          .with(collection: relation, context:, decorator:)
         described_class.decorate(relation, context)
       end
     end
@@ -44,8 +45,8 @@ RSpec.describe Tramway::BaseDecorator do
       end
 
       it 'calls decorate_collection with the collection and context' do
-        expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection).with(collection: relation,
-                                                                                                context:)
+        expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection)
+          .with(collection: relation, context:, decorator:)
         described_class.decorate(relation, context)
       end
     end

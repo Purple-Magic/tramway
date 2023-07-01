@@ -22,7 +22,11 @@ module Tramway
     class << self
       def decorate(object_or_array, context)
         if Tramway::Decorators::CollectionDecorators.collection?(object_or_array)
-          Tramway::Decorators::CollectionDecorators.decorate_collection(collection: object_or_array, context:)
+          Tramway::Decorators::CollectionDecorators.decorate_collection(
+            collection: object_or_array,
+            context:,
+            decorator: self
+          )
         else
           new(object_or_array, context)
         end
