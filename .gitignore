@@ -3,6 +3,7 @@
 /log/*.log
 /pkg/
 /tmp/
+/spec/dummy/db/schema.rb
 /spec/dummy/db/*.sqlite3
 /spec/dummy/db/*.sqlite3-*
 /spec/dummy/log/*.log
