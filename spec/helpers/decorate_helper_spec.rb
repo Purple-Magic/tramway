@@ -27,6 +27,12 @@ describe Tramway::Helpers::DecorateHelper, type: :controller do
 
           controller.tramway_decorate users
         end
+
+        it 'decorates empty collection' do
+          users = []
+
+          expect(controller.tramway_decorate(users)).to be_empty
+        end
       end
 
       context 'with specific decorator' do
