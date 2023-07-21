@@ -7,9 +7,9 @@ module Tramway
     module CollectionDecorators
       module_function
 
-      def decorate_collection(collection:, context:, decorator:)
+      def decorate_collection(collection:, decorator:)
         collection.map do |item|
-          decorator.decorate item, context
+          decorator.decorate item
         end
       end
 

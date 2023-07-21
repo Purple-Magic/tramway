@@ -1,34 +1,30 @@
 # frozen_string_literal: true
 
 require 'tramway/decorators/collection_decorator'
+require 'tramway/utils/decorators/render'
 
 module Tramway
   # Provides decorate function for Tramway projects
   #
   class BaseDecorator
     include Tramway::Decorators::CollectionDecorators
+    include Tramway::Utils::Decorators::Render
 
-    attr_reader :object, :context
+    attr_reader :object
 
-    def initialize(object, context)
+    def initialize(object)
       @object = object
-      @context = context
-    end
-
-    def render(*args)
-      context.render(*args, layout: false)
     end
 
     class << self
-      def decorate(object_or_array, context)
+      def decorate(object_or_array)
         if Tramway::Decorators::CollectionDecorators.collection?(object_or_array)
           Tramway::Decorators::CollectionDecorators.decorate_collection(
             collection: object_or_array,
-            context:,
             decorator: self
           )
         else
-          new(object_or_array, context)
+          new(object_or_array)
         end
       end
 

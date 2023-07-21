@@ -15,7 +15,7 @@ describe Tramway::Helpers::DecorateHelper, type: :controller do
         it 'decorates object' do
           user = create :user
 
-          expect(UserDecorator).to receive(:decorate).with(user, controller)
+          expect(UserDecorator).to receive(:decorate).with(user)
 
           controller.tramway_decorate user
         end
@@ -23,7 +23,7 @@ describe Tramway::Helpers::DecorateHelper, type: :controller do
         it 'decorates collection of objects' do
           users = create_list :user, 5
 
-          expect(UserDecorator).to receive(:decorate).with(users, controller)
+          expect(UserDecorator).to receive(:decorate).with(users)
 
           controller.tramway_decorate users
         end
@@ -39,7 +39,7 @@ describe Tramway::Helpers::DecorateHelper, type: :controller do
         it 'decorates object' do
           user = create :user
 
-          expect(UserSpecificDecorator).to receive(:decorate).with(user, controller)
+          expect(UserSpecificDecorator).to receive(:decorate).with(user)
 
           controller.tramway_decorate user, decorator: UserSpecificDecorator
         end
@@ -47,7 +47,7 @@ describe Tramway::Helpers::DecorateHelper, type: :controller do
         it 'decorates collection of objects' do
           users = create_list :user, 5
 
-          expect(UserSpecificDecorator).to receive(:decorate).with(users, controller)
+          expect(UserSpecificDecorator).to receive(:decorate).with(users)
 
           controller.tramway_decorate users, decorator: UserSpecificDecorator
         end

@@ -8,3 +8,9 @@ directories:
       enabled: false
     UncommunicativeVariableName:
       enabled: false
+  "lib/tramway/helpers":
+    UtilityFunction:
+      enabled: false
+  "lib/tramway/utils":
+    UtilityFunction:
+      enabled: false

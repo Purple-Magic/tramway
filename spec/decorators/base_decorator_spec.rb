@@ -4,22 +4,20 @@ require 'rails_helper' # or 'spec_helper' if not using Rails
 
 RSpec.describe Tramway::BaseDecorator do
   let(:object) { double('object') }
-  let(:context) { double('context') }
   let(:decorator) { Tramway::BaseDecorator }
-  subject { described_class.new(object, context) }
+  subject { described_class.new(object) }
 
   describe '#initialize' do
-    it 'assigns object and context' do
+    it 'assigns object' do
       expect(subject.object).to eq(object)
-      expect(subject.context).to eq(context)
     end
   end
 
   describe '#render' do
     let(:args) { %i[arg1 arg2] }
 
-    it 'calls the context render method with the provided arguments' do
-      expect(context).to receive(:render).with(*args, layout: false)
+    it 'calls the ActionController::Base.render method with the provided arguments' do
+      expect(ActionController::Base).to receive(:render).with(*args, layout: false)
       subject.render(*args)
     end
   end
@@ -31,10 +29,10 @@ RSpec.describe Tramway::BaseDecorator do
         User.all
       end
 
-      it 'calls decorate_collection with the collection and context' do
+      it 'calls decorate_collection with the collection' do
         expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection)
-          .with(collection: relation, context:, decorator:)
-        described_class.decorate(relation, context)
+          .with(collection: relation, decorator:)
+        described_class.decorate(relation)
       end
     end
 
@@ -44,19 +42,19 @@ RSpec.describe Tramway::BaseDecorator do
         User.all.to_a
       end
 
-      it 'calls decorate_collection with the collection and context' do
+      it 'calls decorate_collection with the collection' do
         expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection)
-          .with(collection: relation, context:, decorator:)
-        described_class.decorate(relation, context)
+          .with(collection: relation, decorator:)
+        described_class.decorate(relation)
       end
     end
 
     context 'when object_or_array is not an ActiveRecord::Relation' do
       let(:object) { double('object') }
 
-      it 'initializes a new decorator with the object and context' do
-        expect(described_class).to receive(:new).with(object, context)
-        described_class.decorate(object, context)
+      it 'initializes a new decorator with the object' do
+        expect(described_class).to receive(:new).with(object)
+        described_class.decorate(object)
       end
     end
   end
