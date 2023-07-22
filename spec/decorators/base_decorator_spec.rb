@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper' # or 'spec_helper' if not using Rails
+require 'rails_helper'
 
 RSpec.describe Tramway::BaseDecorator do
   let(:object) { double('object') }

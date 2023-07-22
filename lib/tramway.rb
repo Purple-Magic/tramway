@@ -16,6 +16,6 @@ module Tramway
   end
 
   def config
-    @config ||= Tramway::Config.new
+    Tramway::Config.instance
   end
 end

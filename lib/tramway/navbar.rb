@@ -12,10 +12,17 @@ module Tramway
     end
 
     def left
-      return unless block_given?
-
       @items[:left] = []
       filling_side(:left)
+
+      Tramway.config.entities.each do |entity|
+        entity.to_s.pluralize
+
+        item entity.human_name.plural, entity.routes.index
+      end
+
+      return unless block_given?
+
       yield self
       reset_filling
     end
