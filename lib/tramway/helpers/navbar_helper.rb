@@ -7,13 +7,11 @@ module Tramway
     # Providing navbar helpers for ActionView
     module NavbarHelper
       def tramway_navbar(**options)
-        if block_given?
-          initialize_navbar
+        initialize_navbar
 
-          yield @navbar
+        yield @navbar if block_given?
 
-          assign_navbar_items(options)
-        end
+        assign_navbar_items(options)
 
         render_navbar_component(options)
       end

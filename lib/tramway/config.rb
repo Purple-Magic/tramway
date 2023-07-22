@@ -14,8 +14,6 @@ module Tramway
     end
 
     def entities=(collection)
-      raise 'You try to set empty Tramway entities' if collection.nil?
-
       @entities = collection.map do |entity|
         Tramway::Configs::Entity.new(name: entity)
       end

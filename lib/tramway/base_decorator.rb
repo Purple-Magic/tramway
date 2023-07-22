@@ -8,7 +8,7 @@ module Tramway
   #
   class BaseDecorator
     include Tramway::Decorators::CollectionDecorators
-    include Tramway::Utils::Decorators::Render
+    include Tramway::Utils::Render
 
     attr_reader :object
 

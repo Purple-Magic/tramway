@@ -8,15 +8,15 @@ module Tramway
       attr_reader :name
 
       def initialize(name:)
-        @name = name
+        @name = name.to_s
       end
 
       def routes
-        OpenStruct.new index: Rails.application.routes.url_helpers.public_send("#{name.to_s.pluralize}_path")
+        OpenStruct.new index: Rails.application.routes.url_helpers.public_send("#{name.pluralize}_path")
       end
 
       def human_name
-        OpenStruct.new single: name.to_s.capitalize, plural: name.to_s.pluralize.capitalize
+        OpenStruct.new single: name.capitalize, plural: name.pluralize.capitalize
       end
     end
   end

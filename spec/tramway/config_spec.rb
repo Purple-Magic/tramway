@@ -6,12 +6,6 @@ describe Tramway::Config do
   let(:config) { Tramway::Config.instance }
 
   describe '#entities=' do
-    context 'when collection is nil' do
-      it 'raises an error' do
-        expect { config.entities = nil }.to raise_error('You try to set empty Tramway entities')
-      end
-    end
-
     context 'when collection is not empty' do
       let(:entities) { %w[Podcast Episode] }
 
