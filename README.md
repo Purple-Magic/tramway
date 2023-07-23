@@ -24,7 +24,7 @@ Tramway.configure do |config|
 end
 ```
 
-By default, links to the Tramway Entities index page are rendered in Tramway Navbar.
+By default, links to the Tramway Entities index page are rendered in [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar).
 
 ### Tailwind components
 
@@ -111,7 +111,7 @@ background:
   intensity: Color intensity. Range: **100..950**. Used by Tailwind. Not supported in case of using HEX color in the background.color
 ```
 
-**NOTE:** `tramway_navbar` method called without arguments and block of code will render only Tramway Entities links on the left.
+**NOTE:** `tramway_navbar` method called without arguments and block of code will render only [Tramway Entities](https://github.com/Purple-Magic/tramway#tramway-entities) links on the left.
 
 #### nav.left and nav.right
 
