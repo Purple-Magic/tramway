@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
+require 'tramway/utils/render'
+require 'tramway/utils/navbars/render'
+
 module Tramway
   # Navbar object provides left and right elements
   class Navbar
     include Tramway::Utils::Render
-    include Tramway::Utils::Navbar::Render
+    include Tramway::Utils::Navbars::Render
 
-    attr_reader :items
+    attr_reader :items, :context
 
-    def initialize
+    def initialize(context)
+      @context = context
       @items = { left: [], right: [] }
       @filling = nil
 
@@ -16,15 +20,7 @@ module Tramway
 
       return unless entities.any?
 
-      filling_side :left
-
-      entities.each do |entity|
-        entity.to_s.pluralize
-
-        item entity.human_name.plural, entity.routes.index
-      end
-
-      reset_filling
+      preset_left entities
     end
 
     def left
@@ -57,6 +53,18 @@ module Tramway
 
     private
 
+    def preset_left(entities)
+      filling_side :left
+
+      entities.each do |entity|
+        entity.to_s.pluralize
+
+        item entity.human_name.plural, entity.routes.index
+      end
+
+      reset_filling
+    end
+
     def provided_url_and_block?(url)
       url.present? && block_given?
     end
@@ -67,6 +75,18 @@ module Tramway
 
     def reset_filling
       @filling = nil
+    end
+
+    def render_ignoring_block(text_or_url, url, options)
+      options.merge!(href: url)
+
+      context.render(Tailwinds::Nav::ItemComponent.new(**options)) { text_or_url }
+    end
+
+    def render_using_block(text_or_url, options, &block)
+      options.merge!(href: text_or_url)
+
+      context.render(Tailwinds::Nav::ItemComponent.new(**options), &block)
     end
   end
 end

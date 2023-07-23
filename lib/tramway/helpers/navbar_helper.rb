@@ -19,7 +19,7 @@ module Tramway
       private
 
       def initialize_navbar
-        @navbar = Tramway::Navbar.new(self)
+        @navbar = Tramway::Navbar.new self
       end
 
       def assign_navbar_items(options)

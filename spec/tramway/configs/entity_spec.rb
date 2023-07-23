@@ -8,7 +8,7 @@ RSpec.describe Tramway::Configs::Entity do
 
   describe '#initialize' do
     it 'sets the correct name' do
-      expect(subject.name).to eq(name)
+      expect(subject.name).to eq(name.to_s)
     end
   end
 

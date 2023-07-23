@@ -17,8 +17,8 @@ RSpec.describe Tramway::BaseDecorator do
     let(:args) { %i[arg1 arg2] }
 
     it 'calls the ActionController::Base.render method with the provided arguments' do
-      expect(ActionController::Base).to receive(:render).with(*args, layout: false)
-      subject.render(*args)
+      expect(ActionController::Base).to receive(:render).with(*args, { layout: false })
+      subject.render(*args, layout: false)
     end
   end
 

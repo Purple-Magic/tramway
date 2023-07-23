@@ -5,8 +5,8 @@ module Tramway
     # Provides helper method render that depends on ActionController::Base.render method
     #
     module Render
-      def render(*args)
-        ActionController::Base.render(*args, layout: false)
+      def render(*args, &)
+        ActionController::Base.render(*args, &)
       end
     end
   end
