@@ -1,14 +1,8 @@
 # frozen_string_literal: true
 
-require 'tramway/utils/render'
-require 'tramway/utils/navbars/render'
-
 module Tramway
   # Navbar object provides left and right elements
   class Navbar
-    include Tramway::Utils::Render
-    include Tramway::Utils::Navbars::Render
-
     attr_reader :items, :context
 
     def initialize(context)
