@@ -2,8 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Tramway::Configs::Entity do
-  let(:name) { :user }
+shared_examples 'Tramway Config Entity' do |name|
   subject { described_class.new(name:) }
 
   describe '#initialize' do
@@ -19,7 +18,7 @@ RSpec.describe Tramway::Configs::Entity do
     end
 
     let(:expected_route) do
-      Rails.application.routes.url_helpers.public_send("#{name.to_s.pluralize}_path")
+      Rails.application.routes.url_helpers.public_send("#{name.to_s.pluralize.parameterize.underscore}_path")
     end
 
     it 'sets the correct index route' do
@@ -41,5 +40,15 @@ RSpec.describe Tramway::Configs::Entity do
       expect(subject.human_name.single).to eq(expected_single_name)
       expect(subject.human_name.plural).to eq(expected_plural_name)
     end
+  end
+end
+
+describe Tramway::Configs::Entity do
+  context 'with entity without namespaces' do
+    include_examples 'Tramway Config Entity', :user
+  end
+
+  context 'with entity with namespaces' do
+    include_examples 'Tramway Config Entity', 'episodes/part'
   end
 end

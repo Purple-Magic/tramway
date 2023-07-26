@@ -12,7 +12,9 @@ module Tramway
       end
 
       def routes
-        OpenStruct.new index: Rails.application.routes.url_helpers.public_send("#{name.pluralize}_path")
+        underscored_name = name.parameterize.pluralize.underscore
+
+        OpenStruct.new index: Rails.application.routes.url_helpers.public_send("#{underscored_name}_path")
       end
 
       def human_name
