@@ -11,11 +11,26 @@ gem "view_component"
 
 ## Usage
 
+### Tramway Entities
+
+Tramway is an entity-based framework. **Entity** is the class on whose objects actions be applied: _index, show, create, update, and destroy_. Tramway will support numerous classes as entities. For now, Entity could be only **ActiveRecord::Base** class.
+
+#### Define entity for Tramway
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.entities = [ :user, :podcast, :episode ] # entities based on models User, Podcast and Episode are defined
+end
+```
+
+By default, links to the Tramway Entities index page are rendered in [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar).
+
 ### Tailwind components
 
 Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are implemented with [ViewComponent](https://github.com/viewcomponent/view_component).
 
-### Decorators
+### Tramway Decorators
 
 Tramway provides convenient decorators for your objects. **NOTE:** This is not the decorator pattern in its usual representation.
 
@@ -65,8 +80,7 @@ def show
 end
 ```
 
-
-### Navbar
+### Tramway Navbar
 
 Tramway provides DSL for rendering Tailwind Navgiation bar.
 
@@ -96,6 +110,8 @@ background:
   color: Css-color. Supports all named CSS colors and HEX colors
   intensity: Color intensity. Range: **100..950**. Used by Tailwind. Not supported in case of using HEX color in the background.color
 ```
+
+**NOTE:** `tramway_navbar` method called without arguments and block of code will render only [Tramway Entities](https://github.com/Purple-Magic/tramway#tramway-entities) links on the left.
 
 #### nav.left and nav.right
 

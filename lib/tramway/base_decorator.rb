@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require 'tramway/decorators/collection_decorator'
-require 'tramway/utils/decorators/render'
+require 'tramway/utils/render'
 
 module Tramway
   # Provides decorate function for Tramway projects
   #
   class BaseDecorator
     include Tramway::Decorators::CollectionDecorators
-    include Tramway::Utils::Decorators::Render
+    include Tramway::Utils::Render
 
     attr_reader :object
 

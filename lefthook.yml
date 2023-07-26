@@ -3,14 +3,13 @@ pre-push:
     test:
       tags: backend tests
       run: bundle exec rspec
+
+pre-commit:
+  commands:
     reek:
       tags: backend style
       glob: "*.rb"
       run: bundle exec reek --force-exclusion {all_files}
-
-pre-commit:
-  parallel: true
-  commands:
     rubocop:
       tags: backend style
       glob: "*.rb"

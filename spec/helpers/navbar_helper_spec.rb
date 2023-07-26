@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'support/view_helpers'
+require 'helpers/navbar/shared_examples'
 
 describe Tramway::Helpers::NavbarHelper, type: :view do
   before do
@@ -19,6 +20,9 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
           'Podcasts' => '/podcasts'
         }
       end
+
+      let(:left_items_css) { 'nav .flex ul.flex.items-center.space-x-4' }
+      let(:right_items_css) { 'nav ul.flex.items-center.space-x-4' }
 
       it 'renders navbar with tailwind styles' do
         fragment = view.tramway_navbar
@@ -48,9 +52,6 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
       end
 
       context 'with left and right items checks' do
-        let(:left_items_css) { 'nav .flex ul.flex.items-center.space-x-4' }
-        let(:right_items_css) { 'nav ul.flex.items-center.space-x-4' }
-
         it 'renders navbar with left items' do
           fragment = view.tramway_navbar do |nav|
             nav.left do
@@ -83,29 +84,24 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
           end
         end
 
-        it 'renders navbar with left and right items' do
-          fragment = view.tramway_navbar do |nav|
-            nav.left do
-              items.each do |(name, path)|
-                nav.item name, path
-              end
-            end
+        include_examples 'Helpers Navbar'
+      end
 
-            nav.right do
-              items.each do |(name, path)|
-                nav.item name, path
-              end
-            end
-          end
-
-          expect(fragment).to have_css left_items_css
-          expect(fragment).to have_css right_items_css
-
-          items.each do |(name, path)|
-            expect(fragment).to have_css "#{left_items_css} a[href='#{path}']", text: name
-            expect(fragment).to have_css "#{right_items_css} a[href='#{path}']", text: name
+      context 'with Tramway entities preset' do
+        before do
+          Tramway.configure do |config|
+            config.entities = [:user]
           end
         end
+
+        let(:path) { Rails.application.routes.url_helpers.users_path }
+        let(:fragment) { view.tramway_navbar }
+
+        it 'renders navbar with users link on the left' do
+          expect(fragment).to have_css "#{left_items_css} a[href='#{path}']", text: 'Users'
+        end
+
+        include_examples 'Helpers Navbar'
       end
     end
 
