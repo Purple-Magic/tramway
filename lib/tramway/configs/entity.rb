@@ -4,8 +4,7 @@ require 'tramway/configs/entities/route'
 
 module Tramway
   module Configs
-    # Tramway is entity based framework
-    #
+    # Tramway is an entity-based framework
     class Entity < Dry::Struct
       attribute :name, Types::Coercible::String
       attribute? :route, Tramway::Configs::Entities::Route
@@ -16,21 +15,20 @@ module Tramway
 
       def human_name
         options = if model_class.present?
-                    { single: model_class.model_name.human, plural: model_class.model_name.human.pluralize }
+                    model_name = model_class.model_name.human
+                    { single: model_name, plural: model_name.pluralize }
                   else
                     { single: name.capitalize, plural: name.pluralize.capitalize }
                   end
-        OpenStruct.new **options
+        OpenStruct.new(**options)
       end
 
       private
 
       def model_class
-        begin
-          name.camelize.constantize
-        rescue StandardError => e
-          nil
-        end
+        name.camelize.constantize
+      rescue StandardError
+        nil
       end
 
       def route_helper_method
