@@ -15,7 +15,9 @@ module Tramway
 
     def entities=(collection)
       @entities = collection.map do |entity|
-        Tramway::Configs::Entity.new(name: entity)
+        entity_options = entity.is_a?(Hash) ? entity : { name: entity }
+
+        Tramway::Configs::Entity.new(**entity_options)
       end
     end
 

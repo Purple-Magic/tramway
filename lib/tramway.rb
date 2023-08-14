@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'types'
 require 'tramway/version'
 require 'tramway/engine'
 require 'tramway/base_decorator'

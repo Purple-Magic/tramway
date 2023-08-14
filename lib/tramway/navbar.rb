@@ -51,8 +51,6 @@ module Tramway
       filling_side :left
 
       entities.each do |entity|
-        entity.to_s.pluralize
-
         item entity.human_name.plural, entity.routes.index
       end
 
