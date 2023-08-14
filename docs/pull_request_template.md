@@ -9,7 +9,7 @@ Now we have 2 more helpers
 
 ## What's changed for tramway drivers?
 
-*Here is description how it was before and after*
+*Here is the description of how it was before and after*
 
 *Example*
 
@@ -29,3 +29,4 @@ Now we have 2 more helpers
 *You should make updates in the docs in a single commit if it's possible. Link it here*
 
 Find more info [here](https://github.com/Purple-Magic/tramway/blob/tailwind_helpers/README.md#button)
+
