@@ -26,6 +26,22 @@ end
 
 By default, links to the Tramway Entities index page are rendered in [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar).
 
+#### Define entities with options
+
+Tramway Entity supports several options that are used in different features.
+
+**route**
+
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    { name: :user, route: { namespace: :admin } },                                 # `admin_users_path` link in the Tramway Navbar
+    { name: :podcast, route: { route_method: :shows } },                           # `shows_path` link in the Tramway Navbar
+    { name: :episodes, route: { namespace: :podcasts, route_method: :episodes } }, # `podcasts_episodes_path` link in the Tramway Navbar
+  ]
+end
+```
+
 ### Tailwind components
 
 Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are implemented with [ViewComponent](https://github.com/viewcomponent/view_component).
