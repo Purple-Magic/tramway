@@ -32,6 +32,7 @@ Tramway Entity supports several options that are used in different features.
 
 **route**
 
+*config/initializers/tramway.rb*
 ```ruby
 Tramway.configure do |config|
   config.entities = [
