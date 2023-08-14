@@ -26,7 +26,11 @@ module Tramway
       private
 
       def model_class
-        name.camelize.constantize if defined?(name.camelize.constantize)
+        begin
+          name.camelize.constantize
+        rescue StandardError => e
+          nil
+        end
       end
 
       def route_helper_method
