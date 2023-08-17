@@ -4,8 +4,14 @@ Rails.application.routes.draw do
   mount Tramway::Engine => '/tramway'
 
   resources :users
+  resources :clients
 
   namespace :episodes do
     resources :parts
+  end
+
+  namespace :admin do
+    resources :users
+    resources :clients
   end
 end
