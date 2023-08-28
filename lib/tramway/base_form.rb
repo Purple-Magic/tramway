@@ -23,9 +23,16 @@ module Tramway
       end
 
       def properties(*attributes)
-        attributes.each do |attribute|
-          property(attribute)
+        if attributes.any?
+          attributes.each do |attribute|
+            property(attribute)
+          end
+        else
+          @properties || []
         end
+      end
+
+      def params(&)
       end
     end
 
@@ -38,14 +45,8 @@ module Tramway
     end
 
     def method_missing(method_name, *args)
-      if method_name.to_s.end_with?('=')
-        variable_name = method_name.to_s.chomp('=')
-
-        define_method method_name do |value|
-          object.public_send method_name, value
-        end
-
-        public_send(method_name, *args)
+      if method_name.to_s.end_with?('=') && args.count == 1
+        object.public_send method_name, args.first
       else
         super
       end
