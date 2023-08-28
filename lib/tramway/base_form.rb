@@ -6,8 +6,7 @@ module Tramway
   # Provides form object for Tramway
   #
   class BaseForm
-    extend Dry::Initializer
-    param :object
+    attr_reader :object
 
     [ :model_name, :to_key, :to_model, :errors, :attributes ].each do |method_name|
       delegate method_name, to: :object
@@ -21,12 +20,6 @@ module Tramway
       def property(attribute, proc_obj = nil)
         @properties ||= []
         @properties << attribute
-
-        if proc_obj.present?
-          option attribute, proc_obj
-        else
-          option attribute
-        end
 
         delegate attribute, to: :object
       end
@@ -43,11 +36,15 @@ module Tramway
     end
 
     def submit(params)
-      self.class.properties.each do |attribute|
-        public_send("#{attribute}=", params[attribute])
-      end
+      __submit params
 
       object.save
+    end
+
+    def submit!(params)
+      __submit params
+
+      object.save!
     end
 
     def method_missing(method_name, *args)
@@ -55,6 +52,14 @@ module Tramway
         object.public_send method_name, args.first
       else
         super
+      end
+    end
+
+    private
+
+    def __submit(params)
+      self.class.properties.each do |attribute|
+        public_send("#{attribute}=", params[attribute])
       end
     end
   end
