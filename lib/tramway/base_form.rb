@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require 'dry-initializer'
+
 module Tramway
   # Provides form object for Tramway
   #
   class BaseForm
-    attr_reader :object
+    extend Dry::Initializer
+    param :object
 
     [ :model_name, :to_key, :to_model, :errors, :attributes ].each do |method_name|
       delegate method_name, to: :object
@@ -15,9 +18,15 @@ module Tramway
     end
 
     class << self
-      def property(attribute)
+      def property(attribute, proc_obj = nil)
         @properties ||= []
         @properties << attribute
+
+        if proc_obj.present?
+          option attribute, proc_obj
+        else
+          option attribute
+        end
 
         delegate attribute, to: :object
       end
@@ -30,9 +39,6 @@ module Tramway
         else
           @properties || []
         end
-      end
-
-      def params(&)
       end
     end
 
