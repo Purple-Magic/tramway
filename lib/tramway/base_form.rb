@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-require 'dry-initializer'
-
 module Tramway
   # Provides form object for Tramway
   #
   class BaseForm
     attr_reader :object
 
-    [ :model_name, :to_key, :to_model, :errors, :attributes ].each do |method_name|
+    %i[model_name to_key to_model errors attributes].each do |method_name|
       delegate method_name, to: :object
     end
 
@@ -17,7 +15,7 @@ module Tramway
     end
 
     class << self
-      def property(attribute, proc_obj = nil)
+      def property(attribute, _proc_obj = nil)
         @properties ||= []
         @properties << attribute
 
@@ -38,18 +36,28 @@ module Tramway
     def submit(params)
       __submit params
 
-      object.save
+      object.save.tap do
+        object.reload
+      end
     end
 
     def submit!(params)
       __submit params
 
-      object.save!
+      object.save!.tap do
+        object.reload
+      end
+    end
+
+    def respond_to_missing?(method_name)
+      return true if method_name.to_s.end_with?('=')
+
+      super
     end
 
     def method_missing(method_name, *args)
       if method_name.to_s.end_with?('=') && args.count == 1
-        object.public_send method_name, args.first
+        object.public_send(method_name, args.first)
       else
         super
       end
