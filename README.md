@@ -97,6 +97,130 @@ def show
 end
 ```
 
+### Tramway Form
+
+Tramway provides **convenient** form objects for Rails applications. List properties you want to change and the rules in Form classes. No controllers overloading.
+
+*app/forms/user_form.rb
+```ruby
+class UserForm < Tramway::BaseForm
+  properties :email, :password, :first_name, :last_name, :phone
+
+  def password=(value)
+    object.password = value if value.present?
+  end
+end
+```
+
+**Controllers without Tramway Form**
+
+*app/controllers/users_controller.rb*
+```ruby
+class UsersController < ApplicationController
+  def create
+    @user = User.new
+    if @user.save user_params
+      render :show
+    else
+      render :new
+    end
+  end
+
+  def update
+    @user = User.find params[:id]
+    if @user.save user_params
+      render :show
+    else
+      render :edit
+    end
+  end
+  
+  private
+
+  def user_params
+    params[:user].permit(:email, :password, :first_name, :last_name, :phone)
+  end
+end
+```
+
+**Controllers with Tramway Form**
+
+*app/controllers/users_controller.rb*
+```ruby
+class UsersController < ApplicationController
+  def create
+    @user = tramway_form User.new
+    if @user.submit params[:user]
+      render :show
+    else
+      render :new
+    end
+  end
+
+  def update
+    @user = tramway_form User.find params[:id]
+    if @user.submit params[:user]
+      render :show
+    else
+      render :edit
+    end
+  end
+end
+```
+
+#### Implement Form objects for any case
+
+*app/forms/user_updating_email_form.rb
+```ruby
+class UserUpdatingEmailForm < Tramway::BaseForm
+  properties :email
+end
+```
+
+*app/controllers/updating_emails_controller.rb*
+```ruby
+def update
+  @user = UserUpdatingEmailForm.new User.find params[:id]
+  if @user.submit params[:user]
+    # success
+  else
+    # failure
+  end
+end
+```
+
+#### Create form namespaces
+
+*app/forms/admin/user_form.rb*
+```ruby
+class Admin::UserForm < Tramway::BaseForm
+  properties :email, :password, :first_name, :last_name, :etc
+end
+```
+
+*app/controllers/admin/users_controller.rb*
+```ruby
+class Admin::UsersController < Admin::ApplicationController
+  def create
+    @user = tramway_form User.new, namespace: :admin
+    if @user.submit params[:user]
+      render :show
+    else
+      render :new
+    end
+  end
+
+  def update
+    @user = tramway_form User.find(params[:id]), namespace: :admin
+    if @user.submit params[:user]
+      render :show
+    else
+      render :edit
+    end
+  end
+end
+```
+
 ### Tramway Navbar
 
 Tramway provides DSL for rendering Tailwind Navgiation bar.
