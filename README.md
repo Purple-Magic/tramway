@@ -173,7 +173,7 @@ end
 
 #### Implement Form objects for any case
 
-*app/forms/user_updating_email_form.rb
+*app/forms/user_updating_email_form.rb*
 ```ruby
 class UserUpdatingEmailForm < Tramway::BaseForm
   properties :email
@@ -220,6 +220,28 @@ class Admin::UsersController < Admin::ApplicationController
     else
       render :edit
     end
+  end
+end
+```
+
+### Make flexible and extendable forms
+
+Tramway Form properties are not mapped to a model. You're able to make extended forms.
+
+*app/forms/user_form.rb*
+```ruby
+class UserForm < Tramway::BaseForm
+  properties :email, :password, :full_name
+
+  # RULE: in case password is empty, don't save
+  def password=(value)
+    object.password = value if value.present?
+  end
+
+  # EXTENDED FIELD: full name
+  def full_name=(value)
+    object.first_name = value.split(' ').first
+    object.last_name = value.split(' ').last
   end
 end
 ```
