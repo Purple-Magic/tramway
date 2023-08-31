@@ -1,6 +1,13 @@
 # Tramway
 Unite Ruby on Rails brilliance. Streamline development with Tramway.
 
+* [Installation](https://github.com/Purple-Magic/tramway#installation)
+* [Usage](https://github.com/Purple-Magic/tramway#usage)
+  * [Tramway Entities](https://github.com/Purple-Magic/tramway#tramway-entities)
+  * [Tramway Decorators](https://github.com/Purple-Magic/tramway#tramway-decorators)
+  * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
+  * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
+
 ## Installation
 Add this line to your application's Gemfile:
 
@@ -42,10 +49,6 @@ Tramway.configure do |config|
   ]
 end
 ```
-
-### Tailwind components
-
-Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are implemented with [ViewComponent](https://github.com/viewcomponent/view_component).
 
 ### Tramway Decorators
 
@@ -286,6 +289,10 @@ tramway_navbar title: 'Purple Magic' do |nav|
   end
 end
 ```
+
+### Tailwind components
+
+Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are implemented with [ViewComponent](https://github.com/viewcomponent/view_component).
 
 ## Contributing
 
