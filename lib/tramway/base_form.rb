@@ -37,7 +37,7 @@ module Tramway
       __submit params
 
       object.save.tap do
-        object.reload
+        __object
       end
     end
 
@@ -45,7 +45,7 @@ module Tramway
       __submit params
 
       object.save!.tap do
-        object.reload
+        __object
       end
     end
 
@@ -63,6 +63,10 @@ module Tramway
       self.class.properties.each do |attribute|
         public_send("#{attribute}=", params[attribute])
       end
+    end
+
+    def __object
+      object.persisted? ? object.reload : object
     end
   end
 end
