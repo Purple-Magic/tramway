@@ -9,9 +9,5 @@ Metrics/BlockLength:
 Gemspec/RequiredRubyVersion:
   Enabled: false
 
-Style/MissingRespondToMissing:
-  Exclude:
-    - lib/tramway/base_form.rb
-
 AllCops:
   TargetRubyVersion: 3.2
