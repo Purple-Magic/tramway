@@ -1,3 +1,11 @@
+detectors:
+  InstanceVariableAssumption:
+    exclude:
+      - "Tramway::BaseForm"
+  BooleanParameter:
+    exclude:
+      - "Tramway::BaseForm"
+
 directories:
   "spec/dummy/db/migrate/":
     FeatureEnvy: 

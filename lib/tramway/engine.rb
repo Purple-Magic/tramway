@@ -18,6 +18,12 @@ module Tramway
 
         loaded_class.include Tramway::Helpers::DecorateHelper
       end
+
+      ActiveSupport.on_load(:action_controller) do |loaded_class|
+        require 'tramway/helpers/form_helper'
+
+        loaded_class.include Tramway::Helpers::FormHelper
+      end
     end
   end
 end
