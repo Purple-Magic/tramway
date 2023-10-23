@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
 require 'support/view_helpers'
 require 'helpers/navbar/shared_examples'
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
 describe Tramway::Helpers::DecorateHelper, type: :controller do
   let(:controller) { ActionController::Base.new }
 
