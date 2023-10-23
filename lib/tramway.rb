@@ -6,7 +6,7 @@ require 'tramway/engine'
 require 'tramway/base_decorator'
 require 'tramway/base_form'
 require 'tramway/config'
-require 'tramway/views'
+require 'tramway/views/form_builder'
 require 'view_component/compiler'
 require 'view_component/engine'
 
