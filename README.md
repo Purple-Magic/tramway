@@ -329,6 +329,8 @@ tramway_form_for user do |f|
   tailwind_submit_button "Create User"
 ```
 
+will render [this](https://play.tailwindcss.com/xho3LfjKkK)
+
 Available form helpers:
 * text_field
 * password_field
