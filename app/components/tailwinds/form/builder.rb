@@ -9,7 +9,10 @@ module Tailwinds
         render(Tailwinds::Form::TextFieldComponent.new(input, attribute, object_name:, **options), &)
       end
 
-      alias password_field text_field
+      def password_field(attribute, **options, &)
+        input = super(attribute, **options.merge(class: text_input_class))
+        render(Tailwinds::Form::TextFieldComponent.new(input, attribute, object_name:, **options), &)
+      end
 
       def file_field(attribute, **options, &)
         input = super(
