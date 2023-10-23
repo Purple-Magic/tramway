@@ -3,7 +3,7 @@
 module Tailwinds
   module Form
     # Tailwind-styled submit button
-    class SubmitButtonComponent < ViewComponent::Base
+    class SubmitButtonComponent < TailwindComponent
       def initialize(action, **options)
         @options = options.except :type
 
