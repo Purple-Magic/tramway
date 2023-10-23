@@ -322,11 +322,11 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default.
 
 ```ruby
-tramway_form_for user do |f|
-  f.text_field :email
-  f.password_field :password
-  f.file_field :file
-  tailwind_submit_button "Create User"
+= tramway_form_for User.new do |f|
+  = f.text_field :text
+  = f.password_field :password
+  = f.file_field :file
+  = tailwind_submit_button "Create User"
 ```
 
 will render [this](https://play.tailwindcss.com/xho3LfjKkK)
