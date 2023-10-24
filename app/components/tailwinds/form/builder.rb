@@ -15,13 +15,7 @@ module Tailwinds
       end
 
       def file_field(attribute, **options, &)
-        input = super(
-          attribute,
-          **options.merge(
-            class: :hidden,
-            onchange: "document.getElementById('#{attribute}_label').textContent = this.files[0].name"
-          )
-        )
+        input = super(attribute, **options.merge(class: :hidden))
 
         render(Tailwinds::Form::FileFieldComponent.new(input, attribute, object_name:, **options), &)
       end
