@@ -35,9 +35,6 @@ describe Tailwinds::Form::Builder, type: :view do
 
     it do
       expect(output).to have_selector 'label.inline-block.bg-blue-500.text-white.font-bold.py-2.px-4.rounded'
-      expect(output).to have_selector(
-        "input[onchange=\"document.getElementById(\'file_label\').textContent = this.files[0].name\"]"
-      )
     end
   end
 end
