@@ -326,7 +326,7 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
   = f.text_field :text
   = f.password_field :password
   = f.file_field :file
-  = tailwind_submit_button "Create User"
+  = f.submit "Create User"
 ```
 
 will render [this](https://play.tailwindcss.com/xho3LfjKkK)
@@ -335,7 +335,7 @@ Available form helpers:
 * text_field
 * password_field
 * file_field
-* tailwind_submit_button
+* submit
 
 ## Contributing
 

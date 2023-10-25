@@ -20,6 +20,10 @@ module Tailwinds
         render(Tailwinds::Form::FileFieldComponent.new(input, attribute, object_name:, **options), &)
       end
 
+      def submit(action, **options, &)
+        render(Tailwinds::Form::SubmitButtonComponent.new(action, **options), &)
+      end
+
       private
 
       def text_input_class

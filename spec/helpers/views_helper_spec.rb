@@ -25,15 +25,4 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
       view.tramway_form_for(object, **options)
     end
   end
-
-  describe '#tailwind_submit_button' do
-    it 'renders a Tailwinds::Form::SubmitButtonComponent' do
-      action = 'Submit'
-      options = { class: 'custom-class' }
-
-      expect(view).to receive(:render).with(an_instance_of(Tailwinds::Form::SubmitButtonComponent))
-
-      view.tailwind_submit_button(action, **options)
-    end
-  end
 end

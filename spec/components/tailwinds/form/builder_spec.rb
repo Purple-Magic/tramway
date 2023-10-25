@@ -37,4 +37,16 @@ describe Tailwinds::Form::Builder, type: :view do
       expect(output).to have_selector 'label.inline-block.bg-blue-500.text-white.font-bold.py-2.px-4.rounded'
     end
   end
+
+  describe '#submit' do
+    let(:output) do
+      builder.submit 'Create'
+    end
+
+    it do
+      within 'div.flex.items-center.justify-between' do
+        expect(output).to have_selector('button.bg-red-500.text-white')
+      end
+    end
+  end
 end
