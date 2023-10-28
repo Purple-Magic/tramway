@@ -13,6 +13,12 @@ module Tramway
         loaded_class.include Tramway::Helpers::NavbarHelper
       end
 
+      ActiveSupport.on_load(:action_view) do |loaded_class|
+        require 'tramway/helpers/views_helper'
+
+        loaded_class.include Tramway::Helpers::ViewsHelper
+      end
+
       ActiveSupport.on_load(:action_controller) do |loaded_class|
         require 'tramway/helpers/decorate_helper'
 

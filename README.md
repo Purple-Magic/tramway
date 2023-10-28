@@ -7,6 +7,7 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
   * [Tramway Decorators](https://github.com/Purple-Magic/tramway#tramway-decorators)
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
+  * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -312,9 +313,29 @@ tramway_navbar title: 'Purple Magic' do |nav|
 end
 ```
 
-### Tailwind components
+### Tailwind-styled forms
 
 Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are implemented with [ViewComponent](https://github.com/viewcomponent/view_component).
+
+#### tramway_form_for
+
+Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default.
+
+```ruby
+= tramway_form_for User.new do |f|
+  = f.text_field :text
+  = f.password_field :password
+  = f.file_field :file
+  = f.submit "Create User"
+```
+
+will render [this](https://play.tailwindcss.com/xho3LfjKkK)
+
+Available form helpers:
+* text_field
+* password_field
+* file_field
+* submit
 
 ## Contributing
 

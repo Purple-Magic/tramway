@@ -5,6 +5,9 @@ detectors:
   BooleanParameter:
     exclude:
       - "Tramway::BaseForm"
+  DataClump:
+    exclude:
+      - "Tailwinds::Form::Builder"
 
 directories:
   "spec/dummy/db/migrate/":

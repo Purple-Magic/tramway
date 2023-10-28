@@ -4,7 +4,7 @@ require 'tramway/navbar'
 
 module Tramway
   module Helpers
-    # Providing navbar helpers for ActionView
+    # Provides navbar helpers for ActionView
     module NavbarHelper
       def tramway_navbar(**options)
         initialize_navbar

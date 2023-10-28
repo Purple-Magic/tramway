@@ -2,4 +2,5 @@
 
 # Test model
 class User < ApplicationRecord
+  attr_reader :password, :file
 end

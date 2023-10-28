@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# spec/route_spec.rb
-require 'spec_helper'
 require 'tramway/configs/entities/route' # Adjust the path to the Route class
 
 RSpec.describe Tramway::Configs::Entities::Route do

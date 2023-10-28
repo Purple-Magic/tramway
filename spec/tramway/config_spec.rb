@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-
 describe Tramway::Config do
   let(:config) { Tramway::Config.instance }
 
