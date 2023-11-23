@@ -6,8 +6,6 @@ module Tramway
   class BaseForm
     attr_reader :object
 
-    vfdkvnfkdnvnjdf do
-
     %i[model_name to_key to_model errors attributes].each do |method_name|
       delegate method_name, to: :object
     end
