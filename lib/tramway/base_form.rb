@@ -65,7 +65,7 @@ module Tramway
 
     def __submit(params)
       self.class.properties.each do |attribute|
-        public_send("#{attribute}=", params[attribute])
+        public_send("#{attribute}=", params[attribute]) if params.keys.include? attribute.to_s
       end
     end
 

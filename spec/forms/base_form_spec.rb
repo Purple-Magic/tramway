@@ -84,4 +84,24 @@ RSpec.describe Tramway::BaseForm do
       end
     end
   end
+
+  context 'with non-existing attributes' do
+    let(:object) { create :user, email: 'asya@purple-magic.com' }
+    subject { described_class.new(object) }
+
+    describe '#submit' do
+      let(:params) { { password: '123456' } }
+
+      it 'does not update non-existing attributes' do
+        expect(object).to receive(:save).and_return(true)
+        expect(object).to receive(:reload)
+
+        previous_email = object.email
+
+        subject.submit(params)
+
+        expect(object.email).to eq previous_email
+      end
+    end
+  end
 end
