@@ -7,7 +7,7 @@ RSpec.describe Tramway::BaseForm do
 
     describe '#initialize' do
       it 'assigns object' do
-        expect(subject.object).to eq(object)
+        is_expected.to have_attributes object:
       end
     end
 
@@ -15,8 +15,9 @@ RSpec.describe Tramway::BaseForm do
       it 'adds the attribute to properties list and delegates to the object' do
         described_class.property(:email)
         expect(described_class.properties).to include(:email)
-        expect(subject).to receive(:email).and_return('asya@purple-magic.com')
-        expect(subject.email).to eq('asya@purple-magic.com')
+
+        is_expected.to receive(:email).and_return('asya@purple-magic.com')
+        is_expected.to have_attributes(email: 'asya@purple-magic.com')
       end
     end
 
@@ -47,6 +48,7 @@ RSpec.describe Tramway::BaseForm do
 
         methods_to_delegate.each do |method|
           expect(object).to receive(method)
+
           subject.public_send(method)
         end
       end
@@ -61,7 +63,7 @@ RSpec.describe Tramway::BaseForm do
 
   context 'with not persisted' do\
     let(:object) { build :user }
-    subject { described_class.new(object) }
+    let(:form) { described_class.new(object) }
 
     describe '#submit' do
       let(:params) { { email: 'asya@purple-magic.com' } }
@@ -70,7 +72,7 @@ RSpec.describe Tramway::BaseForm do
         expect(object).to receive(:save).and_return(false)
         expect(object).not_to receive(:reload)
 
-        subject.submit(params)
+        form.submit(params)
       end
     end
 
@@ -80,7 +82,8 @@ RSpec.describe Tramway::BaseForm do
       it 'updates object attributes and saves it with validation' do
         expect(object).to receive(:save!).and_return(false)
         expect(object).not_to receive(:reload)
-        subject.submit!(params)
+
+        form.submit!(params)
       end
     end
   end
@@ -88,7 +91,7 @@ RSpec.describe Tramway::BaseForm do
   context 'with non-existing attributes' do
     let(:user_email) { 'asya@purple-magic.com' }
     let(:object) { create :user, email: user_email }
-    subject { described_class.new(object) }
+    let(:form) { described_class.new(object) }
 
     describe '#submit' do
       let(:params) { { password: '123456' } }
@@ -97,7 +100,7 @@ RSpec.describe Tramway::BaseForm do
         expect(object).to receive(:save).and_return(true)
         expect(object).to receive(:reload)
 
-        subject.submit(params)
+        form.submit(params)
 
         expect(object.email).to eq user_email
       end
