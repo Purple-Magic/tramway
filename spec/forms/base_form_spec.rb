@@ -86,7 +86,8 @@ RSpec.describe Tramway::BaseForm do
   end
 
   context 'with non-existing attributes' do
-    let(:object) { create :user, email: 'asya@purple-magic.com' }
+    let(:user_email) { 'asya@purple-magic.com' }
+    let(:object) { create :user, email: user_email }
     subject { described_class.new(object) }
 
     describe '#submit' do
@@ -96,11 +97,9 @@ RSpec.describe Tramway::BaseForm do
         expect(object).to receive(:save).and_return(true)
         expect(object).to receive(:reload)
 
-        previous_email = object.email
-
         subject.submit(params)
 
-        expect(object.email).to eq previous_email
+        expect(object.email).to eq user_email
       end
     end
   end
