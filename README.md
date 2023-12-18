@@ -101,6 +101,15 @@ def show
 end
 ```
 
+#### Decorate nil
+
+Tramway Decorator does not decorate nil objects
+
+```ruby
+user = nil
+UserDecorator.decorate user # => nil
+```
+
 ### Tramway Form
 
 Tramway provides **convenient** form objects for Rails applications. List properties you want to change and the rules in Form classes. No controllers overloading.
