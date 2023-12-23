@@ -17,7 +17,10 @@ module Tramway
     end
 
     class << self
+      # :reek:NilCheck { enabled: false } because checking for nil is not a type-checking issue but business logic
       def decorate(object_or_array)
+        return if object_or_array.nil?
+
         if Tramway::Decorators::CollectionDecorators.collection?(object_or_array)
           Tramway::Decorators::CollectionDecorators.decorate_collection(
             collection: object_or_array,

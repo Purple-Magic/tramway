@@ -55,6 +55,14 @@ RSpec.describe Tramway::BaseDecorator do
         described_class.decorate(object)
       end
     end
+
+    context 'when object is nil' do
+      let(:object) { nil }
+
+      it 'returns nil' do
+        expect(described_class.decorate(object)).to be_nil
+      end
+    end
   end
 
   describe '.delegate_attributes' do
