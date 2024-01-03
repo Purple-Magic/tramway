@@ -14,7 +14,7 @@ module Tramway
       end
 
       def collection?(object)
-        object.class.name.in? ['ActiveRecord::Relation', 'Array']
+        object.is_a?(Array) || object.is_a?(ActiveRecord::Relation)
       end
     end
   end

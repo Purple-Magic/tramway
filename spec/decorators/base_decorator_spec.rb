@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+shared_examples 'Decorate Collection' do
+  it 'calls decorate_collection with the collection' do
+    expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection)
+      .with(collection: relation, decorator:)
+    described_class.decorate(relation)
+  end
+end
+
 RSpec.describe Tramway::BaseDecorator do
   let(:object) { double('object') }
   let(:decorator) { Tramway::BaseDecorator }
@@ -27,11 +35,7 @@ RSpec.describe Tramway::BaseDecorator do
         User.all
       end
 
-      it 'calls decorate_collection with the collection' do
-        expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection)
-          .with(collection: relation, decorator:)
-        described_class.decorate(relation)
-      end
+      include_examples 'Decorate Collection'
     end
 
     context 'when object_or_array is an Array' do
@@ -40,11 +44,31 @@ RSpec.describe Tramway::BaseDecorator do
         User.all.to_a
       end
 
-      it 'calls decorate_collection with the collection' do
-        expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection)
-          .with(collection: relation, decorator:)
-        described_class.decorate(relation)
+      include_examples 'Decorate Collection'
+    end
+
+    context 'when object_or_array is an ActiveRecord::Relation by association' do
+      let(:relation) do
+        user = create :user
+        create_list(:post, 5, user:)
+
+        user.reload
+        user.posts
       end
+
+      include_examples 'Decorate Collection'
+    end
+
+    context 'when object_or_array is an ActiveRecord::AssociationRelation' do
+      let(:relation) do
+        user = create :user
+        create_list(:post, 5, user:)
+
+        user.reload
+        user.posts.order(id: :asc)
+      end
+
+      include_examples 'Decorate Collection'
     end
 
     context 'when object_or_array is not an ActiveRecord::Relation' do
