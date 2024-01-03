@@ -3,7 +3,8 @@
 module Tailwinds
   module Form
     # Tailwind-styled text field
-    class TextFieldComponent < TailwindComponent
+    class SelectComponent < TailwindComponent
+      option :collection
     end
   end
 end
