@@ -81,13 +81,27 @@ class UserDecorator < Tramway::BaseDecorator
 end
 ```
 
-#### Decorate single object
+#### Decorate a single object
 
 You can use the same method to decorate a single object either
 
 ```ruby
 def show
   @user = tramway_decorate User.find params[:id]
+end
+```
+
+#### Decorate a collection of objects
+
+```ruby
+def index
+  @users = tramway_decorate User.all
+end
+```
+
+```ruby
+def index
+  @posts = tramway_decorate user.posts
 end
 ```
 
