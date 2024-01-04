@@ -12,6 +12,8 @@ module Tramway
 
     def initialize(object)
       @object = object
+
+      self.class.delegate object.class.primary_key, to: :object
     end
 
     class << self
