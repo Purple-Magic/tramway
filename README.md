@@ -348,6 +348,7 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
 = tramway_form_for User.new do |f|
   = f.text_field :text
   = f.password_field :password
+  = f.select :role, [:admin, :user]
   = f.file_field :file
   = f.submit "Create User"
 ```
@@ -358,6 +359,7 @@ Available form helpers:
 * text_field
 * password_field
 * file_field
+* select
 * submit
 
 ## Contributing
