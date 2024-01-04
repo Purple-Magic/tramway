@@ -6,12 +6,14 @@ module Tramway
   class BaseForm
     attr_reader :object
 
-    %i[id model_name to_key to_model errors attributes].each do |method_name|
+    %i[model_name to_key to_model errors attributes].each do |method_name|
       delegate method_name, to: :object
     end
 
     def initialize(object)
       @object = object
+
+      self.class.delegate object.class.primary_key, to: :object
     end
 
     class << self
