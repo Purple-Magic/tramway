@@ -8,6 +8,7 @@ class TailwindComponent < ViewComponent::Base
 
   option :template
   option :attribute
+  option :value, optional: true
   option :object_name
   option :options
   option :label

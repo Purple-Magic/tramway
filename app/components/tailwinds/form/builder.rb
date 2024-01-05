@@ -16,7 +16,7 @@ module Tailwinds
       def file_field(attribute, **options, &)
         input = super(attribute, **options.merge(class: :hidden))
 
-        render(Tailwinds::Form::FileFieldComponent.new(input:, **default_options(attribute, options)), &)
+        render(Tailwinds::Form::FileFieldComponent.new(input:, **default_options(attribute, options).except(:value)), &)
       end
 
       def select(attribute, collection, **options, &)
@@ -36,7 +36,8 @@ module Tailwinds
           object_name:,
           label: label(attribute, options),
           for: for_id(attribute),
-          options:
+          options:,
+          value: object.public_send(attribute)
         }
       end
 
