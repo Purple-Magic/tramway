@@ -4,5 +4,7 @@
 class User < ApplicationRecord
   has_many :posts
 
-  attr_reader :password, :file, :role
+  attr_reader :password, :file
+  # :reek:Attribute { enabled: false }
+  attr_accessor :role
 end
