@@ -30,6 +30,12 @@ module Tramway
 
         loaded_class.include Tramway::Helpers::FormHelper
       end
+
+      ActiveSupport.on_load(:action_view) do |loaded_class|
+        if Tramway.config.pagination[:enabled]
+          Kaminari::Helpers::HelperMethods.include Tramway::Views::KaminariExtension
+        end
+      end
     end
   end
 end
