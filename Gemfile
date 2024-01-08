@@ -16,6 +16,8 @@ gem 'sprockets-rails'
 
 gem 'haml-rails'
 
+gem 'kaminari'
+
 gem 'dry-initializer'
 
 group :development do

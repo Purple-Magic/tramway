@@ -1,0 +1,4 @@
+%tr
+  - [:email].each do |attribute|
+    %td.py-2.px-4.border-b.border-r
+      = user.public_send(attribute)
