@@ -10,7 +10,7 @@ describe Tailwinds::Form::Builder, type: :view do
     context 'default' do
       let(:output) { builder.text_field :email }
 
-      it do
+      it 'gets default value' do
         expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
         expect(output).to have_selector 'input.w-full.px-3.py-2.border.border-gray-300.rounded'
       end
@@ -74,7 +74,7 @@ describe Tailwinds::Form::Builder, type: :view do
     context 'default' do
       let(:output) { builder.select :role, %i[admin user] }
 
-      it do
+      it 'behaves as usual' do
         expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
         expect(output).to have_selector 'select.bg-white.border.border-gray-300.text-gray-700.py-2.px-2.rounded-lg'
         expect(output).to have_selector 'option[value="admin"]'
@@ -86,7 +86,7 @@ describe Tailwinds::Form::Builder, type: :view do
       let(:selected) { :admin }
       let(:output) { builder.select :role, %i[admin user], selected: }
 
-      it do
+      it 'gets value from options' do
         expect(output).to have_selector 'option[value="admin"][selected]'
       end
     end
@@ -95,7 +95,7 @@ describe Tailwinds::Form::Builder, type: :view do
       before { resource.role = :admin }
       let(:output) { builder.select :role, %i[admin user] }
 
-      it do
+      it 'gets value from object' do
         expect(output).to have_selector 'option[value="admin"][selected]'
       end
     end
