@@ -27,6 +27,7 @@ describe Tailwinds::Form::Builder, type: :view do
 
     context 'with value from object' do
       before { resource.email = email }
+
       let(:email) { 'leopold@purple-magic.com' }
       let(:output) { builder.text_field :email }
 
