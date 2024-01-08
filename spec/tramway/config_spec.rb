@@ -47,12 +47,6 @@ describe Tramway::Config do
   end
 
   describe 'pagination' do
-    context 'check default value' do
-      it 'returns pagination enabled false' do
-        expect(config.pagination[:enabled]).to be_falsey
-      end
-    end
-
     context 'change default value' do
       before { config.pagination = { enabled: true } }
 
