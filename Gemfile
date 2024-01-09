@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Specify your gem's dependencies in tramway.gemspec.
 gemspec
 
-gem 'anyway_config', '2.6.2'
+gem 'anyway_config'
 
 gem 'puma'
 
