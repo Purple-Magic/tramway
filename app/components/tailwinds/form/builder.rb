@@ -6,11 +6,18 @@ module Tailwinds
     # :reek:InstanceVariableAssumption
     class Builder < Tramway::Views::FormBuilder
       def text_field(attribute, **options, &)
-        render(Tailwinds::Form::TextFieldComponent.new(**default_options(attribute, options)), &)
+        render(Tailwinds::Form::TextFieldComponent.new(
+                 input: input(:text_field),
+                 value: get_value(attribute, options),
+                 **default_options(attribute, options)
+               ), &)
       end
 
       def password_field(attribute, **options, &)
-        render(Tailwinds::Form::TextFieldComponent.new(**default_options(attribute, options)), &)
+        render(Tailwinds::Form::TextFieldComponent.new(
+                 input: input(:password_field),
+                 **default_options(attribute, options)
+               ), &)
       end
 
       def file_field(attribute, **options, &)
@@ -20,7 +27,12 @@ module Tailwinds
       end
 
       def select(attribute, collection, **options, &)
-        render(Tailwinds::Form::SelectComponent.new(**default_options(attribute, options).merge(collection:)), &)
+        render(Tailwinds::Form::SelectComponent.new(
+                 input: input(:select),
+                 value: options[:selected] || object.public_send(attribute),
+                 collection:,
+                 **default_options(attribute, options)
+               ), &)
       end
 
       def submit(action, **options, &)
@@ -29,11 +41,18 @@ module Tailwinds
 
       private
 
+      def input(method_name)
+        unbound_method = self.class.superclass.instance_method(method_name)
+        unbound_method.bind(self)
+      end
+
+      def get_value(attribute, options)
+        options[:value] || object.public_send(attribute)
+      end
+
       def default_options(attribute, options)
         {
-          template: @template,
           attribute:,
-          object_name:,
           label: label(attribute, options),
           for: for_id(attribute),
           options:

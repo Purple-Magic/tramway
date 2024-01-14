@@ -1,4 +1,4 @@
 .mb-4
   %label.block.text-gray-700.text-sm.font-bold.mb-2{ for: @for }
     = @label
-  = @template.text_field @object_name, @attribute, **@options.merge(class: 'w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-red-500')
+  = @input.call @attribute, **@options.merge(class: 'w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-red-500'), value: @value

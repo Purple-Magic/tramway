@@ -6,9 +6,9 @@ require 'view_component'
 class TailwindComponent < ViewComponent::Base
   extend Dry::Initializer[undefined: false]
 
-  option :template
+  option :input
   option :attribute
-  option :object_name
+  option :value, optional: true
   option :options
   option :label
   option :for
