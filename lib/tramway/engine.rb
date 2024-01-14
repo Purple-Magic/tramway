@@ -51,7 +51,7 @@ module Tramway
     # :reek:NestedIterators { enabled: false }
     # :reek:TooManyStatements { enabled: false }
     def configure_pagination
-      ActiveSupport.on_load(:action_controller) do |_|
+      ActiveSupport.on_load(:action_controller) do
         # Detecting tramway views path
         tramway_spec = Gem.loaded_specs['tramway']
         tramway_views_path = File.join(tramway_spec.full_gem_path, 'app/views')
