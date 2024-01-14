@@ -7,12 +7,12 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gemspec
 
 gem 'anyway_config'
-gem 'puma'
-gem 'sqlite3'
-gem 'sprockets-rails'
+gem 'dry-initializer'
 gem 'haml-rails'
 gem 'kaminari'
-gem 'dry-initializer'
+gem 'puma'
+gem 'sprockets-rails'
+gem 'sqlite3'
 
 group :development do
   gem 'reek'
