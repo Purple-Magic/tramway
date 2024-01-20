@@ -19,7 +19,6 @@ RSpec.describe Tramway do
 
   describe '.config' do
     it 'returns the Tramway::Config instance' do
-      allow(Tramway::Config).to receive(:instance).and_return(config)
       expect(Tramway.config).to eq(config)
     end
   end

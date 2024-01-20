@@ -6,15 +6,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Specify your gem's dependencies in tramway.gemspec.
 gemspec
 
-gem 'puma'
-
-gem 'sqlite3'
-
-gem 'sprockets-rails'
-
-gem 'haml-rails'
-
+gem 'anyway_config'
 gem 'dry-initializer'
+gem 'haml-rails'
+gem 'kaminari'
+gem 'puma'
+gem 'sprockets-rails'
+gem 'sqlite3'
 
 group :development do
   gem 'reek'

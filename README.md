@@ -8,6 +8,7 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
+  * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway#tailwind-styled-pagination)
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -362,6 +363,32 @@ Available form helpers:
 * select
 * submit
 
+### Tailwind-styled pagination for Kaminari
+
+Tramway uses [Tailwind](https://tailwindcss.com/) by default. It has tailwind-styled pagination for [kaminari](https://github.com/kaminari/kaminari).
+
+#### How to use
+
+*Gemfile*
+```ruby
+gem 'tramway'
+gem 'kaminari'
+```
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.pagination = { enabled: true } # enabled is false by default
+end
+```
+
+*app/views/users/index.html.haml*
+```haml
+= paginate @users # it will render tailwind-styled pagination buttons by default
+```
+
+Pagination buttons looks like [this](https://play.tailwindcss.com/mqgDS5l9oY)
+
 ## Contributing
 
 Install [lefthook](https://github.com/evilmartians/lefthook)
@@ -369,6 +396,7 @@ Install [lefthook](https://github.com/evilmartians/lefthook)
 ```
 bundle
 lefthook install
+rspec
 ```
 
 ## License
