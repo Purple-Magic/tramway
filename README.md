@@ -249,6 +249,24 @@ class Admin::UsersController < Admin::ApplicationController
 end
 ```
 
+### Form inheritance
+
+Tramway Form supports inheritance of `properties`
+
+**Example**
+
+```ruby
+class UserForm < TramwayForm
+  properties :email, :password
+end
+
+class AdminForm < TramwayForm
+  properties :permissions
+end
+
+AdminForm.properties # returns [:email, :password, :permissions]
+```
+
 ### Make flexible and extendable forms
 
 Tramway Form properties are not mapped to a model. You're able to make extended forms.
