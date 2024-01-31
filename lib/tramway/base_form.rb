@@ -30,8 +30,21 @@ module Tramway
             property(attribute)
           end
         else
-          @properties || []
+          __properties
         end
+      end
+
+      def __properties
+        @properties ||= []
+
+        (__ancestor_properties + @properties).uniq
+      end
+
+      # :reek:ManualDispatch { enabled: false }
+      def __ancestor_properties(klass = superclass)
+        return [] unless klass.respond_to?(:properties)
+
+        klass.properties + __ancestor_properties(klass.superclass)
       end
     end
 
