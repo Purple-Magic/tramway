@@ -1,37 +1,25 @@
 # frozen_string_literal: true
 
 RSpec.describe AdminForm do
-  context 'class methods' do
-    describe '.properties' do
-      it 'returns an array with email and role' do
-        expect(AdminForm.properties).to contain_exactly(:email, :role, :permissions)
-      end
-    end
-  end
-
-  context 'instance methods' do
+  context 'properties' do
     let(:user) { build :user }
     subject { described_class.new(user) }
 
-    describe 'accessors for properties' do
-      it 'allows reading and writing for email' do
-        subject.email = 'admin@example.com'
+    let(:fields) { %i[email role permissions] }
 
-        expect(subject.email).to eq 'admin@example.com'
-      end
-
-      it 'allows reading and writing for role' do
-        subject.role = 'superadmin'
-
-        expect(subject.role).to eq 'superadmin'
+    describe 'properties field' do
+      it 'returns an array with email and role' do
+        expect(AdminForm.properties).to contain_exactly(*fields)
       end
     end
 
-    describe 'accessors for AdminForm specific properties' do
-      it 'allows reading and writing for permissions' do
-        subject.permissions = 'edit_users'
+    describe 'setting up values' do
+      it 'sets up values' do
+        fields.map do |field|
+          subject.public_send "#{field}=", 'somestr'
 
-        expect(subject.permissions).to eq 'edit_users'
+          expect(subject.send(field)).to eq 'somestr'
+        end
       end
     end
   end
