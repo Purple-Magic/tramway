@@ -260,7 +260,7 @@ class UserForm < TramwayForm
   properties :email, :password
 end
 
-class AdminForm < TramwayForm
+class AdminForm < UserForm
   properties :permissions
 end
 
