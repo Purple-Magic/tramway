@@ -2,4 +2,5 @@
 
 # Test form for form-inheritance testing
 class AdminForm < UserForm
+  properties :permissions
 end

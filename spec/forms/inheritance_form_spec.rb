@@ -4,7 +4,7 @@ RSpec.describe AdminForm do
   context 'class methods' do
     describe '.properties' do
       it 'returns an array with email and role' do
-        expect(AdminForm.properties).to contain_exactly(:email, :role)
+        expect(AdminForm.properties).to contain_exactly(:email, :role, :permissions)
       end
     end
   end
@@ -28,10 +28,6 @@ RSpec.describe AdminForm do
     end
 
     describe 'accessors for AdminForm specific properties' do
-      before do
-        AdminForm.properties :permissions
-      end
-
       it 'allows reading and writing for permissions' do
         subject.permissions = 'edit_users'
 
