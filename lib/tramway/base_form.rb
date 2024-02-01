@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# :reek:ClassVariable { enabled: false }
 module Tramway
   # Provides form object for Tramway
   #
@@ -17,9 +18,17 @@ module Tramway
     end
 
     class << self
+      # rubocop:disable Style/ClassVars
+      @@properties = []
+
+      def inherited(subclass)
+        subclass.class_variable_set(:@@properties, __ancestor_properties)
+
+        super
+      end
+
       def property(attribute, _proc_obj = nil)
-        @properties ||= []
-        @properties << attribute
+        @@properties << attribute
 
         delegate attribute, to: :object
       end
@@ -35,10 +44,9 @@ module Tramway
       end
 
       def __properties
-        @properties ||= []
-
-        (__ancestor_properties + @properties).uniq
+        (__ancestor_properties + @@properties).uniq
       end
+      # rubocop:enable Style/ClassVars
 
       # :reek:ManualDispatch { enabled: false }
       def __ancestor_properties(klass = superclass)
