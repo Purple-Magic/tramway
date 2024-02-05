@@ -6,5 +6,5 @@ class User < ApplicationRecord
 
   attr_reader :password, :file
   # :reek:Attribute { enabled: false }
-  attr_accessor :role
+  attr_accessor :role, :permissions
 end
