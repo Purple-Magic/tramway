@@ -18,41 +18,39 @@ module Tramway
     end
 
     class << self
-      # rubocop:disable Style/ClassVars
-      @@properties = []
-
       def inherited(subclass)
-        subclass.class_variable_set(:@@properties, __ancestor_properties)
+        subclass.instance_variable_set(:@properties, [])
 
         super
       end
 
-      def property(attribute, _proc_obj = nil)
-        @@properties << attribute
+      def property(attribute)
+        @properties << attribute
 
         delegate attribute, to: :object
       end
 
       def properties(*attributes)
-        if attributes.any?
-          attributes.each do |attribute|
-            property(attribute)
-          end
-        else
-          __properties
+        attributes.any? ? __set_properties(attributes) : __properties
+      end
+
+      def __set_properties(attributes)
+        attributes.each do |attribute|
+          property(attribute)
         end
       end
 
       def __properties
-        (__ancestor_properties + @@properties).uniq
+        (__ancestor_properties + @properties).uniq
       end
-      # rubocop:enable Style/ClassVars
 
       # :reek:ManualDispatch { enabled: false }
       def __ancestor_properties(klass = superclass)
-        return [] unless klass.respond_to?(:properties)
+        superklass = klass.superclass
 
-        klass.properties + __ancestor_properties(klass.superclass)
+        return [] unless superklass.respond_to?(:properties)
+
+        klass.properties + __ancestor_properties(superklass)
       end
     end
 

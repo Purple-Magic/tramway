@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Tramway::BaseForm do
+RSpec.describe UserForm do
   context 'with persisted object' do
     let(:object) { create :user }
     subject { described_class.new(object) }
