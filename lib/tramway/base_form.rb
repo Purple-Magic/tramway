@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# :reek:ClassVariable { enabled: false }
 module Tramway
   # Provides form object for Tramway
   #
@@ -18,6 +17,19 @@ module Tramway
     end
 
     class << self
+      attr_reader :normalizations
+
+      def normalizes(attribute, with:)
+        @normalizations ||= {}
+        @normalizations[attribute] = with
+      end
+
+      def apply_normalizations(params)
+        @normalizations.each do |attribute, proc|
+          params[attribute] = proc.call(params[attribute]) if params.key?(attribute)
+        end
+      end
+
       def inherited(subclass)
         subclass.instance_variable_set(:@properties, [])
 
@@ -85,6 +97,7 @@ module Tramway
     private
 
     def __submit(params)
+      self.class.apply_normalizations(params)
       self.class.properties.each do |attribute|
         public_send("#{attribute}=", params[attribute]) if params.keys.include? attribute.to_s
       end
