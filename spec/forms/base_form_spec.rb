@@ -22,13 +22,25 @@ RSpec.describe UserForm do
     end
 
     describe '#submit' do
-      let(:params) { { email: 'asya@purple-magic.com' } }
+      context 'with default checks' do
+        let(:params) { { email: 'asya@purple-magic.com' } }
 
-      it 'updates object attributes and saves it' do
-        expect(object).to receive(:save).and_return(true)
-        expect(object).to receive(:reload)
+        it 'updates object attributes and saves it' do
+          expect(object).to receive(:save).and_return(true)
+          expect(object).to receive(:reload)
 
-        subject.submit(params)
+          subject.submit(params)
+        end
+      end
+
+      context 'with normalizes checks' do
+        let(:params) { { email: 'Asya@Purple-Magic.com' } }
+
+        it 'updates object attributes and saves it' do
+          subject.submit(params)
+
+          expect(object.email).to eq 'asya@purple-magic.com'
+        end
       end
     end
 

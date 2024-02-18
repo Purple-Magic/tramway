@@ -23,4 +23,17 @@ RSpec.describe AdminForm do
       end
     end
   end
+
+  context 'normalizes' do
+    let(:user) { build :user }
+    subject { described_class.new(user) }
+
+    let(:fields) { %i[email permissions] }
+
+    describe 'properties field' do
+      it 'returns an array with email and role' do
+        expect(AdminForm.normalizations.keys).to contain_exactly(*fields)
+      end
+    end
+  end
 end

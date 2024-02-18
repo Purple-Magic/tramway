@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'tramway/forms/properties'
+require 'tramway/forms/normalizations'
+
 module Tramway
   # Provides form object for Tramway
   #
@@ -17,53 +20,15 @@ module Tramway
     end
 
     class << self
-      attr_reader :normalizations
-
-      def normalizes(attribute, with:)
-        @normalizations ||= {}
-        @normalizations[attribute] = with
-      end
-
-      def apply_normalizations(params)
-        @normalizations.each do |attribute, proc|
-          params[attribute] = proc.call(params[attribute]) if params.key?(attribute)
-        end
-      end
-
       def inherited(subclass)
         subclass.instance_variable_set(:@properties, [])
+        subclass.instance_variable_set(:@normalizations, __ancestor_normalizations)
 
         super
       end
 
-      def property(attribute)
-        @properties << attribute
-
-        delegate attribute, to: :object
-      end
-
-      def properties(*attributes)
-        attributes.any? ? __set_properties(attributes) : __properties
-      end
-
-      def __set_properties(attributes)
-        attributes.each do |attribute|
-          property(attribute)
-        end
-      end
-
-      def __properties
-        (__ancestor_properties + @properties).uniq
-      end
-
-      # :reek:ManualDispatch { enabled: false }
-      def __ancestor_properties(klass = superclass)
-        superklass = klass.superclass
-
-        return [] unless superklass.respond_to?(:properties)
-
-        klass.properties + __ancestor_properties(superklass)
-      end
+      include Tramway::Forms::Properties
+      include Tramway::Forms::Normalizations
     end
 
     def submit(params)
@@ -96,8 +61,14 @@ module Tramway
 
     private
 
+    def __apply_normalizations(params)
+      self.class.normalizations.each do |attribute, proc|
+        public_send("#{attribute}=", proc.call(params[attribute])) if params.key?(attribute)
+      end
+    end
+
     def __submit(params)
-      self.class.apply_normalizations(params)
+      __apply_normalizations(params)
       self.class.properties.each do |attribute|
         public_send("#{attribute}=", params[attribute]) if params.keys.include? attribute.to_s
       end
