@@ -62,16 +62,22 @@ module Tramway
     private
 
     def __submit(params)
-      values = params
+      __apply_properties __apply_normalizations params
+    end
 
-      self.class.normalizations.each do |attribute, normalization|
-        if params.key?(attribute) || normalization[:apply_to_nil]
-          values[attribute] = instance_exec(params[attribute], &normalization[:proc])
+    def __apply_normalizations(params)
+      self.class.normalizations.reduce(params) do |hash, (attribute, normalization)|
+        if hash.key?(attribute) || normalization[:apply_to_nil]
+          hash.merge(attribute => instance_exec(hash[attribute], &normalization[:proc]))
+        else
+          hash
         end
       end
+    end
 
+    def __apply_properties(params)
       self.class.properties.each do |attribute|
-        public_send("#{attribute}=", values[attribute]) if values.key?(attribute)
+        public_send("#{attribute}=", params[attribute]) if params.key?(attribute)
       end
     end
 

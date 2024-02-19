@@ -5,6 +5,7 @@ module Tramway
     # This is the same `normalizes` feature like in Rails
     # https://api.rubyonrails.org/v7.1/classes/ActiveRecord/Normalization/ClassMethods.html#method-i-normalizes
     module Normalizations
+      # :reek:BooleanParameter { enabled: false }
       def normalizes(*attributes, with:, apply_to_nil: false)
         attributes.each do |attribute|
           @normalizations.merge!(attribute => { proc: with, apply_to_nil: })

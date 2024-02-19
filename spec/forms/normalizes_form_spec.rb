@@ -18,6 +18,23 @@ describe 'Normalization' do
         expect(user.last_name).to eq 'Selezneva'
       end
     end
+
+    context 'when normalizing attributes with apply_on_nil: true' do
+      it 'applies normalization to nil values' do
+        AdminForm.new(user).submit(first_name: nil, last_name: nil)
+
+        expect(user.first_name).to be_nil
+        expect(user.last_name).to be_nil
+      end
+    end
+
+    context 'when normalizing attributes without apply_on_nil' do
+      it 'does not apply normalization to nil values' do
+        UserForm.new(user).submit(email: nil)
+
+        expect(user.email).to eq nil
+      end
+    end
   end
 
   context 'inheritance and extension' do
