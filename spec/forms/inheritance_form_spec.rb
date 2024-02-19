@@ -5,7 +5,7 @@ RSpec.describe AdminForm do
     let(:user) { build :user }
     subject { described_class.new(user) }
 
-    let(:fields) { %i[email role permissions] }
+    let(:fields) { %i[email first_name last_name role permissions] }
 
     describe 'properties field' do
       it 'returns an array with email and role' do
@@ -28,7 +28,7 @@ RSpec.describe AdminForm do
     let(:user) { build :user }
     subject { described_class.new(user) }
 
-    let(:fields) { %i[email permissions] }
+    let(:fields) { %i[email first_name last_name permissions] }
 
     describe 'properties field' do
       it 'returns an array with email and role' do

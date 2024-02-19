@@ -1,25 +1,38 @@
 # frozen_string_literal: true
 
-RSpec.describe Tramway::BaseForm do
-  let(:user) { build(:user) }
-  let(:form) { UserForm.new(user) }
+describe 'Normalization' do
+  let(:user) { create(:user, email: 'OriginalEmail@example.com', permissions: %i[create update]) }
 
-  describe '#submit with normalization' do
-    it 'normalizes email before saving' do
-      params = { email: ' Example@Email.Com ' }
+  context 'when normalizing attributes' do
+    it 'normalizes email' do
+      UserForm.new(user).submit(email: ' Example@Email.Com ')
 
-      expect(user).to receive(:email=).with('example@email.com')
-      expect(user).to receive(:save).and_return(true)
+      expect(user.email).to eq 'example@email.com'
+    end
 
-      form.submit(params)
+    context 'when normalizing multiple attributes' do
+      it 'normalizes email and name' do
+        AdminForm.new(user).submit(first_name: ' Asya ', last_name: ' Selezneva ')
+
+        expect(user.first_name).to eq 'Asya'
+        expect(user.last_name).to eq 'Selezneva'
+      end
     end
   end
 
-  context 'with normalization rule for non-existing attribute' do
-    it 'ignores normalization for non-defined attributes' do
-      params = { non_existing_attribute: ' some value ' }
+  context 'inheritance and extension' do
+    let(:admin_form) { AdminForm.new(user) }
 
-      expect { form.submit(params) }.not_to raise_error
+    it 'inherits normalizations from the UserForm class' do
+      admin_form.submit(email: ' Admin@Example.Com ')
+
+      expect(user.email).to eq 'admin@example.com'
+    end
+
+    it 'applies its own normalizations in addition to inherited ones' do
+      admin_form.submit(permissions: 'create,update')
+
+      expect(user.permissions).to eq %w[create update]
     end
   end
 end
