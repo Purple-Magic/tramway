@@ -34,6 +34,11 @@ module Tramway
 
           klass.properties + __ancestor_properties(superklass)
         end
+
+        # :reek:UtilityFunction { enabled: false }
+        def __initialize_properties(subclass)
+          subclass.instance_variable_set(:@properties, [])
+        end
       end
 
       def self.included(base)

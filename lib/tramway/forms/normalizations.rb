@@ -26,6 +26,11 @@ module Tramway
 
           klass.normalizations.merge!(__ancestor_normalizations(superklass))
         end
+
+        # :reek:UtilityFunction { enabled: false }
+        def __initialize_normalizations(subclass)
+          subclass.instance_variable_set(:@normalizations, {})
+        end
       end
 
       def self.included(base)

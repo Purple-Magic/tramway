@@ -24,8 +24,8 @@ module Tramway
 
     class << self
       def inherited(subclass)
-        subclass.instance_variable_set(:@properties, [])
-        subclass.instance_variable_set(:@normalizations, {})
+        __initialize_properties subclass
+        __initialize_normalizations subclass
 
         super
       end
