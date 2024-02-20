@@ -7,6 +7,9 @@ module Tramway
   # Provides form object for Tramway
   #
   class BaseForm
+    include Tramway::Forms::Properties
+    include Tramway::Forms::Normalizations
+
     attr_reader :object
 
     %i[model_name to_key to_model errors attributes].each do |method_name|
@@ -26,9 +29,6 @@ module Tramway
 
         super
       end
-
-      include Tramway::Forms::Properties
-      include Tramway::Forms::Normalizations
     end
 
     def submit(params)
@@ -63,22 +63,6 @@ module Tramway
 
     def __submit(params)
       __apply_properties __apply_normalizations params
-    end
-
-    def __apply_normalizations(params)
-      self.class.normalizations.reduce(params) do |hash, (attribute, normalization)|
-        if hash.key?(attribute) || normalization[:apply_to_nil]
-          hash.merge(attribute => instance_exec(hash[attribute], &normalization[:proc]))
-        else
-          hash
-        end
-      end
-    end
-
-    def __apply_properties(params)
-      self.class.properties.each do |attribute|
-        public_send("#{attribute}=", params[attribute]) if params.key?(attribute)
-      end
     end
 
     def __object
