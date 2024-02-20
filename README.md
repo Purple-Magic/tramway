@@ -134,7 +134,7 @@ Tramway provides **convenient** form objects for Rails applications. List proper
 class UserForm < Tramway::BaseForm
   properties :email, :password, :first_name, :last_name, :phone
 
-  normalizes :password, ->(value) { value if value.present? }
+  normalizes :email, ->(value) { value.strip.downcase }
 end
 ```
 
