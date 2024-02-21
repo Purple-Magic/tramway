@@ -134,9 +134,7 @@ Tramway provides **convenient** form objects for Rails applications. List proper
 class UserForm < Tramway::BaseForm
   properties :email, :password, :first_name, :last_name, :phone
 
-  def password=(value)
-    object.password = value if value.present?
-  end
+  normalizes :email, ->(value) { value.strip.downcase }
 end
 ```
 
@@ -249,15 +247,35 @@ class Admin::UsersController < Admin::ApplicationController
 end
 ```
 
+### Normalizes
+
+Tramway Form supports `normalizes` method. It's almost the same [as in Rails](https://edgeapi.rubyonrails.org/classes/ActiveRecord/Normalization.html)
+
+```ruby
+class UserForm < Tramway::BaseForme
+  properties :email, :first_name, :last_name
+  
+  normalizes :email, with: ->(value) { value.strip.downcase }
+  normalizes :first_name, :last_name, with: ->(value) { value.strip }
+end
+```
+
+`normalizes` method arguments:
+* `*properties` - collection of properties that will be normalized
+* `with:` - a proc with a normalization
+* `apply_on_nil` - by default is `false`. When `true` Tramway Form applies normalization on `nil` values
+
 ### Form inheritance
 
-Tramway Form supports inheritance of `properties`
+Tramway Form supports inheritance of `properties` and `normalizations`
 
 **Example**
 
 ```ruby
 class UserForm < TramwayForm
   properties :email, :password
+
+  normalizes :email, with: ->(value) { value.strip.downcase }
 end
 
 class AdminForm < UserForm
@@ -265,6 +283,7 @@ class AdminForm < UserForm
 end
 
 AdminForm.properties # returns [:email, :password, :permissions]
+AdminForm.normalizations # contains the normalization of :email 
 ```
 
 ### Make flexible and extendable forms
@@ -274,12 +293,7 @@ Tramway Form properties are not mapped to a model. You're able to make extended 
 *app/forms/user_form.rb*
 ```ruby
 class UserForm < Tramway::BaseForm
-  properties :email, :password, :full_name
-
-  # RULE: in case password is empty, don't save
-  def password=(value)
-    object.password = value if value.present?
-  end
+  properties :email, :full_name
 
   # EXTENDED FIELD: full name
   def full_name=(value)

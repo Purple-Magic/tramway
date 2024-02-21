@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
-# :reek:ClassVariable { enabled: false }
+require 'tramway/forms/properties'
+require 'tramway/forms/normalizations'
+
 module Tramway
   # Provides form object for Tramway
   #
   class BaseForm
+    include Tramway::Forms::Properties
+    include Tramway::Forms::Normalizations
+
     attr_reader :object
 
     %i[model_name to_key to_model errors attributes].each do |method_name|
@@ -19,38 +24,10 @@ module Tramway
 
     class << self
       def inherited(subclass)
-        subclass.instance_variable_set(:@properties, [])
+        __initialize_properties subclass
+        __initialize_normalizations subclass
 
         super
-      end
-
-      def property(attribute)
-        @properties << attribute
-
-        delegate attribute, to: :object
-      end
-
-      def properties(*attributes)
-        attributes.any? ? __set_properties(attributes) : __properties
-      end
-
-      def __set_properties(attributes)
-        attributes.each do |attribute|
-          property(attribute)
-        end
-      end
-
-      def __properties
-        (__ancestor_properties + @properties).uniq
-      end
-
-      # :reek:ManualDispatch { enabled: false }
-      def __ancestor_properties(klass = superclass)
-        superklass = klass.superclass
-
-        return [] unless superklass.respond_to?(:properties)
-
-        klass.properties + __ancestor_properties(superklass)
       end
     end
 
@@ -85,9 +62,7 @@ module Tramway
     private
 
     def __submit(params)
-      self.class.properties.each do |attribute|
-        public_send("#{attribute}=", params[attribute]) if params.keys.include? attribute.to_s
-      end
+      __apply_properties __apply_normalizations params
     end
 
     def __object
