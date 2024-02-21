@@ -43,9 +43,6 @@ module Tramway
 
       def self.included(base)
         base.extend ClassMethods
-        base.class_eval do
-          @properties = []
-        end
       end
 
       def __apply_properties(params)
