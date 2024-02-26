@@ -37,10 +37,12 @@ module Tramway
         base.extend ClassMethods
       end
 
+      # :reek:NilCheck { enabled: false }
       def __apply_normalizations(params)
         self.class.normalizations.reduce(params) do |hash, (attribute, normalization)|
-          if hash.key?(attribute) || normalization[:apply_to_nil]
-            hash.merge(attribute => instance_exec(hash[attribute], &normalization[:proc]))
+          value = hash[attribute]
+          if hash.key?(attribute) && (!value.nil? || normalization[:apply_to_nil])
+            hash.merge(attribute => instance_exec(value, &normalization[:proc]))
           else
             hash
           end

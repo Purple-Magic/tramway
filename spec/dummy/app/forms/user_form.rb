@@ -4,5 +4,5 @@
 class UserForm < Tramway::BaseForm
   properties :email, :role
 
-  normalizes :email, with: ->(value) { value&.strip&.downcase }
+  normalizes :email, with: ->(value) { value.strip.downcase }
 end
