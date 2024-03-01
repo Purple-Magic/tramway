@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 describe 'Normalization' do
-  let(:user) { create(:user, email: 'OriginalEmail@example.com', permissions: %i[create update]) }
+  let(:user) do
+    create :user,
+           first_name: 'Pasha',
+           last_name: 'Kalashnikov',
+           email: 'OriginalEmail@example.com',
+           permissions: %i[create update]
+  end
 
   context 'when normalizing attributes' do
     it 'normalizes email' do
@@ -19,20 +25,24 @@ describe 'Normalization' do
       end
     end
 
-    context 'when normalizing attributes with apply_on_nil: true' do
-      it 'applies normalization to nil values' do
+    context 'when normalizing attributes with apply_to_nil: true' do
+      it 'applies normalization to nil values and saves attributes' do
+        expect(nil).to receive(:strip).twice
+
         AdminForm.new(user).submit(first_name: nil, last_name: nil)
 
-        expect(user.first_name).to be_nil
-        expect(user.last_name).to be_nil
+        expect(user.first_name).to eq 'Anonymous'
+        expect(user.last_name).to eq 'Anonymous'
       end
     end
 
-    context 'when normalizing attributes without apply_on_nil' do
-      it 'does not apply normalization to nil values' do
+    context 'when normalizing attributes with apply_to_nil: false' do
+      it 'applies normalization to nil values and saves attributes' do
+        expect(nil).not_to receive(:strip)
+
         UserForm.new(user).submit(email: nil)
 
-        expect(user.email).to eq nil
+        expect(user.email).to be_nil
       end
     end
   end
