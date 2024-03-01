@@ -31,8 +31,8 @@ describe 'Normalization' do
 
         AdminForm.new(user).submit(first_name: nil, last_name: nil)
 
-        expect(user.first_name).to be_nil
-        expect(user.last_name).to be_nil
+        expect(user.first_name).to eq 'Anonymous'
+        expect(user.last_name).to eq 'Anonymous'
       end
     end
 
