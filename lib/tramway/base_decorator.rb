@@ -45,9 +45,5 @@ module Tramway
 
       "#{underscored_class_name.pluralize}/#{underscored_class_name}"
     end
-
-    def to_param
-      id.to_s
-    end
   end
 end
