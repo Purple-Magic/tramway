@@ -56,7 +56,7 @@ RSpec.describe UserForm do
 
     context 'method delegation' do
       it 'delegates certain methods to the object' do
-        methods_to_delegate = %i[id model_name to_key to_model errors attributes]
+        methods_to_delegate = %i[id model_name to_key errors attributes]
 
         methods_to_delegate.each do |method|
           expect(object).to receive(method)
