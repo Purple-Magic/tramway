@@ -8,7 +8,7 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
-  * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway#tailwind-styled-pagination)
+  * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#tailwind-styled-pagination-for-kaminari)
 
 ## Installation
 Add this line to your application's Gemfile:
