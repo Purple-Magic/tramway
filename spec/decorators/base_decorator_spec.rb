@@ -110,6 +110,7 @@ RSpec.describe Tramway::BaseDecorator do
     before { allow(object).to receive(:id).and_return(id) }
 
     it 'returns the string representation of the object id' do
+      binding.pry
       expect(subject.to_param).to eq(id.to_s)
     end
   end
