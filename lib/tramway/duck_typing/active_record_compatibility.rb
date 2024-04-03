@@ -13,7 +13,7 @@ module Tramway
         end
       end
 
-      %i[id model_name to_key errors to_param].each do |method_name|
+      %i[id model_name to_key errors to_param attributes].each do |method_name|
         delegate method_name, to: :object
       end
 
