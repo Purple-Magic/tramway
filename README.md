@@ -427,11 +427,11 @@ end
 = paginate @users # it will render tailwind-styled pagination buttons by default
 ```
 
-## behave_as_ar
-
-**Tramway Decorator** and **Tramway Form** 
-
 Pagination buttons looks like [this](https://play.tailwindcss.com/mqgDS5l9oY)
+
+### `behave_as_ar`
+
+**Tramway Decorator** and **Tramway Form** support `behave_as_ar` method. It allows to use `update` and `destroy` methods with decorated and form objects.
 
 ## Contributing
 
