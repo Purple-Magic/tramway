@@ -9,7 +9,7 @@ shared_examples 'Decorate Collection' do
 end
 
 RSpec.describe Tramway::BaseDecorator do
-  let(:object) { double('object') }
+  let(:object) { User.first }
   let(:decorator) { Tramway::BaseDecorator }
   subject { described_class.new(object) }
 
@@ -110,7 +110,6 @@ RSpec.describe Tramway::BaseDecorator do
     before { allow(object).to receive(:id).and_return(id) }
 
     it 'returns the string representation of the object id' do
-      binding.pry
       expect(subject.to_param).to eq(id.to_s)
     end
   end
