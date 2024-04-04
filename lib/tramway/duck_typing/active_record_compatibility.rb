@@ -7,7 +7,7 @@ module Tramway
       # Contains behave_as_ar method
       module ClassMethods
         def behave_as_ar
-          %i[update destroy].each do |method_name|
+          %i[update update! destroy].each do |method_name|
             delegate method_name, to: :object
           end
         end

@@ -7,6 +7,7 @@ describe Tramway::BaseForm do
   context 'default' do
     it 'does not contain update method' do
       expect(form).not_to respond_to(:update)
+      expect(form).not_to respond_to(:update!)
     end
 
     it 'does not contain destroy method' do
@@ -24,6 +25,12 @@ describe Tramway::BaseForm do
         expect(user).to receive(:update).with(attributes).and_return(true)
 
         expect(form.update(attributes)).to be true
+      end
+
+      it 'updates the object with given attributes' do
+        expect(user).to receive(:update!).with(attributes).and_return(true)
+
+        expect(form.update!(attributes)).to be true
       end
     end
 
