@@ -2,6 +2,7 @@
 
 require 'tramway/decorators/collection_decorator'
 require 'tramway/utils/render'
+require 'tramway/duck_typing'
 
 module Tramway
   # Provides decorate function for Tramway projects
@@ -9,6 +10,7 @@ module Tramway
   class BaseDecorator
     include Tramway::Decorators::CollectionDecorators
     include Tramway::Utils::Render
+    include Tramway::DuckTyping::ActiveRecordCompatibility
 
     attr_reader :object
 
@@ -38,16 +40,10 @@ module Tramway
       end
     end
 
-    delegate_attributes :id
-
     def to_partial_path
       underscored_class_name = object.class.name.underscore
 
       "#{underscored_class_name.pluralize}/#{underscored_class_name}"
-    end
-
-    def to_param
-      id.to_s
     end
   end
 end

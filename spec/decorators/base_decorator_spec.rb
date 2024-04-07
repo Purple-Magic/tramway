@@ -9,7 +9,7 @@ shared_examples 'Decorate Collection' do
 end
 
 RSpec.describe Tramway::BaseDecorator do
-  let(:object) { double('object') }
+  let(:object) { User.first }
   let(:decorator) { Tramway::BaseDecorator }
   subject { described_class.new(object) }
 

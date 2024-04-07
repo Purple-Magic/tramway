@@ -125,6 +125,10 @@ user = nil
 UserDecorator.decorate user # => nil
 ```
 
+#### Update and Destroy
+
+Read [behave_as_ar](https://github.com/Purple-Magic/tramway#behave_as_ar) section
+
 ### Tramway Form
 
 Tramway provides **convenient** form objects for Rails applications. List properties you want to change and the rules in Form classes. No controllers overloading.
@@ -303,6 +307,10 @@ class UserForm < Tramway::BaseForm
 end
 ```
 
+#### Update and Destroy
+
+Read [behave_as_ar](https://github.com/Purple-Magic/tramway#behave_as_ar) section
+
 ### Tramway Navbar
 
 Tramway provides DSL for rendering Tailwind Navgiation bar.
@@ -420,6 +428,10 @@ end
 ```
 
 Pagination buttons looks like [this](https://play.tailwindcss.com/mqgDS5l9oY)
+
+### `behave_as_ar`
+
+**Tramway Decorator** and **Tramway Form** support `behave_as_ar` method. It allows to use `update` and `destroy` methods with decorated and form objects.
 
 ## Contributing
 

@@ -2,6 +2,7 @@
 
 require 'tramway/forms/properties'
 require 'tramway/forms/normalizations'
+require 'tramway/duck_typing'
 
 module Tramway
   # Provides form object for Tramway
@@ -9,12 +10,9 @@ module Tramway
   class BaseForm
     include Tramway::Forms::Properties
     include Tramway::Forms::Normalizations
+    include Tramway::DuckTyping::ActiveRecordCompatibility
 
     attr_reader :object
-
-    %i[model_name to_key to_model errors attributes update destroy].each do |method_name|
-      delegate method_name, to: :object
-    end
 
     def initialize(object)
       @object = object
