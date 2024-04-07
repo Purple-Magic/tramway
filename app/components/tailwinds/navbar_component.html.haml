@@ -1,6 +1,6 @@
 %nav.py-4.px-8.flex.justify-between.items-center{ class: "bg-#{@color}" }
   - if @title[:text].present? || @left_items.present?
-    .flex
+    .flex.px-4
       - if @title[:text].present?
         = link_to @title[:link] do
           .text-xl.text-white.font-bold
