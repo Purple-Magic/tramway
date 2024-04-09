@@ -61,7 +61,7 @@ module Tailwinds
 
       # :reek:UtilityFunction
       def label(attribute, options)
-        options[:label] || attribute.to_s.humanize
+        options[:label].nil? ? attribute.to_s.humanize : options[:label]
       end
 
       def for_id(attribute)
