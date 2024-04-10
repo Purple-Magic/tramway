@@ -30,7 +30,7 @@ module Tailwinds
         render(Tailwinds::Form::SelectComponent.new(
                  input: input(:select),
                  value: options[:selected] || object.public_send(attribute),
-                 collection:,
+                 collection: get_collection(collection, options),
                  **default_options(attribute, options)
                ), &)
       end
@@ -66,6 +66,17 @@ module Tailwinds
 
       def for_id(attribute)
         "#{object_name}_#{attribute}"
+      end
+
+      # REMOVE IT. WE MUST UNDERSTAND WHY INCLUDE_BLANK DOES NOT WORK
+      def get_collection(collection, options)
+        if options[:include_blank]
+          collection = collection.to_a if collection.is_a? Hash
+
+          collection.unshift([nil, ''])
+        else
+          collection
+        end
       end
     end
   end
