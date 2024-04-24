@@ -72,13 +72,21 @@ module Tramway
     def render_ignoring_block(text_or_url, url, options)
       options.merge!(href: url)
 
-      context.render(Tailwinds::Nav::ItemComponent.new(**options)) { text_or_url }
+      if options[:method].present? && options[:method].to_sym != :get
+        context.render(Tailwinds::Nav::Item::ButtonComponent.new(**options)) { text_or_url }
+      else
+        context.render(Tailwinds::Nav::Item::LinkComponent.new(**options)) { text_or_url }
+      end
     end
 
     def render_using_block(text_or_url, options, &block)
       options.merge!(href: text_or_url)
 
-      context.render(Tailwinds::Nav::ItemComponent.new(**options), &block)
+      if options[:method].present? && options[:method].to_sym != :get
+        context.render(Tailwinds::Nav::Item::ButtonComponent.new(**options), &block)
+      else
+        context.render(Tailwinds::Nav::Item::LinkComponent.new(**options), &block)
+      end
     end
   end
 end
