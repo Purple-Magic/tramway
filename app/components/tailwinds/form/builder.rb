@@ -53,14 +53,14 @@ module Tailwinds
       def default_options(attribute, options)
         {
           attribute:,
-          label: label(attribute, options),
+          label: label_build(attribute, options),
           for: for_id(attribute),
           options:
         }
       end
 
       # :reek:UtilityFunction
-      def label(attribute, options)
+      def label_build(attribute, options)
         options[:label].nil? ? attribute.to_s.humanize : options[:label]
       end
 
