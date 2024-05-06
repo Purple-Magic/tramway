@@ -60,8 +60,11 @@ module Tailwinds
       end
 
       # :reek:UtilityFunction
+      # :reek:NilCheck
       def label_build(attribute, options)
-        options[:label].presence || attribute.to_s.humanize
+        label_option = options[:label]
+
+        label_option.nil? ? attribute.to_s.humanize : label_option
       end
 
       def for_id(attribute)
