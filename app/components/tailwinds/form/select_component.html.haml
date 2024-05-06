@@ -1,4 +1,5 @@
 .mb-4
-  %label.block.text-gray-700.text-sm.font-bold.mb-2{ for: @for }
-    = @label
+  - if @label
+    %label.block.text-gray-700.text-sm.font-bold.mb-2{ for: @for }
+      = @label
   = @input.call(@attribute, @collection, { selected: @value }, @options.merge(class: 'bg-white border border-gray-300 text-gray-700 py-2 px-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'))
