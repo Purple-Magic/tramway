@@ -1,0 +1,25 @@
+name: Rubocop
+
+on: [workflow_call]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.1
+
+      - name: Clone current repo
+        uses: actions/checkout@master
+        with:
+          repository: purple-magic/tramway
+
+      - name: Install
+        run: |
+          gem install reek
+
+      - name: Reek
+        run: |
+          reek

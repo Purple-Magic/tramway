@@ -8,6 +8,8 @@ detectors:
   DataClump:
     exclude:
       - "Tailwinds::Form::Builder"
+  LongParameterList:
+    max_params: 5
 
 directories:
   "spec/dummy/app/controllers":

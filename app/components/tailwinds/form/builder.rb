@@ -30,7 +30,7 @@ module Tailwinds
         render(Tailwinds::Form::SelectComponent.new(
                  input: input(:select),
                  value: options[:selected] || object.public_send(attribute),
-                 collection:,
+                 collection: explicitly_add_blank_option(collection, options),
                  **default_options(attribute, options)
                ), &)
       end
@@ -53,19 +53,31 @@ module Tailwinds
       def default_options(attribute, options)
         {
           attribute:,
-          label: label(attribute, options),
+          label: label_build(attribute, options),
           for: for_id(attribute),
           options:
         }
       end
 
       # :reek:UtilityFunction
-      def label(attribute, options)
-        options[:label] || attribute.to_s.humanize
+      def label_build(attribute, options)
+        options[:label].presence || attribute.to_s.humanize
       end
 
       def for_id(attribute)
         "#{object_name}_#{attribute}"
+      end
+
+      # REMOVE IT. WE MUST UNDERSTAND WHY INCLUDE_BLANK DOES NOT WORK
+      # :reek:UtilityFunction
+      def explicitly_add_blank_option(collection, options)
+        if options[:include_blank]
+          collection = collection.to_a if collection.is_a? Hash
+
+          collection.unshift([nil, ''])
+        else
+          collection
+        end
       end
     end
   end
