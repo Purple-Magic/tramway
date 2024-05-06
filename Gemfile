@@ -12,7 +12,7 @@ gem 'haml-rails'
 gem 'kaminari'
 gem 'puma'
 gem 'sprockets-rails'
-gem 'sqlite3'
+gem 'sqlite3', '~> 1.4'
 
 group :development do
   gem 'reek'
