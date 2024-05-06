@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Tailwinds::Nav::ItemComponent, type: :component do
+describe Tailwinds::Nav::Item::LinkComponent, type: :component do
   it 'renders link' do
     render_inline(described_class.new(href: '/test_page')) { 'Sign In' }
 

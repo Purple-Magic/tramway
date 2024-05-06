@@ -37,9 +37,9 @@ module Tramway
       raise 'You cannot provide an argument and a code block at the same time' if provided_url_and_block?(url, &block)
 
       rendered_item = if url.present?
-                        render_ignoring_block(text_or_url, url, options)
+                        render_ignoring_block(text_or_url, url, **options)
                       else
-                        render_using_block(text_or_url, options, &block)
+                        render_using_block(text_or_url, **options, &block)
                       end
 
       @items[@filling] << rendered_item
@@ -69,16 +69,24 @@ module Tramway
       @filling = nil
     end
 
-    def render_ignoring_block(text_or_url, url, options)
+    def render_ignoring_block(text_or_url, url, method: nil, **options)
       options.merge!(href: url)
 
-      context.render(Tailwinds::Nav::ItemComponent.new(**options)) { text_or_url }
+      if method.present? && method.to_sym != :get
+        context.render(Tailwinds::Nav::Item::ButtonComponent.new(method:, **options)) { text_or_url }
+      else
+        context.render(Tailwinds::Nav::Item::LinkComponent.new(method:, **options)) { text_or_url }
+      end
     end
 
-    def render_using_block(text_or_url, options, &block)
+    def render_using_block(text_or_url, method: nil, **options, &block)
       options.merge!(href: text_or_url)
 
-      context.render(Tailwinds::Nav::ItemComponent.new(**options), &block)
+      if method.present? && method.to_sym != :get
+        context.render(Tailwinds::Nav::Item::ButtonComponent.new(method:, **options), &block)
+      else
+        context.render(Tailwinds::Nav::Item::LinkComponent.new(method:, **options), &block)
+      end
     end
   end
 end
