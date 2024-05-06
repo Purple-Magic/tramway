@@ -3,7 +3,7 @@ name: Lint
 on: [push]
 
 jobs:
-  build:
-    uses:
-      - ./.github/workflows/rubocop.yml
-      - ./.github/workflows/reek.yml
+  rubocop:
+    uses: ./.github/workflows/rubocop.yml
+  reek:
+    uses: ./.github/workflows/reek.yml
