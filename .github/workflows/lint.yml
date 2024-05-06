@@ -4,4 +4,6 @@ on: [push]
 
 jobs:
   build:
-    uses: ./.github/workflows/rubocop.yml
+    uses:
+      - ./.github/workflows/rubocop.yml
+      - ./.github/workflows/reek.yml
