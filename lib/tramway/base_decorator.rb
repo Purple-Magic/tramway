@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'tramway/decorators/name_builder'
+require 'tramway/decorators/association_decorator'
 require 'tramway/decorators/collection_decorator'
 require 'tramway/utils/render'
 require 'tramway/duck_typing'
@@ -38,6 +40,8 @@ module Tramway
           delegate attribute, to: :object
         end
       end
+
+      include Tramway::Decorators::AssociationDecorator
     end
 
     def to_partial_path

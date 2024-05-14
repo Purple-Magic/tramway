@@ -16,7 +16,7 @@ module Tramway
                     object_or_array.class
                   end
 
-          "#{klass}Decorator".constantize
+          Tramway::Decorators::NameBuilder.default_decorator_class_name(klass).constantize
         end
       end
     end
