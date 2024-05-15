@@ -2,6 +2,8 @@
 
 module Tramway
   module Decorators
+    # Implements name convention for decorators
+    #
     module NameBuilder
       module_function
 

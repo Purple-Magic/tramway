@@ -2,6 +2,7 @@
 
 require 'tramway/decorators/name_builder'
 require 'tramway/decorators/association_decorator'
+require 'tramway/decorators/association_class_methods'
 require 'tramway/decorators/collection_decorator'
 require 'tramway/utils/render'
 require 'tramway/duck_typing'
@@ -13,6 +14,7 @@ module Tramway
     include Tramway::Decorators::CollectionDecorators
     include Tramway::Utils::Render
     include Tramway::DuckTyping::ActiveRecordCompatibility
+    include Tramway::Decorators::AssociationDecorator
 
     attr_reader :object
 
@@ -41,7 +43,7 @@ module Tramway
         end
       end
 
-      include Tramway::Decorators::AssociationDecorator
+      include Tramway::Decorators::AssociationClassMethods
     end
 
     def to_partial_path

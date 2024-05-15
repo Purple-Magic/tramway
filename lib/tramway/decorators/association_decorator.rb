@@ -5,26 +5,16 @@ module Tramway
     # Decorate logic for decorating associations
     #
     module AssociationDecorator
-      def associations(*associations)
-        associations.each do |assoc|
-          association assoc
-        end
+      private
+
+      def decorate_has_many_association(assoc)
+        assoc.empty? ? [] : decorate_associated_object(assoc, class_name: assoc.klass)
       end
 
-      def association(association)
-        define_method(association) do
-          assoc = object.send(association)
+      def decorate_associated_object(assoc, class_name: nil)
+        decorator = Tramway::Decorators::NameBuilder.default_decorator_class_name(class_name || assoc.class).constantize
 
-          if assoc.is_a?(ActiveRecord::Relation)
-            if assoc.empty?
-              []
-            else
-              Tramway::Decorators::NameBuilder.default_decorator_class_name(assoc.klass).constantize.decorate(assoc)
-            end
-          elsif assoc.present?
-            Tramway::Decorators::NameBuilder.default_decorator_class_name(assoc.class).constantize.decorate(assoc)
-          end
-        end
+        decorator.decorate(assoc)
       end
     end
   end
