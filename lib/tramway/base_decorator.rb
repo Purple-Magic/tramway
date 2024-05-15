@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require 'tramway/decorators/name_builder'
-require 'tramway/decorators/association_decorator'
-require 'tramway/decorators/association_class_methods'
+require 'tramway/decorators/association'
 require 'tramway/decorators/collection_decorator'
 require 'tramway/utils/render'
 require 'tramway/duck_typing'
@@ -14,7 +13,6 @@ module Tramway
     include Tramway::Decorators::CollectionDecorators
     include Tramway::Utils::Render
     include Tramway::DuckTyping::ActiveRecordCompatibility
-    include Tramway::Decorators::AssociationDecorator
 
     attr_reader :object
 
