@@ -124,6 +124,9 @@ end
 class UserDecorator < Tramway::BaseDecorator
   association :posts
 end
+
+user = tramway_decorate User.first
+user.posts # => decorated collection of posts with PostDecorator
 ```
 
 #### Decorate nil

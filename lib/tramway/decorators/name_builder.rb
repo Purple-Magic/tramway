@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tramway
   module Decorators
     module NameBuilder
@@ -9,4 +11,3 @@ module Tramway
     end
   end
 end
-

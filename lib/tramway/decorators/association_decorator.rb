@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tramway
   module Decorators
     # Decorate logic for decorating associations
@@ -13,10 +15,14 @@ module Tramway
         define_method(association) do
           assoc = object.send(association)
 
-          if assoc.present?
-            klass = assoc.is_a?(ActiveRecord::Relation) ? assoc.klass : assoc.class
-
-            Tramway::Decorators::NameBuilder.default_decorator_class_name(klass).constantize.decorate(assoc)
+          if assoc.is_a?(ActiveRecord::Relation)
+            if assoc.empty?
+              []
+            else
+              Tramway::Decorators::NameBuilder.default_decorator_class_name(assoc.klass).constantize.decorate(assoc)
+            end
+          elsif assoc.present?
+            Tramway::Decorators::NameBuilder.default_decorator_class_name(assoc.class).constantize.decorate(assoc)
           end
         end
       end
