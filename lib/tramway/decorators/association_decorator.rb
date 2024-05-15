@@ -14,7 +14,9 @@ module Tramway
           assoc = object.send(association)
 
           if assoc.present?
-            Tramway::Decorators::NameBuilder.default_decorator_class_name(assoc.class).constantize.decorate(assoc)
+            klass = assoc.is_a?(ActiveRecord::Relation) ? assoc.klass : assoc.class
+
+            Tramway::Decorators::NameBuilder.default_decorator_class_name(klass).constantize.decorate(assoc)
           end
         end
       end

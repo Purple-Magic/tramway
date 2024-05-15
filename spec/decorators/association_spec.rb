@@ -12,5 +12,20 @@ describe UserDecorator do
   end
 
   it 'returns posts' do
+    expect(subject.posts.first).to be_a(PostDecorator)
+  end
+end
+
+describe PostDecorator do
+  let(:post) { create :post }
+
+  subject { described_class.decorate(post) }
+
+  it 'responds to #posts' do
+    expect(subject).to respond_to(:user)
+  end
+
+  it 'returns posts' do
+    expect(subject.user).to be_a(UserDecorator)
   end
 end
