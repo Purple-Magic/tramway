@@ -70,6 +70,8 @@ class UserDecorator < Tramway::BaseDecorator
   # delegates attributes to decorated object
   delegate_attributes :email, :first_name, :last_name
 
+  association :posts
+
   # you can provide your own methods with access to decorated object attributes with the method `object`
   def created_at
     I18n.l object.created_at
@@ -113,6 +115,14 @@ You can implement a specific decorator and ask Tramway to decorate with it
 ```ruby
 def show
   @user = tramway_decorate User.find(params[:id]), decorator: Users::ShowDecorator
+end
+```
+
+#### Decorate associations
+
+```ruby
+class UserDecorator < Tramway::BaseDecorator
+  association :posts
 end
 ```
 
