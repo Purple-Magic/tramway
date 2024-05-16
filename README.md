@@ -198,6 +198,8 @@ class UsersController < ApplicationController
 end
 ```
 
+We also provide `submit!` as `save!` method that returns an exception in case of failed saving.
+
 #### Implement Form objects for any case
 
 *app/forms/user_updating_email_form.rb*
