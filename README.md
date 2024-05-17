@@ -435,6 +435,18 @@ Pagination buttons looks like [this](https://play.tailwindcss.com/mqgDS5l9oY)
 
 **Tramway Decorator** and **Tramway Form** support `behave_as_ar` method. It allows to use `update` and `destroy` methods with decorated and form objects.
 
+### `object` method
+
+**Tramway Decorator** and **Tramway Form** have public `object` method. It allows to access ActiveRecord object itself.
+
+```ruby
+user_1 = tramway_decorate User.first
+user_1.object #=> returns pure user object
+
+user_2 = tramway_form User.first
+user_2.object #=> returns pure user object
+```
+
 ## Contributing
 
 Install [lefthook](https://github.com/evilmartians/lefthook)
