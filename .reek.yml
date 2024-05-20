@@ -15,6 +15,9 @@ directories:
   "spec/dummy/app/controllers":
     IrresponsibleModule:
       enabled: false
+  "spec/dummy/app/decorators":
+    IrresponsibleModule:
+      enabled: false
   "spec/dummy/db/migrate/":
     FeatureEnvy: 
       enabled: false
