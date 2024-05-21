@@ -18,6 +18,12 @@ gem "tramway"
 gem "view_component"
 ```
 
+OR
+
+```shell
+bundle add tramway view_component
+```
+
 ## Usage
 
 ### Tramway Entities
