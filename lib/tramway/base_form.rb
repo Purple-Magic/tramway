@@ -45,6 +45,10 @@ module Tramway
       end
     end
 
+    def assign(params)
+      __submit params
+    end
+
     def method_missing(method_name, *args)
       if method_name.to_s.end_with?('=') && args.count == 1
         object.public_send(method_name, args.first)
