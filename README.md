@@ -328,7 +328,21 @@ class UserForm < Tramway::BaseForm
 end
 ```
 
-#### Update and Destroy
+### Assign values
+
+Tramway Form provides `assign` method that allows to assign values without saving
+
+```ruby
+class UsersController < ApplicationController
+  def update
+    @user = tramway_form User.new
+    @user.assign params[:user] # assigns values to the form object
+    @user.reload # restores previous values
+  end
+end
+```
+
+### Update and Destroy
 
 Read [behave_as_ar](https://github.com/Purple-Magic/tramway#behave_as_ar) section
 

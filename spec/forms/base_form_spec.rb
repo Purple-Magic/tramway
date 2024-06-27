@@ -54,6 +54,17 @@ RSpec.describe UserForm do
       end
     end
 
+    describe '#assign' do
+      let(:params) { { email: 'asya@purple-magic.com' } }
+
+      it 'just assigns object attributes' do
+        expect(object).not_to receive(:save!)
+        expect(object).not_to receive(:reload)
+        subject.assign(params)
+        expect(object.email).to eq 'asya@purple-magic.com'
+      end
+    end
+
     context 'method delegation' do
       it 'delegates certain methods to the object' do
         methods_to_delegate = %i[id model_name to_key errors attributes]
