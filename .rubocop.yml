@@ -9,6 +9,9 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
 
+RSpec/MultipleExpectations:
+  Max: 3
+
 Gemspec/RequiredRubyVersion:
   Enabled: false
 
