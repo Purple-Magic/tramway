@@ -1,3 +1,5 @@
+require: rubocop-rails
+
 Lint/MissingSuper:
   Exclude:
     - app/components/**/*.rb
