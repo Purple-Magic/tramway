@@ -18,6 +18,7 @@ group :development do
   gem 'reek'
   gem 'rubocop'
   gem 'rubocop-rails'
+  gem 'rubocop-rspec'
 end
 
 group :test do

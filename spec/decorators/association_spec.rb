@@ -33,9 +33,9 @@ describe UserDecorator do
 end
 
 describe PostDecorator do
-  let(:post) { create :post }
-
   subject { described_class.decorate(post) }
+
+  let(:post) { create :post }
 
   it 'responds to #posts' do
     expect(subject).to respond_to(:user)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Tramway::Config do
-  let(:config) { Tramway::Config.instance }
+  let(:config) { described_class.instance }
 
   describe '#entities=' do
     context 'when collection is not empty' do

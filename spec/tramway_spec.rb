@@ -9,17 +9,17 @@ RSpec.describe Tramway do
 
   describe '.configure' do
     it 'yields to the configuration block' do
-      expect { |block| Tramway.configure(&block) }.to yield_control
+      expect { |block| described_class.configure(&block) }.to yield_control
     end
 
     it 'calls the block with the config object' do
-      expect { |block| Tramway.configure(&block) }.to yield_with_args(config)
+      expect { |block| described_class.configure(&block) }.to yield_with_args(config)
     end
   end
 
   describe '.config' do
     it 'returns the Tramway::Config instance' do
-      expect(Tramway.config).to eq(config)
+      expect(described_class.config).to eq(config)
     end
   end
 end

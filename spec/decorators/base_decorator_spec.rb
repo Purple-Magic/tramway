@@ -9,9 +9,10 @@ shared_examples 'Decorate Collection' do
 end
 
 RSpec.describe Tramway::BaseDecorator do
-  let(:object) { User.first }
-  let(:decorator) { Tramway::BaseDecorator }
   subject { described_class.new(object) }
+
+  let(:object) { User.first }
+  let(:decorator) { described_class }
 
   describe '#initialize' do
     it 'assigns object' do
@@ -98,6 +99,7 @@ RSpec.describe Tramway::BaseDecorator do
 
   describe '#to_partial_path' do
     let(:object_class) { double('object_class', name: 'MyClass') }
+
     before { allow(object).to receive(:class).and_return(object_class) }
 
     it 'returns the correct partial path based on the object class' do
@@ -107,6 +109,7 @@ RSpec.describe Tramway::BaseDecorator do
 
   describe '#to_param' do
     let(:id) { 123 }
+
     before { allow(object).to receive(:id).and_return(id) }
 
     it 'returns the string representation of the object id' do

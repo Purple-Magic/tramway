@@ -2,12 +2,13 @@
 
 RSpec.describe UserForm do
   context 'with persisted object' do
-    let(:object) { create :user }
     subject { described_class.new(object) }
+
+    let(:object) { create :user }
 
     describe '#initialize' do
       it 'assigns object' do
-        is_expected.to have_attributes object:
+        expect(subject).to have_attributes object:
       end
     end
 
@@ -16,8 +17,8 @@ RSpec.describe UserForm do
         described_class.property(:email)
         expect(described_class.properties).to include(:email)
 
-        is_expected.to receive(:email).and_return('asya@purple-magic.com')
-        is_expected.to have_attributes(email: 'asya@purple-magic.com')
+        expect(subject).to receive(:email).and_return('asya@purple-magic.com')
+        expect(subject).to have_attributes(email: 'asya@purple-magic.com')
       end
     end
 

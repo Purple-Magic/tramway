@@ -4,7 +4,7 @@ require 'support/view_helpers'
 
 describe Tailwinds::Form::Builder, type: :view do
   let(:resource)  { build :user }
-  let(:builder) { Tailwinds::Form::Builder.new :user, resource, view, {} }
+  let(:builder) { described_class.new :user, resource, view, {} }
 
   describe '#text_field' do
     context 'default' do
@@ -93,6 +93,7 @@ describe Tailwinds::Form::Builder, type: :view do
 
     context 'with value from object' do
       before { resource.role = :admin }
+
       let(:output) { builder.select :role, %i[admin user] }
 
       it 'gets value from object' do

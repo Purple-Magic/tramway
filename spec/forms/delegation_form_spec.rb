@@ -16,7 +16,7 @@ describe Tramway::BaseForm do
   end
 
   context 'when behave_as_ar' do
-    before { Tramway::BaseForm.behave_as_ar }
+    before { described_class.behave_as_ar }
 
     describe '#update' do
       let(:attributes) { { email: 'updated@example.com' } }

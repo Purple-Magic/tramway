@@ -2,14 +2,14 @@
 
 RSpec.describe AdminForm do
   context 'properties' do
-    let(:user) { build :user }
     subject { described_class.new(user) }
 
+    let(:user) { build :user }
     let(:fields) { %i[email first_name last_name role permissions] }
 
     describe 'properties field' do
       it 'returns an array with email and role' do
-        expect(AdminForm.properties).to contain_exactly(*fields)
+        expect(described_class.properties).to match_array(fields)
       end
     end
 
@@ -25,14 +25,14 @@ RSpec.describe AdminForm do
   end
 
   context 'normalizes' do
-    let(:user) { build :user }
     subject { described_class.new(user) }
 
+    let(:user) { build :user }
     let(:fields) { %i[email first_name last_name permissions] }
 
     describe 'properties field' do
       it 'returns an array with email and role' do
-        expect(AdminForm.normalizations.keys).to contain_exactly(*fields)
+        expect(described_class.normalizations.keys).to match_array(fields)
       end
     end
   end
