@@ -1,7 +1,43 @@
 # frozen_string_literal: true
 
 require 'support/view_helpers'
-require 'helpers/navbar/shared_examples'
+
+shared_examples 'Helpers Navbar' do
+  context 'with navbar with items' do
+    let(:items) do
+      {
+        'Users' => '/users',
+        'Podcasts' => '/podcasts'
+      }
+    end
+
+    let(:fragment) do
+      view.tramway_navbar do |nav|
+        nav.left do
+          items.each do |(name, path)|
+            nav.item name, path
+          end
+        end
+
+        nav.right do
+          items.each do |(name, path)|
+            nav.item name, path
+          end
+        end
+      end
+    end
+
+    it 'renders navbar with left and right items' do
+      expect(fragment).to have_css(left_items_css)
+        .and have_css(right_items_css)
+
+      items.each do |(name, path)|
+        expect(fragment).to have_css "#{left_items_css} a[href='#{path}']", text: name
+        expect(fragment).to have_css "#{right_items_css} a[href='#{path}']", text: name
+      end
+    end
+  end
+end
 
 describe Tramway::Helpers::NavbarHelper, type: :view do
   before do
@@ -9,15 +45,10 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
     view.extend described_class
   end
 
+  let(:title) { Faker::Company.name }
+
   describe '#tramway_navbar' do
     context 'with success' do
-      let(:items) do
-        {
-          'Users' => '/users',
-          'Podcasts' => '/podcasts'
-        }
-      end
-
       let(:left_items_css) { 'nav .flex ul.flex.items-center.space-x-4' }
       let(:right_items_css) { 'nav ul.flex.items-center.space-x-4' }
 
@@ -28,8 +59,6 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
       end
 
       context 'with title checks' do
-        let(:title) { Faker::Company.name }
-
         it 'renders navbar with title and default link' do
           fragment = view.tramway_navbar(title:)
 
@@ -48,42 +77,6 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
 
           expect(fragment).not_to have_css "a[href='/home']"
         end
-      end
-
-      context 'with left and right items checks' do
-        it 'renders navbar with left items' do
-          fragment = view.tramway_navbar do |nav|
-            nav.left do
-              items.each do |(name, path)|
-                nav.item name, path
-              end
-            end
-          end
-
-          expect(fragment).to have_css left_items_css
-
-          items.each do |(name, path)|
-            expect(fragment).to have_css "a[href='#{path}']", text: name
-          end
-        end
-
-        it 'renders navbar with right items' do
-          fragment = view.tramway_navbar do |nav|
-            nav.right do
-              items.each do |(name, path)|
-                nav.item name, path
-              end
-            end
-          end
-
-          expect(fragment).to have_css right_items_css
-
-          items.each do |(name, path)|
-            expect(fragment).to have_css "a[href='#{path}']", text: name
-          end
-        end
-
-        include_examples 'Helpers Navbar'
       end
 
       context 'with Tramway entities preset' do

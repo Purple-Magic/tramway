@@ -14,6 +14,12 @@ RSpec/MultipleExpectations:
 
 RSpec/NestedGroups:
   Max: 4
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/MessageSpies:
+  Enabled: false
   
 Gemspec/RequiredRubyVersion:
   Enabled: false
