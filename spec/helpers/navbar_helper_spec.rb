@@ -9,8 +9,6 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
     view.extend described_class
   end
 
-  let(:title) { Faker::Company.name }
-
   describe '#tramway_navbar' do
     context 'with success' do
       let(:items) do
@@ -30,6 +28,8 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
       end
 
       context 'with title checks' do
+        let(:title) { Faker::Company.name }
+
         it 'renders navbar with title and default link' do
           fragment = view.tramway_navbar(title:)
 
@@ -108,15 +108,9 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
       it 'raises error in case there are text and block at the same time' do
         expect do
           view.tramway_navbar do |nav|
-            nav.right do
-              nav.item 'Users', '/users' do
-                'Users'
-              end
-            end
+            nav.right { nav.item('Users', '/users') { 'Users' } }
           end
-        end.to(
-          raise_error 'You cannot provide an argument and a code block at the same time'
-        )
+        end.to raise_error 'You cannot provide an argument and a code block at the same time'
       end
     end
   end

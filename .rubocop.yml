@@ -12,6 +12,9 @@ Metrics/BlockLength:
 RSpec/MultipleExpectations:
   Max: 3
 
+RSpec/NestedGroups:
+  Max: 4
+  
 Gemspec/RequiredRubyVersion:
   Enabled: false
 
