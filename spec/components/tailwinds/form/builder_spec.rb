@@ -7,7 +7,7 @@ describe Tailwinds::Form::Builder, type: :view do
   let(:builder) { described_class.new :user, resource, view, {} }
 
   describe '#text_field' do
-    context 'default' do
+    context 'with default behaviour' do
       let(:output) { builder.text_field :email }
 
       it 'gets default value' do
@@ -71,11 +71,14 @@ describe Tailwinds::Form::Builder, type: :view do
   end
 
   describe '#select' do
-    context 'default' do
+    context 'with default behaviour' do
       let(:output) { builder.select :role, %i[admin user] }
 
-      it 'behaves as usual' do
+      it 'has the label' do
         expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
+      end
+
+      it 'has the select' do
         expect(output).to have_selector 'select.bg-white.border.border-gray-300.text-gray-700.py-2.px-2.rounded-lg'
         expect(output).to have_selector 'option[value="admin"]'
         expect(output).to have_selector 'option[value="user"]'

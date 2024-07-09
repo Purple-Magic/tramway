@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+# NOTE: this file contains tests about associations, so it's better to have the whole logic in one file
+# rubocop:disable RSpec/MultipleDescribes
 describe UserDecorator do
-  subject { described_class.decorate(user) }
+  subject(:decorated_object) { described_class.decorate(user) }
 
   context 'with existing posts' do
     let(:user) do
@@ -11,11 +13,11 @@ describe UserDecorator do
     end
 
     it 'responds to #posts' do
-      expect(subject).to respond_to(:posts)
+      expect(decorated_object).to respond_to(:posts)
     end
 
     it 'returns posts' do
-      expect(subject.posts.first).to be_a(PostDecorator)
+      expect(decorated_object.posts.first).to be_a(PostDecorator)
     end
   end
 
@@ -23,25 +25,26 @@ describe UserDecorator do
     let(:user) { create(:user) }
 
     it 'responds to #posts' do
-      expect(subject).to respond_to(:posts)
+      expect(decorated_object).to respond_to(:posts)
     end
 
     it 'returns empty array' do
-      expect(subject.posts).to eq []
+      expect(decorated_object.posts).to eq []
     end
   end
 end
 
 describe PostDecorator do
-  subject { described_class.decorate(post) }
+  subject(:decorated_object) { described_class.decorate(post) }
 
   let(:post) { create :post }
 
   it 'responds to #posts' do
-    expect(subject).to respond_to(:user)
+    expect(decorated_object).to respond_to(:user)
   end
 
   it 'returns posts' do
-    expect(subject.user).to be_a(UserDecorator)
+    expect(decorated_object.user).to be_a(UserDecorator)
   end
 end
+# rubocop:enable RSpec/MultipleDescribes

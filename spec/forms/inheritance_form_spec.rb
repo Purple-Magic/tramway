@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-RSpec.describe AdminForm do
-  context 'properties' do
-    subject { described_class.new(user) }
+# NOTE: AdminForm is a dummy class, so there is no reason to store these tests following name conventions
+# rubocop:disable RSpec/SpecFilePathFormat
+describe AdminForm do
+  context 'when properties' do
+    subject(:form_object) { described_class.new(user) }
 
     let(:user) { build :user }
     let(:fields) { %i[email first_name last_name role permissions] }
@@ -16,15 +18,15 @@ RSpec.describe AdminForm do
     describe 'setting up values' do
       it 'sets up values' do
         fields.map do |field|
-          subject.public_send "#{field}=", 'somestr'
+          form_object.public_send "#{field}=", 'somestr'
 
-          expect(subject.send(field)).to eq 'somestr'
+          expect(form_object.send(field)).to eq 'somestr'
         end
       end
     end
   end
 
-  context 'normalizes' do
+  context 'when normalizes' do
     subject { described_class.new(user) }
 
     let(:user) { build :user }
@@ -37,3 +39,4 @@ RSpec.describe AdminForm do
     end
   end
 end
+# rubocop:enable RSpec/SpecFilePathFormat

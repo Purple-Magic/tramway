@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Test form for basic functions testing for Admin panel
 module Admin
+  # Test form for basic functions testing for Admin panel
   class UserForm < Tramway::BaseForm
     properties :email, :role
 
