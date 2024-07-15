@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Tramway::Config do
-  let(:config) { Tramway::Config.instance }
+  let(:config) { described_class.instance }
 
   describe '#entities=' do
     context 'when collection is not empty' do
@@ -14,10 +14,7 @@ describe Tramway::Config do
       it 'sets entities as an array of Tramway::Configs::Entity objects' do
         expect(config.entities).to be_an(Array)
         expect(config.entities.length).to eq(entities.length)
-
-        config.entities.each do |entity|
-          expect(entity).to be_a(Tramway::Configs::Entity)
-        end
+        expect(config.entities).to all(be_a(Tramway::Configs::Entity))
       end
     end
   end
@@ -47,7 +44,7 @@ describe Tramway::Config do
   end
 
   describe 'pagination' do
-    context 'change default value' do
+    context 'when change default value' do
       before { config.pagination = { enabled: true } }
 
       it 'returns updated pagination enabled value' do

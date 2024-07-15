@@ -4,14 +4,14 @@ shared_examples 'Tramway Config Entity human_name' do |name|
   subject { described_class.new(name:) }
 
   describe '#human_name' do
+    let(:expected_plural_name) { name.to_s.pluralize.capitalize }
+    let(:expected_single_name) { name.to_s.capitalize }
+
     it 'returns an OpenStruct object with single and plural human names' do
       expect(subject.human_name).to be_an(OpenStruct)
       expect(subject.human_name).to respond_to(:single)
       expect(subject.human_name).to respond_to(:plural)
     end
-
-    let(:expected_single_name) { name.to_s.capitalize }
-    let(:expected_plural_name) { name.to_s.pluralize.capitalize }
 
     it 'sets the correct single and plural human names' do
       expect(subject.human_name.single).to eq(expected_single_name)
@@ -49,10 +49,10 @@ describe Tramway::Configs::Entity do
   end
 
   context 'with entity name and route contains namespace only' do
+    subject { described_class.new(name:, route:) }
+
     let(:name) { :user }
     let(:route) { { namespace: :admin } }
-
-    subject { described_class.new(name:, route:) }
 
     let(:helper) { "#{route[:namespace]}_#{name.to_s.pluralize}_path" }
 
@@ -60,10 +60,10 @@ describe Tramway::Configs::Entity do
   end
 
   context 'with entity name and route contains namespace and route_method' do
+    subject { described_class.new(name:, route:) }
+
     let(:name) { :user }
     let(:route) { { namespace: :admin, route_method: :clients } }
-
-    subject { described_class.new(name:, route:) }
 
     let(:helper) { "#{route[:namespace]}_#{route[:route_method]}_path" }
 
@@ -71,10 +71,10 @@ describe Tramway::Configs::Entity do
   end
 
   context 'with entity name and route contains route_method only' do
+    subject { described_class.new(name:, route:) }
+
     let(:name) { :user }
     let(:route) { { route_method: :clients } }
-
-    subject { described_class.new(name:, route:) }
 
     let(:helper) { "#{route[:route_method]}_path" }
 

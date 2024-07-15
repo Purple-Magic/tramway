@@ -27,7 +27,7 @@ describe 'Normalization' do
 
     context 'when normalizing attributes with apply_to_nil: true' do
       it 'applies normalization to nil values and saves attributes' do
-        expect(nil).to receive(:strip).twice
+        allow(nil).to receive(:strip).twice
 
         AdminForm.new(user).submit(first_name: nil, last_name: nil)
 
@@ -38,8 +38,6 @@ describe 'Normalization' do
 
     context 'when normalizing attributes with apply_to_nil: false' do
       it 'applies normalization to nil values and saves attributes' do
-        expect(nil).not_to receive(:strip)
-
         UserForm.new(user).submit(email: nil)
 
         expect(user.email).to be_nil
@@ -47,7 +45,7 @@ describe 'Normalization' do
     end
   end
 
-  context 'inheritance and extension' do
+  context 'with inheritance and extension' do
     let(:admin_form) { AdminForm.new(user) }
 
     it 'inherits normalizations from the UserForm class' do

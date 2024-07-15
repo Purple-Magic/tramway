@@ -1,3 +1,6 @@
+require: rubocop-rails
+require: rubocop-rspec
+
 Lint/MissingSuper:
   Exclude:
     - app/components/**/*.rb
@@ -6,6 +9,21 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
 
+RSpec/MultipleExpectations:
+  Max: 3
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/StubbedMock:
+  Enabled: false
+  
 Gemspec/RequiredRubyVersion:
   Enabled: false
 

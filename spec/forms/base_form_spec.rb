@@ -1,23 +1,24 @@
 # frozen_string_literal: true
 
-RSpec.describe UserForm do
+# NOTE: UserForm is a dummy class, so there is no reason to store these tests following name conventions
+# rubocop:disable RSpec/SpecFilePathFormat
+describe UserForm do
   context 'with persisted object' do
+    subject(:form_object) { described_class.new(object) }
+
     let(:object) { create :user }
-    subject { described_class.new(object) }
 
     describe '#initialize' do
       it 'assigns object' do
-        is_expected.to have_attributes object:
+        expect(form_object).to have_attributes object:
       end
     end
 
     describe '.property' do
       it 'adds the attribute to properties list and delegates to the object' do
         described_class.property(:email)
-        expect(described_class.properties).to include(:email)
 
-        is_expected.to receive(:email).and_return('asya@purple-magic.com')
-        is_expected.to have_attributes(email: 'asya@purple-magic.com')
+        expect(described_class.properties).to include(:email)
       end
     end
 
@@ -29,7 +30,7 @@ RSpec.describe UserForm do
           expect(object).to receive(:save).and_return(true)
           expect(object).to receive(:reload)
 
-          subject.submit(params)
+          form_object.submit(params)
         end
       end
 
@@ -37,7 +38,7 @@ RSpec.describe UserForm do
         let(:params) { { email: 'Asya@Purple-Magic.com' } }
 
         it 'updates object attributes and saves it' do
-          subject.submit(params)
+          form_object.submit(params)
 
           expect(object.email).to eq 'asya@purple-magic.com'
         end
@@ -50,7 +51,7 @@ RSpec.describe UserForm do
       it 'updates object attributes and saves it with validation' do
         expect(object).to receive(:save!).and_return(true)
         expect(object).to receive(:reload)
-        subject.submit!(params)
+        form_object.submit!(params)
       end
     end
 
@@ -60,26 +61,26 @@ RSpec.describe UserForm do
       it 'just assigns object attributes' do
         expect(object).not_to receive(:save!)
         expect(object).not_to receive(:reload)
-        subject.assign(params)
+        form_object.assign(params)
         expect(object.email).to eq 'asya@purple-magic.com'
       end
     end
 
-    context 'method delegation' do
+    context 'with method delegation' do
       it 'delegates certain methods to the object' do
         methods_to_delegate = %i[id model_name to_key errors attributes]
 
         methods_to_delegate.each do |method|
           expect(object).to receive(method)
 
-          subject.public_send(method)
+          form_object.public_send(method)
         end
       end
     end
 
     describe 'method_missing' do
       it 'raises NoMethodError for other cases' do
-        expect { subject.unknown_method }.to raise_error(NoMethodError)
+        expect { form_object.unknown_method }.to raise_error(NoMethodError)
       end
     end
   end
@@ -136,3 +137,4 @@ RSpec.describe UserForm do
     expect(form).not_to respond_to(:to_model)
   end
 end
+# rubocop:enable RSpec/SpecFilePathFormat

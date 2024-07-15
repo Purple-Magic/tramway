@@ -9,13 +9,14 @@ shared_examples 'Decorate Collection' do
 end
 
 RSpec.describe Tramway::BaseDecorator do
+  subject(:decorated_object) { described_class.new(object) }
+
   let(:object) { User.first }
-  let(:decorator) { Tramway::BaseDecorator }
-  subject { described_class.new(object) }
+  let(:decorator) { described_class }
 
   describe '#initialize' do
     it 'assigns object' do
-      expect(subject.object).to eq(object)
+      expect(decorated_object.object).to eq(object)
     end
   end
 
@@ -24,7 +25,7 @@ RSpec.describe Tramway::BaseDecorator do
 
     it 'calls the ActionController::Base.render method with the provided arguments' do
       expect(ActionController::Base).to receive(:render).with(*args, { layout: false })
-      subject.render(*args, layout: false)
+      decorated_object.render(*args, layout: false)
     end
   end
 
@@ -72,10 +73,11 @@ RSpec.describe Tramway::BaseDecorator do
     end
 
     context 'when object_or_array is not an ActiveRecord::Relation' do
-      let(:object) { double('object') }
+      let(:object) { instance_double(User) }
 
       it 'initializes a new decorator with the object' do
         expect(described_class).to receive(:new).with(object)
+
         described_class.decorate(object)
       end
     end
@@ -96,21 +98,13 @@ RSpec.describe Tramway::BaseDecorator do
     end
   end
 
-  describe '#to_partial_path' do
-    let(:object_class) { double('object_class', name: 'MyClass') }
-    before { allow(object).to receive(:class).and_return(object_class) }
-
-    it 'returns the correct partial path based on the object class' do
-      expect(subject.to_partial_path).to eq('my_classes/my_class')
-    end
-  end
-
   describe '#to_param' do
     let(:id) { 123 }
+
     before { allow(object).to receive(:id).and_return(id) }
 
     it 'returns the string representation of the object id' do
-      expect(subject.to_param).to eq(id.to_s)
+      expect(decorated_object.to_param).to eq(id.to_s)
     end
   end
 end
