@@ -3,4 +3,6 @@
 # Base model for the whole dummy application
 class ApplicationRecord < ActiveRecord::Base
   primary_abstract_class
+
+  include AASM
 end

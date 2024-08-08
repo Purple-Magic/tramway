@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 # Specify your gem's dependencies in tramway.gemspec.
 gemspec
 
+gem 'aasm'
 gem 'anyway_config'
 gem 'dry-initializer'
 gem 'haml-rails'

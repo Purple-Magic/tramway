@@ -8,7 +8,7 @@ shared_examples 'Decorate Collection' do
   end
 end
 
-RSpec.describe Tramway::BaseDecorator do
+describe Tramway::BaseDecorator do
   subject(:decorated_object) { described_class.new(object) }
 
   let(:object) { User.first }
