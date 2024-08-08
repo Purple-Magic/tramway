@@ -7,10 +7,11 @@ module Tramway
     # Provides methods into Rails ActionController
     #
     module DecorateHelper
+      # :reek:NilCheck { enabled: false } because checking for nil is not a type-checking issue but business logic
       def tramway_decorate(object_or_array, decorator: nil)
         return [] if Tramway::Decorators::CollectionDecorators.collection?(object_or_array) && object_or_array.empty?
 
-        return nil if object_or_array.nil?
+        return if object_or_array.nil?
 
         Tramway::Decorators::ClassHelper.decorator_class(object_or_array, decorator).decorate object_or_array
       end
