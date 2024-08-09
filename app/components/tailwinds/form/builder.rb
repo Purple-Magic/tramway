@@ -35,6 +35,15 @@ module Tailwinds
                ), &)
       end
 
+      def multiselect(attribute, collection, **options, &)
+        render(Tailwinds::Form::MultiselectComponent.new(
+                 input: input(:select),
+                 value: options[:selected] || object.public_send(attribute),
+                 collection: explicitly_add_blank_option(collection, options),
+                 **default_options(attribute, options)
+               ), &)
+      end
+
       def submit(action, **options, &)
         render(Tailwinds::Form::SubmitButtonComponent.new(action, **options), &)
       end

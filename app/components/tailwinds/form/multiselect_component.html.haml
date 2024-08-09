@@ -1,0 +1,6 @@
+.mb-4
+  - if @label
+    %label.block.text-gray-700.text-sm.font-bold.mb-2{ for: @for }
+      = @label
+  %div{ data: { controller: :multiselect, "multiselect-items-value" => @collection, placeholder: "Search for birds..." } }
+    = @input.call(@attribute, [], {}, @options.merge(class: 'multiselect__hidden', multiple: :multiple, "data-multiselect-target" => "hidden"))
