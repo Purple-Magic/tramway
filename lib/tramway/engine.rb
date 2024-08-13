@@ -11,7 +11,12 @@ module Tramway
       load_views_helper
       load_decorator_helper
       load_form_helper
+      load_assets
       configure_pagination if Tramway.config.pagination[:enabled]
+    end
+
+    initializer "your_gem.assets.precompile" do |app|
+      app.config.assets.precompile += %w[tramway/multiselect.js]
     end
 
     private

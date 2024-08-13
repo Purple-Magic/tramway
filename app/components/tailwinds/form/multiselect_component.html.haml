@@ -2,5 +2,15 @@
   - if @label
     %label.block.text-gray-700.text-sm.font-bold.mb-2{ for: @for }
       = @label
-  %div{ data: { controller: :multiselect, "multiselect-items-value" => @collection, placeholder: "Search for birds..." } }
-    = @input.call(@attribute, [], {}, @options.merge(class: 'multiselect__hidden', multiple: :multiple, "data-multiselect-target" => "hidden"))
+  .flex.flex-col.items-center.relative{ data: multiselect_hash }
+    .w-full
+      .p-1.flex.border.border-gray-200.bg-white.rounded{ data: { "multiselect-target" => "dropdown" } }
+        .flex.flex-auto.flex-wrap{ data: { "multiselect-target" => "showSelectedArea" } }
+          .flex-1
+            %input.bg-transparent.p-1.px-2.appearance-none.outline-none.h-full.w-full.text-gray-800{ placeholder: "Storehouses...", multiple: :multiple }
+        .text-gray-300.w-8.py-1.pl-2.pr-1.border-l.flex.items-center.border-gray-200
+          %button.cursor-pointer.w-6.h-6.text-gray-600.outline-none.focus:outline-none
+            %svg.feather.feather-chevron-up.w-4.h-4{:fill => "none", :height => "100%", :stroke => "currentColor", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2", :viewbox => "0 0 24 24", :width => "100%", :xmlns => "http://www.w3.org/2000/svg"}
+            %polyline{:points => "18 15 12 9 6 15"}
+  -# %div
+  -#   = @input.call(@attribute, [], {}, @options.merge(class: 'multiselect__hidden', multiple: :multiple, "data-multiselect-target" => "hidden"))
