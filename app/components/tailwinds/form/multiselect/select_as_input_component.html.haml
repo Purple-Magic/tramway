@@ -1,0 +1,2 @@
+.flex-1
+  = @input.call(@attribute, @options.merge(multiple: :multiple, placeholder: "{{placeholder}}", class: "bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800", data: { 'multiselect-target' => 'hiddenInput' }))

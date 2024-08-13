@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class Multiselect extends Controller {
-  static targets = ["dropdown", "showSelectedArea"];
+  static targets = ["dropdown", "showSelectedArea", "hiddenInput"];
 
   static values = {
     items: Array,
@@ -10,24 +10,22 @@ export default class Multiselect extends Controller {
     selectedItemTemplate: String,
     dropdownState: String,
     selectedItems: Array,
-    placeholder: String
+    placeholder: String,
+    selectAsInput: String
   }
 
   connect() {
     this.dropdownState = 'closed';
     this.unselectedItems = JSON.parse(this.element.dataset.items);
     this.selectedItems = [];
-    this.renderSelectedItems()
+    this.renderSelectedItems();
   }
 
   renderSelectedItems() {
-    const allItems = this.fillTemplate(this.element.dataset.selectedItemTemplate, this.selectedItems)
-
-    this.showSelectedAreaTarget.innerHTML = allItems
-    this.showSelectedAreaTarget.insertAdjacentHTML(
-      "beforeEnd",
-      inputHTML(this.selectedItems, this.element.dataset.placeholder)
-    )
+    const allItems = this.fillTemplate(this.element.dataset.selectedItemTemplate, this.selectedItems);
+    this.showSelectedAreaTarget.innerHTML = allItems;
+    this.showSelectedAreaTarget.insertAdjacentHTML("beforeEnd", this.input());
+    this.updateInputOptions();
   }
 
   fillTemplate(template, items) {
@@ -38,15 +36,15 @@ export default class Multiselect extends Controller {
 
   closeOnClickOutside() {
     if (this.dropdownState === 'open' && !this.element.contains(event.target)) {
-      this.closeDropdown()
+      this.closeDropdown();
     }
   }
 
   toggleDropdown() {
     if (this.dropdownState === 'closed') {
-      this.openDropdown()
+      this.openDropdown();
     } else {
-      this.closeDropdown()
+      this.closeDropdown();
     }
   }
 
@@ -57,7 +55,7 @@ export default class Multiselect extends Controller {
 
   openDropdown() {
     this.dropdownState = 'open';
-    this.dropdownTarget.insertAdjacentHTML("afterend", this.template)
+    this.dropdownTarget.insertAdjacentHTML("afterend", this.template);
 
     if (this.dropdown()) {
       this.dropdown().addEventListener('click', event => event.stopPropagation());
@@ -65,7 +63,7 @@ export default class Multiselect extends Controller {
   }
 
   dropdown() {
-    return this.element.querySelector('#dropdown')
+    return this.element.querySelector('#dropdown');
   }
 
   closeDropdown() {
@@ -79,14 +77,14 @@ export default class Multiselect extends Controller {
     return this.element.dataset.dropdownContainer.replace(
       /{{content}}/g,
       this.fillTemplate(this.element.dataset.itemContainer, this.unselectedItems)
-    )
+    );
   }
 
   toggleItem({ currentTarget }) {
     const item = {
       text: currentTarget.dataset.text,
       value: currentTarget.dataset.value
-    }
+    };
 
     const itemIndex = this.selectedItems.findIndex(x => x.value.toString() === item.value);
     if (itemIndex !== -1) {
@@ -103,17 +101,25 @@ export default class Multiselect extends Controller {
       ];
     }
 
-    this.renderSelectedItems()
-    this.rerenderItems()
+    this.renderSelectedItems();
+    this.rerenderItems();
   }
-}
 
-const inputHTML = (selectedItems, placeholder) => {
-  return `
-  <div class="flex-1">
-  <input class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800" multiple="multiple" placeholder="${selectedItems.length > 0 ? '' : placeholder}">
-  </div>
-  `
+  input() {
+    const placeholder = this.selectedItems.length > 0 ? '' : this.element.dataset.placeholder;
+    return this.element.dataset.selectAsInput.replace(/{{placeholder}}/g, placeholder);
+  }
+
+  updateInputOptions() {
+    this.hiddenInputTarget.innerHTML = ''; // Clear existing options
+    this.selectedItems.forEach(selected => {
+      const option = document.createElement("option");
+      option.text = selected.text;
+      option.value = selected.value;
+      option.setAttribute("selected", true);
+      this.hiddenInputTarget.append(option);
+    });
+  }
 }
 
 export { Multiselect }
