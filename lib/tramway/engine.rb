@@ -11,7 +11,6 @@ module Tramway
       load_views_helper
       load_decorator_helper
       load_form_helper
-      load_assets
       configure_pagination if Tramway.config.pagination[:enabled]
     end
 

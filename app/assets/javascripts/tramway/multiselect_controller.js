@@ -5,7 +5,7 @@ export default class Multiselect extends Controller {
 
   static values = {
     items: Array,
-    container: String,
+    dropdownContainer: String,
     itemContainer: String,
     selectedItemTemplate: String,
     dropdownState: String,
@@ -71,7 +71,7 @@ export default class Multiselect extends Controller {
   }
 
   get template() {
-    return this.element.dataset.container.replace(
+    return this.element.dataset.dropdownContainer.replace(
       /{{content}}/g,
       this.fillTemplate(this.element.dataset.itemContainer, this.unselectedItems)
     )
