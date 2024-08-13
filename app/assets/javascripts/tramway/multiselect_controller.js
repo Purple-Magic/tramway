@@ -59,19 +59,19 @@ export default class Multiselect extends Controller {
     this.dropdownState = 'open';
     this.dropdownTarget.insertAdjacentHTML("afterend", this.template)
 
-    if (dropdown()) {
-      dropdownElement.addEventListener('click', event => event.stopPropagation());
+    if (this.dropdown()) {
+      this.dropdown().addEventListener('click', event => event.stopPropagation());
     }
   }
 
   dropdown() {
-    this.element.querySelector('#dropdown')
+    return this.element.querySelector('#dropdown')
   }
 
   closeDropdown() {
     this.dropdownState = 'closed';
-    if (dropdown()) {
-      this.element.querySelector('#dropdown').remove();
+    if (this.dropdown()) {
+      this.dropdown().remove();
     }
   }
 

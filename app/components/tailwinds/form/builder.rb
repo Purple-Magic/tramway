@@ -39,7 +39,7 @@ module Tailwinds
         render(Tailwinds::Form::MultiselectComponent.new(
                  input: input(:select),
                  value: options[:selected] || object.public_send(attribute),
-                 collection: explicitly_add_blank_option(collection, options),
+                 collection:,
                  **default_options(attribute, options)
                ), &)
       end
