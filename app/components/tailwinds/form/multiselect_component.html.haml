@@ -3,10 +3,8 @@
     %label.block.text-gray-700.text-sm.font-bold.mb-2{ for: @for }
       = @label
   .flex.flex-col.items-center.relative{ data: multiselect_hash }
-    .w-full
+    .min-w-96.w-fit
       .p-1.flex.border.border-gray-200.bg-white.rounded{ data: { "multiselect-target" => "dropdown" } }
         .flex.flex-auto.flex-wrap{ data: { "multiselect-target" => "showSelectedArea" } }
-          .flex-1
-            %input.bg-transparent.p-1.px-2.appearance-none.outline-none.h-full.w-full.text-gray-800{ placeholder: "Storehouses...", multiple: :multiple }
         .text-gray-300.w-8.py-1.pl-2.pr-1.border-l.flex.items-center.border-gray-200
           ^

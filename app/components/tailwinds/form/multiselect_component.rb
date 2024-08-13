@@ -23,6 +23,7 @@ module Tailwinds
           action: "click->multiselect#toggleDropdown",
           "select-as-input": render(Tailwinds::Form::Multiselect::SelectAsInputComponent.new(options:, attribute:, input:)),
           placeholder: @options[:placeholder],
+          value:,
         }
       end
     end

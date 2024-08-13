@@ -38,7 +38,7 @@ module Tailwinds
       def multiselect(attribute, collection, **options, &)
         render(Tailwinds::Form::MultiselectComponent.new(
                  input: input(:text_field),
-                 value: options[:selected] || object.public_send(attribute),
+                 value: options[:value] || options[:selected] || object.public_send(attribute),
                  collection:,
                  **default_options(attribute, options)
                ), &)

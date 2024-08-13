@@ -11,13 +11,18 @@ export default class Multiselect extends Controller {
     dropdownState: String,
     selectedItems: Array,
     placeholder: String,
-    selectAsInput: String
+    selectAsInput: String,
+    value: Array
   }
 
   connect() {
     this.dropdownState = 'closed';
     this.unselectedItems = JSON.parse(this.element.dataset.items);
-    this.selectedItems = [];
+
+    const initialValues = this.element.dataset.value === undefined ? [] : this.element.dataset.value.split(',');
+    this.selectedItems = this.unselectedItems.filter(item => initialValues.includes(item.value.toString()));
+    this.unselectedItems = this.unselectedItems.filter(item => !initialValues.includes(item.value.toString()));
+
     this.renderSelectedItems();
   }
 
@@ -111,7 +116,7 @@ export default class Multiselect extends Controller {
   }
 
   updateInputOptions() {
-    this.hiddenInputTarget.innerHTML = ''; // Clear existing options
+    this.hiddenInputTarget.innerHTML = '';
     this.selectedItems.forEach(selected => {
       const option = document.createElement("option");
       option.text = selected.text;
@@ -119,6 +124,8 @@ export default class Multiselect extends Controller {
       option.setAttribute("selected", true);
       this.hiddenInputTarget.append(option);
     });
+
+    this.hiddenInputTarget.value = this.selectedItems.map(item => item.value);
   }
 }
 
