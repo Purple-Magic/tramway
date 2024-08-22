@@ -14,6 +14,7 @@ gem 'kaminari'
 gem 'puma'
 gem 'sprockets-rails'
 gem 'sqlite3', '~> 1.4'
+gem 'importmap-rails'
 
 group :development do
   gem 'reek'
@@ -27,4 +28,6 @@ group :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
 end
