@@ -480,6 +480,12 @@ user_2 = tramway_form User.first
 user_2.object #=> returns pure user object
 ```
 
+# Articles
+* [Tramway on Rails](https://kalashnikovisme.medium.com/tramway-on-rails-32158c35ed68)
+* [Delegating ActiveRecord methods to decorators in Rails](https://kalashnikovisme.medium.com/delegating-activerecord-methods-to-decorators-in-rails-4e4ec1c6b3a6)
+* [Behave as ActiveRecord. Why do we want objects to be AR lookalikes?](https://kalashnikovisme.medium.com/behave-as-activerecord-why-do-we-want-objects-to-be-ar-lookalikes-d494d692e1d3)
+* [Decorating associations in Rails with Tramway](https://kalashnikovisme.medium.com/decorating-associations-in-rails-with-tramway-b46a28392f9e)
+
 ## Contributing
 
 Install [lefthook](https://github.com/evilmartians/lefthook)
