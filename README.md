@@ -9,6 +9,7 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
   * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#tailwind-styled-pagination-for-kaminari)
+* [Articles](https://github.com/Purple-Magic/tramway#usage)
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -480,7 +481,7 @@ user_2 = tramway_form User.first
 user_2.object #=> returns pure user object
 ```
 
-# Articles
+## Articles
 * [Tramway on Rails](https://kalashnikovisme.medium.com/tramway-on-rails-32158c35ed68)
 * [Delegating ActiveRecord methods to decorators in Rails](https://kalashnikovisme.medium.com/delegating-activerecord-methods-to-decorators-in-rails-4e4ec1c6b3a6)
 * [Behave as ActiveRecord. Why do we want objects to be AR lookalikes?](https://kalashnikovisme.medium.com/behave-as-activerecord-why-do-we-want-objects-to-be-ar-lookalikes-d494d692e1d3)
