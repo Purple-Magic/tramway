@@ -3,3 +3,5 @@
 = tramway_form_for @user_form, url: { controller: :users, action: :create } do |f|
   = f.multiselect :role, [['Admin', 'admin'], ['User', 'user']], label: false
 
+  = f.submit 'Create user'
+
