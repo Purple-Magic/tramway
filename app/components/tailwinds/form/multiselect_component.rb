@@ -46,13 +46,23 @@ module Tailwinds
       end
 
       def method_missing(method_name, *, &)
-        component_name = "Tailwinds::Form::Multiselect::#{method_name.to_s.camelize}"
-
-        if method_name.to_s.include?('_') && Object.const_defined?(component_name)
-          render(component_name.constantize.new(*, &))
+        if method_name.to_s.include?('_') && Object.const_defined?(component_name(method_name))
+          render(component_name(method_name).constantize.new(*, &))
         else
           super
         end
+      end
+
+      def respond_to_missing?(method_name, include_private = false)
+        if method_name.to_s.include?('_') && Object.const_defined?(component_name(method_name))
+          true
+        else
+          super
+        end
+      end
+
+      def component_name(method_name)
+        "Tailwinds::Form::Multiselect::#{method_name.to_s.camelize}"
       end
     end
   end
