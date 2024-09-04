@@ -10,11 +10,11 @@ gem 'aasm'
 gem 'anyway_config'
 gem 'dry-initializer'
 gem 'haml-rails'
+gem 'importmap-rails'
 gem 'kaminari'
 gem 'puma'
 gem 'sprockets-rails'
 gem 'sqlite3', '~> 1.4'
-gem 'importmap-rails'
 
 group :development do
   gem 'reek'

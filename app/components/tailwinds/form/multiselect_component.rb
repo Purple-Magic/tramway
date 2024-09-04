@@ -16,14 +16,15 @@ module Tailwinds
         {
           controller: :multiselect,
           "selected-item-template": render(Tailwinds::Form::Multiselect::SelectedItemTemplate.new),
-          "multiselect-selected-items-value" => [],
+          'multiselect-selected-items-value' => [],
           "dropdown-container": render(Tailwinds::Form::Multiselect::DropdownContainer.new),
           "item-container": render(Tailwinds::Form::Multiselect::ItemContainer.new),
           items: @collection,
-          action: "click->multiselect#toggleDropdown",
-          "select-as-input": render(Tailwinds::Form::Multiselect::SelectAsInputComponent.new(options:, attribute:, input:)),
+          action: 'click->multiselect#toggleDropdown',
+          "select-as-input": render(Tailwinds::Form::Multiselect::SelectAsInputComponent.new(options:, attribute:,
+                                                                                             input:)),
           placeholder: @options[:placeholder],
-          value:,
+          value:
         }
       end
     end

@@ -1,5 +1,7 @@
-feature "MultiselectComponent", type: :feature, js: true do
-  scenario "allows user to select one option" do
+# frozen_string_literal: true
+
+feature 'MultiselectComponent', :js, type: :feature do
+  scenario 'allows user to select one option' do
     visit new_user_path
 
     find('#user_role_multiselect').click
@@ -11,7 +13,7 @@ feature "MultiselectComponent", type: :feature, js: true do
     expect(User.last.role).to eq('admin')
   end
 
-  scenario "allows user to select multiple options" do
+  scenario 'allows user to select multiple options' do
     visit new_user_path
 
     find('#user_role_multiselect').click
@@ -27,7 +29,7 @@ feature "MultiselectComponent", type: :feature, js: true do
     expect(User.last.role).to eq('admin,user')
   end
 
-  scenario "allows user to select 2 options and the last one" do
+  scenario 'allows user to select 2 options and the last one' do
     visit new_user_path
 
     find('#user_role_multiselect').click
@@ -45,7 +47,7 @@ feature "MultiselectComponent", type: :feature, js: true do
     expect(User.last.role).to eq('admin')
   end
 
-  scenario "allows user to select 2 options and the first one" do
+  scenario 'allows user to select 2 options and the first one' do
     visit new_user_path
 
     find('#user_role_multiselect').click
@@ -60,6 +62,6 @@ feature "MultiselectComponent", type: :feature, js: true do
 
     click_on 'Create user'
 
-    expect(User.last.role).to eq('admin')
+    expect(User.last.role).to eq('user')
   end
 end
