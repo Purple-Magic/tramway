@@ -3,7 +3,7 @@
 module Tailwinds
   module Form
     module Multiselect
-      class SelectAsInputComponent < ViewComponent::Base
+      class SelectAsInput < ViewComponent::Base
         extend Dry::Initializer[undefined: false]
 
         option :options
