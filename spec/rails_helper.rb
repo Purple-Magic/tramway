@@ -12,7 +12,7 @@ require 'tramway/helpers/navbar_helper'
 require 'tramway/navbar'
 require 'factory_bot_rails'
 
-Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component

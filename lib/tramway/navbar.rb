@@ -33,13 +33,13 @@ module Tramway
       reset_filling
     end
 
-    def item(text_or_url, url = nil, **options, &block)
-      raise 'You cannot provide an argument and a code block at the same time' if provided_url_and_block?(url, &block)
+    def item(text_or_url, url = nil, **, &)
+      raise 'You cannot provide an argument and a code block at the same time' if provided_url_and_block?(url, &)
 
       rendered_item = if url.present?
-                        render_ignoring_block(text_or_url, url, **options)
+                        render_ignoring_block(text_or_url, url, **)
                       else
-                        render_using_block(text_or_url, **options, &block)
+                        render_using_block(text_or_url, **, &)
                       end
 
       @items[@filling] << rendered_item
@@ -79,13 +79,13 @@ module Tramway
       end
     end
 
-    def render_using_block(text_or_url, method: nil, **options, &block)
+    def render_using_block(text_or_url, method: nil, **options, &)
       options.merge!(href: text_or_url)
 
       if method.present? && method.to_sym != :get
-        context.render(Tailwinds::Nav::Item::ButtonComponent.new(method:, **options), &block)
+        context.render(Tailwinds::Nav::Item::ButtonComponent.new(method:, **options), &)
       else
-        context.render(Tailwinds::Nav::Item::LinkComponent.new(method:, **options), &block)
+        context.render(Tailwinds::Nav::Item::LinkComponent.new(method:, **options), &)
       end
     end
   end

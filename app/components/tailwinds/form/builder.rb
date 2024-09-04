@@ -44,8 +44,8 @@ module Tailwinds
                ), &)
       end
 
-      def submit(action, **options, &)
-        render(Tailwinds::Form::SubmitButtonComponent.new(action, **options), &)
+      def submit(action, **, &)
+        render(Tailwinds::Form::SubmitButtonComponent.new(action, **), &)
       end
 
       private

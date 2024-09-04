@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'view_component'
 
   spec.add_development_dependency 'rspec-rails'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end
