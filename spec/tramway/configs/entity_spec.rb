@@ -7,8 +7,8 @@ shared_examples 'Tramway Config Entity human_name' do |name|
     let(:expected_plural_name) { name.to_s.pluralize.capitalize }
     let(:expected_single_name) { name.to_s.capitalize }
 
-    it 'returns an OpenStruct object with single and plural human names' do
-      expect(subject.human_name).to be_an(OpenStruct)
+    it 'returns an HumanNameStruct object with single and plural human names' do
+      expect(subject.human_name).to be_an(Tramway::Configs::Entity::HumanNameStruct)
       expect(subject.human_name).to respond_to(:single)
       expect(subject.human_name).to respond_to(:plural)
     end
@@ -22,8 +22,8 @@ end
 
 shared_examples 'Tramway Config Entity routes' do
   describe '#routes' do
-    it 'returns an OpenStruct object with index route' do
-      expect(subject.routes).to be_an(OpenStruct)
+    it 'returns an RouteStruct object with index route' do
+      expect(subject.routes).to be_an(Tramway::Configs::Entity::RouteStruct)
       expect(subject.routes).to respond_to(:index)
     end
 

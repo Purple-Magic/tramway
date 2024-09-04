@@ -28,6 +28,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry'
+  gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
