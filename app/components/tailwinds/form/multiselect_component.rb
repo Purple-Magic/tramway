@@ -34,7 +34,7 @@ module Tailwinds
       end
 
       def placeholder
-        @options[:placeholder]
+        options[:placeholder]
       end
 
       def multiselect_selected_items_value
@@ -46,8 +46,10 @@ module Tailwinds
       end
 
       def method_missing(method_name, *, &)
-        if method_name.to_s.include?('_') && Object.const_defined?(component_name(method_name))
-          render(component_name(method_name).constantize.new(*, &))
+        component = component_name(method_name)
+
+        if method_name.to_s.include?('_') && Object.const_defined?(component)
+          render(component.constantize.new(*, &))
         else
           super
         end
@@ -61,9 +63,11 @@ module Tailwinds
         end
       end
 
+      # :reek:UtilityFunction { enabled: false }
       def component_name(method_name)
         "Tailwinds::Form::Multiselect::#{method_name.to_s.camelize}"
       end
+      # :reek:UtilityFunction { enabled: true }
     end
   end
 end
