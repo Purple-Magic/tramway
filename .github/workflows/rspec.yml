@@ -36,7 +36,7 @@ jobs:
       - name: Run RSpec tests
         env:
           RAILS_ENV: test
-          DISPLAY: ":99"
+          # DISPLAY: ":99"
         run: |
-          sudo Xvfb :99 -ac &
+          # sudo Xvfb :99 -ac &
           bundle exec rspec
