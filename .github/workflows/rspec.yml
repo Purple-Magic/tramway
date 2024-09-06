@@ -29,6 +29,10 @@ jobs:
       - name: Install dependencies
         run: bundle install --jobs 4 --retry 3 --path vendor/bundle
 
+      - name: Precompile assets
+        run: |
+          bundle exec rails assets:precompile
+
       - name: Initialize db
         run: |
           cd spec/dummy
