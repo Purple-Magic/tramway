@@ -15,6 +15,7 @@ gem 'kaminari'
 gem 'puma'
 gem 'sprockets-rails'
 gem 'sqlite3', '~> 1.4'
+gem 'stimulus-rails'
 
 group :development do
   gem 'reek'
@@ -25,9 +26,9 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'debug'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'pry'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'

@@ -127,6 +127,10 @@ export default class Multiselect extends Controller {
 
     this.hiddenInputTarget.value = this.selectedItems.map(item => item.value);
   }
+
+  disconnect() {
+    document.removeEventListener('click', this.closeOnClickOutside);
+  }
 }
 
 export { Multiselect }

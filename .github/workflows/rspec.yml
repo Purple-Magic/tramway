@@ -19,14 +19,20 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
 
-      # - name: Install Chrome for headless testing
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y google-chrome-stable
+      - name: Install Chrome for headless testing
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
 
       - name: Install dependencies
         run: bundle install --jobs 4 --retry 3 --path vendor/bundle
+
+      - name: Precompile assets
+        run: |
+          cd spec/dummy
+          bundle exec rails assets:precompile
 
       - name: Initialize db
         run: |
@@ -35,8 +41,7 @@ jobs:
 
       - name: Run RSpec tests
         env:
-          RAILS_ENV: test
-          # DISPLAY: ":99"
+          DISPLAY: ":99"
         run: |
-          # sudo Xvfb :99 -ac &
+          sudo Xvfb :99 -ac &
           bundle exec rspec

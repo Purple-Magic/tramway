@@ -5,7 +5,6 @@ feature 'MultiselectComponent', :js, type: :feature do
     visit new_user_path
 
     find('#user_role_multiselect').click
-
     find('.mx-2.leading-6', text: 'Admin').click
 
     click_on 'Create user'
