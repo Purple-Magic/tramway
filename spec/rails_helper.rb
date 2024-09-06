@@ -23,16 +23,6 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :controller
   config.include Capybara::RSpecMatchers, type: :decorator
   config.include FactoryBot::Syntax::Methods
-
-  config.after(:each, type: :feature) do
-    logs = page.driver.browser.logs.get(:browser)
-    
-    unless logs.empty?
-      puts "\nBrowser console logs:\n"
-      logs.each { |log| puts "[#{log.level}] #{log.message}" }
-      puts page.html
-    end
-  end
 end
 
 Capybara.register_driver :headless_chrome do |app|
