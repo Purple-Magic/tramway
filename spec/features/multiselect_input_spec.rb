@@ -4,9 +4,14 @@ feature 'MultiselectComponent', :js, type: :feature do
   scenario 'allows user to select one option' do
     visit new_user_path
 
-    find('#user_role_multiselect').click
-
-    find('.mx-2.leading-6', text: 'Admin').click
+    begin
+      find('#user_role_multiselect').click
+      find('.mx-2.leading-6', text: 'Admin').click
+    rescue Capybara::ElementNotFound => e
+      puts "Element not found: #{e.message}"
+      puts page.html # Outputs the entire HTML of the current page
+      raise # Re-raises the error so the test still fails
+    end
 
     click_on 'Create user'
 
