@@ -35,4 +35,8 @@ jobs:
           bundle exec rails db:create db:migrate
 
       - name: Run RSpec tests
-        run: bundle exec rspec
+        env:
+          DISPLAY: ":99"
+        run: |
+          sudo Xvfb :99 -ac &
+          bundle exec rspec
