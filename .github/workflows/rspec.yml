@@ -20,6 +20,11 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
 
+      - name: Install Chrome for headless testing
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
       - name: Install dependencies
         run: bundle install --jobs 4 --retry 3 --path vendor/bundle
 
@@ -29,4 +34,9 @@ jobs:
           bundle exec rails db:create db:migrate
 
       - name: Run RSpec tests
-        run: bundle exec rspec
+        env:
+          RAILS_ENV: test
+          DISPLAY: ":99"
+        run: |
+          sudo Xvfb :99 -ac &
+          bundle exec rspec

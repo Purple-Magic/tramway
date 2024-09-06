@@ -23,3 +23,17 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :decorator
   config.include FactoryBot::Syntax::Methods
 end
+
+if ENV['CI']
+  require 'webdrivers/chromedriver'
+
+  Capybara.register_driver :headless_chrome do |app|
+    Capybara::Selenium::Driver.new(
+      app,
+      browser: :chrome,
+      options: Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox disable-dev-shm-usage])
+    )
+  end
+
+  Capybara.javascript_driver = :headless_chrome
+end
