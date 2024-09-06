@@ -19,6 +19,8 @@ export default class Multiselect extends Controller {
     this.dropdownState = 'closed';
     this.unselectedItems = JSON.parse(this.element.dataset.items);
 
+    console.log('connected')
+
     const initialValues = this.element.dataset.value === undefined ? [] : this.element.dataset.value.split(',')
     this.selectedItems = this.unselectedItems.filter(item => initialValues.includes(item.value.toString()));
     this.unselectedItems = this.unselectedItems.filter(item => !initialValues.includes(item.value.toString()));
