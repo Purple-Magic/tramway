@@ -24,10 +24,10 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :decorator
   config.include FactoryBot::Syntax::Methods
 
-  config.after(:each, type: :feature) do |example|
-    if example.exception
-      # Access and display browser logs
-      logs = page.driver.browser.manage.logs.get(:browser)
+  config.after(:each, type: :feature) do
+    logs = page.driver.browser.logs.get(:browser)
+    
+    unless logs.empty?
       puts "\nBrowser console logs:\n"
       logs.each { |log| puts "[#{log.level}] #{log.message}" }
     end
@@ -35,18 +35,10 @@ RSpec.configure do |config|
 end
 
 Capybara.register_driver :headless_chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument('headless')
-  options.add_argument('disable-gpu')
-  options.add_argument('no-sandbox')
-  options.add_argument('disable-dev-shm-usage')
-
-  # Enable browser logging
-  options.add_preference(:loggingPrefs, browser: 'ALL')
-
-  Capybara::Selenium::Driver.new(app,
+  Capybara::Selenium::Driver.new(
+    app,
     browser: :chrome,
-    options: options
+    options: Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox disable-dev-shm-usage])
   )
 end
 

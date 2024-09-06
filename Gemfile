@@ -27,7 +27,7 @@ group :test do
   gem 'capybara'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'pry'
+  gem 'debug'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
