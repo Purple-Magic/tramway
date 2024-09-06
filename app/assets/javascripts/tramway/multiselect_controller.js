@@ -39,7 +39,7 @@ export default class Multiselect extends Controller {
     }).join('')
   }
 
-  closeOnClickOutside() {
+  closeOnClickOutside(event) {
     if (this.dropdownState === 'open' && !this.element.contains(event.target)) {
       this.closeDropdown();
     }

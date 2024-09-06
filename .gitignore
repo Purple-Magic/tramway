@@ -1,5 +1,6 @@
 /.bundle/
 /doc/
+/node_modules
 /log/*.log
 /pkg/
 /tmp/
@@ -11,3 +12,4 @@
 /spec/dummy/tmp/
 /spec/dummy/vendor/
 Gemfile.lock
+package-lock.json
