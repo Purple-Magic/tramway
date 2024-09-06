@@ -30,6 +30,7 @@ RSpec.configure do |config|
     unless logs.empty?
       puts "\nBrowser console logs:\n"
       logs.each { |log| puts "[#{log.level}] #{log.message}" }
+      puts page.html
     end
   end
 end
