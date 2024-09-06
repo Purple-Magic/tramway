@@ -14,3 +14,7 @@ pre-commit:
       tags: backend style
       glob: "*.rb"
       run: bundle exec rubocop --force-exclusion {all_files}
+    eslint:
+      tags: frontend style
+      glob: "*.js"
+      run: make eslint
