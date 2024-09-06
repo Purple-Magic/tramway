@@ -11,6 +11,7 @@ require 'faker'
 require 'tramway/helpers/navbar_helper'
 require 'tramway/navbar'
 require 'factory_bot_rails'
+require 'webdrivers/chromedriver'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
