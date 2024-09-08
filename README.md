@@ -8,7 +8,7 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
-    * [Stimulus-based inputs](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
+    * [Stimulus-based inputs](https://github.com/Purple-Magic/tramway#stimulus-based-inputs)
   * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#tailwind-styled-pagination-for-kaminari)
 
 ## Installation
@@ -438,7 +438,7 @@ Available form helpers:
 * password_field
 * file_field
 * select
-* multiselect ([Stimulus-based](https://github.com/Purple-Magic/tramway#tailwind-styled-forms))
+* multiselect ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
 
 #### Stimulus-based inputs
