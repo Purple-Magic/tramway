@@ -17,11 +17,16 @@ export default class Multiselect extends Controller {
 
   connect() {
     this.dropdownState = 'closed';
-    this.unselectedItems = JSON.parse(this.element.dataset.items);
+    this.unselectedItems = JSON.parse(this.element.dataset.items).map((item) => {
+      return {
+        text: item.text,
+        value: item.value.toString()
+      }
+    });
 
     const initialValues = this.element.dataset.value === undefined ? [] : this.element.dataset.value.split(',')
-    this.selectedItems = this.unselectedItems.filter(item => initialValues.includes(item.value.toString()));
-    this.unselectedItems = this.unselectedItems.filter(item => !initialValues.includes(item.value.toString()));
+    this.selectedItems = this.unselectedItems.filter(item => initialValues.includes(item.value));
+    this.unselectedItems = this.unselectedItems.filter(item => !initialValues.includes(item.value));
 
     this.renderSelectedItems();
   }
@@ -98,7 +103,7 @@ export default class Multiselect extends Controller {
       this.selectedItems = [...this.selectedItems, item];
     }
 
-    const unselectedItemIndex = this.unselectedItems.findIndex(x => x.value.toString() === item.value);
+    const unselectedItemIndex = this.unselectedItems.findIndex(x => x.value === item.value);
     if (unselectedItemIndex !== -1) {
       this.unselectedItems = [
         ...this.unselectedItems.slice(0, unselectedItemIndex),
