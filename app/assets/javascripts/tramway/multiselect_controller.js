@@ -96,7 +96,7 @@ export default class Multiselect extends Controller {
       value: currentTarget.dataset.value
     };
 
-    const itemIndex = this.selectedItems.findIndex(x => x.value.toString() === item.value);
+    const itemIndex = this.selectedItems.findIndex(x => x.value === item.value);
     if (itemIndex !== -1) {
       this.selectedItems = [...this.selectedItems.slice(0, itemIndex), ...this.selectedItems.slice(itemIndex + 1)];
     } else {
