@@ -100,7 +100,7 @@ export default class Multiselect extends Controller {
     if (itemIndex !== -1) {
       this.selectedItems = this.selectedItems.filter((_, index) => index !== itemIndex);
     } else {
-      this.selectedItems = [...this.selectedItems, item];
+      this.selectedItems.push(item);
     }
 
     this.unselectedItems = this.unselectedItems.filter(x => x.value !== item.value);
