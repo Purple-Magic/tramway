@@ -98,18 +98,12 @@ export default class Multiselect extends Controller {
 
     const itemIndex = this.selectedItems.findIndex(x => x.value === item.value);
     if (itemIndex !== -1) {
-      this.selectedItems = [...this.selectedItems.slice(0, itemIndex), ...this.selectedItems.slice(itemIndex + 1)];
+      this.selectedItems = this.selectedItems.filter((_, index) => index !== itemIndex);
     } else {
       this.selectedItems = [...this.selectedItems, item];
     }
 
-    const unselectedItemIndex = this.unselectedItems.findIndex(x => x.value === item.value);
-    if (unselectedItemIndex !== -1) {
-      this.unselectedItems = [
-        ...this.unselectedItems.slice(0, unselectedItemIndex),
-        ...this.unselectedItems.slice(unselectedItemIndex + 1)
-      ];
-    }
+    this.unselectedItems = this.unselectedItems.filter(x => x.value !== item.value);
 
     this.renderSelectedItems();
     this.rerenderItems();
