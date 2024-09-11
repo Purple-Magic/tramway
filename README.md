@@ -8,6 +8,7 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
+    * [Stimulus-based inputs](https://github.com/Purple-Magic/tramway#stimulus-based-inputs)
   * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#tailwind-styled-pagination-for-kaminari)
 * [Articles](https://github.com/Purple-Magic/tramway#usage)
 
@@ -422,10 +423,11 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default.
 
 ```ruby
-= tramway_form_for User.new do |f|
+= tramway_form_for @user do |f|
   = f.text_field :text
   = f.password_field :password
   = f.select :role, [:admin, :user]
+  = f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']]
   = f.file_field :file
   = f.submit "Create User"
 ```
@@ -437,7 +439,41 @@ Available form helpers:
 * password_field
 * file_field
 * select
+* multiselect ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
+
+#### Stimulus-based inputs
+
+`tramway_form_for` provides Tailwind-styled Stimulus-based custom inputs.
+
+##### Multiselect
+
+In case you want to use tailwind-styled multiselect this way
+
+```haml
+= tramway_form_for @user do |f|
+  = f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']]
+  #- ...
+```
+
+you should add Tramway Multiselect Stimulus controller to your application.
+
+Example for [importmap-rails](https://github.com/rails/importmap-rails) config
+
+*config/importmap.rb*
+```ruby
+pin '@tramway/multiselect', to: 'tramway/multiselect_controller.js'
+```
+
+*app/javascript/controllers/index.js*
+```js
+import { application } from "controllers/application"
+import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
+import { Multiselect } from "@tramway/multiselect" // importing Multiselect controller class
+eagerLoadControllersFrom("controllers", application)
+
+application.register('multiselect', Multiselect) // register Multiselect controller class as `multiselect` stimulus controller
+```
 
 ### Tailwind-styled pagination for Kaminari
 

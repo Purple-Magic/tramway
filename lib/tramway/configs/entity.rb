@@ -9,18 +9,25 @@ module Tramway
       attribute :name, Types::Coercible::String
       attribute? :route, Tramway::Configs::Entities::Route
 
+      # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
+      RouteStruct = Struct.new(:index)
+
+      # HumanNameStruct contains human names forms for the entity
+      HumanNameStruct = Struct.new(:single, :plural)
+
       def routes
-        OpenStruct.new index: Rails.application.routes.url_helpers.public_send(route_helper_method)
+        RouteStruct.new(Rails.application.routes.url_helpers.public_send(route_helper_method))
       end
 
       def human_name
-        options = if model_class.present?
-                    model_name = model_class.model_name.human
-                    { single: model_name, plural: model_name.pluralize }
-                  else
-                    { single: name.capitalize, plural: name.pluralize.capitalize }
-                  end
-        OpenStruct.new(**options)
+        single, plural = if model_class.present?
+                           model_name = model_class.model_name.human
+                           [model_name, model_name.pluralize]
+                         else
+                           [name.capitalize, name.pluralize.capitalize]
+                         end
+
+        HumanNameStruct.new(single, plural)
       end
 
       private

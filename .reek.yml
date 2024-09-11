@@ -2,9 +2,11 @@ detectors:
   InstanceVariableAssumption:
     exclude:
       - "Tramway::BaseForm"
+      - "UsersController"
   BooleanParameter:
     exclude:
       - "Tramway::BaseForm"
+      - "Tailwinds::Form::MultiselectComponent"
   DataClump:
     exclude:
       - "Tailwinds::Form::Builder"

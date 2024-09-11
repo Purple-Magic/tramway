@@ -9,6 +9,10 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*
 
+Metrics/MethodLength:
+  Exclude:
+    - spec/dummy/db/migrate/**
+
 RSpec/MultipleExpectations:
   Max: 3
 
@@ -29,3 +33,4 @@ Gemspec/RequiredRubyVersion:
 
 AllCops:
   TargetRubyVersion: 3.2
+  NewCops: enable

@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.1].define(version: 20_240_720_025_030) do
     t.string 'first_name'
     t.string 'last_name'
     t.string 'encrypted_password'
+    t.string 'role'
     t.string 'reset_password_token'
     t.datetime 'reset_password_sent_at'
     t.datetime 'remember_created_at'

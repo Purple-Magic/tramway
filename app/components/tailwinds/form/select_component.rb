@@ -2,7 +2,7 @@
 
 module Tailwinds
   module Form
-    # Tailwind-styled text field
+    # Tailwind-styled select field
     class SelectComponent < TailwindComponent
       option :collection
     end

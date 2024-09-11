@@ -27,7 +27,7 @@ module Tramway
         navbar_items.each do |(key, value)|
           key_to_merge = case key
                          when :left, :right
-                           "#{key}_items".to_sym
+                           :"#{key}_items"
                          else
                            key
                          end

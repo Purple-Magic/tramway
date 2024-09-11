@@ -11,8 +11,9 @@ require 'faker'
 require 'tramway/helpers/navbar_helper'
 require 'tramway/navbar'
 require 'factory_bot_rails'
+require 'webdrivers/chromedriver'
 
-Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
@@ -23,3 +24,13 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :decorator
   config.include FactoryBot::Syntax::Methods
 end
+
+Capybara.register_driver :headless_chrome do |app|
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    options: Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox disable-dev-shm-usage])
+  )
+end
+
+Capybara.javascript_driver = :headless_chrome

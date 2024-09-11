@@ -85,7 +85,7 @@ describe UserForm do
     end
   end
 
-  context 'with not persisted' do\
+  context 'with not persisted' do
     let(:object) { build :user }
     let(:form) { described_class.new(object) }
 

@@ -8,7 +8,7 @@ module Rules
       options.reduce({}) do |hash, (key, value)|
         case key
         when :method, :confirm
-          hash.deep_merge data: { "turbo_#{key}".to_sym => value }
+          hash.deep_merge data: { "turbo_#{key}": value }
         else
           hash.merge key => value
         end

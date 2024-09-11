@@ -35,8 +35,17 @@ module Tailwinds
                ), &)
       end
 
-      def submit(action, **options, &)
-        render(Tailwinds::Form::SubmitButtonComponent.new(action, **options), &)
+      def multiselect(attribute, collection, **options, &)
+        render(Tailwinds::Form::MultiselectComponent.new(
+                 input: input(:text_field),
+                 value: options[:value] || options[:selected] || object.public_send(attribute)&.first,
+                 collection:,
+                 **default_options(attribute, options)
+               ), &)
+      end
+
+      def submit(action, **, &)
+        render(Tailwinds::Form::SubmitButtonComponent.new(action, **), &)
       end
 
       private

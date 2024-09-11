@@ -14,6 +14,10 @@ module Tramway
       configure_pagination if Tramway.config.pagination[:enabled]
     end
 
+    initializer 'tramway.assets.precompile' do |app|
+      app.config.assets.precompile += %w[tramway/multiselect.js]
+    end
+
     private
 
     def load_navbar_helper
