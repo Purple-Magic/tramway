@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :users
-  resources :clients
+  mount Tramway::Engine, at: '/tramway'
 
-  namespace :episodes do
-    resources :parts
-  end
+  # resources :users
+  # resources :clients
 
-  namespace :admin do
-    resources :users
-    resources :clients
-  end
+  # namespace :episodes do
+  #   resources :parts
+  # end
+
+  # namespace :admin do
+  #   resources :users
+  #   resources :clients
+  # end
 end
