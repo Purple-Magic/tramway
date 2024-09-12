@@ -1,7 +1,7 @@
 describe 'Tramway::Engine load_routes initializer', type: :routing do
   it 'defines routes for each entity in Tramway::Config.entities' do
     expect(get: '/admin/podcasts').to route_to(controller: 'tramway/entities', action: 'index')
-    # expect(get: '/tramway/users').to be_routable
+    expect(get: '/admin/users').to route_to(controller: 'tramway/entities', action: 'index')
   end
 
   it 'does not define non-existent routes' do

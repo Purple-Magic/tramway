@@ -2,6 +2,6 @@
 
 Tramway::Engine.routes.draw do
   Tramway.config.entities.each do |entity|
-    resources entity.name.pluralize.to_sym, only: :index, controller: :entities
+    resources entity.name.pluralize.to_sym, only: :index, controller: :entities, defaults: { entity: entity.name }
   end
 end
