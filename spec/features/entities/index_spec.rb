@@ -4,7 +4,7 @@ feature 'Entities Index Page', type: :feature do
   scenario 'successfully responds' do
     visit '/admin/posts'
 
-    expect(page).to have_text 'Posts'
+    expect(page).to have_selector('h1', text: 'Posts'), page.html
   end
 
   scenario 'raises an error if entity is not found' do

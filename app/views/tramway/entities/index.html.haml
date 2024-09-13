@@ -1,9 +1,9 @@
 .w-full
-  - content_for :title, human_name.pluralize
+  - content_for :title, page_title
 
-  -# .flex.justify-between.items-center
-  -#   %h1.font-bold.text-4xl
-  -#     = human_name.pluralize
+  .flex.justify-between.items-center
+    %h1.font-bold.text-4xl
+      = page_title
   -#   = link_to "New #{human_name.downcase}", public_send("new_#{singular_route_name}_path"), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium"
 
   -# .min-w-full#entities
