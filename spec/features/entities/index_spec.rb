@@ -8,7 +8,7 @@ feature 'Entities Index Page', type: :feature do
   end
 
   scenario 'raises an error if entity is not found' do
-    visit '/admin/non_existing_entity'
+    visit '/admin/users'
 
     expect(page).to have_http_status(:not_found)
   end

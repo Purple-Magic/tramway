@@ -3,5 +3,13 @@
 Tramway.configure do |config|
   config.pagination = { enabled: true }
 
-  config.entities = [:user, :post]
+  config.entities = [
+    {
+      name: :post,
+      pages: [ :index ]
+    },
+    {
+      name: :user
+    }
+  ]
 end
