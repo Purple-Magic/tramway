@@ -17,7 +17,7 @@ module Tramway
       HumanNameStruct = Struct.new(:single, :plural)
 
       def routes
-        RouteStruct.new(Rails.application.routes.url_helpers.public_send(route_helper_method))
+        RouteStruct.new(route_helper_method)
       end
 
       def human_name
@@ -34,7 +34,7 @@ module Tramway
       private
 
       def model_class
-        name.camelize.constantize
+        name.classify.constantize
       rescue StandardError
         nil
       end
@@ -42,11 +42,17 @@ module Tramway
       def route_helper_method
         underscored_name = name.parameterize.pluralize.underscore
 
-        if route.present?
-          route.helper_method_by(underscored_name)
-        else
-          "#{underscored_name}_path"
-        end
+        engine, method_name = if pages.include?(:index)
+                                [Tramway::Engine, "#{underscored_name}_path"]
+                              else
+                                if route.present?
+                                  [Rails.application, route.helper_method_by(underscored_name)]
+                                else
+                                  [Rails.application, "#{underscored_name}_path"]
+                                end
+                              end
+
+        engine.routes.url_helpers.public_send(method_name)
       end
     end
   end
