@@ -6,7 +6,7 @@ module Tramway
     module ClassHelper
       module_function
 
-      def decorator_class(object_or_array, decorator)
+      def decorator_class(object_or_array, decorator = nil)
         if decorator.present?
           decorator
         else

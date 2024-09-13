@@ -1,5 +1,6 @@
-%div{ id: dom_id(singular_name) }
-  - decorator_class(@entities).list_attributes.each do |attribute|
+%div{ id: dom_id(entity) }
+  - decorator_class(entity).list_attributes.each do |attribute|
+    - binding.break
     %p.my-5
       %strong.block.font-medium.mb-1
         = attribute.human_name

@@ -43,6 +43,10 @@ module Tramway
         end
       end
 
+      def list_attributes
+        []
+      end
+
       include Tramway::Decorators::AssociationClassMethods
     end
 
