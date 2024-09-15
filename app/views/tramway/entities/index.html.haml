@@ -6,6 +6,10 @@
       = page_title
   -#   = link_to "New #{human_name.downcase}", public_send("new_#{singular_route_name}_path"), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium"
 
+  - if decorator_class(@entities).list_attributes.empty?
+    %p.text-center.mt-10
+      You should fill `list_attributes` inside your
+      = decorator_class_name(@entities)
   .min-w-full#entities
     - @entities.each do |item|
       = render 'entity', entity: item
