@@ -5,5 +5,9 @@ module Tramway
     def page_title
       @model_class.model_name.human.pluralize
     end
+
+    def component(name, *, **, &)
+      render("#{name}_component".classify.constantize.new(*, **), &)
+    end
   end
 end

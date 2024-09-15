@@ -10,8 +10,13 @@
     %p.text-center.mt-10
       You should fill `list_attributes` inside your
       = decorator_class_name(@entities)
-  .min-w-full#entities
+
+  = component 'tailwinds/table' do
+    = component 'tailwinds/table/header', headers: decorator_class(@entities).list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
     - @entities.each do |item|
       = render 'entity', entity: item
+      
+  -# .min-w-full#entities
+  -#   - @entities.each do |item|
   -#     %p
   -#       = link_to "Show this #{human_name.downcase}", model_resource_name(singular_table_name), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"

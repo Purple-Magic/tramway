@@ -1,8 +1,12 @@
-%div{ id: dom_id(entity) }
+= component 'tailwinds/table/row' do
   - decorator_class(entity).list_attributes.each do |attribute|
-    %p.my-5
-      %strong.block.font-medium.mb-1
-        = attribute.human_name
+    = component 'tailwinds/table/cell' do
+      = entity.public_send(attribute)
+
+-# %div{ id: dom_id(entity) }
+-#     %p.my-5
+-#       %strong.block.font-medium.mb-1
+-#         = @model_class.human_attribute_name(attribute)
 -# <% if attribute.attachment? -%>
 -#     <%%= link_to <%= singular_name %>.<%= attribute.column_name %>.filename, <%= singular_name %>.<%= attribute.column_name %> if <%= singular_name %>.<%= attribute.column_name %>.attached? %>
 -# <% elsif attribute.attachments? -%>
