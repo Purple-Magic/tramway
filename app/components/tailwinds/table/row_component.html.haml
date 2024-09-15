@@ -1,2 +1,4 @@
-.div-table-row.grid.gap-4.border-b{ class: 'grid-cols-[1fr,2fr,1fr]' }
+- cols = cells_count.times.map { |item| "1fr" }.join(",")
+
+.div-table-row.grid.gap-4.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700{ class: "grid-cols-[#{cols}]" }
   = content
