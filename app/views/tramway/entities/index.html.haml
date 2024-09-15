@@ -1,8 +1,8 @@
-.w-full
+.w-full.pb-4.mb-8
   - content_for :title, page_title
 
   .flex.justify-between.items-center
-    %h1.font-bold.text-4xl
+    %h1.font-bold.text-4xl.dark:text-white
       = page_title
   -#   = link_to "New #{human_name.downcase}", public_send("new_#{singular_route_name}_path"), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium"
 
