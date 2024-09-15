@@ -1,5 +1,5 @@
 module Tramway
-  class EntitiesController < ActionController::Base
+  class EntitiesController < Tramway.config.application_controller.constantize
     helper Tramway::ApplicationHelper
 
     def index

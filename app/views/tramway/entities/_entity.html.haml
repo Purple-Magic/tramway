@@ -1,5 +1,5 @@
 %div{ id: dom_id(entity) }
-  - decorator_class!(entity, message: "It must contain `list_attributes` method with array of attributes to be shown on the page").list_attributes.each do |attribute|
+  - decorator_class(entity).list_attributes.each do |attribute|
     %p.my-5
       %strong.block.font-medium.mb-1
         = attribute.human_name
