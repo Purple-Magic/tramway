@@ -5,13 +5,13 @@
     .div-table-cell.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white.text-xs.sm:text-base
     = cell
 
-.div-table-row
-  .w-full.bg-blue-500.text-white.p-4
+.div-table-row.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700
+  .w-full.p-4.text-gray-700.bg-gray-50.dark:bg-gray-700.dark:text-gray-400
     = cells.first
 
-  %div.flex
+  .flex
     - cells.each_with_index do |cell, index|
       - next if index == 0
 
-      %div{ class: "w-1/3 bg-red-500 text-white p-4" }
+      .text-gray-900.dark:text-white.p-4.text-xs.sm:text-base{ class: "w-1/3" }
         = cell
