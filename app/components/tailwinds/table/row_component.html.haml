@@ -1,4 +1,17 @@
-- cols = cells_count.times.map { |item| "1fr" }.join(",")
+- cols = cells.count.times.map { |item| "1fr" }.join(",")
 
-.div-table-row.grid.gap-4.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700{ class: "grid-cols-[#{cols}]" }
-  = content
+.hidden.md:block.div-table-row.grid.gap-4.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700{ class: "grid-cols-[#{cols}]" }
+  - cells.each do |cell|
+    .div-table-cell.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white.text-xs.sm:text-base
+    = cell
+
+.div-table-row
+  .w-full.bg-blue-500.text-white.p-4
+    = cells.first
+
+  %div.flex
+    - cells.each_with_index do |cell, index|
+      - next if index == 0
+
+      %div{ class: "w-1/3 bg-red-500 text-white p-4" }
+        = cell

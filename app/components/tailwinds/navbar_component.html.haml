@@ -1,16 +1,38 @@
 %nav.py-4.px-8.flex.justify-between.items-center.dark:bg-gray-800{ class: "bg-#{@color}" }
-  - if @title[:text].present? || @left_items.present?
-    .flex
-      - if @title[:text].present?
-        = link_to @title[:link] do
-          .text-xl.text-white.font-bold
-            = @title[:text]
-      - if @left_items.present?
-        %ul.flex.items-center.space-x-4
-          - @left_items.each do |item|
-            = item
+  .flex.justify-between.w-full
+    - if @title[:text].present? || @left_items.present?
+      .flex.items-center
+        - if @title[:text].present?
+          = link_to @title[:link] do
+            .text-xl.text-white.font-bold
+              = @title[:text]
+        - if @left_items.present?
+          %ul.hidden.sm:flex.items-center.space-x-4
+            - @left_items.each do |item|
+              = item
+
+    .block.sm:hidden
+      %button#mobile-menu-button.text-white.focus:outline-none
+        ☰
 
   - if @right_items.present?
-    %ul.flex.items-center.space-x-4
+    %ul.hidden.sm:flex.items-center.space-x-4
       - @right_items.each do |item|
         = item
+
+#mobile-menu.hidden.flex-col.mt-4.sm:hidden
+  - if @left_items.present?
+    %ul.flex.flex-col.space-y-2
+      - @left_items.each do |item|
+        = item
+
+  - if @right_items.present?
+    %ul.flex.flex-col.space-y-2
+      - @right_items.each do |item|
+        = item
+
+:javascript
+  document.getElementById('mobile-menu-button').addEventListener('click', function() {
+    var menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+  });

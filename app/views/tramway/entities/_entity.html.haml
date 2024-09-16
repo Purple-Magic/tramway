@@ -1,7 +1,4 @@
-= component 'tailwinds/table/row', cells_count: decorator_class(entity).list_attributes.count do
-  - decorator_class(entity).list_attributes.each do |attribute|
-    = component 'tailwinds/table/cell' do
-      = entity.public_send(attribute)
+= component 'tailwinds/table/row', cells: decorator_class(entity).list_attributes.map { |cell| entity.public_send(cell) }
 
 -# %div{ id: dom_id(entity) }
 -#     %p.my-5
