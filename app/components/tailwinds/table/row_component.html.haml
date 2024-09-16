@@ -5,7 +5,7 @@
     .div-table-cell.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white.text-xs.sm:text-base
       = cell
 
-.div-table-row.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700.md:hidden
+.div-table-row.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700.md:hidden{"data-action" => "click->preview#toggle", "data-controller" => "preview"}
   .w-full.p-4.text-gray-700.bg-gray-50.dark:bg-gray-700.dark:text-gray-400
     = cells.first
 
@@ -15,5 +15,3 @@
 
       .text-gray-900.dark:text-white.p-4.text-xs.sm:text-base.inline-block.w-auto
         = cell
-
-= component 'tailwinds/table/row/preview', cells: cells
