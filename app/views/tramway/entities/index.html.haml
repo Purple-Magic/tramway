@@ -1,7 +1,7 @@
 .w-full
   - content_for :title, page_title
 
-  .flex.justify-between.items-center
+  .flex.justify-between.items-center.md:mt-4.mt-2
     %h1.font-bold.text-4xl.dark:text-white
       = page_title
   -#   = link_to "New #{human_name.downcase}", public_send("new_#{singular_route_name}_path"), class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium"
@@ -15,8 +15,3 @@
     = component 'tailwinds/table/header', headers: decorator_class(@entities).list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
     - @entities.each do |item|
       = render 'entity', entity: item
-      
-  -# .min-w-full#entities
-  -#   - @entities.each do |item|
-  -#     %p
-  -#       = link_to "Show this #{human_name.downcase}", model_resource_name(singular_table_name), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"

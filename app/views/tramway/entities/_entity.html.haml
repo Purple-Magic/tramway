@@ -1,19 +1,1 @@
 = component 'tailwinds/table/row', cells: decorator_class(entity).list_attributes.map { |cell| entity.public_send(cell) }
-
--# %div{ id: dom_id(entity) }
--#     %p.my-5
--#       %strong.block.font-medium.mb-1
--#         = @model_class.human_attribute_name(attribute)
--# <% if attribute.attachment? -%>
--#     <%%= link_to <%= singular_name %>.<%= attribute.column_name %>.filename, <%= singular_name %>.<%= attribute.column_name %> if <%= singular_name %>.<%= attribute.column_name %>.attached? %>
--# <% elsif attribute.attachments? -%>
--#     <%% <%= singular_name %>.<%= attribute.column_name %>.each do |<%= attribute.singular_name %>| %>
--#       <div><%%= link_to <%= attribute.singular_name %>.filename, <%= attribute.singular_name %> %></div>
--#     <%% end %>
--# <% else -%>
--#     <%%= <%= singular_name %>.<%= attribute.column_name %> %>
--# <% end -%>
--#   </p>
-
--# <% end -%>
--# </div>
