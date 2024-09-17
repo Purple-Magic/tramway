@@ -1,15 +1,12 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class TableRowPreview extends Controller {
-  static targets = ["main"];
-
   connect() {
     this.items = JSON.parse(this.element.dataset.items || '{}');
   }
 
   toggle() {
     const rollUp = document.getElementById("roll-up");
-
 
     const existingTable = rollUp.querySelector(".div-table");
     if (existingTable) {
