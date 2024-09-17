@@ -7,7 +7,7 @@ module Tramway
     # Tramway is an entity-based framework
     class Entity < Dry::Struct
       attribute :name, Types::Coercible::String
-      attribute? :pages, Types::Array.of(Types::Symbol).default([])
+      attribute? :pages, Types::Array.of(Types::Symbol).default([].freeze)
       attribute? :route, Tramway::Configs::Entities::Route
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
