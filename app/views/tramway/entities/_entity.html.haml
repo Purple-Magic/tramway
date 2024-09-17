@@ -1,1 +1,1 @@
-= component 'tailwinds/table/row', cells: decorator_class(entity).list_attributes.map { |cell| entity.public_send(cell) }
+= component 'tailwinds/table/row', cells: decorator_class(entity).list_attributes.reduce({}) { |hash, attribute| hash.merge! attribute => entity.public_send(attribute) }
