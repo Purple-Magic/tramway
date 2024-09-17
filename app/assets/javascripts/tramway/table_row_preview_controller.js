@@ -61,6 +61,7 @@ export default class TableRowPreview extends Controller {
     keyRow.classList.add("div-table-row");
     keyRow.classList.add("bg-purple-300");
     keyRow.classList.add("text-purple-700");
+    keyRow.classList.add("dark:text-white");
     keyRow.classList.add("dark:bg-gray-700");
     keyRow.classList.add("px-2");
     keyRow.classList.add("py-1");
