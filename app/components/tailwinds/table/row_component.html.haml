@@ -5,7 +5,7 @@
     .div-table-cell.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white.text-xs.sm:text-base
       = value
 
-.div-table-row.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700.md:hidden{"data-action" => "click->preview#toggle", "data-controller" => "preview", "data-cells" => cells.to_json }
+.div-table-row.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700.md:hidden{"data-action" => "click->preview#toggle", "data-controller" => "preview", "data-items" => cells.to_json }
   .w-full.p-4.text-gray-700.bg-gray-50.dark:bg-gray-700.dark:text-gray-400
     = cells.values.first
 
