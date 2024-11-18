@@ -22,6 +22,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'dry-struct'
   spec.add_dependency 'haml-rails'
-  spec.add_dependency 'rails', '~> 7'
+  spec.add_dependency 'rails', '~> 7', '< 9'
   spec.add_dependency 'view_component'
 end

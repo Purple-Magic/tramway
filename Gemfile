@@ -18,6 +18,7 @@ gem 'sqlite3', '~> 1.4'
 gem 'stimulus-rails'
 
 group :development do
+  gem 'appraisal'
   gem 'reek'
   gem 'rubocop'
   gem 'rubocop-rails'
