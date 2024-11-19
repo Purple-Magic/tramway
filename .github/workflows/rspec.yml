@@ -34,13 +34,11 @@ jobs:
 
       - name: Precompile assets
         run: |
-          cd spec/dummy
-          bundle exec appraisal ${{ matrix.appraisal }} rails assets:precompile
+          bundle exec appraisal ${{ matrix.appraisal }} rails -C spec/dummy assets:precompile
 
       - name: Initialize db
         run: |
-          cd spec/dummy
-          bundle exec appraisal ${{ matrix.appraisal }} rails db:create db:migrate
+          bundle exec appraisal ${{ matrix.appraisal }} rails -C spec/dummy db:create db:migrate
 
       - name: Run RSpec tests
         env:
