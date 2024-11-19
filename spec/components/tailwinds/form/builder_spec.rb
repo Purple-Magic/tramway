@@ -79,7 +79,7 @@ describe Tailwinds::Form::Builder, type: :view do
       end
 
       it 'has the select' do
-        expect(output).to have_selector 'select.bg-white.border.border-gray-300.text-gray-700.py-2.px-2.rounded-lg'
+        expect(output).to have_selector 'select.bg-white.border.border-gray-300.text-gray-700.px-2', class: /py-2\.5/
         expect(output).to have_selector 'option[value="admin"]'
         expect(output).to have_selector 'option[value="user"]'
       end
