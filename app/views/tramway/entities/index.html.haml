@@ -5,6 +5,9 @@
     %h1.font-bold.text-4xl.dark:text-white
       = page_title
 
+  - if Tramway.config.pagination[:enabled]
+    = paginate @entities
+
   - if decorator_class(@entities).list_attributes.empty?
     %p.text-center.mt-10
       You should fill `list_attributes` inside your
@@ -14,3 +17,6 @@
     = component 'tailwinds/table/header', headers: decorator_class(@entities).list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
     - @entities.each do |item|
       = render 'entity', entity: item
+
+  = paginate @entities
+
