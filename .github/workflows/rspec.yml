@@ -1,4 +1,4 @@
-name: RSpec
+name: RSpec with Appraisal
 
 on: [workflow_call]
 
@@ -8,6 +8,7 @@ jobs:
       fail-fast: false
       matrix:
         ruby: ['3.2', '3.3']
+        appraisal: ['rails-7.0', 'rails-7.1', 'rails-7.2', 'rails-8.0']
 
     runs-on: ubuntu-latest
 
@@ -26,22 +27,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3 --path vendor/bundle
+      - name: Install dependencies for Appraisal
+        run: |
+          bundle install --jobs 4 --retry 3 --path vendor/bundle
+          bundle exec appraisal install
 
       - name: Precompile assets
         run: |
-          cd spec/dummy
-          bundle exec rails assets:precompile
+          bundle exec appraisal ${{ matrix.appraisal }} rails -C spec/dummy assets:precompile
 
       - name: Initialize db
         run: |
-          cd spec/dummy
-          bundle exec rails db:create db:migrate
+          bundle exec appraisal ${{ matrix.appraisal }} rails -C spec/dummy db:create db:migrate
 
       - name: Run RSpec tests
         env:
           DISPLAY: ":99"
         run: |
           sudo Xvfb :99 -ac &
-          bundle exec rspec
+          bundle exec appraisal ${{ matrix.appraisal }} rspec
