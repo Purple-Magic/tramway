@@ -7,7 +7,7 @@
             .text-xl.text-white.font-bold
               = @title[:text]
         - if @left_items.present?
-          %ul.hidden.sm:flex.items-center.space-x-4
+          %ul.hidden.sm:flex.items-center.space-x-4.ml-4
             - @left_items.each do |item|
               = item
 
