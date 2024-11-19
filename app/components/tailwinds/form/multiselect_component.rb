@@ -19,11 +19,11 @@ module Tailwinds
         }.transform_keys { |key| key.to_s.gsub('_', '-') }
       end
 
-      private
-
       def controller
         :multiselect
       end
+
+      private
 
       def action
         'click->multiselect#toggleDropdown'
