@@ -22,13 +22,18 @@ feature 'Entities Index Page', :js, type: :feature do
     )
   end
 
-  scenario 'displays the div-table with appropriate structure and content' do
+  scenario 'displays the div-table' do
     visit '/admin/posts'
 
     expect(page).to have_selector('.div-table', text: '', visible: true)
+  end
+
+  scenario 'displays the appropriate structure and content' do
+    visit '/admin/posts'
 
     within '.div-table' do
       expect(page).to have_selector('.div-table-row.hidden.md\\:grid.dark\\:text-gray-400', count: 1)
+
       within first('.div-table-row.hidden.md\\:grid') do
         expect(page).to have_selector('.div-table-cell', text: 'Title')
         expect(page).to have_selector('.div-table-cell', text: 'User')

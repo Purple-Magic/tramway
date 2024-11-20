@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Tramway
+  # Main controller for entities pages
   class EntitiesController < Tramway.config.application_controller.constantize
     helper Tramway::ApplicationHelper
 

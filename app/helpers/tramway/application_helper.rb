@@ -3,6 +3,7 @@
 require 'tramway/helpers/component_helper'
 
 module Tramway
+  # Main helper module for Tramway entities pages
   module ApplicationHelper
     include Tramway::Decorators::ClassHelper
     include Tramway::Helpers::ComponentHelper
