@@ -3,15 +3,15 @@
 Rails.application.routes.draw do
   mount Tramway::Engine, at: '/admin'
 
-  # resources :users
-  # resources :clients
+  resources :users
+  resources :clients
 
-  # namespace :episodes do
-  #   resources :parts
-  # end
+  namespace :episodes do
+    resources :parts
+  end
 
-  # namespace :admin do
-  #   resources :users
-  #   resources :clients
-  # end
+  namespace :admin do
+    resources :users
+    resources :clients
+  end
 end
