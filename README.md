@@ -365,6 +365,17 @@ tramway_navbar title: 'Purple Magic', background: { color: :red, intensity: 500 
 end
 ```
 
+# Haml example
+
+```haml
+= tramway_navbar title: 'Purple Magic', background: { color: :red, intensity: 500 } do |nav|
+  - nav.left do
+    - nav.item 'Users', '/users'
+    - nav.item 'Podcasts', '/podcasts'
+  - nav.right do
+    - nav.item 'Sign out', '/users/sessions', method: :delete, confirm: 'Wanna quit?'
+```
+
 will render [this](https://play.tailwindcss.com/UZPTCudFw5)
 
 #### tramway_navbar
