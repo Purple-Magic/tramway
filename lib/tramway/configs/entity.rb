@@ -44,12 +44,10 @@ module Tramway
 
         engine, method_name = if pages.include?(:index)
                                 [Tramway::Engine, "#{underscored_name}_path"]
+                              elsif route.present?
+                                [Rails.application, route.helper_method_by(underscored_name)]
                               else
-                                if route.present?
-                                  [Rails.application, route.helper_method_by(underscored_name)]
-                                else
-                                  [Rails.application, "#{underscored_name}_path"]
-                                end
+                                [Rails.application, "#{underscored_name}_path"]
                               end
 
         engine.routes.url_helpers.public_send(method_name)

@@ -1,3 +1,9 @@
-class Tramway::Component::Base < ViewComponent::Base
-  extend Dry::Initializer[undefined: false]
+# frozen_string_literal: true
+
+module Tramway
+  module Component
+    class Base < ViewComponent::Base
+      extend Dry::Initializer[undefined: false]
+    end
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe 'Tramway::Engine load_routes initializer', type: :routing do
   it 'defines routes for each entity in Tramway::Config.entities' do
     expect(get: '/admin/podcasts').to route_to(controller: 'tramway/entities', action: 'index')

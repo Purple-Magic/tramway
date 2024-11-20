@@ -30,7 +30,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around(:each) do |example|
+  config.around do |example|
     DatabaseCleaner.cleaning do
       example.run
     end
@@ -48,7 +48,8 @@ end
 Capybara.javascript_driver = :headless_chrome
 
 Capybara.register_driver :headless_chrome_mobile do |app|
-  mobile_options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox disable-dev-shm-usage])
+  mobile_options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox
+                                                                     disable-dev-shm-usage])
   mobile_options.add_argument('--window-size=375,812') # iPhone X dimensions
 
   Capybara::Selenium::Driver.new(

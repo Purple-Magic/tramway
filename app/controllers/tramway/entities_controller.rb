@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Tramway
   class EntitiesController < Tramway.config.application_controller.constantize
     helper Tramway::ApplicationHelper

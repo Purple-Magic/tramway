@@ -1,2 +1,8 @@
-class Tailwinds::Pagination::LastPageComponent < Tailwinds::Pagination::Base
+# frozen_string_literal: true
+
+module Tailwinds
+  module Pagination
+    class LastPageComponent < Tailwinds::Pagination::Base
+    end
+  end
 end
