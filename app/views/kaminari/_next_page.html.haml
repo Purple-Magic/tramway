@@ -1,9 +1,2 @@
--#  Link to the "Next" page
--#  available local variables
--#    url:           url to the next page
--#    current_page:  a page object for the currently displayed page
--#    total_pages:   total number of pages
--#    per_page:      number of items to fetch per page
--#    remote:        data-remote
-%span.next{ class: 'px-3 py-2 text-sm font-medium text-purple-700 bg-white rounded-md hover:bg-purple-100' }
-  = link_to_unless current_page.last?, t('views.pagination.next').html_safe, url, rel: 'next', remote: remote
+- unless current_page.last?
+  = link_to t('views.pagination.next').html_safe, url, rel: 'next', remote:, class: pagination_classes(klass: 'next')
