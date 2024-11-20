@@ -8,6 +8,7 @@ module Tailwinds
       option :url
       option :remote
 
+      # :reek:UtilityFunction { enabled: false }
       def pagination_classes(klass: nil)
         default_classes = ['cursor-pointer', 'px-3', 'py-2', 'font-medium', 'text-purple-700', 'bg-white',
                            'rounded-md', 'hover:bg-purple-100', 'dark:text-white', 'dark:bg-gray-800',
@@ -15,6 +16,7 @@ module Tailwinds
 
         default_classes.join(' ') + klass
       end
+      # :reek:UtilityFunction { enabled: true }
     end
   end
 end

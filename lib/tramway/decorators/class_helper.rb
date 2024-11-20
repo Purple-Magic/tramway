@@ -11,9 +11,10 @@ module Tramway
           decorator
         else
           begin
-            decorator_class_name(object_or_array).constantize
+            class_name = decorator_class_name(object_or_array)
+            class_name.constantize
           rescue NameError
-            raise NameError, "You should define #{decorator_class_name(object_or_array)} decorator class."
+            raise NameError, "You should define #{class_name} decorator class."
           end
         end
       end

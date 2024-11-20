@@ -42,15 +42,17 @@ module Tramway
       def route_helper_method
         underscored_name = name.parameterize.pluralize.underscore
 
-        engine, method_name = if pages.include?(:index)
-                                [Tramway::Engine, "#{underscored_name}_path"]
-                              elsif route.present?
-                                [Rails.application, route.helper_method_by(underscored_name)]
-                              else
-                                [Rails.application, "#{underscored_name}_path"]
-                              end
+        method_name = if pages.include?(:index) || route.blank?
+                        "#{underscored_name}_path"
+                      else
+                        route.helper_method_by(underscored_name)
+                      end
 
-        engine.routes.url_helpers.public_send(method_name)
+        route_helper_engine.routes.url_helpers.public_send(method_name)
+      end
+
+      def route_helper_engine
+        pages.include?(:index) ? Tramway::Engine : Rails.application
       end
     end
   end
