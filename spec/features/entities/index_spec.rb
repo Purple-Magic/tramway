@@ -55,23 +55,39 @@ feature 'Entities Index Page', :js, type: :feature do
     before { Capybara.javascript_driver = :headless_chrome_mobile }
     after { Capybara.javascript_driver = :headless_chrome }
 
-    scenario 'displays mobile-friendly rows and opens preview on click' do
+    scenario 'displays mobile-friendly rows and correctly populates preview on click' do
       visit '/admin/posts'
 
       rows = all('.div-table .div-table-row.md\\:hidden.mb-2')
       expect(rows.count).to eq(3)
 
       rows.each_with_index do |row, index|
+        # Simulate a click to open the preview
         row.click
 
+        # Parse the data-items JSON from the row
+        data_items = JSON.parse(row[:'data-items'])
+
+        # Check that the preview is displayed
         within '#roll-up' do
-          expect(page).to have_selector('.div-table-cell', text: "Title #{index + 1}")
-          expect(page).to have_selector('.div-table-cell', text: "User #{index + 1}")
+          # Verify the dynamically added title
+          title_text = data_items.values.first # Extract the first value as the title
+          expect(page).to have_selector('h3.text-xl.text-white', text: title_text)
+
+          # Verify the table content
+          data_items.each do |key, value|
+            # Check key row
+            expect(page).to have_selector('.div-table-row.bg-purple-300.text-purple-700', text: key)
+            # Check value row
+            expect(page).to have_selector('.div-table-row.dark\\:bg-gray-800', text: value)
+          end
         end
 
+        # Close the preview
         find("button[data-action='click->preview#close']").click
 
-        expect(page).not_to have_selector('#roll-up')
+        # Ensure the preview is hidden after closing
+        expect(page).not_to have_selector('#roll-up', visible: true)
       end
     end
   end
