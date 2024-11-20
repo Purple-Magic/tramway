@@ -1,6 +1,6 @@
 - cols = cells.count.times.map { |item| "1fr" }.join(",")
 
-.div-table-row.hidden.md:grid.gap-4.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700{ class: "grid-cols-[#{cols}]" }
+= row_tag class: "div-table-row hidden md:grid gap-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 grid-cols-[#{cols}]" do
   - cells.each do |(_, value)|
     .div-table-cell.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white.text-xs.sm:text-base
       = value

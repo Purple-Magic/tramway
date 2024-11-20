@@ -12,7 +12,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 20_241_120_022_635) do
+ActiveRecord::Schema[7.2].define(version: 20_241_120_224_028) do
+  create_table 'articles', force: :cascade do |t|
+    t.string 'title'
+    t.string 'text'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
   create_table 'comments', force: :cascade do |t|
     t.integer 'post_id'
     t.integer 'user_id'

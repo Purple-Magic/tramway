@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :clients
+  resources :articles, only: :show
 
   namespace :episodes do
     resources :parts

@@ -22,6 +22,7 @@ group :development do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'sqlite3'
 end
 
 group :test do

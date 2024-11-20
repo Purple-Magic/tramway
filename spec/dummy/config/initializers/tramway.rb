@@ -13,6 +13,10 @@ Tramway.configure do |config|
       pages: [:index]
     },
     {
+      name: :article,
+      pages: [:index]
+    },
+    {
       name: :user
     }
   ]

@@ -55,5 +55,7 @@ module Tramway
 
       "#{underscored_class_name.pluralize}/#{underscored_class_name}"
     end
+
+    def show_path = nil
   end
 end
