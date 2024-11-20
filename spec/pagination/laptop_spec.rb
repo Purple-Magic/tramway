@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec/pagination/shared'
+require 'pagination/shared'
 
 feature 'Order Index Page', type: %i[feature admin] do
   context 'with pagination checks' do
