@@ -1,5 +1,1 @@
-- if page.current?
-  %span.px-3.py-2.font-medium.rounded-md.bg-purple-500.text-white.dark:text-gray-800.dark:bg-white
-    = page
-- else
-  = link_to page, url, remote:, rel: page.rel, class: pagination_classes(klass: 'hidden sm:flex')
+= component 'tailwinds/pagination/page', current_page:, url:, remote:, page:

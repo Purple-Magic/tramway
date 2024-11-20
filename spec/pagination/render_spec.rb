@@ -22,7 +22,9 @@ feature 'Order Index Page', type: %i[feature admin] do
     end
 
     it 'displays 1..5 pages links and next/last buttons' do
-      expect(page).to have_css('span', text: '1', class: 'bg-purple-500')
+      save_and_open_page
+
+      expect(page).to have_css('a', text: '1', class: 'bg-purple-500')
 
       (2..5).each do |i|
         expect(page).to have_link(i.to_s, href: users_path(page: i))
