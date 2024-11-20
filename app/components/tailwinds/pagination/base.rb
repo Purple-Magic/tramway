@@ -14,7 +14,7 @@ module Tailwinds
                            'rounded-md', 'hover:bg-purple-100', 'dark:text-white', 'dark:bg-gray-800',
                            'dark:hover:bg-gray-700']
 
-        default_classes.join(' ') + klass
+        (default_classes + [klass]).join(' ')
       end
       # :reek:UtilityFunction { enabled: true }
     end
