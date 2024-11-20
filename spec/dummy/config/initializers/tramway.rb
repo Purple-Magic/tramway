@@ -9,6 +9,10 @@ Tramway.configure do |config|
       pages: [ :index ]
     },
     {
+      name: :comment,
+      pages: [ :index ]
+    },
+    {
       name: :user
     }
   ]
