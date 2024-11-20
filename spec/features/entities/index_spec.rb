@@ -50,4 +50,31 @@ feature 'Entities Index Page', type: :feature do
       expect(page).to have_selector('.div-table-row.md\\:hidden.mb-2', count: 3)
     end
   end
+
+  context 'mobile version' do
+    before { Capybara.javascript_driver = :headless_chrome_mobile }
+    after { Capybara.javascript_driver = :headless_chrome }
+
+    scenario 'displays mobile-friendly rows and opens preview on click' do
+      visit '/admin/posts'
+
+      within '.div-table' do
+        rows = all('.div-table-row.md\\:hidden.mb-2')
+        expect(rows.count).to eq(3)
+
+        rows.each_with_index do |row, index|
+          row.click
+
+          within '#roll-up' do
+            expect(page).to have_selector('.div-table-cell', text: "Title #{index + 1}")
+            expect(page).to have_selector('.div-table-cell', text: "User #{index + 1}")
+          end
+
+          find("button[data-action='click->preview#close']").click
+
+          expect(page).not_to have_selector('#roll-up')
+        end
+      end
+    end
+  end
 end

@@ -47,14 +47,13 @@ feature 'Order Index Page on Mobile', type: %i[feature admin] do
   before do
     Capybara.javascript_driver = :headless_chrome_mobile
 
-    User.destroy_all
     create_list :user, 125
 
     visit users_path
   end
 
   after do
-    Capybara.javascript_driver = :headless_chrome # Restore default driver after tests
+    Capybara.javascript_driver = :headless_chrome
   end
 
   it 'displays 1..3 pages links and next/last buttons for a smaller viewport' do
