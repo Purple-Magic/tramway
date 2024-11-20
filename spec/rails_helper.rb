@@ -34,3 +34,14 @@ Capybara.register_driver :headless_chrome do |app|
 end
 
 Capybara.javascript_driver = :headless_chrome
+
+Capybara.register_driver :headless_chrome_mobile do |app|
+  mobile_options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox disable-dev-shm-usage])
+  mobile_options.add_argument('--window-size=375,812') # iPhone X dimensions
+
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    options: mobile_options
+  )
+end
