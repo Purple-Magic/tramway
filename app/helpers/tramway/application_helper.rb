@@ -1,3 +1,5 @@
+require 'tramway/helpers/component_helper'
+
 module Tramway
   module ApplicationHelper
     include Tramway::Decorators::ClassHelper

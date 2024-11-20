@@ -1,2 +1,2 @@
-class Tailwinds::Pagination::GapComponent < Tailwinds::Pagination::Base
+class Tailwinds::Pagination::GapComponent < Tramway::Component::Base
 end
