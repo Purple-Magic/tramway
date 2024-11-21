@@ -1,4 +1,4 @@
-%nav.py-4.px-4.sm:px-8.flex.justify-between.items-center.dark:bg-gray-800{ class: "bg-#{@color}" }
+%nav.sm:w-fit.py-4.px-4.sm:px-8.flex.justify-between.items-center.dark:bg-gray-800{ class: "bg-#{@color}" }
   .flex.justify-between.w-full
     - if @title[:text].present? || @left_items.present?
       .flex.items-center
@@ -20,7 +20,7 @@
       - @right_items.each do |item|
         = item
 
-#mobile-menu.hidden.flex-col.mt-4.sm:hidden
+#mobile-menu.hidden.flex-col.sm:hidden.dark:bg-gray-800
   - if @left_items.present?
     %ul.flex.flex-col.space-y-2
       - @left_items.each do |item|
