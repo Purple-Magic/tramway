@@ -2,4 +2,22 @@
 
 Tramway.configure do |config|
   config.pagination = { enabled: true }
+
+  config.entities = [
+    {
+      name: :post,
+      pages: [:index]
+    },
+    {
+      name: :comment,
+      pages: [:index]
+    },
+    {
+      name: :article,
+      pages: [:index]
+    },
+    {
+      name: :user
+    }
+  ]
 end

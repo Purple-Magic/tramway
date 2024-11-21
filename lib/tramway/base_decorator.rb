@@ -43,6 +43,10 @@ module Tramway
         end
       end
 
+      def list_attributes
+        []
+      end
+
       include Tramway::Decorators::AssociationClassMethods
     end
 
@@ -51,5 +55,7 @@ module Tramway
 
       "#{underscored_class_name.pluralize}/#{underscored_class_name}"
     end
+
+    def show_path = nil
   end
 end

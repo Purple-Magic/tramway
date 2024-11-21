@@ -49,13 +49,13 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
 
   describe '#tramway_navbar' do
     context 'with success' do
-      let(:left_items_css) { 'nav .flex ul.flex.items-center.space-x-4' }
-      let(:right_items_css) { 'nav ul.flex.items-center.space-x-4' }
+      let(:left_items_css) { 'nav .flex ul.hidden.sm\\:flex.items-center.space-x-4' }
+      let(:right_items_css) { 'nav ul.hidden.sm\\:flex.items-center.space-x-4' }
 
       it 'renders navbar with tailwind styles' do
         fragment = view.tramway_navbar
 
-        expect(fragment).to have_css 'nav.bg-purple-700.py-4.px-8.flex.justify-between.items-center'
+        expect(fragment).to have_css 'nav.bg-purple-700.py-4.px-4.sm\\:px-8.flex.justify-between.items-center'
       end
 
       context 'with title checks' do

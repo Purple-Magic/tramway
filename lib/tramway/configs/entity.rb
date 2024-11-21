@@ -7,6 +7,7 @@ module Tramway
     # Tramway is an entity-based framework
     class Entity < Dry::Struct
       attribute :name, Types::Coercible::String
+      attribute? :pages, Types::Array.of(Types::Symbol).default([].freeze)
       attribute? :route, Tramway::Configs::Entities::Route
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
@@ -16,7 +17,7 @@ module Tramway
       HumanNameStruct = Struct.new(:single, :plural)
 
       def routes
-        RouteStruct.new(Rails.application.routes.url_helpers.public_send(route_helper_method))
+        RouteStruct.new(route_helper_method)
       end
 
       def human_name
@@ -33,7 +34,7 @@ module Tramway
       private
 
       def model_class
-        name.camelize.constantize
+        name.classify.constantize
       rescue StandardError
         nil
       end
@@ -41,11 +42,17 @@ module Tramway
       def route_helper_method
         underscored_name = name.parameterize.pluralize.underscore
 
-        if route.present?
-          route.helper_method_by(underscored_name)
-        else
-          "#{underscored_name}_path"
-        end
+        method_name = if pages.include?(:index) || route.blank?
+                        "#{underscored_name}_path"
+                      else
+                        route.helper_method_by(underscored_name)
+                      end
+
+        route_helper_engine.routes.url_helpers.public_send(method_name)
+      end
+
+      def route_helper_engine
+        pages.include?(:index) ? Tramway::Engine : Rails.application
       end
     end
   end

@@ -11,7 +11,7 @@ module Tailwinds
         def initialize(**options)
           @href = options[:href]
           @method = options[:method]
-          @style = 'text-white hover:bg-red-300 px-4 py-2 rounded'
+          @style = 'text-white hover:bg-gray-300 hover:text-gray-800 px-4 py-2 rounded whitespace-nowrap'
           @options = options.except(:href, :method)
         end
       end
