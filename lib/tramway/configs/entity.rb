@@ -34,7 +34,7 @@ module Tramway
       private
 
       def pluralized(model_name)
-        local_plural = I18n.t("#{name}.many", scope: 'activerecord.plural.models')
+        local_plural = I18n.t("#{name}.many", scope: 'activerecord.plural.models', default: nil)
 
         local_plural.present? ? local_plural : model_name.pluralize
       end
