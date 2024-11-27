@@ -1,3 +1,4 @@
+
 - if cells.any?
   - cols = cells.count.times.map { |item| "1fr" }.join(",")
 
@@ -17,4 +18,7 @@
         .text-gray-900.dark:text-white.p-4.text-xs.sm:text-base.inline-block.w-auto
           = value
 - else
-  = content
+  - cols = Nokogiri::HTML.fragment(content).children.css('> div').count.times.map { |item| "1fr" }.join(",")
+
+  %div{ class: "div-table-row hidden md:grid gap-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 grid-cols-[#{cols}]" }
+    = content
