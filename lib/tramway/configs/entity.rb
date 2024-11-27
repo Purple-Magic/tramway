@@ -23,7 +23,7 @@ module Tramway
       def human_name
         single, plural = if model_class.present?
                            model_name = model_class.model_name.human
-                           [model_name, model_name.pluralize]
+                           [model_name, pluralized(model_name)]
                          else
                            [name.capitalize, name.pluralize.capitalize]
                          end
@@ -32,6 +32,12 @@ module Tramway
       end
 
       private
+
+      def pluralized(model_name)
+        local_plural = I18n.t("#{name}.many", scope: 'activerecord.plural.models')
+
+        local_plural.present? ? local_plural : model_name.pluralize
+      end
 
       def model_class
         name.classify.constantize
