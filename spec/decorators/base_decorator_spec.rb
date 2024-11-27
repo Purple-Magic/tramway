@@ -11,7 +11,7 @@ end
 describe Tramway::BaseDecorator do
   subject(:decorated_object) { described_class.new(object) }
 
-  let(:object) { User.first }
+  let(:object) { create :user }
   let(:decorator) { described_class }
 
   describe '#initialize' do
