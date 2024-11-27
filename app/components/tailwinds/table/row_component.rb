@@ -4,7 +4,7 @@ module Tailwinds
   module Table
     # Component for rendering a row in a table
     class RowComponent < Tramway::Component::Base
-      option :cells
+      option :cells, optional: true, default: -> { [] }
       option :href, optional: true
 
       def row_tag(**options, &)

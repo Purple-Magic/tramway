@@ -13,10 +13,10 @@
       You should fill class-level method `self.list_attributes` inside your
       = decorator_class_name(@entities)
 
-  = component 'tailwinds/table' do
-    = component 'tailwinds/table/header', headers: decorator_class(@entities).list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
-    - @entities.each do |item|
-      = render 'entity', entity: item
+= component 'tailwinds/table' do
+  = component 'tailwinds/table/header', headers: decorator_class(@entities).list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
+  - @entities.each do |item|
+    = render 'entity', entity: item
 
   .flex.mt-4
     = paginate @entities
