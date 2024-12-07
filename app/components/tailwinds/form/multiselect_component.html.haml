@@ -1,8 +1,8 @@
 .mb-4
   - if @label
-    %label.block.text-gray-700.text-sm.font-bold.mb-2{ for: @for }
+    = component('tailwinds/form/label', for: @for) do
       = @label
-  .flex.flex-col.items-center.relative{ data: multiselect_hash, id: "#{@for}_multiselect" }
+  .flex.flex-col.relative{ data: multiselect_hash, id: "#{@for}_multiselect" }
     .min-w-96.w-fit
       .p-1.flex.border.border-gray-200.bg-white.rounded{ data: { "multiselect-target" => "dropdown" } }
         .flex.flex-auto.flex-wrap{ data: { "multiselect-target" => "showSelectedArea" } }
