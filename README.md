@@ -539,9 +539,7 @@ user_2.object #=> returns pure user object
 Install [lefthook](https://github.com/evilmartians/lefthook)
 
 ```
-bundle
-lefthook install
-rspec
+make install
 ```
 
 ## License
