@@ -58,9 +58,12 @@ feature 'MultiselectComponent', :js, type: :feature do
   end
 
   scenario 'runs onchange stimulus action' do
-    save_and_open_page
+    collect_console_logs(page)
+
     find('.mx-2.leading-6', text: 'Admin').click
 
-    expect(page).to have_content('Works!')
+    logs = page.evaluate_script('window.collectedLogs')
+
+    expect(logs.any? { |log| log.include?('Form updated') }).to be(true)
   end
 end

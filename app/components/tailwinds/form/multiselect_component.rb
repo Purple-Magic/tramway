@@ -22,7 +22,7 @@ module Tailwinds
       def controller
         controllers = [:multiselect]
         controllers << external_action.split('->').last.split('#').first if external_action
-        controllers += options[:controller].split(' ') if options[:controller]
+        controllers += external_controllers
         controllers.join(' ')
       end
 
@@ -52,6 +52,10 @@ module Tailwinds
         return unless external_action&.start_with?('change')
 
         external_action.split('->').last
+      end
+
+      def external_controllers
+        options[:controller]&.split || []
       end
 
       def external_action
