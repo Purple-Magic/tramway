@@ -15,7 +15,7 @@ module Tailwinds
       def multiselect_hash
         {
           controller:, selected_item_template:, multiselect_selected_items_value:, dropdown_container:, item_container:,
-          items:, action:, select_as_input:, placeholder:, value:
+          items:, action:, select_as_input:, placeholder:, value:, on_change:
         }.transform_keys { |key| key.to_s.gsub('_', '-') }
       end
 
@@ -43,6 +43,16 @@ module Tailwinds
 
       def select_as_input
         render(Tailwinds::Form::Multiselect::SelectAsInput.new(options:, attribute:, input:))
+      end
+
+      def on_change
+        return unless external_action.start_with?('change')
+
+        external_action.split('->').last
+      end
+
+      def external_action
+        options.dig(:data, :action)
       end
 
       def method_missing(method_name, *, &)
