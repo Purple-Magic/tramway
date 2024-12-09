@@ -20,7 +20,10 @@ module Tailwinds
       end
 
       def controller
-        :multiselect
+        controllers = [:multiselect]
+        controllers << external_action.split('->').last.split('#').first if external_action
+        controllers += options[:controller].split(' ') if options[:controller]
+        controllers.join(' ')
       end
 
       private
