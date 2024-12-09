@@ -486,6 +486,13 @@ eagerLoadControllersFrom("controllers", application)
 application.register('multiselect', Multiselect) // register Multiselect controller class as `multiselect` stimulus controller
 ```
 
+Use Stimulus `change` action with Tramway Multiselect
+
+```ruby
+= tramway_form_for @user do |f|
+  = f.multiselect :role, data: { action: 'change->user-form#updateForm' } # user-form is your Stimulus controller, updateForm is a method inside user-form Stimulus controller
+```
+
 ### Tailwind-styled pagination for Kaminari
 
 Tramway uses [Tailwind](https://tailwindcss.com/) by default. It has tailwind-styled pagination for [kaminari](https://github.com/kaminari/kaminari).
