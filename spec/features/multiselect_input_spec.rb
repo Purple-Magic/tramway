@@ -57,12 +57,10 @@ feature 'MultiselectComponent', :js, type: :feature do
     expect(User.last.role).to eq('user')
   end
 
-  scenario 'runs the on_change action' do
+  scenario 'runs onchange stimulus action' do
+    save_and_open_page
     find('.mx-2.leading-6', text: 'Admin').click
 
-    save_and_open_page
-    find('body').click
-
-    expect(page).to have_content('Form updated')
+    expect(page).to have_content('Works!')
   end
 end

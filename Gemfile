@@ -22,6 +22,7 @@ group :development do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'sqlite3'
 end
 
 group :test do
@@ -34,4 +35,8 @@ group :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+end
+
+group :development, :test do
+  gem 'debug'
 end

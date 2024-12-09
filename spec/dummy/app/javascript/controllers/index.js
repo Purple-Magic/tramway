@@ -1,15 +1,12 @@
-// import { application } from "controllers/application"
-// import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-// import { Multiselect } from "@tramway/multiselect"
-// import UserFormController from "controllers/user_form_controller"
-// eagerLoadControllersFrom("controllers", application)
+import { Application } from "@hotwired/stimulus"
+import { Multiselect } from "@tramway/multiselect"
+import UserFormoller from "./user_form_controller"
 
-// application.register('multiselect', Multiselect)
-// application.register('user-form', UserFormController)
+const application = Application.start()
 
-// import { application } from "controllers/application"
+application.debug = false
+window.Stimulus   = application
+application.register('multiselect', Multiselect)
+application.register('user-form', UserFormController)
 
-// Eager load all controllers defined in the import map under controllers/**/*_controller
-import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-eagerLoadControllersFrom("controllers", application)
-
+export { application }

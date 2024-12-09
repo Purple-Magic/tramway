@@ -1,11 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
-export default class UserFormController extends Controller {
-  connect() {
-    console.log("User form controller connected");k
-  }
-
+export default class UserForm extends Controller {
   updateForm() {
-    alert("Form updated");
+    alert('Works!');
   }
 }
