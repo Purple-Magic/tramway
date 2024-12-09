@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 feature 'MultiselectComponent', :js, type: :feature do
-  scenario 'allows user to select one option' do
+  before do
     visit new_user_path
 
     find('#user_role_multiselect').click
+  end
+
+  scenario 'allows user to select one option' do
     find('.mx-2.leading-6', text: 'Admin').click
 
     find('body').click
@@ -15,10 +18,6 @@ feature 'MultiselectComponent', :js, type: :feature do
   end
 
   scenario 'allows user to select multiple options' do
-    visit new_user_path
-
-    find('#user_role_multiselect').click
-
     find('.mx-2.leading-6', text: 'Admin').click
     find('.mx-2.leading-6', text: 'User').click
 
@@ -31,10 +30,6 @@ feature 'MultiselectComponent', :js, type: :feature do
   end
 
   scenario 'allows user to select 2 options and the last one' do
-    visit new_user_path
-
-    find('#user_role_multiselect').click
-
     find('.mx-2.leading-6', text: 'Admin').click
     find('.mx-2.leading-6', text: 'User').click
 
@@ -49,10 +44,6 @@ feature 'MultiselectComponent', :js, type: :feature do
   end
 
   scenario 'allows user to select 2 options and the first one' do
-    visit new_user_path
-
-    find('#user_role_multiselect').click
-
     find('.mx-2.leading-6', text: 'Admin').click
     find('.mx-2.leading-6', text: 'User').click
 
@@ -64,5 +55,13 @@ feature 'MultiselectComponent', :js, type: :feature do
     click_on 'Create user'
 
     expect(User.last.role).to eq('user')
+  end
+
+  scenario 'runs the on_change action' do
+    find('.mx-2.leading-6', text: 'Admin').click
+
+    find('body').click
+
+    expect(page).to have_content('Form updated')
   end
 end
