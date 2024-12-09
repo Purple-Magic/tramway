@@ -46,7 +46,7 @@ module Tailwinds
       end
 
       def on_change
-        return unless external_action.start_with?('change')
+        return unless external_action&.start_with?('change')
 
         external_action.split('->').last
       end
