@@ -12,7 +12,8 @@ module Tramway
 
     attr_config(
       pagination: { enabled: false },
-      entities: []
+      entities: [],
+      application_controller: 'ActionController::Base'
     )
 
     def entities=(collection)

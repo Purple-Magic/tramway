@@ -10,7 +10,7 @@ module Tailwinds
       class LinkComponent < TailwindComponent
         def initialize(**options)
           @href = options[:href]
-          @style = 'text-white hover:bg-red-300 px-4 py-2 rounded'
+          @style = 'text-white hover:bg-gray-300 hover:text-gray-800 px-4 py-2 rounded whitespace-nowrap'
           @options = Rules::TurboHtmlAttributesRules.prepare_turbo_html_attributes(options:)
         end
       end

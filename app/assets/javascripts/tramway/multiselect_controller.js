@@ -17,22 +17,25 @@ export default class Multiselect extends Controller {
 
   connect() {
     this.dropdownState = 'closed';
-    this.unselectedItems = JSON.parse(this.element.dataset.items).map((item) => {
+    this.items = JSON.parse(this.element.dataset.items).map((item, index) => {
       return {
+        index,
         text: item.text,
-        value: item.value.toString()
+        value: item.value.toString(),
+        selected: false
       }
     });
 
     const initialValues = this.element.dataset.value === undefined ? [] : this.element.dataset.value.split(',')
-    this.selectedItems = this.unselectedItems.filter(item => initialValues.includes(item.value));
-    this.unselectedItems = this.unselectedItems.filter(item => !initialValues.includes(item.value));
+    this.selectedItems = this.items.filter(item => initialValues.includes(item.value));
+    this.items = this.items.filter(item => !initialValues.includes(item.value));
 
     this.renderSelectedItems();
   }
 
   renderSelectedItems() {
     const allItems = this.fillTemplate(this.element.dataset.selectedItemTemplate, this.selectedItems);
+
     this.showSelectedAreaTarget.innerHTML = allItems;
     this.showSelectedAreaTarget.insertAdjacentHTML("beforeEnd", this.input());
     this.updateInputOptions();
@@ -86,24 +89,21 @@ export default class Multiselect extends Controller {
   get template() {
     return this.element.dataset.dropdownContainer.replace(
       /{{content}}/g,
-      this.fillTemplate(this.element.dataset.itemContainer, this.unselectedItems)
+      this.fillTemplate(this.element.dataset.itemContainer, this.items.filter(item => !item.selected))
     );
   }
 
   toggleItem({ currentTarget }) {
-    const item = {
-      text: currentTarget.dataset.text,
-      value: currentTarget.dataset.value
-    };
+    const itemIndex = this.items.findIndex(x => x.value === currentTarget.dataset.value);
+    const itemSelectedIndex = this.selectedItems.findIndex(x => x.value === currentTarget.dataset.value);
 
-    const itemIndex = this.selectedItems.findIndex(x => x.value === item.value);
-    if (itemIndex !== -1) {
-      this.selectedItems = this.selectedItems.filter((_, index) => index !== itemIndex);
+    if (itemSelectedIndex !== -1) {
+      this.selectedItems = this.selectedItems.filter((_, index) => index !== itemSelectedIndex);
+      this.items[itemIndex].selected = false; 
     } else {
-      this.selectedItems.push(item);
+      this.selectedItems.push(this.items[itemIndex]);
+      this.items[itemIndex].selected = true;
     }
-
-    this.unselectedItems = this.unselectedItems.filter(x => x.value !== item.value);
 
     this.renderSelectedItems();
     this.rerenderItems();

@@ -1,0 +1,22 @@
+.w-full
+  - content_for :title, page_title
+
+  .flex.justify-between.items-center.md:mt-4.mt-2
+    %h1.font-bold.text-4xl.dark:text-white
+      = page_title
+
+    - if Tramway.config.pagination[:enabled]
+      = paginate @entities
+
+  - if decorator_class(@entities).list_attributes.empty?
+    %p.text-center.mt-10
+      You should fill class-level method `self.list_attributes` inside your
+      = decorator_class_name(@entities)
+
+= component 'tailwinds/table' do
+  = component 'tailwinds/table/header', headers: decorator_class(@entities).list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
+  - @entities.each do |item|
+    = render 'entity', entity: item
+
+  .flex.mt-4
+    = paginate @entities

@@ -1,0 +1,3 @@
+- unless current_page.last?
+  = link_to helpers.t('views.pagination.next').html_safe, url, rel: 'next', remote:, class: pagination_classes(klass: 'next hidden sm:flex')
+  = link_to '🠖', url, rel: 'next', remote:, class: pagination_classes(klass: 'next sm:hidden font-bold')

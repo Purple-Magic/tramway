@@ -7,6 +7,7 @@ module Tramway
     # Tramway is an entity-based framework
     class Entity < Dry::Struct
       attribute :name, Types::Coercible::String
+      attribute? :pages, Types::Array.of(Types::Symbol).default([].freeze)
       attribute? :route, Tramway::Configs::Entities::Route
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
@@ -16,13 +17,13 @@ module Tramway
       HumanNameStruct = Struct.new(:single, :plural)
 
       def routes
-        RouteStruct.new(Rails.application.routes.url_helpers.public_send(route_helper_method))
+        RouteStruct.new(route_helper_method)
       end
 
       def human_name
         single, plural = if model_class.present?
                            model_name = model_class.model_name.human
-                           [model_name, model_name.pluralize]
+                           [model_name, pluralized(model_name)]
                          else
                            [name.capitalize, name.pluralize.capitalize]
                          end
@@ -32,8 +33,14 @@ module Tramway
 
       private
 
+      def pluralized(model_name)
+        local_plural = I18n.t("#{name}.many", scope: 'activerecord.plural.models', default: nil)
+
+        local_plural.present? ? local_plural : model_name.pluralize
+      end
+
       def model_class
-        name.camelize.constantize
+        name.classify.constantize
       rescue StandardError
         nil
       end
@@ -41,11 +48,17 @@ module Tramway
       def route_helper_method
         underscored_name = name.parameterize.pluralize.underscore
 
-        if route.present?
-          route.helper_method_by(underscored_name)
-        else
-          "#{underscored_name}_path"
-        end
+        method_name = if pages.include?(:index) || route.blank?
+                        "#{underscored_name}_path"
+                      else
+                        route.helper_method_by(underscored_name)
+                      end
+
+        route_helper_engine.routes.url_helpers.public_send(method_name)
+      end
+
+      def route_helper_engine
+        pages.include?(:index) ? Tramway::Engine : Rails.application
       end
     end
   end
