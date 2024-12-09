@@ -96,12 +96,19 @@ export default class Multiselect extends Controller {
     if (onChange) {
       const [controllerName, actionName] = onChange.split('#');
       const controller = this.application.controllers.find(controller => controller.identifier === controllerName)
+      const span = document.createElement('div')
+      span.innerHTML = Stimulus.controllers.map(controller => controller.identifier);
+      document.body.appendChild(span);
 
-      if (controller && typeof controller[actionName] === 'function') {
-        controller[actionName]();
-      } else {
-        console.warn(`Controller or action not found: ${onChange}`); // eslint-disable-line no-undef
-      }
+      // if (controller) {
+      //   if (typeof controller[actionName] === 'function') {
+      //     controller[actionName]();
+      //   } else {
+      //     alert(`Action not found: ${actionName}`); // eslint-disable-line no-undef
+      //   }
+      // } else {
+      //   alert(`Controller not found: ${controllerName}`); // eslint-disable-line no-undef
+      // }
     }
   }
 

@@ -60,6 +60,7 @@ feature 'MultiselectComponent', :js, type: :feature do
   scenario 'runs the on_change action' do
     find('.mx-2.leading-6', text: 'Admin').click
 
+    save_and_open_page
     find('body').click
 
     expect(page).to have_content('Form updated')
