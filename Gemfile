@@ -27,11 +27,14 @@ end
 group :test do
   gem 'capybara'
   gem 'database_cleaner-active_record'
-  gem 'debug'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'launchy'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+end
+
+group :development, :test do
+  gem 'debug'
 end

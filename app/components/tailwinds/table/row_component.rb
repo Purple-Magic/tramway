@@ -9,7 +9,7 @@ module Tailwinds
 
       def row_tag(**options, &)
         if href.present?
-          klass = "#{options[:class] || ''} cursor-pointer hover:bg-gray-700"
+          klass = "#{options[:class] || ''} cursor-pointer dark:hover:bg-gray-700"
 
           link_to(href, options.merge(class: klass)) do
             yield if block_given?
