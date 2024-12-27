@@ -7,16 +7,16 @@
             .text-xl.text-white.font-bold
               = @title[:text]
         - if @left_items.present?
-          %ul.hidden.sm:flex.items-center.space-x-4.ml-4
+          %ul.block.flex.flex-row.items-center.space-x-4.ml-4
             - @left_items.each do |item|
               = item
 
-    .block.sm:hidden
+    .hidden.sm:block
       %button#mobile-menu-button.text-white.focus:outline-none
         ☰
 
   - if @right_items.present?
-    %ul.hidden.sm:flex.items-center.space-x-4
+    %ul.block.sm:flex.items-center.space-x-4
       - @right_items.each do |item|
         = item
 
