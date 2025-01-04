@@ -28,13 +28,13 @@ export default class Multiselect extends Controller {
     });
 
     const initialValues = this.element.dataset.value === undefined ? [] : JSON.parse(this.element.dataset.value);
-    this.selectedItems = this.items.filter(item => initialValues.includes(item.value));
 
     initialValues.map((value) => {
-      const itemIndex = this.items.findIndex(x => x.value === value);
+      const itemIndex = this.items.findIndex(x => x.value.toString() === value.toString());
       this.items[itemIndex].selected = true;
     })
 
+    this.selectedItems = this.items.filter(item => item.selected);
 
     this.renderSelectedItems();
   }
