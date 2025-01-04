@@ -99,7 +99,7 @@ export default class Multiselect extends Controller {
 
       if (controller) {
         if (typeof controller[actionName] === 'function') {
-          controller[actionName]();
+          controller[actionName]({ target: this.element });
         } else {
           alert(`Action not found: ${actionName}`); // eslint-disable-line no-undef
         }
