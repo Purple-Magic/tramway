@@ -7,20 +7,20 @@
             .text-xl.text-white.font-bold
               = @title[:text]
         - if @left_items.present?
-          %ul.hidden.sm:flex.flex-row.items-center.space-x-4.ml-4
+          %ul.block.flex.flex-row.items-center.space-x-4.ml-4
             - @left_items.each do |item|
               = item
 
-    .sm:hidden.block
+    .hidden.sm:block
       %button#mobile-menu-button.text-white.focus:outline-none
         ☰
 
   - if @right_items.present?
-    %ul.hidden.sm:flex.items-center.space-x-4
+    %ul.block.sm:flex.items-center.space-x-4
       - @right_items.each do |item|
         = item
 
-#mobile-menu.flex-col.hidden.dark:bg-gray-800
+#mobile-menu.hidden.flex-col.sm:hidden.dark:bg-gray-800
   - if @left_items.present?
     %ul.flex.flex-col.space-y-2
       - @left_items.each do |item|
