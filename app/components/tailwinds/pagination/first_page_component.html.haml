@@ -1,3 +1,10 @@
 - unless current_page.first?
-  = link_to helpers.t('views.pagination.first').html_safe, url, remote:, class: pagination_classes(klass: 'first hidden sm:flex')
-  = link_to '⭰', url, remote:, class: pagination_classes(klass: 'first sm:hidden font-bold')
+  = link_to helpers.t('views.pagination.first').html_safe,
+    url,
+    remote:,
+    class: pagination_classes(klass: 'first sm:hidden flex')
+
+  = link_to '⭰',
+    url,
+    remote:,
+    class: pagination_classes(klass: 'first hidden sm:flex font-bold')
