@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 feature 'Entities Index Page', :js, type: :feature do
+  before { Post.destroy_all }
+
   scenario 'displays table header' do
     visit '/admin/posts'
 
-    save_and_open_page
     within '.div-table' do
-      expect(page).to have_selector('.div-table-row', count: 2)
+      expect(page).to have_selector('.div-table-row', count: 1)
 
       within first('.div-table-row') do
         expect(page).to have_selector('.div-table-cell', text: 'Title')
