@@ -1,4 +1,5 @@
-- list_attributes = Tramway::Decorators::NameBuilder.default_decorator_class_name(@model_class).constantize.list_attributes
+- decorator = Tramway::Decorators::NameBuilder.default_decorator_class_name(@model_class)
+- list_attributes = decorator.constantize.list_attributes
 
 .w-full
   - content_for :title, page_title
@@ -13,7 +14,7 @@
   - if list_attributes.empty?
     %p.text-center.mt-10
       You should fill class-level method `self.list_attributes` inside your
-      = decorator_class_name(@model_class)
+      = decorator
 
 = component 'tailwinds/table' do
   = component 'tailwinds/table/header', headers: list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }

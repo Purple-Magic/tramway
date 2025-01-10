@@ -48,15 +48,7 @@ feature 'Entities Index Page', :js, type: :feature do
       visit '/admin/posts'
 
       within '.div-table' do
-        expect(page).to have_selector('.div-table-row.hidden.md\\:grid', minimum: 1)
-      end
-    end
-
-    scenario 'displays mobile-friendly rows' do
-      visit '/admin/posts'
-
-      within '.div-table' do
-        expect(page).to have_selector('.div-table-row.md\\:hidden.mb-2', count: 3)
+        expect(page).to have_selector('.div-table-row.block.grid', minimum: 1)
       end
     end
   end
