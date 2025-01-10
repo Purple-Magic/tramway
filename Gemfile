@@ -25,6 +25,9 @@ group :development do
 end
 
 group :test do
+  gem 'base64'
+  gem 'mutex_m'
+  gem 'drb'
   gem 'capybara'
   gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'

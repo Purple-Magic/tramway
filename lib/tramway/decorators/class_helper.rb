@@ -7,6 +7,12 @@ module Tramway
       module_function
 
       def decorator_class(object_or_array, decorator = nil)
+        if object_or_array.blank? && decorator.nil?
+          text = 'You should pass object or array that is not empty OR provide a decorator class as a second argument'
+
+          raise ArgumentError, text
+        end
+
         if decorator.present?
           decorator
         else
