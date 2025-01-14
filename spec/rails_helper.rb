@@ -13,8 +13,7 @@ require 'tramway/navbar'
 require 'factory_bot_rails'
 require 'webdrivers/chromedriver'
 require 'database_cleaner/active_record'
-
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+require 'support/web_driver_helper'
 
 RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component

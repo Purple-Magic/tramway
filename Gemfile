@@ -25,13 +25,19 @@ group :development do
 end
 
 group :test do
+  gem 'base64'
   gem 'capybara'
   gem 'database_cleaner-active_record'
-  gem 'debug'
+  gem 'drb'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'launchy'
+  gem 'mutex_m'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+end
+
+group :development, :test do
+  gem 'debug'
 end

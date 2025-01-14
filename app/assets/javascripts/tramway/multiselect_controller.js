@@ -12,7 +12,8 @@ export default class Multiselect extends Controller {
     selectedItems: Array,
     placeholder: String,
     selectAsInput: String,
-    value: Array
+    value: Array,
+    onChange: String
   }
 
   connect() {
@@ -26,9 +27,14 @@ export default class Multiselect extends Controller {
       }
     });
 
-    const initialValues = this.element.dataset.value === undefined ? [] : this.element.dataset.value.split(',')
-    this.selectedItems = this.items.filter(item => initialValues.includes(item.value));
-    this.items = this.items.filter(item => !initialValues.includes(item.value));
+    const initialValues = this.element.dataset.value === undefined ? [] : JSON.parse(this.element.dataset.value);
+
+    initialValues.map((value) => {
+      const itemIndex = this.items.findIndex(x => x.value.toString() === value.toString());
+      this.items[itemIndex].selected = true;
+    })
+
+    this.selectedItems = this.items.filter(item => item.selected);
 
     this.renderSelectedItems();
   }
@@ -83,6 +89,23 @@ export default class Multiselect extends Controller {
     this.dropdownState = 'closed';
     if (this.dropdown()) {
       this.dropdown().remove();
+    }
+
+    const onChange = this.element.dataset.onChange;
+
+    if (onChange) {
+      const [controllerName, actionName] = onChange.split('#');
+      const controller = this.application.controllers.find(controller => controller.identifier === controllerName)
+
+      if (controller) {
+        if (typeof controller[actionName] === 'function') {
+          controller[actionName]({ target: this.element });
+        } else {
+          alert(`Action not found: ${actionName}`); // eslint-disable-line no-undef
+        }
+      } else {
+        alert(`Controller not found: ${controllerName}`); // eslint-disable-line no-undef
+      }
     }
   }
 

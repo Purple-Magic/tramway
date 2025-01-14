@@ -1,6 +1,6 @@
 - cols = headers.map { |item| "1fr" }.join(",")
 
-.div-table-row.hidden.md:grid.text-white.text-small.gap-4.bg-purple-700.dark:bg-gray-700.dark:text-gray-400{ class: "grid-cols-[#{cols}]" }
+.div-table-row.block.grid.text-white.text-small.gap-4.bg-purple-700.dark:bg-gray-700.dark:text-gray-400{ class: "grid-cols-[#{cols}]" }
   - headers.each do |header|
     .div-table-cell.py-4.px-6
       = header
