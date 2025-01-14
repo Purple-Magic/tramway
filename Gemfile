@@ -26,13 +26,13 @@ end
 
 group :test do
   gem 'base64'
-  gem 'mutex_m'
-  gem 'drb'
   gem 'capybara'
   gem 'database_cleaner-active_record'
+  gem 'drb'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'launchy'
+  gem 'mutex_m'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'webdrivers'
