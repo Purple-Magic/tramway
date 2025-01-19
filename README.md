@@ -28,6 +28,29 @@ bundle add tramway view_component
 
 ## Usage
 
+### Basic Example
+
+**Step 1**
+
+*config/initializers/tramway.rb*
+```
+Tramway.configure do |config|
+  config.entities = [ :user ] # use any model you want instead
+end
+```
+
+**Step 2**
+
+Run your server
+
+```
+bundle exec rails s
+```
+
+**Step 3**
+
+Open [http://localhost:3000](http://localhost:3000)
+
 ### Tramway Entities
 
 Tramway is an entity-based framework. **Entity** is the class on whose objects actions be applied: _index, show, create, update, and destroy_. Tramway will support numerous classes as entities. For now, Entity could be only **ActiveRecord::Base** class.
