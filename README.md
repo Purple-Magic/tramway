@@ -47,7 +47,8 @@ end
 **Step 2**
 
 *config/routes.rb*
-```
+
+```ruby
 Rails.application.routes.draw do
   mount Tramway::Engine, at: '/'
 end
@@ -55,13 +56,37 @@ end
 
 **Step 3**
 
-Run your server
-
-```
-bundle exec rails s
+```ruby
+class UserDecorator < Tramway::BaseDecorator
+  def self.list_attributes
+    [:id, :email, :created_at]
+  end
+end
 ```
 
 **Step 4**
+
+Copy this file to config/tailwind.config.js
+
+
+**Step 5**
+
+Run tailwincss-rails compiler
+
+
+```bash
+bin/rails tailwindcss:build
+```
+
+**Step 6**
+
+Run your server
+
+```bash
+bundle exec rails s
+```
+
+**Step 5**
 
 Open [http://localhost:3000/users](http://localhost:3000/users)
 
