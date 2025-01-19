@@ -26,20 +26,32 @@ OR
 bundle add tramway view_component
 ```
 
-## Usage
-
-### Basic Example
+## Getting Started
 
 **Step 1**
 
 *config/initializers/tramway.rb*
 ```
 Tramway.configure do |config|
-  config.entities = [ :user ] # use any model you want instead
+  config.entities = [
+    {
+      name: :user,
+      pages: [:index],
+    }
+  ]
 end
 ```
 
 **Step 2**
+
+*config/routes.rb*
+```
+Rails.application.routes.draw do
+  mount Tramway::Engine, at: '/'
+end
+```
+
+**Step 3**
 
 Run your server
 
@@ -47,9 +59,12 @@ Run your server
 bundle exec rails s
 ```
 
-**Step 3**
+**Step 4**
 
-Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000/users](http://localhost:3000/users)
+
+## Usage
+
 
 ### Tramway Entities
 
