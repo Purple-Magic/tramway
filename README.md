@@ -17,6 +17,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem "tramway"
+gem "haml-rails"
 gem "kaminari"
 gem "view_component"
 ```
