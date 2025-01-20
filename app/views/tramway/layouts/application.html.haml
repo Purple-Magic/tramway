@@ -21,6 +21,7 @@
     = stylesheet_link_tag :app
 
   %body.bg-gray-100
-    - binding.pry
-    .container.mx-auto.px-4
+    = tramway_navbar title: 'Tramway'
+
+    .container.mx-auto.p-4.flex.align-center.justify-center
       = yield

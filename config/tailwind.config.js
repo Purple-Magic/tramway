@@ -20,9 +20,15 @@ module.exports = {
     'div-table',
     'div-table-row',
     'div-table-cell',
+    'hidden',
+    'text-xl',
+    'text-4xl',
+    'font-bold',
     'xl:hidden',
     'grid-cols-[1fr,1fr,1fr]',
     'text-right',
+    'w-2/3',
+    'flex',
     // multiselect styles
     'absolute', 'shadow', 'top-100', 'z-40', 'w-full', 'lef-0', 'rounded', 'max-h-select', 'overflow-y-auto', 'cursor-pointer', 'rounded-t', 'border-b', 'hover:bg-teal-100', 'items-center', 'border-transparent', 'border-l-2,', 'relative', 'hover:border-teal-100', 'leading-6', 'bg-transparent', 'appearance-none', 'outline-none', 'h-full' , 'justify-center', 'm-1', 'font-medium', 'rounded-full', 'text-teal-700', 'bg-teal-100', 'border', 'border-teal-300', 'text-xs', 'font-normal', 'leading-none', 'max-w-full', 'flex-initial', 'flex-auto', 'flex-row-reverse',, 'flex-col', 'min-w-96', 'w-fit', 'flex-wrap', 'w-8', 'border-l',
     {
