@@ -3,6 +3,10 @@
 module Tramway
   # Main controller for entities pages
   class EntitiesController < Tramway.config.application_controller.constantize
+    prepend_view_path "#{Gem::Specification.find_by_name('tramway').gem_dir}/app/views"
+
+    layout 'tramway/layouts/application'
+
     helper Tramway::ApplicationHelper
     include Rails.application.routes.url_helpers
 

@@ -1,7 +1,7 @@
 - decorator = Tramway::Decorators::NameBuilder.default_decorator_class_name(@model_class)
 - list_attributes = decorator.constantize.list_attributes
 
-.w-full
+.mt-8{ class: 'w-2/3' }
   - content_for :title, page_title
 
   .flex.justify-between.items-center.md:mt-4.mt-2
@@ -16,10 +16,10 @@
       You should fill class-level method `self.list_attributes` inside your
       = decorator
 
-= component 'tailwinds/table' do
-  = component 'tailwinds/table/header', headers: list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
-  - @entities.each do |item|
-    = render 'entity', entity: item
+  = component 'tailwinds/table' do
+    = component 'tailwinds/table/header', headers: list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
+    - @entities.each do |item|
+      = render 'entity', entity: item
 
-  .flex.mt-4
-    = paginate @entities
+    .flex.mt-4
+      = paginate @entities

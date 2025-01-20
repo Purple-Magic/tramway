@@ -57,5 +57,24 @@ module Tramway
     end
 
     def show_path = nil
+
+    # :reek:ManualDispatch { enabled: false } because there is the idea to manual dispatch
+    def method_missing(method_name, *, &)
+      url_helpers = Rails.application.routes.url_helpers
+
+      if method_name.to_s.end_with?('_path', '_url')
+        return url_helpers.public_send(method_name, *, &) if url_helpers.respond_to?(method_name)
+
+        raise NoMethodError, "undefined method `#{method_name}` for #{self}" unless respond_to_missing?(method_name)
+
+      end
+
+      super
+    end
+
+    # :reek:BooleanParameter { enabled: false } because it's a part of the duck-typing
+    def respond_to_missing?(method_name, include_private = false)
+      method_name.to_s.end_with?('_path', '_url') || super
+    end
   end
 end

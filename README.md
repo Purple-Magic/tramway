@@ -17,6 +17,8 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem "tramway"
+gem "haml-rails"
+gem "kaminari"
 gem "view_component"
 ```
 
@@ -26,7 +28,70 @@ OR
 bundle add tramway view_component
 ```
 
+## Getting Started
+
+**Step 1**
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :user,
+      pages: [:index],
+    }
+  ]
+end
+```
+
+**Step 2**
+
+*config/routes.rb*
+
+```ruby
+Rails.application.routes.draw do
+  mount Tramway::Engine, at: '/'
+end
+```
+
+**Step 3**
+
+```ruby
+class UserDecorator < Tramway::BaseDecorator
+  def self.list_attributes
+    [:id, :email, :created_at]
+  end
+end
+```
+
+**Step 4**
+
+Copy this file to config/tailwind.config.js
+
+
+**Step 5**
+
+Run tailwincss-rails compiler
+
+
+```bash
+bin/rails tailwindcss:build
+```
+
+**Step 6**
+
+Run your server
+
+```bash
+bundle exec rails s
+```
+
+**Step 7**
+
+Open [http://localhost:3000/users](http://localhost:3000/users)
+
 ## Usage
+
 
 ### Tramway Entities
 
