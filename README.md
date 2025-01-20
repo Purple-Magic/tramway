@@ -66,7 +66,7 @@ end
 
 **Step 4**
 
-Copy this file to config/tailwind.config.js
+Copy this [file](https://github.com/Purple-Magic/tramway/blob/main/config/tailwind.config.js) to config/tailwind.config.js
 
 
 **Step 5**
