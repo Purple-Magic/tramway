@@ -17,7 +17,7 @@ module Tramway
     private
 
     def model_class
-      @model_class ||= params[:entity].classify.constantize
+      @model_class ||= params[:entity][:name].classify.constantize
     end
   end
 end
