@@ -33,7 +33,7 @@ bundle add tramway view_component
 **Step 1**
 
 *config/initializers/tramway.rb*
-```
+```ruby
 Tramway.configure do |config|
   config.entities = [
     {
