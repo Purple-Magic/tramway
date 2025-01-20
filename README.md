@@ -86,7 +86,7 @@ Run your server
 bundle exec rails s
 ```
 
-**Step 5**
+**Step 7**
 
 Open [http://localhost:3000/users](http://localhost:3000/users)
 
