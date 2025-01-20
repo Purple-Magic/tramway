@@ -2,6 +2,7 @@
 Unite Ruby on Rails brilliance. Streamline development with Tramway.
 
 * [Installation](https://github.com/Purple-Magic/tramway#installation)
+* [Getting Started](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#getting-started)
 * [Usage](https://github.com/Purple-Magic/tramway#usage)
   * [Tramway Entities](https://github.com/Purple-Magic/tramway#tramway-entities)
   * [Tramway Decorators](https://github.com/Purple-Magic/tramway#tramway-decorators)
