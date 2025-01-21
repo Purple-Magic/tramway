@@ -1,7 +1,7 @@
 - decorator = Tramway::Decorators::NameBuilder.default_decorator_class_name(@model_class)
 - list_attributes = decorator.constantize.list_attributes
 
-.mt-8{ class: 'w-2/3' }
+.mt-8.w-full
   - content_for :title, page_title
 
   .flex.justify-between.items-center.md:mt-4.mt-2
