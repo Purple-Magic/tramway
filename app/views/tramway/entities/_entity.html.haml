@@ -1,2 +1,3 @@
 - decorator = decorator_class(entity)
-= component 'tailwinds/table/row', cells: decorator.list_attributes.reduce({}) { |hash, attribute| hash.merge! attribute => entity.public_send(attribute) }, href: decorator.decorate(entity).show_path
+- decorated_object = decorator.decorate(entity)
+= component 'tailwinds/table/row', cells: decorator.list_attributes.reduce({}) { |hash, attribute| hash.merge! attribute => decorated_object.public_send(attribute) }, href: decorated_object.show_path
