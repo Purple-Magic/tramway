@@ -1,9 +1,6 @@
-
 - if cells.any?
-  - cols = cells.count.times.map { |item| "1fr" }.join(",")
-
   -# desktop view
-  = row_tag class: "div-table-row block grid gap-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 grid-cols-[#{cols}]" do
+  = row_tag class: "div-table-row block grid gap-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 grid-cols-#{cells.count}" do
     - cells.each do |(_, value)|
       .div-table-cell.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white.sm:text-xs.text-base
         = value
@@ -20,7 +17,7 @@
         .text-gray-900.dark:text-white.p-4.text-xs.sm:text-base.inline-block.w-auto
           = value
 - else
-  - cols = Nokogiri::HTML.fragment(content).children.css('> div').count.times.map { |item| "1fr" }.join(",")
+  - cols = Nokogiri::HTML.fragment(content).children.css('> div').count
 
-  %div{ class: "div-table-row hidden md:grid gap-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 grid-cols-[#{cols}]" }
+  %div{ class: "div-table-row hidden md:grid gap-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 grid-cols-#{cols}" }
     = content
