@@ -35,6 +35,14 @@ module.exports = {
     'dark:hover:text-gray-400',
     'ml-4',
     'sm:text-base',
+    'sm:hidden',
+    'sm:flex',
+    'last:border-b-0',
+    'hover:bg-gray-100',
+    'hover:bg-gray-300',
+    'hover:text-gray-800',
+    // pagination
+    'bg-white', 'rounded-md', 'hover:bg-purple-100', 'dark:text-white', 'dark:bg-gray-800', 'dark:hover:bg-gray-700',
     // multiselect styles
     'absolute', 'shadow', 'top-100', 'z-40', 'w-full', 'lef-0', 'rounded', 'max-h-select', 'overflow-y-auto', 'cursor-pointer', 'rounded-t', 'border-b', 'hover:bg-teal-100', 'items-center', 'border-transparent', 'border-l-2,', 'relative', 'hover:border-teal-100', 'leading-6', 'bg-transparent', 'appearance-none', 'outline-none', 'h-full' , 'justify-center', 'm-1', 'font-medium', 'rounded-full', 'text-teal-700', 'bg-teal-100', 'border', 'border-teal-300', 'text-xs', 'font-normal', 'leading-none', 'max-w-full', 'flex-initial', 'flex-auto', 'flex-row-reverse',, 'flex-col', 'min-w-96', 'w-fit', 'flex-wrap', 'w-8', 'border-l',
   ],
