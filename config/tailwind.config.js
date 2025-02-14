@@ -34,7 +34,7 @@ module.exports = {
     'dark:hover:bg-gray-700',
     'dark:hover:text-gray-400',
     'ml-4',
-    'text-base',
+    'sm:text-base',
     // multiselect styles
     'absolute', 'shadow', 'top-100', 'z-40', 'w-full', 'lef-0', 'rounded', 'max-h-select', 'overflow-y-auto', 'cursor-pointer', 'rounded-t', 'border-b', 'hover:bg-teal-100', 'items-center', 'border-transparent', 'border-l-2,', 'relative', 'hover:border-teal-100', 'leading-6', 'bg-transparent', 'appearance-none', 'outline-none', 'h-full' , 'justify-center', 'm-1', 'font-medium', 'rounded-full', 'text-teal-700', 'bg-teal-100', 'border', 'border-teal-300', 'text-xs', 'font-normal', 'leading-none', 'max-w-full', 'flex-initial', 'flex-auto', 'flex-row-reverse',, 'flex-col', 'min-w-96', 'w-fit', 'flex-wrap', 'w-8', 'border-l',
   ],
