@@ -1,5 +1,7 @@
 require:
   - rubocop-rails
+
+plugins:
   - rubocop-rspec
 
 Lint/MissingSuper:
