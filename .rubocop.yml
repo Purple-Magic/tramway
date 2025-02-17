@@ -1,8 +1,6 @@
-require:
-  - rubocop-rails
-
 plugins:
   - rubocop-rspec
+  - rubocop-rails
 
 Lint/MissingSuper:
   Exclude:
