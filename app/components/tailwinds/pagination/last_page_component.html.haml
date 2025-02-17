@@ -2,9 +2,9 @@
   = link_to helpers.t('views.pagination.last').html_safe,
     url,
     remote:,
-    class: pagination_classes(klass: 'last sm:hidden flex')
+    class: pagination_classes(klass: 'last hidden sm:flex')
 
   = link_to '⭲',
     url,
     remote:,
-    class: pagination_classes(klass: 'last hidden sm:flex font-bold')
+    class: pagination_classes(klass: 'last sm:hidden flex font-bold')

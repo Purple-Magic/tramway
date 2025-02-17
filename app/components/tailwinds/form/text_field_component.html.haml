@@ -2,4 +2,4 @@
   - if @label
     = component('tailwinds/form/label', for: @for) do
       = @label
-  = @input.call @attribute, **@options.merge(class: 'w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-red-500'), value: @value
+  = @input.call @attribute, **@options.merge(class: 'w-full bg-white px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-red-500 dark:placeholder-gray-400 dark:text-white'), value: @value
