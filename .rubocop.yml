@@ -1,5 +1,6 @@
-require: rubocop-rails
-require: rubocop-rspec
+require:
+  - rubocop-rails
+  - rubocop-rspec
 
 Lint/MissingSuper:
   Exclude:
@@ -35,5 +36,5 @@ Gemspec/RequireMFA:
   Enabled: false
 
 AllCops:
-  TargetRubyVersion: 3.2
+  TargetRubyVersion: 3.4
   NewCops: enable
