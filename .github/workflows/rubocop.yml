@@ -22,4 +22,4 @@ jobs:
 
       - name: Rubocop
         run: |
-          bundle exec rubocop -d
+          rubocop -d
