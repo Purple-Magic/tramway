@@ -47,6 +47,10 @@ module Tramway
         []
       end
 
+      def index_header_buttons
+        nil
+      end
+
       include Tramway::Decorators::AssociationClassMethods
     end
 

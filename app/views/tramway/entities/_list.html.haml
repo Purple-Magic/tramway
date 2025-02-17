@@ -8,6 +8,7 @@
     %h1.font-bold.text-4xl.dark:text-white
       = content_for(:title)
 
+    = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
     - if Tramway.config.pagination[:enabled]
       = paginate @entities
 
