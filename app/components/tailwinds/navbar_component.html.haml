@@ -4,7 +4,7 @@
       .flex.items-center
         - if @title[:text].present?
           = link_to @title[:link] do
-            .text-xl.text-white.font-bold
+            .text-xl.text-white.font-bold.dark:text-white
               = @title[:text]
         - if @left_items.present?
           %ul.block.flex.flex-row.items-center.space-x-4.ml-4

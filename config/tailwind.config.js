@@ -23,7 +23,11 @@ module.exports = {
     'flex',
     'bg-purple-700',
     'px-6',
+    'px-3',
+    'px-4',
     'py-4',
+    'py-2',
+    'mb-2',
     'dark:placeholder-gray-400',
     'dark:text-white',
     'dark:bg-gray-800',
@@ -41,6 +45,7 @@ module.exports = {
     'hover:bg-gray-100',
     'hover:bg-gray-300',
     'hover:text-gray-800',
+    'mt-8',
     // pagination
     'bg-white', 'rounded-md', 'hover:bg-purple-100', 'dark:text-white', 'dark:bg-gray-800', 'dark:hover:bg-gray-700',
     // multiselect styles

@@ -47,7 +47,7 @@ module Tramway
         []
       end
 
-      def index_header_buttons
+      def index_header_content
         nil
       end
 
