@@ -9,7 +9,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.2
+          ruby-version: 3.4.1
 
       - name: Clone current repo
         uses: actions/checkout@master
@@ -18,9 +18,8 @@ jobs:
 
       - name: Install
         run: |
-          gem install rubocop
-          gem install rubocop-rspec
+          gem install rubocop rubocop-rspec rubocop-rails
 
       - name: Rubocop
         run: |
-          rubocop
+          rubocop -d

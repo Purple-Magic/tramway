@@ -9,7 +9,7 @@ module Tramway
     include Tramway::Helpers::ComponentHelper
 
     def page_title
-      @model_class.model_name.human.pluralize
+      @model_class.model_name.human.pluralize # rubocop:disable Rails/HelperInstanceVariable
     end
   end
 end
