@@ -26,7 +26,7 @@ gem "view_component"
 OR
 
 ```shell
-bundle add tramway view_component
+bundle add tramway view_component kaminari view_component
 ```
 
 ## Getting Started
