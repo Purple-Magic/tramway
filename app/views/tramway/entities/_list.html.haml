@@ -10,7 +10,7 @@
 
     = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
     - if Tramway.config.pagination[:enabled]
-      = paginate @entities
+      = paginate @entities, custom_path_method: :leads_collections_path
 
   - if list_attributes.empty?
     %p.text-center.mt-10
@@ -22,5 +22,6 @@
     - @entities.each do |item|
       = render 'tramway/entities/entity', entity: item
 
-    .flex.mt-4
-      = paginate @entities
+    - if Tramway.config.pagination[:enabled]
+      .flex.mt-4
+        -# = paginate @entities, url: Tramway::Engine.routes.url_helpers.leads_collections_path
