@@ -11,7 +11,7 @@ module Tramway
     include Rails.application.routes.url_helpers
 
     def index
-      @entities = model_class.page(params[:page])
+      @entities = model_class.order(id: :desc).page(params[:page])
     end
 
     private
