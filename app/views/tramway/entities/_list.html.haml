@@ -4,13 +4,14 @@
 .mt-8.w-full
   - content_for :title, page_title
 
-  .flex.justify-between.items-center.md:mt-4.mt-2
+  .flex.justify-between.items-center
     %h1.font-bold.text-4xl.dark:text-white
       = content_for(:title)
 
-    = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
     - if Tramway.config.pagination[:enabled]
       = paginate @entities, custom_path_method: :leads_collections_path
+  .flex.justify-end.mt-2
+    = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
 
   - if list_attributes.empty?
     %p.text-center.mt-10
