@@ -1,6 +1,6 @@
 - if cells.any?
   -# desktop view
-  = row_tag class: desktop_row_classes(cells.count) do
+  = row_tag class: desktop_row_classes(cells.count), **options do
     - cells.each do |(_, value)|
       .div-table-cell.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white.text-xs.sm:text-base
         = value
@@ -20,8 +20,8 @@
   - cells = Nokogiri::HTML.fragment(content).children.css('div')
 
   - if href.present?
-    = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' ') do
+    = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' '), **options do
       = content
   - else
-    = tag.div class: desktop_row_classes(cells.count) do
+    = tag.div class: desktop_row_classes(cells.count), **options do
       = content
