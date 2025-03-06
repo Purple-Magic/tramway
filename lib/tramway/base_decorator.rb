@@ -16,6 +16,7 @@ module Tramway
     include Tramway::Utils::Render
     include Tramway::DuckTyping::ActiveRecordCompatibility
     include Tramway::Helpers::DecorateHelper
+    include Tramway::Helpers::ComponentHelper
 
     attr_reader :object
 
