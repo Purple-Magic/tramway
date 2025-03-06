@@ -1,9 +1,3 @@
-pre-push:
-  commands:
-    test:
-      tags: backend tests
-      run: bundle exec appraisal rspec
-
 pre-commit:
   commands:
     reek:
