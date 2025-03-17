@@ -17,7 +17,7 @@
   -#       .text-gray-900.dark:text-white.p-4.text-xs.sm:text-base.inline-block.w-auto
   -#         = value
 - else
-  - cells = Nokogiri::HTML.fragment(content).children.css('div.div-table-cell')
+  - cells = Nokogiri::HTML.fragment(content).xpath('./*[@class and contains(concat(" ", normalize-space(@class), " "), " div-table-cell ")]')
 
   - if href.present?
     = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' '), **options do
