@@ -9,7 +9,7 @@
       = content_for(:title)
 
     - if Tramway.config.pagination[:enabled]
-      = paginate @entities, custom_path_method: :leads_collections_path
+      = paginate @entities, custom_path_method: "#{@model_class.model_name.plural}_path"
   .flex.justify-end.mt-2
     = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
 
@@ -25,4 +25,4 @@
 
     - if Tramway.config.pagination[:enabled]
       .flex.mt-4
-        -# = paginate @entities, url: Tramway::Engine.routes.url_helpers.leads_collections_path
+        = paginate @entities, custom_path_method: "#{@model_class.model_name.plural}_path"
