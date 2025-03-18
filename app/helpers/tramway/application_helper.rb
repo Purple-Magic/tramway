@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'tramway/helpers/component_helper'
-require 'tramway/pagination/template_renderer'
 require 'kaminari/helpers/tag'
 
 module Tramway
