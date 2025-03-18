@@ -1,21 +1,9 @@
 - if cells.any?
-  -# desktop view
   = row_tag class: desktop_row_classes(cells.count), **options do
     - cells.each do |(_, value)|
       .div-table-cell.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white.text-xs.sm:text-base
         = value
 
-  -# mobile view
-  -# .div-table-row.xl:hidden.border-b.dark:bg-gray-800.dark:border-gray-700.mb-2{ "data-action" => "click->preview#toggle", "data-controller" => "preview", "data-items" => cells.to_json }
-  -#   .w-full.p-4.bg-purple-100.text-gray-700.dark:bg-gray-700.dark:text-gray-400
-  -#     = cells.values.first
-
-  -#   .flex.overflow-x-auto.whitespace-nowrap
-  -#     - cells.each_with_index do |(_, value), index|
-  -#       - next if index == 0
-
-  -#       .text-gray-900.dark:text-white.p-4.text-xs.sm:text-base.inline-block.w-auto
-  -#         = value
 - else
   - cells = Nokogiri::HTML.fragment(content).xpath('./*[@class and contains(concat(" ", normalize-space(@class), " "), " div-table-cell ")]')
 
