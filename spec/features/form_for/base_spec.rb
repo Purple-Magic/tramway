@@ -10,7 +10,6 @@ feature 'Form For Base Test', :js, type: :feature do
   end
 
   scenario 'check file_field' do
-    # binding.break
     expect(page).to have_selector("input[type='file']", visible: false)
     expect(page).to have_selector('label.inline-block.bg-blue-500.hover\\:bg-blue-700.text-white.font-bold.py-2.px-4.rounded.cursor-pointer.mt-4')
   end
