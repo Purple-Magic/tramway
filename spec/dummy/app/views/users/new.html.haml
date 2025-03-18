@@ -2,6 +2,10 @@
 
 = javascript_importmap_tags
 = tramway_form_for @user_form, url: { controller: :users, action: :create } do |f|
+  = f.text_field :email, label: 'Email'
+  = f.file_field :avatar, label: 'Avatar'
+  = f.select :country, [['Velmora', 'vm'], ['Dravara', 'dv']], label: 'Country'
+  = f.text_area :personal_info, label: 'Personal info'
   = f.multiselect :role, [['Admin', 'admin'], ['User', 'user']], label: false, data: { controller: 'user-form', action: 'change->user-form#updateForm' }
 
   = f.submit 'Create user'
