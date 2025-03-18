@@ -1,14 +1,9 @@
 .flex.justify-between.mb-4.mt-4
   %h1{ class: "text-4xl font-bold text-left text-black-700 mb-8 mt-4" }
     = t('activerecord.plural.models.user.many')
-%table.w-full.bg-white.border.border-gray-200
-  %thead
-    %tr
-      - [:email].each do |attribute|
-        %th.py-2.px-4.border-b.border-r
-          = User.human_attribute_name attribute
-  %tbody#users
-    = render @users
+= component 'tailwinds/table' do
+  = component 'tailwinds/table/header', headers: [:email].map { |header| User.human_attribute_name header }
+  = render @users
 
 .flex.flex-end.border-t.border-gray-200.px-4.pt-4.w-full
   = paginate @users

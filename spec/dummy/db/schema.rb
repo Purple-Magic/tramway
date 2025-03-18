@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 20_241_120_224_028) do
+ActiveRecord::Schema[7.2].define(version: 20_250_318_222_237) do
   create_table 'articles', force: :cascade do |t|
     t.string 'title'
     t.string 'text'
@@ -48,5 +48,8 @@ ActiveRecord::Schema[7.2].define(version: 20_241_120_224_028) do
     t.datetime 'remember_created_at'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.string 'avatar'
+    t.string 'country'
+    t.string 'personal_info'
   end
 end

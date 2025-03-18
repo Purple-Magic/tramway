@@ -13,6 +13,14 @@ module Tailwinds
                ), &)
       end
 
+      def text_area(attribute, **options, &)
+        render(Tailwinds::Form::TextAreaComponent.new(
+                 input: input(:text_area),
+                 value: get_value(attribute, options),
+                 **default_options(attribute, options)
+               ), &)
+      end
+
       def password_field(attribute, **options, &)
         render(Tailwinds::Form::TextFieldComponent.new(
                  input: input(:password_field),

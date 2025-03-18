@@ -4,12 +4,14 @@
 .mt-8.w-full
   - content_for :title, page_title
 
-  .flex.justify-between.items-center.md:mt-4.mt-2
+  .flex.justify-between.items-center
     %h1.font-bold.text-4xl.dark:text-white
       = content_for(:title)
 
     - if Tramway.config.pagination[:enabled]
-      = paginate @entities
+      = paginate @entities, custom_path_method: "#{@model_class.model_name.plural}_path"
+  .flex.justify-end.mt-2
+    = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
 
   - if list_attributes.empty?
     %p.text-center.mt-10
@@ -21,5 +23,6 @@
     - @entities.each do |item|
       = render 'tramway/entities/entity', entity: item
 
-    .flex.mt-4
-      = paginate @entities
+    - if Tramway.config.pagination[:enabled]
+      .flex.mt-4
+        = paginate @entities, custom_path_method: "#{@model_class.model_name.plural}_path"

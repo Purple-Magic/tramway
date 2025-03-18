@@ -6,6 +6,7 @@ module Tailwinds
     class RowComponent < Tramway::Component::Base
       option :cells, optional: true, default: -> { [] }
       option :href, optional: true
+      option :options, optional: true, default: -> { {} }
 
       def row_tag(**options, &)
         if href.present?

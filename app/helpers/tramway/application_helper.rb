@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'tramway/helpers/component_helper'
+require 'kaminari/helpers/tag'
 
 module Tramway
   # Main helper module for Tramway entities pages

@@ -7,7 +7,7 @@ describe AdminForm do
     subject(:form_object) { described_class.new(user) }
 
     let(:user) { build :user }
-    let(:fields) { %i[email first_name last_name role permissions] }
+    let(:fields) { %i[email first_name last_name role permissions avatar country personal_info] }
 
     describe 'properties field' do
       it 'returns an array with email and role' do

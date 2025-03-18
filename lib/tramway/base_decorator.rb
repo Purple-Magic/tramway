@@ -4,6 +4,7 @@ require 'tramway/decorators/name_builder'
 require 'tramway/decorators/association'
 require 'tramway/decorators/collection_decorator'
 require 'tramway/helpers/decorate_helper'
+require 'tramway/helpers/component_helper'
 require 'tramway/utils/render'
 require 'tramway/duck_typing'
 
@@ -15,6 +16,7 @@ module Tramway
     include Tramway::Utils::Render
     include Tramway::DuckTyping::ActiveRecordCompatibility
     include Tramway::Helpers::DecorateHelper
+    include Tramway::Helpers::ComponentHelper
 
     attr_reader :object
 
@@ -23,6 +25,9 @@ module Tramway
     end
 
     class << self
+      include Tramway::Helpers::ComponentHelper
+      include Tramway::Utils::Render
+
       # :reek:NilCheck { enabled: false } because checking for nil is not a type-checking issue but business logic
       def decorate(object_or_array)
         return if object_or_array.nil?
@@ -45,6 +50,10 @@ module Tramway
 
       def list_attributes
         []
+      end
+
+      def index_header_content
+        nil
       end
 
       include Tramway::Decorators::AssociationClassMethods
