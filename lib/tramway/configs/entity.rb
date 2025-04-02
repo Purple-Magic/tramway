@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 require 'tramway/configs/entities/route'
+require 'tramway/configs/entities/page'
 
 module Tramway
   module Configs
     # Tramway is an entity-based framework
     class Entity < Dry::Struct
       attribute :name, Types::Coercible::String
-      attribute? :pages, Types::Array.of(Types::Symbol).default([].freeze)
+      attribute? :pages, Types::Array.of(Tramway::Configs::Entities::Page).default([].freeze)
       attribute? :route, Tramway::Configs::Entities::Route
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
@@ -31,6 +32,10 @@ module Tramway
         HumanNameStruct.new(single, plural)
       end
 
+      def page(name)
+        pages.find { |page| page.action == name.to_s }
+      end
+
       private
 
       def pluralized(model_name)
@@ -48,7 +53,7 @@ module Tramway
       def route_helper_method
         underscored_name = name.parameterize.pluralize.underscore
 
-        method_name = if pages.include?(:index) || route.blank?
+        method_name = if set_page?(:index) || route.blank?
                         "#{underscored_name}_path"
                       else
                         route.helper_method_by(underscored_name)
@@ -58,8 +63,10 @@ module Tramway
       end
 
       def route_helper_engine
-        pages.include?(:index) ? Tramway::Engine : Rails.application
+        set_page?(:index) ? Tramway::Engine : Rails.application
       end
+
+      alias set_page? page
     end
   end
 end
