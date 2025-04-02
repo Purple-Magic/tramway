@@ -7,7 +7,7 @@ module Tramway
       #
       class Page < Dry::Struct
         attribute :action, Types::Coercible::String
-        attribute? :scope, Dry::Types::Definition.new(Proc).optional.default(nil)
+        attribute? :scope, Types::Coercible::String
       end
     end
   end
