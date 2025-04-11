@@ -194,6 +194,8 @@ end
 
 #### Decorate associations
 
+**Decorate single association**
+
 ```ruby
 class UserDecorator < Tramway::BaseDecorator
   association :posts
@@ -201,6 +203,14 @@ end
 
 user = tramway_decorate User.first
 user.posts # => decorated collection of posts with PostDecorator
+```
+
+**Decorate multiple associations**
+
+```ruby
+class UserDecorator < Tramway::BaseDecorator
+  associations :posts, :users
+end
 ```
 
 #### Decorate nil
