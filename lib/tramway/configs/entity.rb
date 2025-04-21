@@ -14,7 +14,7 @@ module Tramway
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
       RouteStruct = Struct.new(:index)
 
-      # HumanNameStruct contains human names forms for the entity
+      # HumanName Struct contains human names forms for the entity
       HumanNameStruct = Struct.new(:single, :plural)
 
       def routes
