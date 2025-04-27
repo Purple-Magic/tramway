@@ -8,6 +8,7 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
   * [Tramway Decorators](https://github.com/Purple-Magic/tramway#tramway-decorators)
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
+  * [Tramway Table Component](https://github.com/Purple-Magic/tramway#tramway-table-component)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
     * [Stimulus-based inputs](https://github.com/Purple-Magic/tramway#stimulus-based-inputs)
   * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#tailwind-styled-pagination-for-kaminari)
@@ -499,6 +500,20 @@ tramway_navbar title: 'Purple Magic' do |nav|
     # </li>
   end
 end
+```
+
+### Tramway Table Component
+
+Tramway provides a responsive, tailwind-styled table with light and dark themes.
+
+```haml
+= component 'tailwinds/table' do
+  = component 'tailwinds/table/header', headers: ['Column 1', 'Column 2']
+  = component 'tailwinds/table/row' do
+    = component 'tailwinds/table/cell' do
+      Something
+    = component 'tailwinds/table/cell' do
+      Another
 ```
 
 ### Tailwind-styled forms
