@@ -44,11 +44,37 @@ feature 'Entities Index Page', :js, type: :feature do
       expect(page).to have_selector('.div-table', text: '', visible: true)
     end
 
+    let(:row_selector) { '.div-table-row.block.grid' }
+
     scenario 'displays rows of the table with correct data' do
       visit '/admin/posts'
 
       within '.div-table' do
-        expect(page).to have_selector('.div-table-row.block.grid', minimum: 1)
+        expect(page).to have_selector(row_selector, minimum: 1)
+      end
+    end
+
+    context 'without scope' do
+      before { create_list :article, 3 }
+
+      scenario 'displays exact number of rows' do
+        visit '/admin/articles'
+
+        within '.div-table' do
+          expect(page).to have_selector(row_selector, count: 3)
+        end
+      end
+    end
+
+    context 'with scope' do
+      before { Post.first(2).each(&:publish!) }
+
+      scenario 'displays exact number of rows' do
+        visit '/admin/posts'
+
+        within '.div-table' do
+          expect(page).to have_selector(row_selector, count: 2)
+        end
       end
     end
   end
