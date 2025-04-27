@@ -45,6 +45,24 @@ describe Tramway::Config do
 
       context 'with customized entities' do
         context 'when index page exists' do
+          let(:entities) do
+            [
+              {
+                name: :post,
+                pages: [
+                  {
+                    action: :index,
+                    scope: :published
+                  }
+                ]
+              }
+            ]
+          end
+
+          before do
+            config.entities = entities
+          end
+
           it 'returns the index page' do
             post_entity = config.entities.find { |entity| entity.name == 'post' }
             scope = post_entity.pages.find { |page| page.action == 'index' }.scope
