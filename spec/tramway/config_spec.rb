@@ -31,14 +31,27 @@ describe Tramway::Config do
     end
 
     context 'with non-empty collection' do
-      let(:entities) { %w[Podcast Episode] }
+      context 'when entities are default' do
+        let(:entities) { %w[Podcast Episode] }
 
-      before do
-        config.entities = entities
+        before do
+          config.entities = entities
+        end
+
+        it 'returns the previously set entities' do
+          expect(config.entities.map(&:name)).to eq(entities)
+        end
       end
 
-      it 'returns the previously set entities' do
-        expect(config.entities.map(&:name)).to eq(entities)
+      context 'with customized entities' do
+        context 'when index page exists' do
+          it 'returns the index page' do
+            post_entity = config.entities.find { |entity| entity.name == 'post' }
+            scope = post_entity.pages.find { |page| page.action == 'index' }.scope
+
+            expect(scope).to eq 'published'
+          end
+        end
       end
     end
   end
