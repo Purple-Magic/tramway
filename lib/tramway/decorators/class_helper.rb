@@ -28,7 +28,7 @@ module Tramway
 
         base_class_name = Tramway::Decorators::NameBuilder.default_decorator_class_name(klass)
 
-        namespace.present? ? "#{namespace.camelize}::#{base_class_name}" : base_class_name
+        namespace.present? ? "#{namespace.to_s.camelize}::#{base_class_name}" : base_class_name
       end
 
       # :reek:NilCheck { enabled: false }
