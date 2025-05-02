@@ -22,7 +22,7 @@ module Tramway
       end
 
       # has_and_belongs_to_many is not supported for now
-      def association(association)
+      def association(association, decorator: nil)
         define_method(association) do
           assoc = object.send(association)
 
@@ -38,12 +38,18 @@ module Tramway
     # Helper module for association decorators
     module AssocDecoratorHelper
       class << self
-        def decorate_has_many_association(assoc)
-          assoc.empty? ? [] : decorator(assoc.klass).decorate(assoc)
+        def decorate_has_many_association(assoc, decorator_class: nil)
+          return [] if assoc.empty?
+          
+          decorator_class ||= decorator(assoc.klass)
+
+          decorator_class.decorate(assoc)
         end
 
-        def decorate_associated_object(assoc)
-          decorator(assoc.class).decorate(assoc)
+        def decorate_associated_object(assoc, decorator_class: nil)
+          decorator_class ||= decorator(assoc.class)
+
+          decorator_class.decorate(assoc)
         end
 
         def decorator(class_name)
