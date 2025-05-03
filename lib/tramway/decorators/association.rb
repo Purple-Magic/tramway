@@ -27,9 +27,9 @@ module Tramway
           assoc = object.send(association)
 
           if assoc.is_a?(ActiveRecord::Relation)
-            AssocDecoratorHelper.decorate_has_many_association assoc
+            AssocDecoratorHelper.decorate_has_many_association assoc, decorator_class: decorator
           elsif assoc.present?
-            AssocDecoratorHelper.decorate_associated_object(assoc)
+            AssocDecoratorHelper.decorate_associated_object(assoc, decorator_class: decorator)
           end
         end
       end
