@@ -2,29 +2,30 @@
 
 Tramway::Engine.routes.draw do
   Tramway.config.entities.each do |entity|
-    define_resource = lambda do |resource_name, entity| # rubocop:disable Lint/ShadowingOuterLocalVariable
+    segments      = entity.name.split('/')
+    resource_name = segments.pop          
+
+    define_resource = proc do
       resources resource_name.pluralize.to_sym,
-                only: [:index],
-                controller: '/tramway/entities',
-                defaults: { entity: }
+                only:      [:index],
+                controller:'/tramway/entities',
+                defaults:   { entity: entity }
     end
 
-    if entity.name.include?('/')
-      *namespaces, resource_name = entity.name.split('/')
-
-      define_namespace = lambda do |index|
-        namespace namespaces[index].to_sym do
-          if namespaces[index] == namespaces.last
-            define_resource.call(resource_name, entity)
+    if segments.empty?
+      define_resource.call
+    else
+      nest = lambda do |names|
+        namespace names.first.to_sym do
+          if names.size > 1
+            nest.call(names.drop(1))
           else
-            define_namespace.call(namespaces[index + 1])
+            define_resource.call
           end
         end
       end
 
-      define_namespace.call(0)
-    else
-      define_resource.call(entity.name, entity)
+      nest.call(segments)
     end
   end
 end
