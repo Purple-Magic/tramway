@@ -2,6 +2,10 @@
 
 feature 'MultiselectComponent', :js, type: :feature do
   before do
+    skip 'JavaScript driver not available' if Capybara.javascript_driver == :rack_test
+  end
+
+  before do
     visit new_user_path
 
     find('#user_role_multiselect').click

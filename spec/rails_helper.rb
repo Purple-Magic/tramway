@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('dummy/config/environment', __dir__)
 
 require 'spec_helper'
@@ -15,6 +16,11 @@ require 'webdrivers/chromedriver'
 require 'database_cleaner/active_record'
 require 'support/web_driver_helper'
 
+# Ensure the test database schema is up to date before running specs. This will
+# load the schema or run migrations if needed so that ActiveRecord models have
+# the required tables available.
+ActiveRecord::Migration.maintain_test_schema!
+
 RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
@@ -24,7 +30,12 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :decorator
   config.include FactoryBot::Syntax::Methods
 
+  # Load factory definitions from the engine's spec/factories directory rather
+  # than the dummy application's spec directory so FactoryBot can build test
+  # objects correctly.
   config.before(:suite) do
+    FactoryBot.definition_file_paths << File.expand_path('factories', __dir__)
+    FactoryBot.find_definitions
     DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation)
   end
@@ -44,7 +55,10 @@ Capybara.register_driver :headless_chrome do |app|
   )
 end
 
-Capybara.javascript_driver = :headless_chrome
+# When Chrome is not available in the environment, fall back to Rack::Test so
+# feature specs can still run (albeit without JavaScript support).
+Capybara.default_driver = :rack_test
+Capybara.javascript_driver = ENV['CAPYBARA_JS_DRIVER']&.to_sym || :rack_test
 
 Capybara.register_driver :headless_chrome_mobile do |app|
   mobile_options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox
