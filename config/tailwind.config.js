@@ -50,6 +50,9 @@ module.exports = {
     'space-x-1',
     'justify-end',
     'mt-2',
+    'disabled:bg-gray-100',
+    'disabled:text-gray-400',
+    'disabled:cursor-not-allowed',
     // pagination
     'bg-white', 'rounded-md', 'hover:bg-purple-100', 'dark:text-white', 'dark:bg-gray-800', 'dark:hover:bg-gray-700',
     // multiselect styles
