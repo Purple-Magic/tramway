@@ -11,13 +11,22 @@ module Tramway
     include Rails.application.routes.url_helpers
 
     def index
-      @entities = model_class.order(id: :desc).page(params[:page])
+      @entities = if entity.page(:index).scope.present?
+                    model_class.public_send(entity.page(:index).scope)
+                  else
+                    model_class.order(id: :desc)
+                  end.page(params[:page])
+      @namespace = entity.route.namespace
     end
 
     private
 
     def model_class
       @model_class ||= params[:entity][:name].classify.constantize
+    end
+
+    def entity
+      @entity ||= Tramway.config.entities.find { |e| e.name == params[:entity][:name] }
     end
   end
 end

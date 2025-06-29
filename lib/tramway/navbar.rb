@@ -5,16 +5,18 @@ module Tramway
   class Navbar
     attr_reader :items, :context
 
-    def initialize(context)
+    def initialize(context, with_entities:)
       @context = context
       @items = { left: [], right: [] }
       @filling = nil
 
-      entities = Tramway.config.entities
+      if with_entities
+        entities = Tramway.config.entities
 
-      return unless entities.any?
+        return unless entities.any?
 
-      preset_left entities
+        preset_left entities
+      end
     end
 
     def left

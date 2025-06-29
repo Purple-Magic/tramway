@@ -44,11 +44,39 @@ feature 'Entities Index Page', :js, type: :feature do
       expect(page).to have_selector('.div-table', text: '', visible: true)
     end
 
+    let(:row_selector) { '.div-table-row.grid[role="row"]:not([aria-label="Table Header"]' }
+
     scenario 'displays rows of the table with correct data' do
       visit '/admin/posts'
 
       within '.div-table' do
-        expect(page).to have_selector('.div-table-row.block.grid', minimum: 1)
+        expect(page).not_to have_selector(row_selector)
+      end
+    end
+
+    context 'without scope' do
+      let(:article_count) { 3 }
+      before { create_list :article, article_count }
+
+      scenario 'displays exact number of rows' do
+        visit '/admin/articles'
+
+        within '.div-table' do
+          expect(page).to have_selector(row_selector, count: article_count)
+        end
+      end
+    end
+
+    context 'with scope' do
+      let(:posts_count) { 2 }
+      before { Post.first(posts_count).each(&:publish!) }
+
+      scenario 'displays exact number of rows' do
+        visit '/admin/posts'
+
+        within '.div-table' do
+          expect(page).to have_selector(row_selector, count: posts_count)
+        end
       end
     end
   end

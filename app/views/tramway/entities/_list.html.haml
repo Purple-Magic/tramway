@@ -1,4 +1,4 @@
-- decorator = Tramway::Decorators::NameBuilder.default_decorator_class_name(@model_class)
+- decorator = Tramway::Decorators::ClassHelper.decorator_class_name(@model_class, @namespace)
 - list_attributes = decorator.constantize.list_attributes
 
 .mt-8.w-full

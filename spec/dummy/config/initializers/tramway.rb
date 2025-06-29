@@ -6,15 +6,28 @@ Tramway.configure do |config|
   config.entities = [
     {
       name: :post,
-      pages: [:index]
+      pages: [
+        {
+          action: :index,
+          scope: :published
+        }
+      ]
     },
     {
       name: :comment,
-      pages: [:index]
+      pages: [
+        {
+          action: :index,
+        }
+      ]
     },
     {
       name: :article,
-      pages: [:index]
+      pages: [
+        {
+          action: :index
+        }
+      ]
     },
     {
       name: :user

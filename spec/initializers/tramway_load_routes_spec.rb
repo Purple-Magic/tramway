@@ -5,7 +5,7 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
     expect(get: '/admin/posts').to route_to(
       controller: 'tramway/entities',
       action: 'index',
-      entity: build(:entity, name: 'post')
+      entity: build(:entity, name: 'post', pages: [{ action: 'index', scope: :published }])
     )
     expect(get: '/admin/comments').to route_to(
       controller: 'tramway/entities',
