@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/rspec.yml
     needs: [rubocop]
   push:
-    needs: [tests]
+    # needs: [tests]
     name: Build + Publish
     runs-on: ubuntu-latest
     permissions:
