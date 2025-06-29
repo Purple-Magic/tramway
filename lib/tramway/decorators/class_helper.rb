@@ -19,11 +19,13 @@ module Tramway
         end
       end
 
-      def decorator_class_name(object_or_array, namespace)
-        klass = if Tramway::Decorators::CollectionDecorators.collection?(object_or_array)
-                  object_or_array.first.class
+      def decorator_class_name(object_or_array_or_class, namespace)
+        klass = if Tramway::Decorators::CollectionDecorators.collection?(object_or_array_or_class)
+                  object_or_array_or_class.first.class
+                elsif object_or_array_or_class.is_a?(Class)
+                  object_or_array_or_class
                 else
-                  object_or_array.class
+                  object_or_array_or_class.class
                 end
 
         base_class_name = Tramway::Decorators::NameBuilder.default_decorator_class_name(klass)
