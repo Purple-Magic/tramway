@@ -465,9 +465,21 @@ title_link: Link on Tramway Navbar title. Default: '/'
 background:
   color: Css-color. Supports all named CSS colors and HEX colors
   intensity: Color intensity. Range: **100..950**. Used by Tailwind. Not supported in case of using HEX color in the background.color
+with_entities: Adds links to [Tramway Entities](#tramway-entities). Default: true
 ```
 
 **NOTE:** `tramway_navbar` method called without arguments and block of code will render only [Tramway Entities](https://github.com/Purple-Magic/tramway#tramway-entities) links on the left.
+
+In case you want to hide entity links you can pass `with_entities: false`.
+
+```haml
+- if current_user.present?
+  = tramway_navbar title: 'WaiWai' do |nav|
+    - nav.left do
+      - nav.item 'Board', admin_board_path
+- else
+  = tramway_navbar title: 'WaiWai', with_entities: false
+```
 
 #### nav.left and nav.right
 
