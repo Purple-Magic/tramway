@@ -40,7 +40,7 @@ Tramway.configure do |config|
   config.entities = [
     {
       name: :user,
-      pages: [:index],
+      pages: [{ action: :index }],
     }
   ]
 end
