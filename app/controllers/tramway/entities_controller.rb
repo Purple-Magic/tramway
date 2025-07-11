@@ -16,7 +16,8 @@ module Tramway
                   else
                     model_class.order(id: :desc)
                   end.page(params[:page])
-      @namespace = entity.route.namespace
+
+      @namespace = entity.route&.namespace
     end
 
     private
