@@ -32,7 +32,7 @@ module Tramway
 
         klass_name = namespace.present? ? "#{namespace.to_s.camelize}::#{base_class_name}" : base_class_name
 
-        if defined?(klass_name.safe_constantize)
+        if klass_name.safe_constantize
           klass_name
         else
           raise NameError, "You should define #{klass_name} decorator class in app/decorators/ folder."
