@@ -30,7 +30,13 @@ module Tramway
 
         base_class_name = Tramway::Decorators::NameBuilder.default_decorator_class_name(klass)
 
-        namespace.present? ? "#{namespace.to_s.camelize}::#{base_class_name}" : base_class_name
+        klass_name = namespace.present? ? "#{namespace.to_s.camelize}::#{base_class_name}" : base_class_name
+
+        if defined?(klass_name.safe_constantize)
+          klass_name
+        else
+          raise NameError, "You should define #{klass_name} decorator class in app/decorators/ folder."
+        end
       end
 
       # :reek:NilCheck { enabled: false }
