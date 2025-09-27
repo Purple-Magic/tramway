@@ -1,4 +1,4 @@
-.div-table-row.grid.text-white.text-small.gap-4.bg-purple-700.dark:bg-gray-700.dark:text-gray-400{ class: "grid-cols-#{headers.count}", aria: { label: "Table Header" }, role: "row" }
+.div-table-row.grid.text-white.text-small.gap-4.bg-purple-700.dark:bg-gray-700.dark:text-gray-400{ class: "grid-cols-#{columns_count}", aria: { label: "Table Header" }, role: "row" }
   - if headers.any?
     - headers.each do |header|
       .div-table-cell.py-4.px-6
