@@ -528,6 +528,38 @@ Tramway provides a responsive, tailwind-styled table with light and dark themes.
       Another
 ```
 
+`Tailwinds::TableComponent` accepts an optional `options` hash that is merged into the outer `.div-table` element. The hash is
+forwarded as HTML attributes, so you can pass things like `id`, `data` attributes, or additional classes. If you do not supply
+your own width utility (e.g. a class that starts with `w-`), the component automatically appends `w-full` to keep the table
+responsive. This allows you to extend the default styling without losing the sensible defaults provided by the component.
+
+```haml
+= component 'tailwinds/table', options: { class: 'max-w-3xl border border-gray-200', data: { controller: 'table' } } do
+  = component 'tailwinds/table/header', headers: ['Name', 'Email']
+  = component 'tailwinds/table/row' do
+    = component 'tailwinds/table/cell' do
+      = user.name
+    = component 'tailwinds/table/cell' do
+      = user.email
+```
+
+When you render a header you can either pass the `headers:` array, as in the examples above, or render custom header content in
+the block. `Tailwinds::Table::HeaderComponent` uses the length of the `headers` array to build the grid if the array is present.
+If you omit the array and provide custom content, pass the `columns:` argument so the component knows how many grid columns to
+generate.
+
+```haml
+= component 'tailwinds/table/header', columns: 4 do
+  = component 'tailwinds/table/cell' do
+    Custom header cell
+  = component 'tailwinds/table/cell' do
+    Another header cell
+  / ...
+```
+
+With this approach you control the header layout while still benefiting from the default Tailwind grid classes that the header
+component applies.
+
 ### Tailwind-styled forms
 
 Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are implemented with [ViewComponent](https://github.com/viewcomponent/view_component).
