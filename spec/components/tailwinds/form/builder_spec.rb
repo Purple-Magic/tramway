@@ -4,7 +4,8 @@ require 'support/view_helpers'
 
 describe Tailwinds::Form::Builder, type: :view do
   let(:resource)  { build :user }
-  let(:builder) { described_class.new :user, resource, view, {} }
+  let(:form_options) { {} }
+  let(:builder) { described_class.new :user, resource, view, form_options }
 
   describe '#text_field' do
     context 'with default behaviour' do
@@ -12,7 +13,37 @@ describe Tailwinds::Form::Builder, type: :view do
 
       it 'gets default value' do
         expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
-        expect(output).to have_selector 'input.w-full.px-3.py-2.border.border-gray-300.rounded'
+        expect(output).to have_selector 'input.text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+      end
+    end
+
+    context 'with small size' do
+      let(:form_options) { { size: :small } }
+      let(:output) { builder.text_field :email }
+
+      it 'applies small spacing' do
+        expect(output).to have_selector 'input.text-sm.px-2.py-1'
+      end
+    end
+
+    context 'with large size' do
+      let(:form_options) { { size: :large } }
+      let(:output) { builder.text_field :email }
+
+      it 'applies large spacing' do
+        expect(output).to have_selector 'input.text-lg.px-4.py-3'
+      end
+    end
+
+    context 'when size option is passed directly to the field' do
+      let(:output) { builder.text_field :email, size: :large }
+
+      it 'keeps the form size classes' do
+        expect(output).to have_selector 'input.text-base.px-3.py-2'
+      end
+
+      it 'does not render a size attribute' do
+        expect(output).not_to have_selector 'input[size]'
       end
     end
 
@@ -44,7 +75,7 @@ describe Tailwinds::Form::Builder, type: :view do
 
     it do
       expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
-      expect(output).to have_selector 'input.w-full.px-3.py-2.border.border-gray-300.rounded'
+      expect(output).to have_selector 'input.text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
     end
   end
 
@@ -54,7 +85,16 @@ describe Tailwinds::Form::Builder, type: :view do
     end
 
     it do
-      expect(output).to have_selector 'label.inline-block.bg-blue-500.text-white.font-bold.py-2.px-4.rounded'
+      expect(output).to have_selector 'label.inline-block.text-base.px-4.py-2.bg-blue-500.text-white.font-bold.rounded'
+    end
+
+    context 'with small size' do
+      let(:form_options) { { size: :small } }
+      let(:output) { builder.file_field :file }
+
+      it 'applies small spacing' do
+        expect(output).to have_selector 'label.text-sm.px-3.py-1'
+      end
     end
   end
 
@@ -65,7 +105,16 @@ describe Tailwinds::Form::Builder, type: :view do
 
     it do
       within 'div.flex.items-center.justify-between' do
-        expect(output).to have_selector('button.bg-red-500.text-white')
+        expect(output).to have_selector('button.text-base.bg-red-500.text-white')
+      end
+    end
+
+    context 'with large size' do
+      let(:form_options) { { size: :large } }
+      let(:output) { builder.submit 'Create' }
+
+      it 'renders larger button' do
+        expect(output).to have_selector 'button.text-lg.px-5.py-3'
       end
     end
   end
@@ -79,9 +128,18 @@ describe Tailwinds::Form::Builder, type: :view do
       end
 
       it 'has the select' do
-        expect(output).to have_selector 'select.bg-white.border.border-gray-300.text-gray-700'
+        expect(output).to have_selector 'select.text-base.bg-white.border.border-gray-300.text-gray-700'
         expect(output).to have_selector 'option[value="admin"]'
         expect(output).to have_selector 'option[value="user"]'
+      end
+    end
+
+    context 'with small size' do
+      let(:form_options) { { size: :small } }
+      let(:output) { builder.select :role, %i[admin user] }
+
+      it 'applies small spacing' do
+        expect(output).to have_selector 'select.text-sm.px-2.py-1'
       end
     end
 

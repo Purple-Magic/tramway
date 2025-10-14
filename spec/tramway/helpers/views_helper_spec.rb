@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'tramway/helpers/views_helper'
 require 'support/view_helpers'
 
 describe Tramway::Helpers::ViewsHelper, type: :view do
@@ -9,25 +10,27 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
   end
 
   describe '#tramway_form_for' do
-    it 'calls form_for with the correct builder' do
+    it 'calls form_for with the correct builder and default size' do
       object = instance_double(User)
 
-      allow(view).to receive(:form_for).with(object, hash_including(builder: Tailwinds::Form::Builder))
+      allow(view).to receive(:form_for).with(object, hash_including(builder: Tailwinds::Form::Builder, size: :middle))
 
       view.tramway_form_for(object)
 
-      expect(view).to have_received(:form_for).with(object, hash_including(builder: Tailwinds::Form::Builder))
+      expect(view).to have_received(:form_for).with(object, hash_including(builder: Tailwinds::Form::Builder, size: :middle))
     end
 
     it 'forwards arguments and options to form_for' do
       object = instance_double(User)
       options = { key: 'value' }
 
-      allow(view).to receive(:form_for).with(object, hash_including(options))
+      expected_options = options.merge(size: :large)
 
-      view.tramway_form_for(object, **options)
+      allow(view).to receive(:form_for).with(object, hash_including(expected_options))
 
-      expect(view).to have_received(:form_for).with(object, hash_including(options))
+      view.tramway_form_for(object, size: :large, **options)
+
+      expect(view).to have_received(:form_for).with(object, hash_including(expected_options))
     end
   end
 end
