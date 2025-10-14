@@ -13,8 +13,8 @@ module Tailwinds
                ), &)
       end
 
-      def numeric_field(attribute, **options, &)
-        render(Tailwinds::Form::NumericFieldComponent.new(
+      def number_field(attribute, **options, &)
+        render(Tailwinds::Form::NumberFieldComponent.new(
                  input: input(:number_field),
                  value: get_value(attribute, options),
                  **default_options(attribute, options)

@@ -3,7 +3,7 @@
 module Tailwinds
   module Form
     # Tailwind-styled numeric field
-    class NumericFieldComponent < TailwindComponent
+    class NumberFieldComponent < TailwindComponent
     end
   end
 end
