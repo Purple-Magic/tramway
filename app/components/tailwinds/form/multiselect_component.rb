@@ -45,7 +45,14 @@ module Tailwinds
       end
 
       def select_as_input
-        render(Tailwinds::Form::Multiselect::SelectAsInput.new(options:, attribute:, input:))
+        render(
+          Tailwinds::Form::Multiselect::SelectAsInput.new(
+            options:,
+            attribute:,
+            input:,
+            size_class: size_class(:multiselect_input)
+          )
+        )
       end
 
       def on_change

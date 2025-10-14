@@ -10,6 +10,7 @@ module Tailwinds
         option :options
         option :attribute
         option :input
+        option :size_class
       end
     end
   end
