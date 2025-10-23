@@ -35,6 +35,9 @@ Gemspec/RequiredRubyVersion:
 Gemspec/RequireMFA:
   Enabled: false
 
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
 AllCops:
   TargetRubyVersion: 3.4
   NewCops: enable

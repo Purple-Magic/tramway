@@ -93,7 +93,7 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
           expect(fragment).to have_css "#{left_items_css} a[href='#{path}']", text: 'Users'
         end
 
-        include_examples 'Helpers Navbar'
+        it_behaves_like 'Helpers Navbar'
       end
     end
 

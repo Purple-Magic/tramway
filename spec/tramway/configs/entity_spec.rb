@@ -38,13 +38,13 @@ describe Tramway::Configs::Entity do
     context 'with entity without namespaces' do
       entity = :user
 
-      include_examples 'Tramway Config Entity human_name', entity
+      it_behaves_like 'Tramway Config Entity human_name', entity
     end
 
     context 'with entity with namespaces' do
       entity = 'episodes/part'
 
-      include_examples 'Tramway Config Entity human_name', entity
+      it_behaves_like 'Tramway Config Entity human_name', entity
     end
   end
 
@@ -56,7 +56,7 @@ describe Tramway::Configs::Entity do
 
     let(:helper) { "#{route[:namespace]}_#{name.to_s.pluralize}_path" }
 
-    include_examples 'Tramway Config Entity routes'
+    it_behaves_like 'Tramway Config Entity routes'
   end
 
   context 'with entity name and route contains namespace and route_method' do
@@ -67,7 +67,7 @@ describe Tramway::Configs::Entity do
 
     let(:helper) { "#{route[:namespace]}_#{route[:route_method]}_path" }
 
-    include_examples 'Tramway Config Entity routes'
+    it_behaves_like 'Tramway Config Entity routes'
   end
 
   context 'with entity name and route contains route_method only' do
@@ -78,6 +78,6 @@ describe Tramway::Configs::Entity do
 
     let(:helper) { "#{route[:route_method]}_path" }
 
-    include_examples 'Tramway Config Entity routes'
+    it_behaves_like 'Tramway Config Entity routes'
   end
 end
