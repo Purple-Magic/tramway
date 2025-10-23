@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+ENV['RAILS_ENV'] ||= 'test'
+ENV['RACK_ENV'] ||= 'test'
+
+require_relative '../spec/dummy/config/environment'
+
+# Ensure the schema file is not rewritten when migrations run.
+if ActiveRecord::Base.respond_to?(:dump_schema_after_migration=)
+  ActiveRecord::Base.dump_schema_after_migration = false
+elsif defined?(Rails) && Rails.application.config.respond_to?(:active_record)
+  Rails.application.config.active_record.dump_schema_after_migration = false
+end
+
+migration_context =
+  if ActiveRecord::Base.connection.respond_to?(:migration_context)
+    ActiveRecord::Base.connection.migration_context
+  else
+    ActiveRecord::MigrationContext.new(
+      Rails.root.join('db/migrate').to_s,
+      ActiveRecord::Base.connection.schema_migration
+    )
+  end
+
+migration_context.migrate
