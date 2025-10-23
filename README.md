@@ -14,6 +14,16 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
   * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#tailwind-styled-pagination-for-kaminari)
 * [Articles](https://github.com/Purple-Magic/tramway#usage)
 
+## Compatibility
+
+Tramway is actively verified against the following Ruby and Rails versions.
+
+| Ruby \ Rails | 7.1 | 7.2 | 8.0 | 8.1 |
+| ------------- | --- | --- | --- | --- |
+| 3.2           | ✅  | ✅  | ✅  | ✅  |
+| 3.3           | ✅  | ✅  | ✅  | ✅  |
+| 3.4           | ✅  | ✅  | ✅  | ✅  |
+
 ## Installation
 Add this line to your application's Gemfile:
 
