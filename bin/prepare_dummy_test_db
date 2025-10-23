@@ -46,15 +46,32 @@ with_sqlite_guard do
     Rails.application.config.active_record.dump_schema_after_migration = false
   end
 
+  migrations_paths =
+    if ActiveRecord::Migrator.respond_to?(:migrations_paths)
+      Array(ActiveRecord::Migrator.migrations_paths)
+    else
+      [Rails.root.join('db/migrate').to_s]
+    end
+
   migration_context =
     if ActiveRecord::Base.connection.respond_to?(:migration_context)
       ActiveRecord::Base.connection.migration_context
-    else
-      ActiveRecord::MigrationContext.new(
-        Rails.root.join('db/migrate').to_s,
-        ActiveRecord::Base.connection.schema_migration
-      )
+    elsif defined?(ActiveRecord::MigrationContext)
+      schema_migration =
+        if ActiveRecord::Base.connection.respond_to?(:schema_migration)
+          ActiveRecord::Base.connection.schema_migration
+        elsif ActiveRecord::Base.respond_to?(:schema_migration)
+          ActiveRecord::Base.schema_migration
+        end
+
+      schema_migration ||= ActiveRecord::SchemaMigration if defined?(ActiveRecord::SchemaMigration)
+
+      ActiveRecord::MigrationContext.new(migrations_paths, schema_migration)
     end
 
-  migration_context.migrate
+  if migration_context
+    migration_context.migrate
+  else
+    ActiveRecord::Migrator.migrate(migrations_paths)
+  end
 end
