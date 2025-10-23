@@ -6,7 +6,7 @@ feature 'Form For Base Test', :js, type: :feature do
   end
 
   scenario 'check text_field' do
-    expect(page).to have_selector('input.text-base.px-3.py-2.w-full.bg-white.border.border-gray-300.rounded.focus\\:outline-none.focus\\:border-red-500.dark\\:bg-gray-800.dark\\:border-gray-600.dark\\:text-white.dark\\:focus\\:border-red-400.dark\\:placeholder-white') # rubocop:disable.Layout/LineLength
+    expect(page).to have_selector('input.text-base.px-3.py-2.w-full.bg-white.border.border-gray-300.rounded.focus\\:outline-none.focus\\:border-red-500.dark\\:bg-gray-800.dark\\:border-gray-600.dark\\:text-white.dark\\:focus\\:border-red-400.dark\\:placeholder-white') # rubocop:disable Layout/LineLength
   end
 
   scenario 'check file_field' do
