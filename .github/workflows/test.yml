@@ -1,7 +1,7 @@
-# name: Tests
+name: Tests
 
-# on: [push]
+on: [push]
 
-# jobs:
-#   build:
-#     uses: ./.github/workflows/rspec.yml
+jobs:
+  build:
+    uses: ./.github/workflows/rspec.yml
