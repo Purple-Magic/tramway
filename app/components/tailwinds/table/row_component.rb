@@ -12,7 +12,7 @@ module Tailwinds
         default_attributes = { role: :row }
 
         if href.present?
-          link_to(href, options.merge(class: link_class, **default_attributes)) do
+          link_to(href, options.merge(class: "#{options[:class] || ''} #{link_row_classes}", **default_attributes)) do
             yield if block_given?
           end
         else
@@ -29,10 +29,8 @@ module Tailwinds
         ].join(' ')
       end
 
-      private
-
-      def link_class
-        "#{options[:class] || ''} 'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700'"
+      def link_row_classes
+        'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700'
       end
     end
   end
