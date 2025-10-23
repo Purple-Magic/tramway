@@ -38,6 +38,9 @@ Gemspec/RequireMFA:
 Rails/HasManyOrHasOneDependent:
   Enabled: false
 
+Style/ItBlockParameter:
+  Enabled: false
+
 AllCops:
   TargetRubyVersion: 3.4
   NewCops: enable

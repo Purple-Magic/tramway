@@ -78,7 +78,7 @@ feature 'Entities Index Page', :js, type: :feature do
       let(:posts_count) { 2 }
 
       before do
-        Post.all.sample(2).each { it.update! aasm_state: :published }
+        Post.all.sample(2).each { _1.update! aasm_state: :published }
       end
 
       scenario 'displays exact number of rows' do
