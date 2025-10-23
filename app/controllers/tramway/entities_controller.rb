@@ -11,8 +11,8 @@ module Tramway
     include Rails.application.routes.url_helpers
 
     def index
-      if entity.page(:index).scope.present?
-        model_class.public_send(entity.page(:index).scope)
+      if index_scope.present?
+        model_class.public_send(index_scope)
       else
         model_class.order(id: :desc)
       end.page(params[:page]) => entities
@@ -30,6 +30,10 @@ module Tramway
 
     def entity
       @entity ||= Tramway.config.entities.find { |e| e.name == params[:entity][:name] }
+    end
+
+    def index_scope
+      entity.page(:index).scope
     end
   end
 end

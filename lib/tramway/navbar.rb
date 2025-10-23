@@ -10,13 +10,13 @@ module Tramway
       @items = { left: [], right: [] }
       @filling = nil
 
-      if with_entities
-        entities = Tramway.config.entities
+      return unless with_entities
 
-        return unless entities.any?
+      entities = Tramway.config.entities
 
-        preset_left entities
-      end
+      return unless entities.any?
+
+      preset_left entities
     end
 
     def left

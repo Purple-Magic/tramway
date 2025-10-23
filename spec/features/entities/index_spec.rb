@@ -3,7 +3,7 @@
 feature 'Entities Index Page', :js, type: :feature do
   before { Post.destroy_all }
 
-  context 'default setup' do
+  context 'with default setup' do
     scenario 'displays table header' do
       visit '/admin/posts'
 
@@ -26,6 +26,8 @@ feature 'Entities Index Page', :js, type: :feature do
       end
     end
 
+    let(:row_selector) { '.div-table-row.grid[role="row"]:not([aria-label="Table Header"]' }
+
     scenario 'successfully responds' do
       visit '/admin/posts'
 
@@ -46,8 +48,6 @@ feature 'Entities Index Page', :js, type: :feature do
       expect(page).to have_selector('.div-table', text: '', visible: true)
     end
 
-    let(:row_selector) { '.div-table-row.grid[role="row"]:not([aria-label="Table Header"]' }
-
     scenario 'displays rows of the table with correct data' do
       visit '/admin/posts'
 
@@ -58,6 +58,7 @@ feature 'Entities Index Page', :js, type: :feature do
 
     context 'without scope' do
       let(:article_count) { 3 }
+
       before do
         Article.destroy_all
 

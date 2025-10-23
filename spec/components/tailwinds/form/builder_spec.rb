@@ -3,7 +3,7 @@
 require 'support/view_helpers'
 
 describe Tailwinds::Form::Builder, type: :view do
-  let(:resource)  { build :user }
+  let(:resource) { build :user }
   let(:form_options) { {} }
   let(:builder) { described_class.new :user, resource, view, form_options }
 

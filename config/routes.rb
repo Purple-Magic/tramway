@@ -3,13 +3,13 @@
 Tramway::Engine.routes.draw do
   Tramway.config.entities.each do |entity|
     segments      = entity.name.split('/')
-    resource_name = segments.pop          
+    resource_name = segments.pop
 
     define_resource = proc do
       resources resource_name.pluralize.to_sym,
-                only:      [:index],
-                controller:'/tramway/entities',
-                defaults:   { entity: entity }
+                only: [:index],
+                controller: '/tramway/entities',
+                defaults: { entity: entity }
     end
 
     if segments.empty?

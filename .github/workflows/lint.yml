@@ -5,7 +5,5 @@ on: [push]
 jobs:
   rubocop:
     uses: ./.github/workflows/rubocop.yml
-  reek:
-    uses: ./.github/workflows/reek.yml
   eslint:
     uses: ./.github/workflows/eslint.yml

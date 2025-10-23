@@ -10,7 +10,7 @@ feature 'Table Base Spec', :js, type: :feature do
   end
 
   scenario 'check table' do
-    expect(page).to have_selector(".div-table.text-left.rtl\\:text-right.text-gray-500.dark\\:text-gray-400.w-full") # rubocop:disable Layout/LineLength
+    expect(page).to have_selector('.div-table.text-left.rtl\\:text-right.text-gray-500.dark\\:text-gray-400.w-full')
   end
 
   scenario 'check rows' do
