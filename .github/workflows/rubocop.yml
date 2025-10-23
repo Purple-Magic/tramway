@@ -22,4 +22,4 @@ jobs:
 
       - name: Rubocop
         run: |
-          rubocop -d -c .rubocop.yml
+          rubocop -d -c .rubocop.yml --cache false
