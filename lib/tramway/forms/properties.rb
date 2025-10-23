@@ -10,21 +10,17 @@ module Tramway
           @properties << attribute
 
           define_method(attribute) do
-            if object.respond_to?(attribute)
-              object.public_send(attribute)
-            else
-              raise NoMethodError, "#{self.class}##{attribute} is not defined"
-            end
+            raise NoMethodError, "#{self.class}##{attribute} is not defined" unless object.respond_to?(attribute)
+
+            object.public_send(attribute)
           end
 
           set_method = "#{attribute}="
 
           define_method(set_method) do |value|
-            if object.respond_to?(set_method)
-              object.public_send(set_method, value)
-            else
-              raise NoMethodError, "#{self.class}##{set_method} is not defined"
-            end
+            raise NoMethodError, "#{self.class}##{set_method} is not defined" unless object.respond_to?(set_method)
+
+            object.public_send(set_method, value)
           end
         end
 

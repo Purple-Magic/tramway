@@ -20,26 +20,19 @@ module Tramway
       end
 
       def decorator_class_name(object_or_array_or_class, namespace)
-        klass = if Tramway::Decorators::CollectionDecorators.collection?(object_or_array_or_class)
-                  object_or_array_or_class.first.class
-                elsif object_or_array_or_class.is_a?(Class)
-                  object_or_array_or_class
-                else
-                  object_or_array_or_class.class
-                end
+        if Tramway::Decorators::CollectionDecorators.collection?(object_or_array_or_class)
+          object_or_array_or_class.first.class
+        elsif object_or_array_or_class.is_a?(Class)
+          object_or_array_or_class
+        else
+          object_or_array_or_class.class
+        end => klass
 
         base_class_name = Tramway::Decorators::NameBuilder.default_decorator_class_name(klass)
 
-        klass_name = namespace.present? ? "#{namespace.to_s.camelize}::#{base_class_name}" : base_class_name
-
-        if klass_name.safe_constantize
-          klass_name
-        else
-          raise NameError, "You should define #{klass_name} decorator class in app/decorators/ folder."
-        end
+        build_klass_name(base_class_name, namespace)
       end
 
-      # :reek:NilCheck { enabled: false }
       def raise_error_if_object_empty(object_or_array, decorator)
         return unless object_or_array.blank? && decorator.nil?
 
@@ -47,7 +40,16 @@ module Tramway
 
         raise ArgumentError, text
       end
-      # :reek:NilCheck { enabled: true }
+
+      def build_klass_name(base_class_name, namespace)
+        klass_name = namespace.present? ? "#{namespace.to_s.camelize}::#{base_class_name}" : base_class_name
+
+        unless klass_name.safe_constantize
+          raise NameError, "You should define #{klass_name} decorator class in app/decorators/ folder."
+        end
+
+        klass_name
+      end
     end
   end
 end

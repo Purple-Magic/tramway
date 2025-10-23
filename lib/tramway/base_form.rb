@@ -50,7 +50,7 @@ module Tramway
     end
 
     def method_missing(method_name, *args)
-      if method_name.to_s.end_with?('=') && args.count == 1
+      if method_name.to_s.end_with?('=') && args.one?
         object.public_send(method_name, args.first)
       else
         super

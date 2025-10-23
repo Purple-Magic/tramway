@@ -1,8 +1,8 @@
 .mb-4
-    - if @label
-      - base_classes = 'inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold rounded cursor-pointer mt-4 '
-      - base_classes += 'dark:bg-blue-600 dark:hover:bg-blue-500'
-      - classes = "#{size_class(:file_button)} #{base_classes}"
-      %label{ for: @for, class: classes }
-        = @label
+  - if @label
+    - base_classes = 'inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold rounded cursor-pointer mt-4 '
+    - base_classes += 'dark:bg-blue-600 dark:hover:bg-blue-500'
+    - classes = "#{size_class(:file_button)} #{base_classes}"
+    %label{ for: @for, class: classes }
+      = @label
   = @input

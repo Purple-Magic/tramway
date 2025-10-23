@@ -40,7 +40,7 @@ module Tramway
       class << self
         def decorate_has_many_association(assoc, decorator_class: nil)
           return [] if assoc.empty?
-          
+
           decorator_class ||= decorator(assoc.klass)
 
           decorator_class.decorate(assoc)

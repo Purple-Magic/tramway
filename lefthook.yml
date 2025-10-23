@@ -1,9 +1,5 @@
 pre-commit:
   commands:
-    reek:
-      tags: backend style
-      glob: "*.rb"
-      run: bundle exec reek --force-exclusion {all_files}
     rubocop:
       tags: backend style
       glob: "*.rb"

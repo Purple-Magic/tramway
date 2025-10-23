@@ -6,6 +6,8 @@ feature 'Order Index Page on Mobile', type: %i[feature admin] do
   before do
     Capybara.javascript_driver = :headless_chrome_mobile
 
+    User.destroy_all
+
     create_list :user, 125
 
     visit users_path
@@ -28,8 +30,8 @@ feature 'Order Index Page on Mobile', type: %i[feature admin] do
     expect(page).to have_link('⭲', href: users_path(page: 5))
   end
 
-  include_examples 'Click on Page', '2'
-  include_examples 'Click on Page', '3'
-  include_examples 'Click on Page', '2', '🠖'
-  include_examples 'Click on Page', '5', '⭲'
+  it_behaves_like 'Click on Page', '2'
+  it_behaves_like 'Click on Page', '3'
+  it_behaves_like 'Click on Page', '2', '🠖'
+  it_behaves_like 'Click on Page', '5', '⭲'
 end

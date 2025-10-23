@@ -36,7 +36,7 @@ describe Tramway::BaseDecorator do
         User.all
       end
 
-      include_examples 'Decorate Collection'
+      it_behaves_like 'Decorate Collection'
     end
 
     context 'when object_or_array is an Array' do
@@ -45,7 +45,7 @@ describe Tramway::BaseDecorator do
         User.all.to_a
       end
 
-      include_examples 'Decorate Collection'
+      it_behaves_like 'Decorate Collection'
     end
 
     context 'when object_or_array is an ActiveRecord::Relation by association' do
@@ -57,7 +57,7 @@ describe Tramway::BaseDecorator do
         user.posts
       end
 
-      include_examples 'Decorate Collection'
+      it_behaves_like 'Decorate Collection'
     end
 
     context 'when object_or_array is an ActiveRecord::AssociationRelation' do
@@ -69,7 +69,7 @@ describe Tramway::BaseDecorator do
         user.posts.order(id: :asc)
       end
 
-      include_examples 'Decorate Collection'
+      it_behaves_like 'Decorate Collection'
     end
 
     context 'when object_or_array is not an ActiveRecord::Relation' do

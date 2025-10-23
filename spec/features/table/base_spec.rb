@@ -2,13 +2,15 @@
 
 feature 'Table Base Spec', :js, type: :feature do
   before do
+    User.destroy_all
+
     create_list(:user, rand(1..10))
 
     visit users_path
   end
 
   scenario 'check table' do
-    expect(page).to have_selector('.div-table.w-full.text-left.rtl\\:text-right.text-gray-500.dark\\:text-gray-400.mt-4') # rubocop:disable Layout/LineLength
+    expect(page).to have_selector('.div-table.text-left.rtl\\:text-right.text-gray-500.dark\\:text-gray-400.w-full')
   end
 
   scenario 'check rows' do

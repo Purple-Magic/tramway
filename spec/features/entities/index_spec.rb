@@ -3,15 +3,17 @@
 feature 'Entities Index Page', :js, type: :feature do
   before { Post.destroy_all }
 
-  scenario 'displays table header' do
-    visit '/admin/posts'
+  context 'with default setup' do
+    scenario 'displays table header' do
+      visit '/admin/posts'
 
-    within '.div-table' do
-      expect(page).to have_selector('.div-table-row', count: 1)
+      within '.div-table' do
+        expect(page).to have_selector('.div-table-row', count: 1)
 
-      within first('.div-table-row') do
-        expect(page).to have_selector('.div-table-cell', text: 'Title')
-        expect(page).to have_selector('.div-table-cell', text: 'User')
+        within first('.div-table-row') do
+          expect(page).to have_selector('.div-table-cell', text: 'Title')
+          expect(page).to have_selector('.div-table-cell', text: 'User')
+        end
       end
     end
   end
@@ -23,6 +25,8 @@ feature 'Entities Index Page', :js, type: :feature do
         create :comment, post:
       end
     end
+
+    let(:row_selector) { '.div-table-row.grid[role="row"]:not([aria-label="Table Header"]' }
 
     scenario 'successfully responds' do
       visit '/admin/posts'
@@ -44,8 +48,6 @@ feature 'Entities Index Page', :js, type: :feature do
       expect(page).to have_selector('.div-table', text: '', visible: true)
     end
 
-    let(:row_selector) { '.div-table-row.grid[role="row"]:not([aria-label="Table Header"]' }
-
     scenario 'displays rows of the table with correct data' do
       visit '/admin/posts'
 
@@ -56,7 +58,12 @@ feature 'Entities Index Page', :js, type: :feature do
 
     context 'without scope' do
       let(:article_count) { 3 }
-      before { create_list :article, article_count }
+
+      before do
+        Article.destroy_all
+
+        create_list :article, article_count
+      end
 
       scenario 'displays exact number of rows' do
         visit '/admin/articles'
@@ -69,7 +76,10 @@ feature 'Entities Index Page', :js, type: :feature do
 
     context 'with scope' do
       let(:posts_count) { 2 }
-      before { Post.first(posts_count).each(&:publish!) }
+
+      before do
+        Post.all.sample(2).each { _1.update! aasm_state: :published }
+      end
 
       scenario 'displays exact number of rows' do
         visit '/admin/posts'

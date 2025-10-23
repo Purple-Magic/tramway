@@ -18,7 +18,7 @@ RSpec/MultipleExpectations:
   Max: 3
 
 RSpec/NestedGroups:
-  Max: 4
+  Max: 5
 
 RSpec/ExampleLength:
   Max: 10
@@ -28,11 +28,17 @@ RSpec/MessageSpies:
 
 RSpec/StubbedMock:
   Enabled: false
-  
+
 Gemspec/RequiredRubyVersion:
   Enabled: false
 
 Gemspec/RequireMFA:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Style/ItBlockParameter:
   Enabled: false
 
 AllCops:

@@ -17,7 +17,7 @@ Tramway.configure do |config|
       name: :comment,
       pages: [
         {
-          action: :index,
+          action: :index
         }
       ]
     },

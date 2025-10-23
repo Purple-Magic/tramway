@@ -17,7 +17,8 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
 
       view.tramway_form_for(object)
 
-      expect(view).to have_received(:form_for).with(object, hash_including(builder: Tailwinds::Form::Builder, size: :middle))
+      expect(view).to have_received(:form_for).with(object,
+                                                    hash_including(builder: Tailwinds::Form::Builder, size: :middle))
     end
 
     it 'forwards arguments and options to form_for' do

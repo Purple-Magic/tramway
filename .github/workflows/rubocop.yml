@@ -9,12 +9,10 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.7
 
-      - name: Clone current repo
-        uses: actions/checkout@master
-        with:
-          repository: purple-magic/tramway
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Install
         run: |
@@ -22,4 +20,4 @@ jobs:
 
       - name: Rubocop
         run: |
-          rubocop -d
+          rubocop -d -c .rubocop.yml

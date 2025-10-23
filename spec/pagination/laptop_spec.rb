@@ -24,11 +24,11 @@ feature 'Order Index Page', type: %i[feature admin] do
       expect(page).to have_link('Last', href: users_path(page: 5))
     end
 
-    include_examples 'Click on Page', '2'
-    include_examples 'Click on Page', '3'
-    include_examples 'Click on Page', '4'
-    include_examples 'Click on Page', '5'
-    include_examples 'Click on Page', '2', 'Next'
-    include_examples 'Click on Page', '5', 'Last'
+    it_behaves_like 'Click on Page', '2'
+    it_behaves_like 'Click on Page', '3'
+    it_behaves_like 'Click on Page', '4'
+    it_behaves_like 'Click on Page', '5'
+    it_behaves_like 'Click on Page', '2', 'Next'
+    it_behaves_like 'Click on Page', '5', 'Last'
   end
 end

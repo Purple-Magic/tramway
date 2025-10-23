@@ -24,16 +24,7 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :decorator
   config.include FactoryBot::Syntax::Methods
 
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.around do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
-  end
+  config.use_transactional_fixtures = false
 end
 
 Capybara.register_driver :headless_chrome do |app|

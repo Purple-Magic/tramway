@@ -99,13 +99,7 @@ module Tailwinds
       end
 
       def default_options(attribute, options)
-        {
-          attribute:,
-          label: label_build(attribute, options),
-          for: for_id(attribute),
-          options:,
-          size: form_size
-        }
+        { attribute:, label: label_build(attribute, options), for: for_id(attribute), options:, size: form_size }
       end
 
       # :reek:UtilityFunction
