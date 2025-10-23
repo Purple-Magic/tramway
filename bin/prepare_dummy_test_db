@@ -64,9 +64,13 @@ with_sqlite_guard do
           ActiveRecord::Base.schema_migration
         end
 
-      schema_migration ||= ActiveRecord::SchemaMigration if defined?(ActiveRecord::SchemaMigration)
+      schema_migration = nil unless schema_migration&.respond_to?(:create_table)
 
-      ActiveRecord::MigrationContext.new(migrations_paths, schema_migration)
+      if schema_migration
+        ActiveRecord::MigrationContext.new(migrations_paths, schema_migration)
+      else
+        ActiveRecord::MigrationContext.new(migrations_paths)
+      end
     end
 
   if migration_context
