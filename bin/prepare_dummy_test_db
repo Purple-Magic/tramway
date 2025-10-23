@@ -4,23 +4,57 @@
 ENV['RAILS_ENV'] ||= 'test'
 ENV['RACK_ENV'] ||= 'test'
 
-require_relative '../spec/dummy/config/environment'
+def sqlite_error?(error)
+  return false unless error.respond_to?(:message)
 
-# Ensure the schema file is not rewritten when migrations run.
-if ActiveRecord::Base.respond_to?(:dump_schema_after_migration=)
-  ActiveRecord::Base.dump_schema_after_migration = false
-elsif defined?(Rails) && Rails.application.config.respond_to?(:active_record)
-  Rails.application.config.active_record.dump_schema_after_migration = false
+  error.respond_to?(:name) && error.name == 'sqlite3' || error.message.include?('sqlite3')
 end
 
-migration_context =
-  if ActiveRecord::Base.connection.respond_to?(:migration_context)
-    ActiveRecord::Base.connection.migration_context
-  else
-    ActiveRecord::MigrationContext.new(
-      Rails.root.join('db/migrate').to_s,
-      ActiveRecord::Base.connection.schema_migration
-    )
+def find_sqlite_error(error)
+  current = error
+
+  while current
+    return current if sqlite_error?(current)
+
+    current = current.cause if current.respond_to?(:cause)
+  end
+end
+
+def abort_with_sqlite_hint(error)
+  warn(error.message)
+  warn
+  warn 'SQLite3 must be available to prepare the dummy test database.'
+  warn 'Run this script through an Appraisal that depends on sqlite3, for example:'
+  warn '  bundle exec appraisal rails-7.2 ruby bin/prepare_dummy_test_db'
+  exit 1
+end
+
+def with_sqlite_guard
+  yield
+rescue LoadError, StandardError => e
+  sqlite_error = find_sqlite_error(e)
+  sqlite_error ? abort_with_sqlite_hint(sqlite_error) : raise
+end
+
+with_sqlite_guard do
+  require_relative '../spec/dummy/config/environment'
+
+  # Ensure the schema file is not rewritten when migrations run.
+  if ActiveRecord::Base.respond_to?(:dump_schema_after_migration=)
+    ActiveRecord::Base.dump_schema_after_migration = false
+  elsif defined?(Rails) && Rails.application.config.respond_to?(:active_record)
+    Rails.application.config.active_record.dump_schema_after_migration = false
   end
 
-migration_context.migrate
+  migration_context =
+    if ActiveRecord::Base.connection.respond_to?(:migration_context)
+      ActiveRecord::Base.connection.migration_context
+    else
+      ActiveRecord::MigrationContext.new(
+        Rails.root.join('db/migrate').to_s,
+        ActiveRecord::Base.connection.schema_migration
+      )
+    end
+
+  migration_context.migrate
+end
