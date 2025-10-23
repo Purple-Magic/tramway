@@ -22,4 +22,4 @@ jobs:
 
       - name: Rubocop
         run: |
-          rubocop -d
+          rubocop -d -c .rubocop.yml
