@@ -2,6 +2,8 @@
 
 feature 'Table Base Spec', :js, type: :feature do
   before do
+    User.destroy_all
+
     create_list(:user, rand(1..10))
 
     visit users_path

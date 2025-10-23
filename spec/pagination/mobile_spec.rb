@@ -6,6 +6,8 @@ feature 'Order Index Page on Mobile', type: %i[feature admin] do
   before do
     Capybara.javascript_driver = :headless_chrome_mobile
 
+    User.destroy_all
+
     create_list :user, 125
 
     visit users_path
