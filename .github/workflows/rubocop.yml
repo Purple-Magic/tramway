@@ -9,7 +9,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.1
+          ruby-version: 3.4.7
 
       - name: Clone current repo
         uses: actions/checkout@master
@@ -22,4 +22,4 @@ jobs:
 
       - name: Rubocop
         run: |
-          rubocop -d
+          bundle exec rubocop -d
