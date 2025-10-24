@@ -13,8 +13,20 @@ module Tramway
         )
       end
 
-      def tramway_table(**options)
-        component 'tailwinds/table', options:
+      def tramway_table(**options, &)
+        component 'tailwinds/table', options:, &
+      end
+
+      def tramway_row(**options, &)
+        component 'tailwinds/table/row',
+                  cells: options.delete(:cells),
+                  href: options.delete(:href),
+                  options:,
+                  &
+      end
+
+      def tramway_cell(&)
+        component 'tailwinds/table/cell', &
       end
 
       def tramway_button(path:, text: nil, method: :get, **options)
