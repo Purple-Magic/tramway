@@ -32,6 +32,7 @@ gem "tramway"
 gem "haml-rails"
 gem "kaminari"
 gem "view_component"
+gem 'dry-initializer'
 ```
 
 OR
