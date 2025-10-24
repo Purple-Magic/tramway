@@ -8,11 +8,18 @@ module Tramway
       desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
 
       def ensure_dependencies
-        gem_dependencies.each do |dependency|
-          next if gemfile_contains?(dependency[:name])
-
-          append_to_file 'Gemfile', "\n#{dependency[:declaration]}\n"
+        missing_dependencies = gem_dependencies.reject do |dependency|
+          gemfile_contains?(dependency[:name])
         end
+
+        return if missing_dependencies.empty?
+
+        append_to_file 'Gemfile', <<~GEMS
+
+          # Tramway dependencies
+          #{missing_dependencies.map { |dependency| dependency[:declaration] }.join("\n          ")}
+
+        GEMS
       end
 
       def ensure_tailwind_safelist
