@@ -12,6 +12,21 @@ module Tramway
           &
         )
       end
+
+      def tramway_table(**options)
+        component 'tailwinds/table', options:
+      end
+
+      def tramway_button(path:, text: nil, method: :get, **options)
+        component 'tailwinds/button',
+                  text:,
+                  path:,
+                  method:,
+                  color: options.delete(:color),
+                  type: options.delete(:type),
+                  size: options.delete(:size),
+                  options:
+      end
     end
   end
 end
