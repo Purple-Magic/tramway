@@ -16,8 +16,8 @@ module Tramway
 
         append_to_file 'Gemfile', <<~GEMS
 
-          # Tramway dependencies
-          #{missing_dependencies.map { |dependency| dependency[:declaration] }.join("\n          ")}
+# Tramway dependencies
+#{missing_dependencies.map { |dependency| dependency[:declaration] }.join("\n")}
 
         GEMS
       end
