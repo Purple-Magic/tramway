@@ -38,7 +38,7 @@ gem 'dry-initializer'
 OR
 
 ```shell
-bundle add tramway view_component kaminari view_component
+bundle add tramway view_component kaminari view_component dry-initializer
 ```
 
 ## Getting Started
