@@ -27,6 +27,10 @@ module Tramway
                   size: options.delete(:size),
                   options:
       end
+
+      def tramway_back_button
+        component 'tailwinds/back_button'
+      end
     end
   end
 end
