@@ -16,10 +16,12 @@ module Tailwinds
 
         component_class = "Tailwinds::Form::#{component_name.to_s.camelize}FieldComponent".constantize
 
-        render(new(component_class,
-                   input: input(input_method),
-                   value: get_value(attribute, sanitized_options),
-                   **default_options(attribute, sanitized_options)), &)
+        render(component_class.new(
+                 input: input(input_method),
+                 value: get_value(attribute, sanitized_options),
+                 **default_options(attribute, sanitized_options)
+               ),
+               &)
       end
 
       def text_field(attribute, **, &)

@@ -191,7 +191,7 @@ describe Tailwinds::Form::Builder, type: :view do
   end
 
   describe '#multiselect' do
-    let(:collection) { [['Read', 'read'], ['Write', 'write']] }
+    let(:collection) { [%w[Read read], %w[Write write]] }
     let(:output) { builder.multiselect :permissions, collection }
 
     it 'renders multiselect wrapper with controller and options' do
