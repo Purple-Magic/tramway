@@ -13,7 +13,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
   let(:template_tailwind_config_path) { File.expand_path('../../../config/tailwind.config.js', __dir__) }
 
   after do
-    FileUtils.remove_entry(destination_root) if File.exist?(destination_root)
+    FileUtils.rm_rf(destination_root)
   end
 
   def run_generator

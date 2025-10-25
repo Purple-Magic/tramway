@@ -33,6 +33,9 @@ RSpec/MessageSpies:
 RSpec/StubbedMock:
   Enabled: false
 
+RSpec/ExampleLength:
+  Enabled: false
+
 Gemspec/RequiredRubyVersion:
   Enabled: false
 
