@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 # NOTE: Tramway::BaseForm is responsible for Tramway Form basic logic, so spec/forms is the best place for it
 # rubocop:disable RSpec/SpecFilePathFormat
 describe Tramway::BaseForm do

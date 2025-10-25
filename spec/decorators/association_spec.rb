@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 # NOTE: this file contains tests about associations, so it's better to have the whole logic in one file
 # rubocop:disable RSpec/MultipleDescribes
 describe UserDecorator do

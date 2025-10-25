@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 # NOTE: AdminForm is a dummy class, so there is no reason to store these tests following name conventions
 # rubocop:disable RSpec/SpecFilePathFormat
 describe AdminForm do

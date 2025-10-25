@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 shared_examples 'Tramway Config Entity human_name' do |name|
   subject { described_class.new(name:) }
 

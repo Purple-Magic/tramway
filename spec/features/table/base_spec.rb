@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 feature 'Table Base Spec', :js, type: :feature do
   before do
     User.destroy_all
