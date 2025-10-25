@@ -14,6 +14,10 @@ Metrics/MethodLength:
   Exclude:
     - spec/dummy/db/migrate/**
 
+Metrics/AbcSize:
+  Exclude:
+    - lib/generators/**/*.rb
+
 RSpec/MultipleExpectations:
   Max: 3
 

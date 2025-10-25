@@ -4,6 +4,8 @@ require 'rails/generators'
 
 module Tramway
   module Generators
+    # Running `rails generate tramway:install` will invoke this generator
+    #
     class InstallGenerator < Rails::Generators::Base
       desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
 
@@ -16,8 +18,8 @@ module Tramway
 
         append_to_file 'Gemfile', <<~GEMS
 
-# Tramway dependencies
-#{missing_dependencies.map { |dependency| dependency[:declaration] }.join("\n")}
+          # Tramway dependencies
+          #{missing_dependencies.pluck(:declaration).join("\n")}
 
         GEMS
       end
@@ -54,7 +56,7 @@ module Tramway
         return false unless File.exist?(gemfile_path)
 
         content = File.read(gemfile_path)
-        content.match?(/^\s*gem ['\"]#{Regexp.escape(name)}['\"]/)
+        content.match?(/^\s*gem ['"]#{Regexp.escape(name)}['"]/)
       end
 
       def tailwind_config_path
