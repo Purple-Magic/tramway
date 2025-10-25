@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 feature 'MultiselectComponent', :js, type: :feature do
   before do
     visit new_user_path

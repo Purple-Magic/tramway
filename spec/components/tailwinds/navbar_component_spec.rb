@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 describe Tailwinds::NavbarComponent, type: :component do
   context 'with title checks' do
     it 'renders title' do

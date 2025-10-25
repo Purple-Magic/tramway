@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 require 'tramway/helpers/views_helper'
 require 'support/view_helpers'
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 require 'support/view_helpers'
 
 describe Tailwinds::Form::Builder, type: :view do
@@ -65,6 +66,24 @@ describe Tailwinds::Form::Builder, type: :view do
       it 'gets value from object' do
         expect(output).to have_selector "input[value='#{email}']"
       end
+    end
+  end
+
+  describe '#email_field' do
+    let(:output) { builder.email_field :email }
+
+    it 'renders email input with tailwind classes' do
+      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'input[type="email"].text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+    end
+  end
+
+  describe '#number_field' do
+    let(:output) { builder.number_field :id }
+
+    it 'renders number input with tailwind classes' do
+      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'input[type="number"].text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
     end
   end
 

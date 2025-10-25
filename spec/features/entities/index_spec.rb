@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 feature 'Entities Index Page', :js, type: :feature do
   before { Post.destroy_all }
 

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 describe Tramway::Helpers::FormHelper, type: :helper do
   let(:dummy_class) do
     Class.new do

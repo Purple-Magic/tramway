@@ -29,16 +29,17 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem "tramway"
-gem "haml-rails"
-gem "kaminari"
-gem "view_component"
 ```
 
-OR
+Then install Tramway and its dependencies:
 
 ```shell
-bundle add tramway view_component kaminari view_component
+bundle install
+bin/rails g tramway:install
 ```
+
+The install generator adds the required gems (`haml-rails`, `kaminari`, `view_component`, and `dry-initializer`) to your
+application's Gemfile—if they are not present—and appends the Tailwind safelist configuration Tramway ships with.
 
 ## Getting Started
 
@@ -78,7 +79,9 @@ end
 
 **Step 4**
 
-Copy this [file](https://github.com/Purple-Magic/tramway/blob/main/config/tailwind.config.js) to config/tailwind.config.js
+If you ran `bin/rails g tramway:install`, the Tailwind safelist was already appended to `config/tailwind.config.js`.
+Otherwise, copy this [file](https://github.com/Purple-Magic/tramway/blob/main/config/tailwind.config.js) to
+`config/tailwind.config.js`.
 
 
 **Step 5**
@@ -581,6 +584,7 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
 ```ruby
 = tramway_form_for @user do |f|
   = f.text_field :text
+  = f.email_field :email
   = f.password_field :password
   = f.select :role, [:admin, :user]
   = f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']]
@@ -592,11 +596,37 @@ will render [this](https://play.tailwindcss.com/xho3LfjKkK)
 
 Available form helpers:
 * text_field
+* email_field
 * password_field
 * file_field
 * select
 * multiselect ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
+
+**Examples**
+
+1. Sign In Form for `devise` authentication
+
+*app/views/devise/sessions/new.html.haml*
+```haml
+  = tramway_form_for(resource, as: resource_name, url: session_path(resource_name), class: 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4') do |f|
+    = component 'forms/errors', record: resource
+
+    = f.text_field :email, placeholder: "Your email"
+    = f.password_field :password, placeholder: "Your password"
+
+    = f.submit "Sign In"
+```
+
+2. Sign In Form for Rails authorization
+
+*app/views/sessions/new.html.haml*
+```haml
+= form_with url: login_path, scope: :session, local: true, builder: Tailwinds::Form::Builder do |form|
+    = form.email_field :email
+    = form.password_field :password
+    = form.submit "Log in"
+```
 
 #### Stimulus-based inputs
 
