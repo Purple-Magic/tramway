@@ -1,9 +1,14 @@
 module.exports = {
   safelist: [
+    // === Navbar ===
+    'ml-4',
+    
     // === Custom table layout utilities ===
     'div-table',
     'div-table-row',
     'div-table-cell',
+    'sm:text-base',
+    'last:border-b-0',
 
     // === Visibility and typography helpers ===
     'hidden',
@@ -127,5 +132,6 @@ module.exports = {
     'outline-none',
     'h-full',
     'm-1',
+    'hover:bg-teal-100',
   ],
 }
