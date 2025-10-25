@@ -68,6 +68,33 @@ describe Tailwinds::Form::Builder, type: :view do
     end
   end
 
+  describe '#email_field' do
+    let(:output) { builder.email_field :email }
+
+    it 'renders email input with tailwind classes' do
+      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'input[type="email"].text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+    end
+  end
+
+  describe '#number_field' do
+    let(:output) { builder.number_field :id }
+
+    it 'renders number input with tailwind classes' do
+      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'input[type="number"].text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+    end
+  end
+
+  describe '#text_area' do
+    let(:output) { builder.text_area :personal_info }
+
+    it 'renders text area with tailwind classes' do
+      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'textarea.text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+    end
+  end
+
   describe '#password_field' do
     let(:output) do
       builder.password_field :password
@@ -160,6 +187,16 @@ describe Tailwinds::Form::Builder, type: :view do
       it 'gets value from object' do
         expect(output).to have_selector 'option[value="admin"][selected]'
       end
+    end
+  end
+
+  describe '#multiselect' do
+    let(:collection) { [['Read', 'read'], ['Write', 'write']] }
+    let(:output) { builder.multiselect :permissions, collection }
+
+    it 'renders multiselect wrapper with controller and options' do
+      expect(output).to have_selector "div.flex.flex-col.relative[data-controller~='multiselect']"
+      expect(output).to have_selector 'div[data-multiselect-items-value]'
     end
   end
 end
