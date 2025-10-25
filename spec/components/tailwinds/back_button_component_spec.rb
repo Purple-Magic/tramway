@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 describe Tailwinds::BackButtonComponent, type: :component do
   before do
     allow(I18n).to receive(:t).and_call_original

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
+
 describe Tailwinds::ButtonComponent, type: :component do
   context 'when text is provided' do
     let(:component) { described_class.new(path: '/projects', text: 'View projects') }
