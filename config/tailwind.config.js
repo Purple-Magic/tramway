@@ -19,6 +19,7 @@ module.exports = {
     'text-right',
 
     // === Grid templates used for configurable layouts ===
+    'grid',
     'grid-cols-1',
     'grid-cols-2',
     'grid-cols-3',
