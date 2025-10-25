@@ -14,7 +14,7 @@ module Tailwinds
       def common_field(component_name, input_method, attribute, **options, &)
         sanitized_options = sanitize_options(options)
 
-        component_class = "Tailwinds::Form::#{component_name}FieldComponent".constantize
+        component_class = "Tailwinds::Form::#{component_name.to_s.camelize}FieldComponent".constantize
 
         render(new(component_class,
                    input: input(input_method),
