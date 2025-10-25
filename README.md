@@ -584,6 +584,7 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
 ```ruby
 = tramway_form_for @user do |f|
   = f.text_field :text
+  = f.email_field :email
   = f.password_field :password
   = f.select :role, [:admin, :user]
   = f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']]
@@ -595,6 +596,7 @@ will render [this](https://play.tailwindcss.com/xho3LfjKkK)
 
 Available form helpers:
 * text_field
+* email_field
 * password_field
 * file_field
 * select
