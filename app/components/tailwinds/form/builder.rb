@@ -92,7 +92,7 @@ module Tailwinds
       end
 
       def get_value(attribute, options)
-        options[:value] || object.public_send(attribute)
+        options[:value] || (object.present? ? object.public_send(attribute) : nil)
       end
 
       def default_options(attribute, options)
