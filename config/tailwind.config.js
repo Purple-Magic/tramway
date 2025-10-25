@@ -104,6 +104,8 @@ module.exports = {
     'disabled:text-gray-400',
     'disabled:cursor-not-allowed',
     'mb-4',
+    'bg-red-500',
+    'hover:bg-red-700',
 
     // === Multiselect dropdown positioning ===
     'absolute',
