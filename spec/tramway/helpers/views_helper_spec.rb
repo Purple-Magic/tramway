@@ -11,7 +11,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
 
   describe '#tramway_form_for' do
     it 'calls form_for with the correct builder and default size' do
-      object = double('User')
+      object = Struct.new(:id).new(1)
 
       allow(view).to receive(:form_for).with(object, hash_including(builder: Tailwinds::Form::Builder, size: :middle))
 
@@ -22,7 +22,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
     end
 
     it 'forwards arguments and options to form_for' do
-      object = double('User')
+      object = Struct.new(:id).new(2)
       options = { key: 'value' }
 
       expected_options = options.merge(size: :large)
@@ -38,98 +38,103 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
   describe '#tramway_table' do
     it 'delegates to tailwinds table component with provided options and block' do
       block = proc {}
+      captured = {}
 
-      expect(view).to receive(:component) do |name, options:, &received_block|
-        expect(name).to eq 'tailwinds/table'
-        expect(options).to eq(class: 'table')
-        expect(received_block).to eq block
+      allow(view).to receive(:component) do |name, **kwargs, &received_block|
+        captured = { name:, kwargs:, block: received_block }
         :component_output
       end
 
-      expect(view.tramway_table(class: 'table', &block)).to eq :component_output
+      result = view.tramway_table(class: 'table', &block)
+
+      expect(result).to eq :component_output
+      expect(captured).to eq(name: 'tailwinds/table', kwargs: { options: { class: 'table' } }, block: block)
     end
   end
 
   describe '#tramway_row' do
-    it 'delegates to tailwinds row component with extracted options' do
-      block = proc {}
+    let(:row_block) { proc {} }
+    let(:row_component_arguments) do
+      { cells: %w[first second], href: '/rows/1', options: { class: 'row' } }
+    end
+    let(:row_helper_arguments) { { cells: %w[first second], href: '/rows/1', class: 'row' } }
 
-      expect(view).to receive(:component) do |name, cells:, href:, options:, &received_block|
-        expect(name).to eq 'tailwinds/table/row'
-        expect(cells).to eq %w[first second]
-        expect(href).to eq '/rows/1'
-        expect(options).to eq(class: 'row')
-        expect(received_block).to eq block
+    it 'delegates to tailwinds row component with extracted options' do
+      expect(view).to receive(:component).with('tailwinds/table/row', **row_component_arguments) do |&received_block|
+        expect(received_block).to be row_block
         :row_output
       end
 
-      result = view.tramway_row(cells: %w[first second], href: '/rows/1', class: 'row', &block)
-
-      expect(result).to eq :row_output
+      expect(view.tramway_row(**row_helper_arguments, &row_block)).to eq :row_output
     end
   end
 
   describe '#tramway_cell' do
-    it 'delegates to tailwinds cell component' do
-      block = proc {}
+    let(:cell_block) { proc {} }
 
-      expect(view).to receive(:component) do |name, &received_block|
-        expect(name).to eq 'tailwinds/table/cell'
-        expect(received_block).to eq block
+    it 'delegates to tailwinds cell component' do
+      expect(view).to receive(:component).with('tailwinds/table/cell') do |&received_block|
+        expect(received_block).to be cell_block
         :cell_output
       end
 
-      expect(view.tramway_cell(&block)).to eq :cell_output
+      expect(view.tramway_cell(&cell_block)).to eq :cell_output
     end
   end
 
   describe '#tramway_button' do
-    it 'delegates to tailwinds button component with defaults' do
-      expect(view).to receive(:component) do |name, text:, path:, method:, color:, type:, size:, options:|
-        expect(name).to eq 'tailwinds/button'
-        expect(text).to be_nil
-        expect(path).to eq '/dashboard'
-        expect(method).to eq :get
-        expect(color).to be_nil
-        expect(type).to be_nil
-        expect(size).to be_nil
-        expect(options).to eq({})
-        :button_output
-      end
+    let(:default_component_arguments) do
+      { text: nil, path: '/dashboard', method: :get, color: nil, type: nil, size: nil, options: {} }
+    end
 
-      expect(view.tramway_button(path: '/dashboard')).to eq :button_output
+    let(:default_helper_arguments) { { path: '/dashboard' } }
+
+    let(:custom_component_arguments) do
+      {
+        text: 'Edit',
+        path: '/users/1',
+        method: :delete,
+        color: :red,
+        type: :outline,
+        size: :small,
+        options: { data: { turbo_confirm: 'Are you sure?' } }
+      }
+    end
+
+    let(:custom_helper_arguments) do
+      {
+        path: '/users/1',
+        text: 'Edit',
+        method: :delete,
+        color: :red,
+        type: :outline,
+        size: :small,
+        data: { turbo_confirm: 'Are you sure?' }
+      }
+    end
+
+    it 'delegates to tailwinds button component with defaults' do
+      expect(view)
+        .to receive(:component)
+        .with('tailwinds/button', **default_component_arguments)
+        .and_return(:button_output)
+
+      expect(view.tramway_button(**default_helper_arguments)).to eq :button_output
     end
 
     it 'delegates to tailwinds button component with custom options' do
-      expect(view).to receive(:component) do |name, text:, path:, method:, color:, type:, size:, options:|
-        expect(name).to eq 'tailwinds/button'
-        expect(text).to eq 'Edit'
-        expect(path).to eq '/users/1'
-        expect(method).to eq :delete
-        expect(color).to eq :red
-        expect(type).to eq :outline
-        expect(size).to eq :small
-        expect(options).to eq(data: { turbo_confirm: 'Are you sure?' })
-        :custom_button_output
-      end
+      expect(view)
+        .to receive(:component)
+        .with('tailwinds/button', **custom_component_arguments)
+        .and_return(:custom_button_output)
 
-      expect(
-        view.tramway_button(
-          path: '/users/1',
-          text: 'Edit',
-          method: :delete,
-          color: :red,
-          type: :outline,
-          size: :small,
-          data: { turbo_confirm: 'Are you sure?' }
-        )
-      ).to eq :custom_button_output
+      expect(view.tramway_button(**custom_helper_arguments)).to eq :custom_button_output
     end
   end
 
   describe '#tramway_back_button' do
     it 'delegates to tailwinds back button component' do
-      expect(view).to receive(:component).with('tailwinds/back_button') { :back_button }
+      expect(view).to receive(:component).with('tailwinds/back_button').and_return(:back_button)
 
       expect(view.tramway_back_button).to eq :back_button
     end

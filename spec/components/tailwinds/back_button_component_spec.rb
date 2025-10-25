@@ -10,7 +10,9 @@ describe Tailwinds::BackButtonComponent, type: :component do
     render_inline(described_class.new)
 
     expect(page).to have_css "a[href='#']", text: 'Back'
-    expect(page).to have_css 'a.btn.btn-delete.bg-orange-500.hover\:bg-orange-700.text-white.font-bold.py-2.px-4.rounded.ml-2'
+    expect(page).to have_css(
+      'a.btn.btn-delete.bg-orange-500.hover\:bg-orange-700.text-white.font-bold.py-2.px-4.rounded.ml-2'
+    )
     expect(page).to have_css "a[onclick='window.history.back(); return false;']"
   end
 end
