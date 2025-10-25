@@ -11,34 +11,31 @@ module Tailwinds
         @form_size = options[:size] || options['size'] || :middle
       end
 
-      def text_field(attribute, **options, &)
+      def common_field(component_name, input_method, attribute, **options, &)
         sanitized_options = sanitize_options(options)
 
-        render(Tailwinds::Form::TextFieldComponent.new(
-                 input: input(:text_field),
-                 value: get_value(attribute, sanitized_options),
-                 **default_options(attribute, sanitized_options)
-               ), &)
+        component_class = "Tailwinds::Form::#{component_name}FieldComponent".constantize
+
+        render(new(component_class,
+                   input: input(input_method),
+                   value: get_value(attribute, sanitized_options),
+                   **default_options(attribute, sanitized_options)), &)
       end
 
-      def number_field(attribute, **options, &)
-        sanitized_options = sanitize_options(options)
-
-        render(Tailwinds::Form::NumberFieldComponent.new(
-                 input: input(:number_field),
-                 value: get_value(attribute, sanitized_options),
-                 **default_options(attribute, sanitized_options)
-               ), &)
+      def text_field(attribute, **, &)
+        common_text_field(:text, :text_field, attribute, **, &)
       end
 
-      def text_area(attribute, **options, &)
-        sanitized_options = sanitize_options(options)
+      def email_field(attribute, **, &)
+        common_text_field(:text, :email_field, attribute, **, &)
+      end
 
-        render(Tailwinds::Form::TextAreaComponent.new(
-                 input: input(:text_area),
-                 value: get_value(attribute, sanitized_options),
-                 **default_options(attribute, sanitized_options)
-               ), &)
+      def number_field(attribute, **, &)
+        common_text_field(:number, :number_field, attribute, **, &)
+      end
+
+      def text_area(attribute, **, &)
+        common_text_field(:text_area, :text_area, attribute, **, &)
       end
 
       def password_field(attribute, **options, &)
