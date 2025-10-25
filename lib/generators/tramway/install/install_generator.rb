@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails/generators'
+require 'fileutils'
 
 module Tramway
   module Generators
@@ -37,6 +38,21 @@ module Tramway
         File.write(tailwind_config_path, insert_entries(target_content, missing_entries))
       end
 
+      def ensure_tailwind_application_stylesheet
+        path = tailwind_application_stylesheet_path
+        FileUtils.mkdir_p(File.dirname(path))
+
+        return create_file(path, "#{tailwind_css_import_line}\n") unless File.exist?(path)
+
+        content = File.read(path)
+        return if content.include?(tailwind_css_import_line)
+
+        File.open(path, 'a') do |file|
+          file.write("\n") unless content.empty? || content.end_with?("\n")
+          file.write("#{tailwind_css_import_line}\n")
+        end
+      end
+
       private
 
       def gem_dependencies
@@ -65,6 +81,14 @@ module Tramway
 
       def gem_tailwind_config_path
         @gem_tailwind_config_path ||= File.expand_path('../../../../config/tailwind.config.js', __dir__)
+      end
+
+      def tailwind_application_stylesheet_path
+        @tailwind_application_stylesheet_path ||= File.join(destination_root, 'app/assets/tailwind/application.css')
+      end
+
+      def tailwind_css_import_line
+        '@import "tailwindcss";'
       end
 
       def create_tailwind_config

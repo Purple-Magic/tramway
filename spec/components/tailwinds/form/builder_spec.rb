@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 require 'support/view_helpers'
 
 describe Tailwinds::Form::Builder, type: :view do

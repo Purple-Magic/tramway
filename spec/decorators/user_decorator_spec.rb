@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 describe UserDecorator do
   subject(:decorated_object) { described_class.new(object) }
 

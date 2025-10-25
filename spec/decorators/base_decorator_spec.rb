@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 shared_examples 'Decorate Collection' do
   it 'calls decorate_collection with the collection' do
     expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection)

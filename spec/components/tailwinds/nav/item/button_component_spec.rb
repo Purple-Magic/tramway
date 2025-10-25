@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 describe Tailwinds::Nav::Item::ButtonComponent, type: :component do
   it 'renders button' do
     render_inline(described_class.new(href: '/test_page')) { 'Sign In' }

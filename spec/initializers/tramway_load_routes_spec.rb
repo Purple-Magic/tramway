@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'rails_helper'
 describe 'Tramway::Engine load_routes initializer', type: :routing do
   it 'defines routes for each entity in Tramway::Config.entities' do
     expect(get: '/admin/posts').to route_to(
