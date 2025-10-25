@@ -12,6 +12,14 @@ module Tramway
           &
         )
       end
+
+      def tramway_container(id: nil, &)
+        if id.present?
+          component 'tailwinds/containers/narrow', id: id, &
+        else
+          component 'tailwinds/containers/narrow', &
+        end
+      end
     end
   end
 end
