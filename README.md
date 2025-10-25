@@ -601,9 +601,9 @@ Available form helpers:
 * multiselect ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
 
-Example:
+**Examples**
 
-##### Sign In Form for `devise` authentication
+1. Sign In Form for `devise` authentication
 
 *app/views/devise/sessions/new.html.haml*
 ```haml
@@ -614,6 +614,16 @@ Example:
     = f.password_field :password, placeholder: "Your password"
 
     = f.submit "Sign In"
+```
+
+2. Sign In Form for Rails authorization
+
+*app/views/sessions/new.html.haml*
+```haml
+= form_with url: login_path, scope: :session, local: true, builder: Tailwinds::Form::Builder do |form|
+    = form.email_field :email
+    = form.password_field :password
+    = form.submit "Log in"
 ```
 
 #### Stimulus-based inputs
