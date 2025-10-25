@@ -16,6 +16,7 @@ require 'database_cleaner/active_record'
 require 'support/web_driver_helper'
 
 RSpec.configure do |config|
+  config.use_active_record = false
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
