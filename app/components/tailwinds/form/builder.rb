@@ -11,10 +11,10 @@ module Tailwinds
         @form_size = options[:size] || options['size'] || :middle
       end
 
-      def common_field(input_method, attribute, **options, &)
+      def common_field(component_name, input_method, attribute, **options, &)
         sanitized_options = sanitize_options(options)
 
-        component_class = "Tailwinds::Form::#{input_method.to_s.camelize}Component".constantize
+        component_class = "Tailwinds::Form::#{component_name.to_s.camelize}Component".constantize
 
         render(component_class.new(
                  input: input(input_method),
@@ -25,19 +25,19 @@ module Tailwinds
       end
 
       def text_field(attribute, **, &)
-        common_field(:text_field, attribute, **, &)
+        common_field(:text_field, :text_field, attribute, **, &)
       end
 
       def email_field(attribute, **, &)
-        common_field(:email_field, attribute, **, &)
+        common_field(:text_field, :email_field, attribute, **, &)
       end
 
       def number_field(attribute, **, &)
-        common_field(:number_field, attribute, **, &)
+        common_field(:number_field, :number_field, attribute, **, &)
       end
 
       def text_area(attribute, **, &)
-        common_field(:text_area, attribute, **, &)
+        common_field(:text_area, :text_area, attribute, **, &)
       end
 
       def password_field(attribute, **options, &)
