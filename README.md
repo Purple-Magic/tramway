@@ -29,17 +29,17 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem "tramway"
-gem "haml-rails"
-gem "kaminari"
-gem "view_component"
-gem 'dry-initializer'
 ```
 
-OR
+Then install Tramway and its dependencies:
 
 ```shell
-bundle add tramway view_component kaminari view_component dry-initializer
+bundle install
+bin/rails g tramway:install
 ```
+
+The install generator adds the required gems (`haml-rails`, `kaminari`, `view_component`, and `dry-initializer`) to your
+application's Gemfile—if they are not present—and appends the Tailwind safelist configuration Tramway ships with.
 
 ## Getting Started
 
@@ -79,7 +79,9 @@ end
 
 **Step 4**
 
-Copy this [file](https://github.com/Purple-Magic/tramway/blob/main/config/tailwind.config.js) to config/tailwind.config.js
+If you ran `bin/rails g tramway:install`, the Tailwind safelist was already appended to `config/tailwind.config.js`.
+Otherwise, copy this [file](https://github.com/Purple-Magic/tramway/blob/main/config/tailwind.config.js) to
+`config/tailwind.config.js`.
 
 
 **Step 5**
