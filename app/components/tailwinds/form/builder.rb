@@ -23,19 +23,19 @@ module Tailwinds
       end
 
       def text_field(attribute, **, &)
-        common_text_field(:text, :text_field, attribute, **, &)
+        common_field(:text, :text_field, attribute, **, &)
       end
 
       def email_field(attribute, **, &)
-        common_text_field(:text, :email_field, attribute, **, &)
+        common_field(:text, :email_field, attribute, **, &)
       end
 
       def number_field(attribute, **, &)
-        common_text_field(:number, :number_field, attribute, **, &)
+        common_field(:number, :number_field, attribute, **, &)
       end
 
       def text_area(attribute, **, &)
-        common_text_field(:text_area, :text_area, attribute, **, &)
+        common_field(:text_area, :text_area, attribute, **, &)
       end
 
       def password_field(attribute, **options, &)
