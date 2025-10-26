@@ -781,6 +781,33 @@ user_2 = tramway_form User.first
 user_2.object #=> returns pure user object
 ```
 
+## Configuration
+
+### Custom layout
+
+In case you wanna use a custom layout:
+
+1. Create a controller
+2. Set the layout there
+3. Set this controller as `application_controller` in Tramway initializer
+4. Reload your server
+
+**Example**
+
+*app/controllers/admin/application_controller.rb*
+```ruby
+class Admin::ApplicationController < ApplicationController
+  layout 'admin/application'
+end
+```
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.application_controller = 'Admin::ApplicationController'
+end
+```
+
 ## Articles
 * [Tramway on Rails](https://kalashnikovisme.medium.com/tramway-on-rails-32158c35ed68)
 * [Tramway is the way to deal with little things for Rails developers](https://medium.com/@kalashnikovisme/tramway-is-the-way-to-deal-with-little-things-for-rails-developers-4f502172a18c)
