@@ -148,6 +148,32 @@ Tramway.configure do |config|
 end
 ```
 
+**scope**
+
+By default, Tramway lists all records for an entity on the index page. You can narrow the records displayed by providing a
+`scope`. When set, Tramway will call the named scope on the entity before rendering the index view.
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      route: { namespace: :admin },
+      pages: [
+        {
+          action: :index,
+          scope: :active
+        }
+      ]
+    }
+  ]
+end
+```
+
+In this example, the `Campaign` entity will display only records returned by the `active` scope on its index page, while all
+other pages continue to show every record unless another scope is specified.
+
 **route_helper**
 
 To get routes Tramway generated just Tramway::Engine.
