@@ -133,11 +133,28 @@ Tramway Entity supports several options that are used in different features.
 ```ruby
 Tramway.configure do |config|
   config.entities = [
-    { name: :user, route: { namespace: :admin } },                                 # `admin_users_path` link in the Tramway Navbar
-    { name: :podcast, route: { route_method: :shows } },                           # `shows_path` link in the Tramway Navbar
-    { name: :episodes, route: { namespace: :podcasts, route_method: :episodes } }, # `podcasts_episodes_path` link in the Tramway Navbar
+    {
+      name: :user,
+      route: { namespace: :admin }
+    }, # `/admin/users` link in the Tramway Navbar
+    {
+      name: :episodes,
+      route: {
+        namespace: :podcasts,
+        route_method: :episodes
+      }
+    }, # `/podcasts/episodes` link in the Tramway Navbar
   ]
 end
+```
+
+**route_helper**
+
+To get routes Tramway generated just Tramway::Engine.
+
+```ruby
+Tramway::Engine.routes.url_helpers.users_path => '/admin/users'
+Tramway::Engine.routes.url_helpers.podcasts_episodes_path => '/podcasts/episodes'
 ```
 
 ### Tramway Decorators
