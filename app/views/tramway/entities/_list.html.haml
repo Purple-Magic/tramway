@@ -17,12 +17,12 @@
     %p.text-center.mt-10
       You should fill class-level method `self.list_attributes` inside your
       = decorator
+  - else
+    = component 'tailwinds/table' do
+      = component 'tailwinds/table/header', headers: list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
+      - @entities.each do |item|
+        = render 'tramway/entities/entity', entity: item
 
-  = component 'tailwinds/table' do
-    = component 'tailwinds/table/header', headers: list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
-    - @entities.each do |item|
-      = render 'tramway/entities/entity', entity: item
-
-    - if Tramway.config.pagination[:enabled]
-      .flex.mt-4
-        = paginate @entities, custom_path_method: "#{@model_class.model_name.plural}_path"
+      - if Tramway.config.pagination[:enabled]
+        .flex.mt-4
+          = paginate @entities, custom_path_method: "#{@model_class.model_name.plural}_path"
