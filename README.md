@@ -455,15 +455,19 @@ tramway_navbar title: 'Purple Magic', background: { color: :red, intensity: 500 
 end
 ```
 
-# Haml example
+# ERB example
 
-```haml
-= tramway_navbar title: 'Purple Magic', background: { color: :red, intensity: 500 } do |nav|
-  - nav.left do
-    - nav.item 'Users', '/users'
-    - nav.item 'Podcasts', '/podcasts'
-  - nav.right do
-    - nav.item 'Sign out', '/users/sessions', method: :delete, confirm: 'Wanna quit?'
+```erb
+<%= tramway_navbar title: 'Purple Magic', background: { color: :red, intensity: 500 } do |nav| %>
+  <% nav.left do %>
+    <%= nav.item 'Users', '/users' %>
+    <%= nav.item 'Podcasts', '/podcasts' %>
+  <% end %>
+
+  <% nav.right do %>
+    <%= nav.item 'Sign out', '/users/sessions', method: :delete, confirm: 'Wanna quit?' %>
+  <% end %>
+<% end %>
 ```
 
 will render [this](https://play.tailwindcss.com/UZPTCudFw5)
@@ -485,13 +489,16 @@ with_entities: Show Tramway Entities index page links to navbar. Default: true
 
 In case you want to hide entity links you can pass `with_entities: false`.
 
-```haml
-- if current_user.present?
-  = tramway_navbar title: 'WaiWai' do |nav|
-    - nav.left do
-      - nav.item 'Board', admin_board_path
-- else
-  = tramway_navbar title: 'WaiWai', with_entities: false
+```erb
+<% if current_user.present? %>
+  <%= tramway_navbar title: 'WaiWai' do |nav| %>
+    <% nav.left do %>
+      <%= nav.item 'Board', admin_board_path %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= tramway_navbar title: 'WaiWai', with_entities: false %>
+<% end %>
 ```
 
 #### nav.left and nav.right
@@ -529,31 +536,43 @@ end
 
 ### Tramway Table Component
 
-Tramway provides a responsive, tailwind-styled table with light and dark themes.
+Tramway provides a responsive, tailwind-styled table with light and dark themes. Use the `tramway_table`, `tramway_row`, and
+`tramway_cell` helpers to build tables with readable ERB templates while still leveraging the underlying ViewComponent
+implementations.
 
-```haml
-= component 'tailwinds/table' do
-  = component 'tailwinds/table/header', headers: ['Column 1', 'Column 2']
-  = component 'tailwinds/table/row' do
-    = component 'tailwinds/table/cell' do
+```erb
+<%= tramway_table do %>
+  <%= component 'tailwinds/table/header', headers: ['Column 1', 'Column 2'] %>
+
+  <%= tramway_row do %>
+    <%= tramway_cell do %>
       Something
-    = component 'tailwinds/table/cell' do
+    <% end %>
+    <%= tramway_cell do %>
       Another
+    <% end %>
+  <% end %>
+<% end %>
 ```
 
-`Tailwinds::TableComponent` accepts an optional `options` hash that is merged into the outer `.div-table` element. The hash is
-forwarded as HTML attributes, so you can pass things like `id`, `data` attributes, or additional classes. If you do not supply
-your own width utility (e.g. a class that starts with `w-`), the component automatically appends `w-full` to keep the table
-responsive. This allows you to extend the default styling without losing the sensible defaults provided by the component.
+`tramway_table` accepts the same optional `options` hash as `Tailwinds::TableComponent`. The hash is forwarded as HTML
+attributes, so you can pass things like `id`, `data` attributes, or additional classes. If you do not supply your own width
+utility (e.g. a class that starts with `w-`), the component automatically appends `w-full` to keep the table responsive. This
+allows you to extend the default styling without losing the sensible defaults provided by the component.
 
-```haml
-= component 'tailwinds/table', options: { class: 'max-w-3xl border border-gray-200', data: { controller: 'table' } } do
-  = component 'tailwinds/table/header', headers: ['Name', 'Email']
-  = component 'tailwinds/table/row' do
-    = component 'tailwinds/table/cell' do
-      = user.name
-    = component 'tailwinds/table/cell' do
-      = user.email
+```erb
+<%= tramway_table class: 'max-w-3xl border border-gray-200', data: { controller: 'table' } do %>
+  <%= component 'tailwinds/table/header', headers: ['Name', 'Email'] %>
+
+  <%= tramway_row do %>
+    <%= tramway_cell do %>
+      <%= user.name %>
+    <% end %>
+    <%= tramway_cell do %>
+      <%= user.email %>
+    <% end %>
+  <% end %>
+<% end %>
 ```
 
 When you render a header you can either pass the `headers:` array, as in the examples above, or render custom header content in
@@ -561,17 +580,47 @@ the block. `Tailwinds::Table::HeaderComponent` uses the length of the `headers` 
 If you omit the array and provide custom content, pass the `columns:` argument so the component knows how many grid columns to
 generate.
 
-```haml
-= component 'tailwinds/table/header', columns: 4 do
-  = component 'tailwinds/table/cell' do
+```erb
+<%= component 'tailwinds/table/header', columns: 4 do %>
+  <%= tramway_cell do %>
     Custom header cell
-  = component 'tailwinds/table/cell' do
+  <% end %>
+  <%= tramway_cell do %>
     Another header cell
-  / ...
+  <% end %>
+  <!-- ... -->
+<% end %>
 ```
 
 With this approach you control the header layout while still benefiting from the default Tailwind grid classes that the header
 component applies.
+
+### Tramway Buttons and Containers
+
+Tramway ships with helpers for common UI patterns built on top of Tailwind components.
+
+* `tramway_button` renders a button-styled link and accepts `path`, optional `text`, HTTP `method`, and styling options such as
+  `color`, `type`, and `size`. All additional keyword arguments are forwarded to the underlying component as HTML attributes.
+
+  ```erb
+  <%= tramway_button path: user_path(user), text: 'View profile', color: :emerald, data: { turbo: false } %>
+  ```
+
+* `tramway_back_button` renders a standardized "Back" link.
+
+  ```erb
+  <%= tramway_back_button %>
+  ```
+
+* `tramway_container` wraps content in a responsive, narrow layout container. Pass an `id` if you need to target the container
+  with JavaScript or CSS.
+
+  ```erb
+  <%= tramway_container id: 'user-settings' do %>
+    <h2 class="text-xl font-semibold">Settings</h2>
+    <p class="mt-2 text-gray-600">Update your preferences below.</p>
+  <% end %>
+  ```
 
 ### Tailwind-styled forms
 
@@ -581,15 +630,16 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 
 Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default.
 
-```ruby
-= tramway_form_for @user do |f|
-  = f.text_field :text
-  = f.email_field :email
-  = f.password_field :password
-  = f.select :role, [:admin, :user]
-  = f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']]
-  = f.file_field :file
-  = f.submit "Create User"
+```erb
+<%= tramway_form_for @user do |f| %>
+  <%= f.text_field :text %>
+  <%= f.email_field :email %>
+  <%= f.password_field :password %>
+  <%= f.select :role, [:admin, :user] %>
+  <%= f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
+  <%= f.file_field :file %>
+  <%= f.submit 'Create User' %>
+<% end %>
 ```
 
 will render [this](https://play.tailwindcss.com/xho3LfjKkK)
@@ -607,25 +657,27 @@ Available form helpers:
 
 1. Sign In Form for `devise` authentication
 
-*app/views/devise/sessions/new.html.haml*
-```haml
-  = tramway_form_for(resource, as: resource_name, url: session_path(resource_name), class: 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4') do |f|
-    = component 'forms/errors', record: resource
+*app/views/devise/sessions/new.html.erb*
+```erb
+<%= tramway_form_for(resource, as: resource_name, url: session_path(resource_name), class: 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4') do |f| %>
+  <%= component 'forms/errors', record: resource %>
 
-    = f.text_field :email, placeholder: "Your email"
-    = f.password_field :password, placeholder: "Your password"
+  <%= f.text_field :email, placeholder: 'Your email' %>
+  <%= f.password_field :password, placeholder: 'Your password' %>
 
-    = f.submit "Sign In"
+  <%= f.submit 'Sign In' %>
+<% end %>
 ```
 
 2. Sign In Form for Rails authorization
 
-*app/views/sessions/new.html.haml*
-```haml
-= form_with url: login_path, scope: :session, local: true, builder: Tailwinds::Form::Builder do |form|
-    = form.email_field :email
-    = form.password_field :password
-    = form.submit "Log in"
+*app/views/sessions/new.html.erb*
+```erb
+<%= form_with url: login_path, scope: :session, local: true, builder: Tailwinds::Form::Builder do |form| %>
+  <%= form.email_field :email %>
+  <%= form.password_field :password %>
+  <%= form.submit 'Log in' %>
+<% end %>
 ```
 
 #### Stimulus-based inputs
@@ -636,10 +688,11 @@ Available form helpers:
 
 In case you want to use tailwind-styled multiselect this way
 
-```haml
-= tramway_form_for @user do |f|
-  = f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']]
-  #- ...
+```erb
+<%= tramway_form_for @user do |f| %>
+  <%= f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
+  <%# ... %>
+<% end %>
 ```
 
 you should add Tramway Multiselect Stimulus controller to your application.
@@ -663,9 +716,10 @@ application.register('multiselect', Multiselect) // register Multiselect control
 
 Use Stimulus `change` action with Tramway Multiselect
 
-```ruby
-= tramway_form_for @user do |f|
-  = f.multiselect :role, data: { action: 'change->user-form#updateForm' } # user-form is your Stimulus controller, updateForm is a method inside user-form Stimulus controller
+```erb
+<%= tramway_form_for @user do |f| %>
+  <%= f.multiselect :role, data: { action: 'change->user-form#updateForm' } %>
+<% end %>
 ```
 
 ### Tailwind-styled pagination for Kaminari
@@ -687,9 +741,9 @@ Tramway.configure do |config|
 end
 ```
 
-*app/views/users/index.html.haml*
-```haml
-= paginate @users # it will render tailwind-styled pagination buttons by default
+*app/views/users/index.html.erb*
+```erb
+<%= paginate @users %> <%# it will render tailwind-styled pagination buttons by default %>
 ```
 
 Pagination buttons looks like [this](https://play.tailwindcss.com/mqgDS5l9oY)
