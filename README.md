@@ -783,9 +783,12 @@ user_2.object #=> returns pure user object
 
 ## Articles
 * [Tramway on Rails](https://kalashnikovisme.medium.com/tramway-on-rails-32158c35ed68)
+* [Tramway is the way to deal with little things for Rails developers](https://medium.com/@kalashnikovisme/tramway-is-the-way-to-deal-with-little-things-for-rails-developers-4f502172a18c)
 * [Delegating ActiveRecord methods to decorators in Rails](https://kalashnikovisme.medium.com/delegating-activerecord-methods-to-decorators-in-rails-4e4ec1c6b3a6)
 * [Behave as ActiveRecord. Why do we want objects to be AR lookalikes?](https://kalashnikovisme.medium.com/behave-as-activerecord-why-do-we-want-objects-to-be-ar-lookalikes-d494d692e1d3)
 * [Decorating associations in Rails with Tramway](https://kalashnikovisme.medium.com/decorating-associations-in-rails-with-tramway-b46a28392f9e)
+* [Easy-to-use Tailwind-styled multi-select built with Stimulus](https://medium.com/@kalashnikovisme/easy-to-use-tailwind-styled-multi-select-built-with-stimulus-b3daa9e307aa)
+* 
 
 ## Contributing
 
