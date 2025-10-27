@@ -21,7 +21,6 @@ module Tramway
         component 'tailwinds/table/header',
                   headers:,
                   columns:,
-                  options:,
                   &
       end
 
