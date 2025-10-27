@@ -17,6 +17,14 @@ module Tramway
         component 'tailwinds/table', options:, &
       end
 
+      def tramway_header(headers: nil, columns: nil, &)
+        component 'tailwinds/table/header',
+                  headers:,
+                  columns:,
+                  options:,
+                  &
+      end
+
       def tramway_row(**options, &)
         component 'tailwinds/table/row',
                   cells: options.delete(:cells),

@@ -585,7 +585,7 @@ implementations.
 
 ```erb
 <%= tramway_table do %>
-  <%= component 'tailwinds/table/header', headers: ['Column 1', 'Column 2'] %>
+  <%= tramway_header headers: ['Column 1', 'Column 2'] %>
 
   <%= tramway_row do %>
     <%= tramway_cell do %>
@@ -605,7 +605,7 @@ allows you to extend the default styling without losing the sensible defaults pr
 
 ```erb
 <%= tramway_table class: 'max-w-3xl border border-gray-200', data: { controller: 'table' } do %>
-  <%= component 'tailwinds/table/header', headers: ['Name', 'Email'] %>
+  <%= tramway_header', headers: ['Name', 'Email'] %>
 
   <%= tramway_row do %>
     <%= tramway_cell do %>
