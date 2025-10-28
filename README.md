@@ -646,6 +646,40 @@ Tramway ships with helpers for common UI patterns built on top of Tailwind compo
   options such as `color`, `type`, and `size`. Pass `link: true` to render a button-styled link instead. All additional keyword
   arguments are forwarded to the underlying component as HTML attributes.
 
+  The `type` option maps semantic intent to Tailwind color families. The full set of supported values is:
+
+  | Type | Color |
+  | ---- | ----- |
+  | `default`, `life` | Gray |
+  | `primary`, `hope` | Blue |
+  | `secondary` | Zinc |
+  | `success`, `will` | Green |
+  | `warning`, `greed` | Orange |
+  | `danger`, `rage` | Red |
+  | `love` | Violet |
+  | `compassion` | Indigo |
+  | `fear` | Yellow |
+
+  If none of the predefined semantic types fit your needs, you can supply a Tailwind color family directly using the `color`
+  option—for example: `color: :gray`. When you pass a custom color ensure the corresponding utility classes exist in your
+  Tailwind configuration. Add the following safelist entries (adjusting the color name as needed) to `config/tailwind.config.js`:
+
+  ```js
+  // config/tailwind.config.js
+  module.exports = {
+    // ...
+    safelist: [
+      // existing entries …
+      {
+        pattern: /(bg|hover:bg|dark:bg|dark:hover:bg)-gray-(500|600|700|800)/,
+      },
+    ],
+  }
+  ```
+
+  Tailwind will then emit the `bg-gray-500`, `hover:bg-gray-700`, `dark:bg-gray-600`, and `dark:hover:bg-gray-800` classes that
+  Tramway buttons expect when you opt into a custom color.
+
   ```erb
   <%= tramway_button path: user_path(user), text: 'View profile', color: :emerald, data: { turbo: false } %>
   ```
