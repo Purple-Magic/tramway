@@ -136,7 +136,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
           method: :delete,
           link: false,
           color: :red,
-          type: :outline,
+        type: :primary,
           size: :small,
           options: { data: { turbo_confirm: 'Are you sure?' } }
         }
@@ -148,7 +148,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
           text: 'Edit',
           method: :delete,
           color: :red,
-          type: :outline,
+          type: :primary,
           size: :small,
           data: { turbo_confirm: 'Are you sure?' }
         }

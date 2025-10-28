@@ -10,8 +10,8 @@ describe Tailwinds::ButtonComponent, type: :component do
       render_inline(component)
 
       expect(page).to have_css(
-        "form[action='/projects'] button.btn.btn-primary.flex.flex-row.py-2.px-4.cursor-pointer.bg-blue-500." \
-        'hover\\:bg-blue-700.text-white.dark\\:bg-blue-600.dark\\:hover\\:bg-blue-800.dark\\:text-gray-300',
+        "form[action='/projects'] button.btn.btn-primary.flex.flex-row.py-2.px-4.cursor-pointer.bg-gray-500." \
+        'hover\\:bg-gray-700.text-white.dark\\:bg-gray-600.dark\\:hover\\:bg-gray-800.dark\\:text-gray-300',
         text: 'View projects'
       )
     end
@@ -55,9 +55,22 @@ describe Tailwinds::ButtonComponent, type: :component do
       render_inline(component)
 
       expect(page).to have_css(
-        "a[href='/projects'].btn.btn-primary.flex.flex-row.py-2.px-4.bg-blue-500.hover\\:bg-blue-700.text-white." \
-        'dark\\:bg-blue-600.dark\\:hover\\:bg-blue-800.dark\\:text-gray-300.px-1.h-fit',
+        "a[href='/projects'].btn.btn-primary.flex.flex-row.py-2.px-4.bg-gray-500.hover\\:bg-gray-700.text-white." \
+        'dark\\:bg-gray-600.dark\\:hover\\:bg-gray-800.dark\\:text-gray-300.px-1.h-fit',
         text: 'View projects'
+      )
+    end
+  end
+
+  context 'when a semantic type is provided' do
+    let(:component) { described_class.new(path: '/projects', text: 'Celebrate', type: :love) }
+
+    it 'renders button with mapped color' do
+      render_inline(component)
+
+      expect(page).to have_css(
+        "form[action='/projects'] button.bg-violet-500.hover\\:bg-violet-700.dark\\:bg-violet-600.dark\\:hover\\:bg-violet-800",
+        text: 'Celebrate'
       )
     end
   end
