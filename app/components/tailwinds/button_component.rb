@@ -10,6 +10,7 @@ module Tailwinds
     option :type, default: -> { :default }
     option :size, default: -> { :middle }
     option :method, optional: true, default: -> { :get }
+    option :link, optional: true, default: -> { false }
     option :options, optional: true, default: -> { {} }
 
     def size_classes
@@ -25,7 +26,7 @@ module Tailwinds
       (default_classes +
         light_mode_classes +
         dark_mode_classes +
-        (method == :get ? %w[px-1 h-fit] : ['cursor-pointer'])).compact.join(' ')
+        (link ? %w[px-1 h-fit] : ['cursor-pointer'])).compact.join(' ')
     end
 
     def default_classes

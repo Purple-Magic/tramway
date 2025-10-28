@@ -1,10 +1,10 @@
 - if text.present?
-  - if method == :get
+  - if link
     = link_to text, path, class: classes, **options.except(:class)
   - else
     = button_to text, path, method:, class: classes, **options.except(:class)
 - else
-  - if method == :get
+  - if link
     = link_to path, class: classes, **options.except(:class) do
       = content
   - else

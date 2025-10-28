@@ -85,7 +85,16 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
 
   describe '#tramway_button' do
     let(:default_component_arguments) do
-      { text: nil, path: '/dashboard', method: :get, color: nil, type: nil, size: nil, options: {} }
+      {
+        text: nil,
+        path: '/dashboard',
+        method: :get,
+        link: false,
+        color: nil,
+        type: nil,
+        size: nil,
+        options: {}
+      }
     end
 
     let(:default_helper_arguments) { { path: '/dashboard' } }
@@ -95,6 +104,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
         text: 'Edit',
         path: '/users/1',
         method: :delete,
+        link: false,
         color: :red,
         type: :outline,
         size: :small,
@@ -114,6 +124,14 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
       }
     end
 
+    let(:link_component_arguments) do
+      default_component_arguments.merge(link: true)
+    end
+
+    let(:link_helper_arguments) do
+      default_helper_arguments.merge(link: true)
+    end
+
     it 'delegates to tailwinds button component with defaults' do
       expect(view)
         .to receive(:component)
@@ -130,6 +148,15 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
         .and_return(:custom_button_output)
 
       expect(view.tramway_button(**custom_helper_arguments)).to eq :custom_button_output
+    end
+
+    it 'delegates to tailwinds button component when rendering a link' do
+      expect(view)
+        .to receive(:component)
+        .with('tailwinds/button', **link_component_arguments)
+        .and_return(:link_button_output)
+
+      expect(view.tramway_button(**link_helper_arguments)).to eq :link_button_output
     end
   end
 
