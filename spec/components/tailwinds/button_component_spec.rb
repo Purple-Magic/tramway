@@ -33,7 +33,7 @@ describe Tailwinds::ButtonComponent, type: :component do
       render_inline(component)
 
       expect(page).to have_css(
-        "form[action='/projects/1'] button.cursor-pointer.bg-red-500.hover\\:bg-red-700.text-sm.py-1.px-1." \
+        "form[action='/projects/1'] button.bg-red-500.hover\\:bg-red-700.text-sm.py-1.px-2." \
         "extra-class[data-turbo-confirm='Are you sure?']",
         text: 'Delete'
       )
