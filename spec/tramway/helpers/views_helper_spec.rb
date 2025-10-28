@@ -18,8 +18,9 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
 
       view.tramway_form_for(object)
 
-      expect(view).to have_received(:form_for).with(object,
-                                                    hash_including(builder: Tailwinds::Form::Builder, size: :middle))
+      expect(view).to have_received(:form_for).with(
+        object, hash_including(builder: Tailwinds::Form::Builder, size: :middle)
+      )
     end
 
     it 'forwards arguments and options to form_for' do
@@ -99,39 +100,6 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
 
     let(:default_helper_arguments) { { path: '/dashboard' } }
 
-    let(:custom_component_arguments) do
-      {
-        text: 'Edit',
-        path: '/users/1',
-        method: :delete,
-        link: false,
-        color: :red,
-        type: :outline,
-        size: :small,
-        options: { data: { turbo_confirm: 'Are you sure?' } }
-      }
-    end
-
-    let(:custom_helper_arguments) do
-      {
-        path: '/users/1',
-        text: 'Edit',
-        method: :delete,
-        color: :red,
-        type: :outline,
-        size: :small,
-        data: { turbo_confirm: 'Are you sure?' }
-      }
-    end
-
-    let(:link_component_arguments) do
-      default_component_arguments.merge(link: true)
-    end
-
-    let(:link_helper_arguments) do
-      default_helper_arguments.merge(link: true)
-    end
-
     it 'delegates to tailwinds button component with defaults' do
       expect(view)
         .to receive(:component)
@@ -141,22 +109,59 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
       expect(view.tramway_button(**default_helper_arguments)).to eq :button_output
     end
 
-    it 'delegates to tailwinds button component with custom options' do
-      expect(view)
-        .to receive(:component)
-        .with('tailwinds/button', **custom_component_arguments)
-        .and_return(:custom_button_output)
+    context 'with link arguments' do
+      let(:link_component_arguments) do
+        default_component_arguments.merge(link: true)
+      end
 
-      expect(view.tramway_button(**custom_helper_arguments)).to eq :custom_button_output
+      let(:link_helper_arguments) do
+        default_helper_arguments.merge(link: true)
+      end
+
+      it 'delegates to tailwinds button component when rendering a link' do
+        expect(view)
+          .to receive(:component)
+          .with('tailwinds/button', **link_component_arguments)
+          .and_return(:link_button_output)
+
+        expect(view.tramway_button(**link_helper_arguments)).to eq :link_button_output
+      end
     end
 
-    it 'delegates to tailwinds button component when rendering a link' do
-      expect(view)
-        .to receive(:component)
-        .with('tailwinds/button', **link_component_arguments)
-        .and_return(:link_button_output)
+    context 'with custom arguments' do
+      let(:custom_component_arguments) do
+        {
+          text: 'Edit',
+          path: '/users/1',
+          method: :delete,
+          link: false,
+          color: :red,
+          type: :outline,
+          size: :small,
+          options: { data: { turbo_confirm: 'Are you sure?' } }
+        }
+      end
 
-      expect(view.tramway_button(**link_helper_arguments)).to eq :link_button_output
+      let(:custom_helper_arguments) do
+        {
+          path: '/users/1',
+          text: 'Edit',
+          method: :delete,
+          color: :red,
+          type: :outline,
+          size: :small,
+          data: { turbo_confirm: 'Are you sure?' }
+        }
+      end
+
+      it 'delegates to tailwinds button component with custom options' do
+        expect(view)
+          .to receive(:component)
+          .with('tailwinds/button', **custom_component_arguments)
+          .and_return(:custom_button_output)
+
+        expect(view.tramway_button(**custom_helper_arguments)).to eq :custom_button_output
+      end
     end
   end
 

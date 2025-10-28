@@ -11,7 +11,7 @@ describe Tailwinds::ButtonComponent, type: :component do
 
       expect(page).to have_css(
         "form[action='/projects'] button.btn.btn-primary.flex.flex-row.py-2.px-4.cursor-pointer.bg-blue-500." \
-        "hover\\:bg-blue-700.text-white.dark\\:bg-blue-600.dark\\:hover\\:bg-blue-800.dark\\:text-gray-300",
+        'hover\\:bg-blue-700.text-white.dark\\:bg-blue-600.dark\\:hover\\:bg-blue-800.dark\\:text-gray-300',
         text: 'View projects'
       )
     end
