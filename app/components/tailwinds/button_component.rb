@@ -16,7 +16,7 @@ module Tailwinds
     def size_classes
       case size
       when :small
-        'text-sm py-1 px-1'
+        'text-sm py-1 px-2 rounded'
       when :middle
         'py-2 px-4'
       end
