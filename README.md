@@ -642,8 +642,9 @@ component applies.
 
 Tramway ships with helpers for common UI patterns built on top of Tailwind components.
 
-* `tramway_button` renders a button-styled link and accepts `path`, optional `text`, HTTP `method`, and styling options such as
-  `color`, `type`, and `size`. All additional keyword arguments are forwarded to the underlying component as HTML attributes.
+* `tramway_button` renders a button-styled form submit by default and accepts `path`, optional `text`, HTTP `method`, and styling
+  options such as `color`, `type`, and `size`. Pass `link: true` to render a button-styled link instead. All additional keyword
+  arguments are forwarded to the underlying component as HTML attributes.
 
   ```erb
   <%= tramway_button path: user_path(user), text: 'View profile', color: :emerald, data: { turbo: false } %>

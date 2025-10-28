@@ -6,12 +6,12 @@ describe Tailwinds::ButtonComponent, type: :component do
   context 'when text is provided' do
     let(:component) { described_class.new(path: '/projects', text: 'View projects') }
 
-    it 'renders link button with defaults' do
+    it 'renders button_to with defaults' do
       render_inline(component)
 
       expect(page).to have_css(
-        "a[href='/projects'].btn.btn-primary.flex.flex-row.py-2.px-4.bg-blue-500.hover\\:bg-blue-700.text-white." \
-        'dark\\:bg-blue-600.dark\\:hover\\:bg-blue-800.dark\\:text-gray-300.px-1.h-fit',
+        "form[action='/projects'] button.btn.btn-primary.flex.flex-row.py-2.px-4.cursor-pointer.bg-blue-500." \
+        'hover\\:bg-blue-700.text-white.dark\\:bg-blue-600.dark\\:hover\\:bg-blue-800.dark\\:text-gray-300',
         text: 'View projects'
       )
     end
@@ -45,6 +45,20 @@ describe Tailwinds::ButtonComponent, type: :component do
       'Open'
     end
 
-    expect(page).to have_css "a[href='/projects']", text: 'Open'
+    expect(page).to have_css "form[action='/projects'] button", text: 'Open'
+  end
+
+  context 'when rendering a link explicitly' do
+    let(:component) { described_class.new(path: '/projects', text: 'View projects', link: true) }
+
+    it 'renders a link_to element' do
+      render_inline(component)
+
+      expect(page).to have_css(
+        "a[href='/projects'].btn.btn-primary.flex.flex-row.py-2.px-4.bg-blue-500.hover\\:bg-blue-700.text-white." \
+        'dark\\:bg-blue-600.dark\\:hover\\:bg-blue-800.dark\\:text-gray-300.px-1.h-fit',
+        text: 'View projects'
+      )
+    end
   end
 end
