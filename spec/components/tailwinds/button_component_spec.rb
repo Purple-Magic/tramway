@@ -69,7 +69,8 @@ describe Tailwinds::ButtonComponent, type: :component do
       render_inline(component)
 
       expect(page).to have_css(
-        "form[action='/projects'] button.bg-violet-500.hover\\:bg-violet-700.dark\\:bg-violet-600.dark\\:hover\\:bg-violet-800",
+        "form[action='/projects'] button.bg-violet-500.hover\\:bg-violet-700.dark\\:bg-violet-600" \
+        '.dark\\:hover\\:bg-violet-800',
         text: 'Celebrate'
       )
     end
