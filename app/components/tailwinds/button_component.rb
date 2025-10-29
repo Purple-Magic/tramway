@@ -5,7 +5,7 @@ module Tailwinds
   #
   class ButtonComponent < BaseComponent
     option :text, optional: true, default: -> {}
-    option :path
+    option :path, optional: true, default: -> { '#' }
     option :color, optional: true
     option :type, optional: true
     option :size, default: -> { :middle }
@@ -14,12 +14,11 @@ module Tailwinds
     option :options, optional: true, default: -> { {} }
 
     def size_classes
-      case size
-      when :small
-        'text-sm py-1 px-2 rounded' # small button
-      when :middle
-        'py-2 px-4' # middle button
-      end
+      {
+        small: 'text-sm py-1 px-2 rounded',
+        middle: 'py-2 px-4',
+        large: 'text-lg px-5 py-3'
+      }[size]
     end
 
     TYPE_COLOR_MAP = {
@@ -37,7 +36,8 @@ module Tailwinds
       love: :violet,
       compassion: :indigo,
       compassio: :indigo,
-      fear: :yellow
+      fear: :yellow,
+      submit: :green
     }.freeze
 
     def classes
