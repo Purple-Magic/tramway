@@ -55,6 +55,7 @@ module Tailwinds
         'rounded-sm',
         'flex',
         'flex-row',
+        'whitespace-nowrap',
         size_classes.to_s,
         options[:class].to_s
       ]
