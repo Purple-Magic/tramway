@@ -14,7 +14,7 @@
   - else
     - if type&.to_sym == :submit
       %button{ type: :submit, name: :commit, class: classes, **options.except(:class) }
-        = text
+        = content
     - else
       = button_to path, method:, class: classes, **options.except(:class) do
         = content
