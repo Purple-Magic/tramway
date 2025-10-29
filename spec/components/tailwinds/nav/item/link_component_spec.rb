@@ -6,6 +6,7 @@ describe Tailwinds::Nav::Item::LinkComponent, type: :component do
     render_inline(described_class.new(href: '/test_page')) { 'Sign In' }
 
     expect(page).to have_css "a[href='/test_page']", text: 'Sign In'
+    expect(page).to have_css 'li.whitespace-nowrap'
     expect(page).to have_text 'Sign In'
   end
 
