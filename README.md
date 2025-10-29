@@ -18,11 +18,13 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
 
 Tramway is actively verified against the following Ruby and Rails versions.
 
-| Ruby \ Rails | 7.1 | 7.2 | 8.0 | 8.1 |
-| ------------- | --- | --- | --- | --- |
-| 3.2           | ✅  | ✅  | ✅  | ✅  |
-| 3.3           | ✅  | ✅  | ✅  | ✅  |
-| 3.4           | ✅  | ✅  | ✅  | ✅  |
+| Ruby \ Rails | 7.1* | 7.2 | 8.0 | 8.1 |
+| ------------- | ---- | --- | --- | --- |
+| 3.2           | ✅   | ✅  | ✅  | ✅  |
+| 3.3           | ✅   | ✅  | ✅  | ✅  |
+| 3.4           | ✅   | ✅  | ✅  | ✅  |
+
+\* Rails 7.1 receives only residual support because it no longer receives updates from the Rails core team. See the [announcement](https://rubyonrails.org/2025/10/29/new-rails-releases-and-end-of-support-announcement) for details.
 
 ## Installation
 Add this line to your application's Gemfile:
