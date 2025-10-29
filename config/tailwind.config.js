@@ -2,6 +2,7 @@ module.exports = {
   safelist: [
     // === Navbar ===
     'ml-4',
+    'text-white',
     
     // === Custom table layout utilities ===
     'div-table',
