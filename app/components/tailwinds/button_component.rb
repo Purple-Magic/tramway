@@ -37,7 +37,8 @@ module Tailwinds
       love: :violet,
       compassion: :indigo,
       compassio: :indigo,
-      fear: :yellow
+      fear: :yellow,
+      submit: :green
     }.freeze
 
     def classes
