@@ -101,6 +101,7 @@ module.exports = {
     'font-medium',
     'font-normal',
     'text-xs',
+    'whitespace-nowrap',
 
     // === Button color presets ===
     'bg-gray-500',

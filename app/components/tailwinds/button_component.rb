@@ -49,13 +49,7 @@ module Tailwinds
 
     def default_classes
       [
-        'btn',
-        'btn-primary',
-        'font-bold',
-        'rounded-sm',
-        'flex',
-        'flex-row',
-        size_classes.to_s,
+        'btn', 'btn-primary', 'font-bold', 'rounded-sm', 'flex', 'flex-row', 'whitespace-nowrap', size_classes.to_s,
         options[:class].to_s
       ]
     end
