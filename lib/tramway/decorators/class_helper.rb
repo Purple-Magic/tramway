@@ -15,7 +15,17 @@ module Tramway
           class_name = decorator_class_name(object_or_array, namespace)
           class_name.constantize
         rescue NameError
-          raise NameError, "You should define #{class_name} decorator class."
+          object = object_or_array.respond_to?(:first) ? object_or_array.first : object_or_array
+
+          base_class_name = "#{object.class.name}Decorator"
+
+          if namespace.present?
+            "#{namespace}::#{base_class_name}"
+          else
+            base_class_name
+          end => class_name_for_error
+
+          raise NameError, "You should define #{class_name_for_error} decorator class."
         end
       end
 
