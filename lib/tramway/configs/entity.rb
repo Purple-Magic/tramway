@@ -58,30 +58,23 @@ module Tramway
         end.compact
       end
 
-      def show_helper_method
-        underscored_name = name.parameterize
-
-        if set_page?(:show) || route.blank?
-          "#{underscored_name}_path"
+      def build_helper_method(base_name, route: nil, namespace: nil, plural: false)
+        if plural
+          base_name.to_s.parameterize.underscore.pluralize
         else
-          route.helper_method_by(underscored_name, namespace)
-        end => method_name
+          base_name.to_s.parameterize.underscore
+        end => underscored
 
-        method_name
-        # route_helper_engine.routes.url_helpers.public_send(method_name)
+        method_name = route.present? ? route.helper_method_by(underscored) : "#{underscored}_path"
+        namespace.present? ? "#{namespace}_#{method_name}" : method_name
+      end
+
+      def show_helper_method
+        build_helper_method(name, route:, namespace:, plural: false)
       end
 
       def index_helper_method
-        underscored_name = name.parameterize.pluralize.underscore
-
-        if set_page?(:index) || route.blank?
-          "#{underscored_name}_path"
-        else
-          route.helper_method_by(underscored_name, namespace)
-        end => method_name
-
-        method_name
-        # route_helper_engine.routes.url_helpers.public_send(method_name)
+        build_helper_method(name, route:, namespace:, plural: true)
       end
 
       def route_helper_engine

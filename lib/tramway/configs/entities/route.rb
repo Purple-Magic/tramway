@@ -8,8 +8,8 @@ module Tramway
       class Route < Dry::Struct
         attribute? :route_method, Types::Coercible::String
 
-        def helper_method_by(underscored_name, namespace = nil)
-          "#{[namespace, route_method || underscored_name].compact.join('_')}_path"
+        def helper_method_by(underscored_name)
+          "#{route_method || underscored_name}_path"
         end
       end
     end
