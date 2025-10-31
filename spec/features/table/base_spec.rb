@@ -24,9 +24,11 @@ feature 'Table Base Spec', :js, type: :feature do
   end
 
   scenario 'check cells' do
-    expect(page).to have_selector(
-      '.div-table-cell.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark\\:text-white.text-xs.sm\\:text-base',
-      count: User.count
-    )
+    selector = [
+      'div-table-cell', 'px-6', 'py-4', 'font-medium', 'text-gray-900', 'dark\\:text-white', 'text-xs',
+      'sm\\:text-base'
+    ].join('.')
+
+    expect(page).to have_selector(".#{selector}", count: User.count)
   end
 end

@@ -50,8 +50,8 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
 
   describe '#tramway_navbar' do
     context 'with success' do
-      let(:left_items_css) { 'nav .flex ul.block.flex.flex-row.items-center.space-x-4.ml-4' }
-      let(:right_items_css) { 'nav ul.block.flex.flex-row.items-center.space-x-4.ml-4' }
+      let(:left_items_css) { 'nav ul.flex-row.items-center.space-x-4.ml-4.hidden.md\\:flex' }
+      let(:right_items_css) { 'nav ul.items-center.space-x-4.hidden.md\\:flex' }
 
       it 'renders navbar' do
         fragment = view.tramway_navbar
