@@ -7,7 +7,7 @@
             .text-xl.text-white.font-bold.dark:text-white
               = @title[:text]
         - if @left_items.present?
-          %ul.block.flex.flex-row.items-center.space-x-4.ml-4
+          %ul.flex-row.items-center.space-x-4.ml-4.hidden.md:flex
             - @left_items.each do |item|
               = item
 
@@ -16,7 +16,7 @@
         ☰
 
   - if @right_items.present?
-    %ul.block.sm:flex.items-center.space-x-4
+    %ul.items-center.space-x-4.hidden.md:flex
       - @right_items.each do |item|
         = item
 
