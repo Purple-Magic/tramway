@@ -2,7 +2,7 @@
 
 Tramway::Engine.routes.draw do
   Tramway.config.entities.each do |entity|
-    segments      = entity.name.split('/')
+    segments      = entity.namespace.split('/') + entity.name.split('/')
     resource_name = segments.pop
 
     define_resource = proc do
