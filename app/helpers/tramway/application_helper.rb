@@ -8,6 +8,7 @@ module Tramway
   module ApplicationHelper
     include Tramway::Decorators::ClassHelper
     include Tramway::Helpers::ComponentHelper
+    include Tramway::Helpers::ViewsHelper
 
     def page_title
       @model_class.model_name.human.pluralize # rubocop:disable Rails/HelperInstanceVariable

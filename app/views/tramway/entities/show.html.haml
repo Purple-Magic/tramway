@@ -8,7 +8,7 @@
       = @entity.class.name
   = tramway_table do
     - @entity.show_attributes.each do |attribute|
-      = tramway_table_row do
+      = tramway_row do
         = tramway_cell do
           = @model_class.human_attribute_name(attribute)
         = tramway_cell do
