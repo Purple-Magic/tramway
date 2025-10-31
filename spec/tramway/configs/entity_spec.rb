@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+
 shared_examples 'Tramway Config Entity human_name' do |name|
   subject { described_class.new(name:) }
 
@@ -26,10 +27,27 @@ shared_examples 'Tramway Config Entity routes' do
     it 'returns an RouteStruct object with index route' do
       expect(subject.routes).to be_an(Tramway::Configs::Entity::RouteStruct)
       expect(subject.routes).to respond_to(:index)
+      expect(subject.routes).to respond_to(:show)
+    end
+
+    it 'sets the correct routes' do
+      expect(subject.routes.index).to eq(index_helper)
+      expect(subject.routes.show).to eq(show_helper)
+    end
+  end
+end
+
+shared_examples 'Tramway Config Entity routes absent' do
+  describe '#routes' do
+    it 'responds with RouteStruct' do
+      expect(subject.routes).to be_an(Tramway::Configs::Entity::RouteStruct)
+      expect(subject.routes).to respond_to(:index)
+      expect(subject.routes).to respond_to(:show)
     end
 
     it 'sets the correct index route' do
-      expect(subject.routes.index).to eq(Rails.application.routes.url_helpers.public_send(helper))
+      expect(subject.routes.index).to be_nil
+      expect(subject.routes.show).to be_nil
     end
   end
 end
@@ -50,35 +68,78 @@ describe Tramway::Configs::Entity do
   end
 
   context 'with entity name and route contains namespace only' do
-    subject { described_class.new(name:, route:) }
+    subject do
+      described_class.new(name:, namespace:, pages: [{ action: :index }, { action: :show }])
+    end
 
-    let(:name) { :user }
-    let(:route) { { namespace: :admin } }
+    let(:name) { :post }
+    let(:namespace) { :admin }
 
-    let(:helper) { "#{route[:namespace]}_#{name.to_s.pluralize}_path" }
-
-    it_behaves_like 'Tramway Config Entity routes'
-  end
-
-  context 'with entity name and route contains namespace and route_method' do
-    subject { described_class.new(name:, route:) }
-
-    let(:name) { :user }
-    let(:route) { { namespace: :admin, route_method: :clients } }
-
-    let(:helper) { "#{route[:namespace]}_#{route[:route_method]}_path" }
+    let(:index_helper) { "#{namespace}_#{name.to_s.pluralize}_path" }
+    let(:show_helper) { "#{namespace}_#{name}_path" }
 
     it_behaves_like 'Tramway Config Entity routes'
   end
 
-  context 'with entity name and route contains route_method only' do
-    subject { described_class.new(name:, route:) }
+  context 'with page index' do
+    context 'with entity name and route contains namespace and route_method' do
+      subject { described_class.new(name:, namespace:, route:, pages: [{ action: :index }, { action: :show }]) }
 
-    let(:name) { :user }
-    let(:route) { { route_method: :clients } }
+      let(:name) { :post }
+      let(:route) { { route_method: :clients } }
+      let(:namespace) { :admin }
 
-    let(:helper) { "#{route[:route_method]}_path" }
+      let(:index_helper) { "#{namespace}_#{route[:route_method]}_path" }
+      let(:show_helper) { "#{namespace}_#{route[:route_method]}_path" }
 
-    it_behaves_like 'Tramway Config Entity routes'
+      it_behaves_like 'Tramway Config Entity routes'
+    end
+
+    context 'with entity name and route contains route_method only' do
+      subject { described_class.new(name:, route:, pages: [{ action: :index }, { action: :show }]) }
+
+      let(:name) { :post }
+      let(:route) { { route_method: :clients } }
+
+      let(:index_helper) { "#{route[:route_method]}_path" }
+      let(:show_helper) { "#{route[:route_method]}_path" }
+
+      it_behaves_like 'Tramway Config Entity routes'
+    end
+  end
+
+  context 'with page index only' do
+    subject { described_class.new(name:, pages: [{ action: :index }]) }
+
+    let(:name) { :post }
+
+    it 'does not expose show route' do
+      expect(subject.routes.show).to be_nil
+    end
+  end
+
+  context 'without page index' do
+    context 'with entity name and route contains namespace and route_method' do
+      subject { described_class.new(name:, namespace:, route:) }
+
+      let(:name) { :post }
+      let(:route) { { route_method: :clients } }
+      let(:namespace) { :admin }
+
+      let(:helper) { "#{namespace}_#{route[:route_method]}_path" }
+
+      it_behaves_like 'Tramway Config Entity routes absent'
+    end
+
+    context 'with entity name and route contains route_method only' do
+      subject { described_class.new(name:, route:) }
+
+      let(:name) { :post }
+      let(:route) { { route_method: :clients } }
+
+      let(:helper) { "#{route[:route_method]}_path" }
+
+      it_behaves_like 'Tramway Config Entity routes absent'
+    end
   end
 end

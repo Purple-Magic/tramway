@@ -2,6 +2,8 @@
 
 FactoryBot.define do
   factory :user do
+    sequence(:email) { |n| "user#{n}@example.com" }
+
     trait :with_posts do
       after :create do |u|
         create :post, user: u

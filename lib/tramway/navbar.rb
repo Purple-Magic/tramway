@@ -38,11 +38,11 @@ module Tramway
     def item(text_or_url, url = nil, **, &)
       raise 'You cannot provide an argument and a code block at the same time' if provided_url_and_block?(url, &)
 
-      rendered_item = if url.present?
-                        render_ignoring_block(text_or_url, url, **)
-                      else
-                        render_using_block(text_or_url, **, &)
-                      end
+      if url.present?
+        render_ignoring_block(text_or_url, url, **)
+      else
+        render_using_block(text_or_url, **, &)
+      end => rendered_item
 
       @items[@filling] << rendered_item
     end
@@ -53,7 +53,10 @@ module Tramway
       filling_side :left
 
       entities.each do |entity|
-        item entity.human_name.plural, entity.routes.index
+        # binding.break if entity.name == 'user'
+        next if entity.routes.index.blank?
+
+        item entity.human_name.plural, Tramway::Engine.routes.url_helpers.public_send(entity.routes.index)
       end
 
       reset_filling

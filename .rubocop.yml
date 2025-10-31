@@ -45,6 +45,12 @@ Rails/HasManyOrHasOneDependent:
 Style/ItBlockParameter:
   Enabled: false
 
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
 AllCops:
   TargetRubyVersion: 3.4
   NewCops: enable

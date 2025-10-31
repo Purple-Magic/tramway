@@ -3,7 +3,7 @@
 module Tailwinds
   module Form
     # Form label for all tailwind-styled forms
-    class LabelComponent < Tramway::Component::Base
+    class LabelComponent < Tramway::BaseComponent
       option :for
     end
   end

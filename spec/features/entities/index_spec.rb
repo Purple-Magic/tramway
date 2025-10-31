@@ -35,11 +35,12 @@ feature 'Entities Index Page', :js, type: :feature do
       expect(page).to have_selector('h1', text: 'Posts'), page.html
     end
 
-    scenario 'shows info message about `list_attributes` method' do
+    scenario 'shows info message about `index_attributes` method' do
       visit '/admin/comments'
 
+      # binding.break
       expect(page).to have_content(
-        'You should fill class-level method `self.list_attributes` inside your CommentDecorator'
+        'You should fill class-level method `self.index_attributes` inside your CommentDecorator'
       )
     end
 
@@ -89,6 +90,16 @@ feature 'Entities Index Page', :js, type: :feature do
           expect(page).to have_selector(row_selector, count: posts_count)
         end
       end
+    end
+  end
+
+  context 'with show page configured' do
+    let!(:post) { create :post, aasm_state: :published, title: 'Linked post' }
+
+    scenario 'wraps each row into a link to the show page' do
+      visit '/admin/posts'
+
+      expect(page).to have_css(".div-table a.div-table-row[href='/admin/posts/#{post.id}']")
     end
   end
 end

@@ -48,7 +48,7 @@ module Tramway
         end
       end
 
-      def list_attributes
+      def index_attributes
         []
       end
 
@@ -66,6 +66,10 @@ module Tramway
     end
 
     def show_path = nil
+
+    def show_attributes
+      []
+    end
 
     # :reek:ManualDispatch { enabled: false } because there is the idea to manual dispatch
     def method_missing(method_name, *, &)

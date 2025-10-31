@@ -25,12 +25,12 @@ module Tramway
       def assign_navbar_items(options)
         navbar_items = @navbar.items
         navbar_items.each do |(key, value)|
-          key_to_merge = case key
-                         when :left, :right
-                           :"#{key}_items"
-                         else
-                           key
-                         end
+          case key
+          when :left, :right
+            :"#{key}_items"
+          else
+            key
+          end => key_to_merge
 
           options.merge! key_to_merge => value
         end

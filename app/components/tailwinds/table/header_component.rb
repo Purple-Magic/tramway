@@ -3,7 +3,7 @@
 module Tailwinds
   module Table
     # Component for rendering a header in a table
-    class HeaderComponent < Tramway::Component::Base
+    class HeaderComponent < Tramway::BaseComponent
       option :headers, optional: true, default: -> { [] }
       option :columns, optional: true, default: -> { 3 }
 

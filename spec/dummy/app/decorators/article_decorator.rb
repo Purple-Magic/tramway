@@ -3,7 +3,7 @@
 class ArticleDecorator < Tramway::BaseDecorator
   delegate_attributes :title
 
-  def self.list_attributes
+  def self.index_attributes
     %i[title]
   end
 

@@ -2,7 +2,7 @@
 
 module Tailwinds
   # Table component for rendering a table
-  class TableComponent < Tramway::Component::Base
+  class TableComponent < Tramway::BaseComponent
     option :options, optional: true, default: -> { {} }
   end
 end

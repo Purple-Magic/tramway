@@ -90,8 +90,8 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
         let(:path) { Rails.application.routes.url_helpers.users_path }
         let(:fragment) { view.tramway_navbar }
 
-        it 'renders navbar with users link on the left' do
-          expect(fragment).to have_css "#{left_items_css} a[href='#{path}']", text: 'Users'
+        it 'does not render navbar with users link on the left' do
+          expect(fragment).not_to have_css "#{left_items_css} a[href='#{path}']", text: 'Users'
         end
 
         it_behaves_like 'Helpers Navbar'
