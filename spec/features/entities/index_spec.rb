@@ -38,6 +38,7 @@ feature 'Entities Index Page', :js, type: :feature do
     scenario 'shows info message about `index_attributes` method' do
       visit '/admin/comments'
 
+      # binding.break
       expect(page).to have_content(
         'You should fill class-level method `self.index_attributes` inside your CommentDecorator'
       )

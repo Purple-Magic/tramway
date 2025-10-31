@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'tramway/helpers/component_helper'
+require 'tramway/helpers/decorate_helper'
+require 'tramway/helpers/views_helper'
 
 module Tramway
   # You can use this class as a base for all your components

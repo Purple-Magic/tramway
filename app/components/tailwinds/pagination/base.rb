@@ -3,7 +3,7 @@
 module Tailwinds
   module Pagination
     # Base component for rendering a Kaminari pagination
-    class Base < Tramway::Component::Base
+    class Base < Tramway::BaseComponent
       option :current_page
       option :url
       option :remote

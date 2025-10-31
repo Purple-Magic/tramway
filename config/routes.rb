@@ -6,7 +6,7 @@ Tramway::Engine.routes.draw do
     resource_name = segments.pop
 
     define_resource = proc do
-      # binding.pry if entity.name == 'announcement'
+      # binding.break if entity.name == 'user'
       resources resource_name.pluralize.to_sym,
                 only: entity.pages.map(&:action),
                 controller: '/tramway/entities',

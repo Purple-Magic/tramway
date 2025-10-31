@@ -2,6 +2,6 @@
 
 module Tailwinds
   # Shared base component for Tailwinds components
-  class BaseComponent < Tramway::Component::Base
+  class BaseComponent < Tramway::BaseComponent
   end
 end

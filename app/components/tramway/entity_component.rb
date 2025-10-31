@@ -8,7 +8,7 @@ module Tramway
     option :entity
 
     def decorated_item
-      tramway_decorate item, namespace: entity.route.namespace
+      tramway_decorate item, namespace: entity.namespace
     end
 
     def href

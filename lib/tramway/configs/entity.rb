@@ -10,6 +10,7 @@ module Tramway
       attribute :name, Types::Coercible::String
       attribute? :pages, Types::Array.of(Tramway::Configs::Entities::Page).default([].freeze)
       attribute? :route, Tramway::Configs::Entities::Route
+      attribute? :namespace, Types::Coercible::String
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
       RouteStruct = Struct.new(:index, :show)
@@ -52,7 +53,9 @@ module Tramway
       end
 
       def route_helper_methods
-        [index_helper_method, show_helper_method]
+        %i[index show].map do |action|
+          page(action).present? ? send("#{action}_helper_method") : nil
+        end.compact
       end
 
       def show_helper_method

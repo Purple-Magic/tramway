@@ -53,6 +53,9 @@ module Tramway
       filling_side :left
 
       entities.each do |entity|
+        # binding.break if entity.name == 'user'
+        next if entity.routes.index.blank?
+
         item entity.human_name.plural, Tramway::Engine.routes.url_helpers.public_send(entity.routes.index)
       end
 
