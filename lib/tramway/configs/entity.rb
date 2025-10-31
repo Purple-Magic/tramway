@@ -64,7 +64,7 @@ module Tramway
         if set_page?(:show) || route.blank?
           "#{underscored_name}_path"
         else
-          route.helper_method_by(underscored_name)
+          route.helper_method_by(underscored_name, namespace)
         end => method_name
 
         method_name
@@ -77,7 +77,7 @@ module Tramway
         if set_page?(:index) || route.blank?
           "#{underscored_name}_path"
         else
-          route.helper_method_by(underscored_name)
+          route.helper_method_by(underscored_name, namespace)
         end => method_name
 
         method_name
