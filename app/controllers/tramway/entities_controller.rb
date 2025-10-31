@@ -19,11 +19,11 @@ module Tramway
 
       @entities = entities
 
-      @namespace = entity.route&.namespace
+      @namespace = entity.namespace
     end
 
     def show
-      @entity = tramway_decorate model_class.find(params[:id]), namespace: entity.route&.namespace
+      @entity = tramway_decorate model_class.find(params[:id]), namespace: entity.namespace
     end
 
     private
