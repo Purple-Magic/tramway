@@ -92,4 +92,14 @@ feature 'Entities Index Page', :js, type: :feature do
       end
     end
   end
+
+  context 'with show page configured' do
+    let!(:post) { create :post, aasm_state: :published, title: 'Linked post' }
+
+    scenario 'wraps each row into a link to the show page' do
+      visit '/admin/posts'
+
+      expect(page).to have_css(".div-table a.div-table-row[href='/admin/posts/#{post.id}']")
+    end
+  end
 end

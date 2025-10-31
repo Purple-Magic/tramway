@@ -176,6 +176,37 @@ end
 In this example, the `Campaign` entity will display only records returned by the `active` scope on its index page, while all
 other pages continue to show every record unless another scope is specified.
 
+**show page**
+
+To render a show page for an entity, declare a `:show` action inside the `pages` array in
+`config/initializers/tramway.rb`. Tramway will generate the route and render a table using the attributes returned by the
+decorator's `self.show_attributes` method.
+
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      pages: [
+        { action: :index },
+        { action: :show }
+      ]
+    }
+  ]
+end
+```
+
+```ruby
+class CampaignDecorator < Tramway::BaseDecorator
+  def self.show_attributes
+    %i[name status starts_at]
+  end
+end
+```
+
+With this configuration in place, visiting the show page displays a two-column table where the left column contains the
+localized attribute names and the right column renders their values.
+
 **route_helper**
 
 To get routes Tramway generated just Tramway::Engine.

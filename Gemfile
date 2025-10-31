@@ -35,6 +35,7 @@ group :test do
   gem 'mutex_m'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
+  gem 'sqlite3', '>= 2.1'
   gem 'webdrivers'
 end
 
