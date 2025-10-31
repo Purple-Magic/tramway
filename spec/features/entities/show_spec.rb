@@ -12,11 +12,15 @@ feature 'Entities Show Page', :js, type: :feature do
     visit "/admin/posts/#{post.id}"
 
     within '.div-table' do
-      expect(page).to have_selector('.div-table-row', count: 2)
-      expect(page).to have_selector('.div-table-cell', text: 'Title')
-      expect(page).to have_selector('.div-table-cell', text: 'Displayed Post')
-      expect(page).to have_selector('.div-table-cell', text: 'User email')
-      expect(page).to have_selector('.div-table-cell', text: user.email)
+      expect(page).to have_selector('.div-table-row', count: 3)
+
+      rows = [['Title', 'Displayed Post'], ['Aasm state', 'published'], ['User email', user.email]]
+      rows.each_with_index do |(label, value), index|
+        within all('.div-table-row')[index] do
+          expect(page).to have_selector('.div-table-cell', text: label)
+          expect(page).to have_selector('.div-table-cell', text: value)
+        end
+      end
     end
   end
 end

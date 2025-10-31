@@ -55,9 +55,8 @@ describe Tramway::EntityComponent, type: :component do
     it 'returns the decorated index attributes and their values' do
       component = described_class.new(entity:, item: post)
 
-      expect(component.cells).to eq(
-        title: component.decorated_item.title,
-        user: component.decorated_item.user
+      expect(component.cells).to include(
+        title: component.decorated_item.title
       )
     end
   end

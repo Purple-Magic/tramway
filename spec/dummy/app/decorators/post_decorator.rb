@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PostDecorator < Tramway::BaseDecorator
-  delegate_attributes :title
+  delegate_attributes :title, :aasm_state
 
   association :user
 
@@ -9,8 +9,8 @@ class PostDecorator < Tramway::BaseDecorator
     %i[title user]
   end
 
-  def self.show_attributes
-    %i[title user_email]
+  def show_attributes
+    %i[title aasm_state user_email]
   end
 
   def user_email
