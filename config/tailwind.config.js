@@ -3,6 +3,7 @@ module.exports = {
     // === Navbar ===
     'ml-4',
     'text-white',
+    'md:flex',
     
     // === Custom table layout utilities ===
     'div-table',
