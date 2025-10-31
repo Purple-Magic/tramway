@@ -28,7 +28,7 @@ module Tramway
           [model_name, pluralized(model_name)]
         else
           [name.capitalize, name.pluralize.capitalize]
-        end => single, plural 
+        end => single, plural
 
         HumanNameStruct.new(single, plural)
       end
