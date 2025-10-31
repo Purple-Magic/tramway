@@ -8,4 +8,12 @@ class PostDecorator < Tramway::BaseDecorator
   def self.index_attributes
     %i[title user]
   end
+
+  def self.show_attributes
+    %i[title user_email]
+  end
+
+  def user_email
+    object.user&.email
+  end
 end

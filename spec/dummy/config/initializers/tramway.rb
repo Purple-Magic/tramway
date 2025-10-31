@@ -10,6 +10,9 @@ Tramway.configure do |config|
         {
           action: :index,
           scope: :published
+        },
+        {
+          action: :show
         }
       ]
     },
