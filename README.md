@@ -73,7 +73,7 @@ end
 
 ```ruby
 class UserDecorator < Tramway::BaseDecorator
-  def self.list_attributes
+  def self.index_attributes
     [:id, :email, :created_at]
   end
 end

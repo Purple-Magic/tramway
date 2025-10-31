@@ -5,7 +5,7 @@ class PostDecorator < Tramway::BaseDecorator
 
   association :user
 
-  def self.list_attributes
+  def self.index_attributes
     %i[title user]
   end
 end

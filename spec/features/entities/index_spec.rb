@@ -35,11 +35,11 @@ feature 'Entities Index Page', :js, type: :feature do
       expect(page).to have_selector('h1', text: 'Posts'), page.html
     end
 
-    scenario 'shows info message about `list_attributes` method' do
+    scenario 'shows info message about `index_attributes` method' do
       visit '/admin/comments'
 
       expect(page).to have_content(
-        'You should fill class-level method `self.list_attributes` inside your CommentDecorator'
+        'You should fill class-level method `self.index_attributes` inside your CommentDecorator'
       )
     end
 

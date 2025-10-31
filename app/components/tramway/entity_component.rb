@@ -20,7 +20,7 @@ module Tramway
     end
 
     def cells
-      decorated_item.class.list_attributes.reduce({}) do |hash, attribute|
+      decorated_item.class.index_attributes.reduce({}) do |hash, attribute|
         hash.merge! attribute => decorated_item.public_send(attribute)
       end
     end

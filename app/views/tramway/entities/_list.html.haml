@@ -1,5 +1,5 @@
 - decorator = Tramway::Decorators::ClassHelper.decorator_class_name(@model_class, @namespace)
-- list_attributes = decorator.constantize.list_attributes
+- index_attributes = decorator.constantize.index_attributes
 
 .mt-8.w-full
   - content_for :title, page_title
@@ -13,13 +13,13 @@
   .flex.justify-end.mt-2
     = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
 
-  - if list_attributes.empty?
+  - if index_attributes.empty?
     %p.text-center.mt-10
-      You should fill class-level method `self.list_attributes` inside your
+      You should fill class-level method `self.index_attributes` inside your
       = decorator
   - else
     = tramway_table do
-      = tramway_header headers: list_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
+      = tramway_header headers: index_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
       - @entities.each do |item|
         = component 'tramway/entity', entity: @entity, item: item
 
