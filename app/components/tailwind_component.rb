@@ -3,7 +3,7 @@
 require 'view_component'
 
 # Base TailwindComponent. Contains base features for all tailwind components
-class TailwindComponent < Tramway::Component::Base
+class TailwindComponent < Tramway::BaseComponent
   option :input
   option :attribute
   option :value, optional: true

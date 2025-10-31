@@ -3,7 +3,7 @@
 module Tailwinds
   module Table
     # Component for rendering a row in a table
-    class RowComponent < Tramway::Component::Base
+    class RowComponent < Tramway::BaseComponent
       option :cells, optional: true, default: -> { [] }
       option :href, optional: true
       option :options, optional: true, default: -> { {} }

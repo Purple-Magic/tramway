@@ -22,6 +22,10 @@ module Tramway
       @namespace = entity.route&.namespace
     end
 
+    def show
+      @entity = tramway_decorate model_class.find(params[:id]), namespace: entity.route&.namespace
+    end
+
     private
 
     def model_class
