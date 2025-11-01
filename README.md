@@ -248,6 +248,56 @@ class UserDecorator < Tramway::BaseDecorator
 end
 ```
 
+#### Add header content to index pages
+
+You can inject custom content above an entity's index table by defining an
+`index_header_content` lambda on its decorator. The lambda receives the
+collection of decorated records and can render any component you need.
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :project,
+      pages: [
+        { action: :index }
+      ]
+    }
+  ]
+end
+```
+
+*app/decorators/project_decorator.rb*
+```ruby
+class ProjectDecorator < Tramway::BaseDecorator
+  class << self
+    def index_header_content
+      lambda do |_collection|
+        component "projects/index_header"
+      end
+    end
+  end
+end
+```
+
+*app/components/projects/index_header_component.html.haml*
+```haml
+.mb-2
+  = tramway_button path: Rails.application.routes.url_helpers.new_project_path,
+    text: 'Create',
+    type: :hope
+```
+
+*app/components/projects/index_header_component.rb*
+```ruby
+class Projects::IndexHeaderComponent < Tramway::BaseComponent
+end
+```
+
+With this configuration in place, the index page will render the `Create`
+button component above the table of projects.
+
 #### Decorate a single object
 
 You can use the same method to decorate a single object either
