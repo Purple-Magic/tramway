@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 Tramway::Engine.routes.draw do
   Tramway.config.entities.each do |entity|
-    segments      = entity.name.split('/')
+    if entity.namespace.present?
+      entity.namespace.split('/') + entity.name.split('/')
+    else
+      entity.name.split('/')
+    end => segments
+
     resource_name = segments.pop
 
     define_resource = proc do
@@ -29,3 +35,4 @@ Tramway::Engine.routes.draw do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
