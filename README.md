@@ -820,7 +820,7 @@ Available form helpers:
 
 *app/views/devise/sessions/new.html.erb*
 ```erb
-<%= tramway_form_for(resource, as: resource_name, url: session_path(resource_name), class: 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4') do |f| %>
+<%= tramway_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4') } do |f| %>
   <%= component 'forms/errors', record: resource %>
 
   <%= f.text_field :email, placeholder: 'Your email' %>
