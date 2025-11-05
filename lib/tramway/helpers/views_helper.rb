@@ -59,6 +59,13 @@ module Tramway
           component 'tailwinds/containers/narrow', &
         end
       end
+
+      def tramway_badge(text:, type: nil, color: nil)
+        component 'tailwinds/badge',
+                  text:,
+                  type:,
+                  color:
+      end
     end
   end
 end
