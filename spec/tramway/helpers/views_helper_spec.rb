@@ -165,6 +165,54 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
     end
   end
 
+  describe '#tramway_badge' do
+    let(:default_component_arguments) do
+      {
+        text: 'Active',
+        type: nil,
+        color: nil
+      }
+    end
+
+    let(:default_helper_arguments) { { text: 'Active' } }
+
+    it 'delegates to tailwinds badge component with defaults' do
+      expect(view)
+        .to receive(:component)
+        .with('tailwinds/badge', **default_component_arguments)
+        .and_return(:badge_output)
+
+      expect(view.tramway_badge(**default_helper_arguments)).to eq :badge_output
+    end
+
+    context 'with custom arguments' do
+      let(:custom_component_arguments) do
+        {
+          text: 'Alert',
+          type: :danger,
+          color: :red
+        }
+      end
+
+      let(:custom_helper_arguments) do
+        {
+          text: 'Alert',
+          type: :danger,
+          color: :red
+        }
+      end
+
+      it 'delegates to tailwinds badge component with custom options' do
+        expect(view)
+          .to receive(:component)
+          .with('tailwinds/badge', **custom_component_arguments)
+          .and_return(:custom_badge_output)
+
+        expect(view.tramway_badge(**custom_helper_arguments)).to eq :custom_badge_output
+      end
+    end
+  end
+
   describe '#tramway_back_button' do
     it 'delegates to tailwinds back button component' do
       expect(view).to receive(:component).with('tailwinds/back_button').and_return(:back_button)
