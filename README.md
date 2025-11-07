@@ -182,7 +182,7 @@ other pages continue to show every record unless another scope is specified.
 
 To render a show page for an entity, declare a `:show` action inside the `pages` array in
 `config/initializers/tramway.rb`. Tramway will generate the route and render a table using the attributes returned by the
-decorator's 'show_attributes` method.
+decorator's `self.show_attributes` method.
 
 ```ruby
 Tramway.configure do |config|
@@ -200,7 +200,7 @@ end
 
 ```ruby
 class CampaignDecorator < Tramway::BaseDecorator
-  def show_attributes
+  def self.show_attributes
     %i[name status starts_at]
   end
 end
