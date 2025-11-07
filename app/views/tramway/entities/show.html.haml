@@ -2,7 +2,7 @@
   %h1.text-2xl.font-bold.mb-4
     = @entity.title
 
-  - if @entity.show_attributes.empty?
+  - if @entity.class.show_attributes.empty?
     %p.text-center.mt-10
       You should fill object-level method `show_attributes` inside your
       = @entity.class.name
