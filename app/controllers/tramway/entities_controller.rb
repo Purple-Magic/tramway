@@ -25,9 +25,9 @@ module Tramway
     end
 
     def show
-      @entity = tramway_decorate model_class.find(params[:id]), namespace: entity.namespace
-
       check_permission
+
+      @entity = tramway_decorate model_class.find(params[:id]), namespace: entity.namespace
     end
 
     private
