@@ -19,11 +19,21 @@ module Tramway
 
       @entities = entities
 
+      case entity.permission.adapter
+      when 'pundit'
+        authorize @entities, policy_class: "#{model_class}Policy".constantize
+      end
+
       @namespace = entity.namespace
     end
 
     def show
-      @entity = tramway_decorate model_class.find(params[:id]), namespace: entity.namespace
+      @record = tramway_decorate model_class.find(params[:id]), namespace: entity.namespace
+
+      case entity.permission.adapter
+      when 'pundit'
+        authorize @record, policy_class: "#{model_class}Policy".constantize
+      end
     end
 
     private
