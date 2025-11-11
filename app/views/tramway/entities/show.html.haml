@@ -1,15 +1,15 @@
 = tramway_container do
   %h1.text-2xl.font-bold.mb-4
-    = @entity.title
+    = @record.title
 
-  - if @entity.show_attributes.empty?
+  - if @record.show_attributes.empty?
     %p.text-center.mt-10
       You should fill object-level method `show_attributes` inside your
-      = @entity.class.name
+      = @record.class.name
   = tramway_table do
-    - @entity.show_attributes.each do |attribute|
+    - @record.show_attributes.each do |attribute|
       = tramway_row do
         = tramway_cell do
           = @model_class.human_attribute_name(attribute)
         = tramway_cell do
-          = @entity.public_send(attribute)
+          = @record.public_send(attribute)
