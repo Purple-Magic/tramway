@@ -19,6 +19,11 @@ module Tramway
 
       @entities = entities
 
+      case entity.permission.adapter
+      when 'pundit'
+        authorize @entities, policy_class: "#{model_class}Policy".constantize
+      end
+
       @namespace = entity.namespace
     end
 

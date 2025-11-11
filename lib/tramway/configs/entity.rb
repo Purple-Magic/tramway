@@ -2,6 +2,7 @@
 
 require 'tramway/configs/entities/route'
 require 'tramway/configs/entities/page'
+require 'tramway/configs/entities/permission'
 
 module Tramway
   module Configs
@@ -11,6 +12,7 @@ module Tramway
       attribute? :pages, Types::Array.of(Tramway::Configs::Entities::Page).default([].freeze)
       attribute? :route, Tramway::Configs::Entities::Route
       attribute? :namespace, Types::Coercible::String
+      attribute? :permission, Tramway::Configs::Entities::Permission
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
       RouteStruct = Struct.new(:index, :show)
