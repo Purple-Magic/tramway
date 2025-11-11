@@ -200,7 +200,7 @@ end
 
 ```ruby
 class CampaignDecorator < Tramway::BaseDecorator
-  def self.show_attributes
+  def show_attributes
     %i[name status starts_at]
   end
 end
