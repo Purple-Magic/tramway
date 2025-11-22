@@ -139,12 +139,11 @@ Tramway.configure do |config|
   config.entities = [
     {
       name: :user,
-      route: { namespace: :admin }
+      namespace: :admin
     }, # `/admin/users` link in the Tramway Navbar
     {
       name: :episodes,
       route: {
-        namespace: :podcasts,
         route_method: :episodes
       }
     }, # `/podcasts/episodes` link in the Tramway Navbar
@@ -163,7 +162,7 @@ Tramway.configure do |config|
   config.entities = [
     {
       name: :campaign,
-      route: { namespace: :admin },
+      namespace: :admin,
       pages: [
         {
           action: :index,
