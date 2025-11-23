@@ -698,11 +698,14 @@ attributes, so you can pass things like `id`, `data` attributes, or additional c
 utility (e.g. a class that starts with `w-`), the component automatically appends `w-full` to keep the table responsive. This
 allows you to extend the default styling without losing the sensible defaults provided by the component.
 
+Use the optional `href:` argument on `tramway_row` to turn an entire row into a link. Linked rows gain pointer and hover styles
+(`cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700`) to indicate interactivity.
+
 ```erb
 <%= tramway_table class: 'max-w-3xl border border-gray-200', data: { controller: 'table' } do %>
   <%= tramway_header', headers: ['Name', 'Email'] %>
 
-  <%= tramway_row do %>
+  <%= tramway_row href: user_path(user) do %>
     <%= tramway_cell do %>
       <%= user.name %>
     <% end %>
@@ -738,8 +741,14 @@ component applies.
 Tramway ships with helpers for common UI patterns built on top of Tailwind components.
 
 * `tramway_button` renders a button-styled form submit by default and accepts `path`, optional `text`, HTTP `method`, and styling
-  options such as `color`, `type`, and `size`. Pass `link: true` to render a button-styled link instead. All additional keyword
-  arguments are forwarded to the underlying component as HTML attributes.
+  options such as `color`, `type`, and `size`. It uses Rails' `button_to` helper by default (or when `link: false` is passed),
+  and switches to `link_to` when you set `link: true`.
+
+  ```erb
+  <%= tramway_button path: user_path(user), text: 'Open profile', link: true %>
+  ```
+
+  All additional keyword arguments are forwarded to the underlying component as HTML attributes.
 
   The `type` option maps semantic intent to Tailwind color families. The full set of supported values is:
 
