@@ -244,7 +244,7 @@ class UserDecorator < Tramway::BaseDecorator
 
   # you can provide representations with ViewComponent to avoid implementing views with Rails Helpers
   def posts_table
-    render TableComponent.new(object.posts)
+    component 'table', object.posts
   end
 end
 ```
