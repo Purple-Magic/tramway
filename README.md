@@ -567,6 +567,10 @@ Read [behave_as_ar](https://github.com/Purple-Magic/tramway#behave_as_ar) sectio
 
 ### Tramway Navbar
 
+#### Running tramway_navbar without arguments
+
+When you call `tramway_navbar` without passing any arguments, it renders a navbar that lists buttons linking to all entities configured with a page index in `config/initializers/tramway.rb`.
+
 Tramway provides DSL for rendering Tailwind Navgiation bar.
 
 ```ruby
