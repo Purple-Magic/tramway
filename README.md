@@ -65,7 +65,9 @@ end
 
 ```ruby
 Rails.application.routes.draw do
-  mount Tramway::Engine, at: '/'
+  # all your routes
+
+  mount Tramway::Engine, at: '/' # it's important for this line to be below your own routes
 end
 ```
 
