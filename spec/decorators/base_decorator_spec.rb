@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+
 shared_examples 'Decorate Collection' do
   it 'calls decorate_collection with the collection' do
     expect(Tramway::Decorators::CollectionDecorators).to receive(:decorate_collection)
@@ -24,9 +25,33 @@ describe Tramway::BaseDecorator do
   describe '#render' do
     let(:args) { %i[arg1 arg2] }
 
-    it 'calls the ActionController::Base.render method with the provided arguments' do
-      expect(ActionController::Base).to receive(:render).with(*args, { layout: false })
-      decorated_object.render(*args, layout: false)
+    context 'when view context is provided' do
+      let(:view_context) { instance_double(ActionView::Base) }
+
+      before { decorated_object.with(view_context:) }
+
+      it 'delegates rendering to the view context' do
+        expect(view_context).to receive(:render)
+
+        decorated_object.render(*args)
+      end
+    end
+
+    context 'when view context is not provided' do
+      it 'calls the ActionController::Base.render method with the provided arguments' do
+        expect(ActionController::Base).to receive(:render).with(*args, { layout: false })
+
+        decorated_object.render(*args, layout: false)
+      end
+    end
+  end
+
+  describe '#with' do
+    let(:view_context) { instance_double(ActionView::Base) }
+
+    it 'assigns the view context and returns self' do
+      expect(decorated_object.with(view_context:)).to eq(decorated_object)
+      expect(decorated_object.view_context).to eq(view_context)
     end
   end
 

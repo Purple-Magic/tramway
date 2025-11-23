@@ -18,10 +18,16 @@ module Tramway
     include Tramway::Helpers::DecorateHelper
     include Tramway::Helpers::ComponentHelper
 
-    attr_reader :object
+    attr_reader :object, :view_context
 
     def initialize(object)
       @object = object
+    end
+
+    def with(view_context:)
+      @view_context = view_context
+
+      self
     end
 
     class << self

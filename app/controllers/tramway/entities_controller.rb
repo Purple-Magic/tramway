@@ -23,7 +23,10 @@ module Tramway
     end
 
     def show
-      @entity = tramway_decorate model_class.find(params[:id]), namespace: entity.namespace
+      @entity = tramway_decorate(
+        model_class.find(params[:id]),
+        namespace: entity.namespace
+      ).with(view_context:)
     end
 
     private
