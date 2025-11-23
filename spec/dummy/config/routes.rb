@@ -3,7 +3,9 @@
 Rails.application.routes.draw do
   resources :users
   resources :clients
-  resources :articles, only: :show
+  resources :articles, only: :show do
+    get :feed, on: :collection
+  end
 
   namespace :episodes do
     resources :parts

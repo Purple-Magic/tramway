@@ -11,13 +11,15 @@ Tramway::Engine.routes.draw do
 
     resource_name = segments.pop
 
+    default_resource_actions = %i[index create new show update destroy edit]
+
     project_routes_actions = Rails.application.routes.routes.map do |route|
       controller = route.defaults[:controller]&.split('/')&.last
 
       next unless controller == resource_name.pluralize
 
       route.defaults[:action]&.to_sym
-    end.compact
+    end.compact & default_resource_actions
 
     actions = (project_routes_actions + entity.pages.map { |page| page.action.to_sym }).uniq
 

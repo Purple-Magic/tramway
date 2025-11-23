@@ -34,5 +34,7 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
       id: '1',
       entity: build(:entity, name: 'article')
     )
+
+    expect(get: '/admin/articles/feed').not_to be_routable
   end
 end
