@@ -18,7 +18,7 @@
       You should fill class-level method `self.index_attributes` inside your
       = decorator
   - else
-    = tramway_table do
+    = tramway_table class: 'mt-4' do
       = tramway_header headers: index_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
       - @entities.each do |item|
         = component 'tramway/entity', entity: @entity, item: item
