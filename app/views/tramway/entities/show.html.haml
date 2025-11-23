@@ -1,22 +1,17 @@
-- @show_header_content = @entity.show_header_content
-
 = tramway_container do
-
   .flex.justify-between.items-center
     %h1.text-4xl.font-bold.mb-4
       = @entity.title
 
   .flex.justify-end.mt-2
-    - if @show_header_content.present?
-      - if @show_header_content.respond_to?(:call)
-        = @show_header_content.call(@entity)
-      - else
-        = @show_header_content
+    - if @entity.show_header_content.present?
+      = @entity.show_header_content
 
   - if @entity.show_attributes.empty?
     %p.text-center.mt-10
       You should fill object-level method `show_attributes` inside your
       = @entity.class.name
+
   = tramway_table class: 'mt-4' do
     - @entity.show_attributes.each do |attribute|
       = tramway_row do

@@ -306,6 +306,32 @@ object-level `show_header_content` method on its decorator. The method
 can return any rendered content and has full access to the decorated
 object's helpers and attributes.
 
+#### Use `view_context` in show and index pages
+
+Some helpers—such as `button_to` with non-`GET` methods—need access to the
+live request context to include CSRF tokens. Pass the Rails `view_context`
+into your decorated objects so their render calls execute inside the
+current request.
+
+```ruby
+def show
+  @project = tramway_decorate(Project.find(params[:id])).with(view_context:)
+end
+```
+
+For index pages, decorate each record with the current context before
+rendering headers or per-row components:
+
+```ruby
+def index
+  @projects = tramway_decorate(Project.all).map { |project| project.with(view_context:) }
+end
+```
+
+Passing the context this way ensures `show_header_content` and
+`index_header_content` blocks can safely call helpers that require the
+session-bound authenticity token.
+
 #### Decorate a single object
 
 You can use the same method to decorate a single object either
@@ -315,6 +341,11 @@ def show
   @user = tramway_decorate User.find params[:id]
 end
 ```
+
+All objects returned from `tramway_decorate` respond to
+`with(view_context:)`, so you can attach the current Rails `view_context`
+when you need decorator-rendered content to use helpers that rely on the
+active request (such as CSRF tokens).
 
 #### Decorate a collection of objects
 
