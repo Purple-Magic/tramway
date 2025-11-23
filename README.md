@@ -302,8 +302,9 @@ button component above the table of projects.
 #### Add header content to show pages
 
 To inject custom content above a record's details, define an
-object-level `show_header_content` lambda on its decorator. The lambda
-receives the decorated object and can return any rendered content.
+object-level `show_header_content` method on its decorator. The method
+can return any rendered content and has full access to the decorated
+object's helpers and attributes.
 
 #### Decorate a single object
 

@@ -18,8 +18,6 @@ class PostDecorator < Tramway::BaseDecorator
   end
 
   def show_header_content
-    lambda do |decorated_object|
-      "Show header for #{decorated_object.title}"
-    end
+    "Show header for #{title}"
   end
 end
