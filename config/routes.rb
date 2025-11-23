@@ -11,9 +11,19 @@ Tramway::Engine.routes.draw do
 
     resource_name = segments.pop
 
+    project_routes_actions = Rails.application.routes.routes.map do |route|
+      controller = route.defaults[:controller]&.split('/')&.last
+
+      next unless controller == resource_name.pluralize
+
+      route.defaults[:action]&.to_sym
+    end.compact
+
+    actions = (project_routes_actions + entity.pages.map { |page| page.action.to_sym }).uniq
+
     define_resource = proc do
       resources resource_name.pluralize.to_sym,
-                only: entity.pages.map(&:action),
+                only: actions,
                 controller: '/tramway/entities',
                 defaults: { entity: entity }
     end

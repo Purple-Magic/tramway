@@ -20,4 +20,19 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
   it 'does not define non-existent routes' do
     expect(get: '/non_existing_entity').not_to be_routable
   end
+
+  it 'merges actions from existing project routes with entity actions' do
+    expect(get: '/admin/articles').to route_to(
+      controller: 'tramway/entities',
+      action: 'index',
+      entity: build(:entity, name: 'article')
+    )
+
+    expect(get: '/admin/articles/1').to route_to(
+      controller: 'tramway/entities',
+      action: 'show',
+      id: '1',
+      entity: build(:entity, name: 'article')
+    )
+  end
 end

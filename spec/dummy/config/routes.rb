@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount Tramway::Engine, at: '/admin'
-
   resources :users
   resources :clients
   resources :articles, only: :show
@@ -10,6 +8,8 @@ Rails.application.routes.draw do
   namespace :episodes do
     resources :parts
   end
+
+  mount Tramway::Engine, at: '/admin'
 
   namespace :admin do
     resources :users
