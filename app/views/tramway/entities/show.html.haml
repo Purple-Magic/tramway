@@ -1,21 +1,46 @@
 = tramway_container do
   .flex.justify-between.items-center
     %h1.text-4xl.font-bold.mb-4
-      = @entity.title
+      = @record.title
 
   .flex.justify-end.mt-2
-    - if @entity.show_header_content.present?
-      = @entity.show_header_content
+    - if @record.show_header_content.present?
+      = @record.show_header_content
 
-  - if @entity.show_attributes.empty?
+  - if @record.show_attributes.empty?
     %p.text-center.mt-10
       You should fill object-level method `show_attributes` inside your
-      = @entity.class.name
+      = @record.class.name
 
   = tramway_table class: 'mt-4' do
-    - @entity.show_attributes.each do |attribute|
+    - @record.show_attributes.each do |attribute|
       = tramway_row do
         = tramway_cell do
           = @model_class.human_attribute_name(attribute)
         = tramway_cell do
-          = @entity.public_send(attribute)
+          = @record.public_send(attribute)
+
+  - @associations.each do |association|
+    .flex.flex-row.justify-between.mt-8
+      %h3.text-2xl.font-bold
+        = @model_class.human_attribute_name(association[:name])
+
+      %div
+        = paginate association[:records],
+          custom_path_method: "#{@model_class.model_name.to_s.underscore}_path",
+          custom_path_arguments: [@record.id]
+
+    = tramway_table class: 'mt-4' do 
+      -# FIXME: don't use first object for getting association decorator
+      = tramway_header headers: association[:headers]
+
+      - association[:records].each do |record|
+        = tramway_row do
+          - association[:columns].each do |column|
+            = tramway_cell do
+              = record.public_send(column)
+
+    .mt-4
+      = paginate association[:records],
+        custom_path_method: "#{@model_class.model_name.to_s.underscore}_path",
+        custom_path_arguments: [@record.id]

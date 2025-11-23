@@ -23,10 +23,29 @@ module Tramway
     end
 
     def show
-      @entity = tramway_decorate(
+      @record = tramway_decorate(
         model_class.find(params[:id]),
         namespace: entity.namespace
       ).with(view_context:)
+
+      @associations = @record.show_associations.map do |association|
+        records = Kaminari.paginate_array(
+          @record.public_send(association.name),
+        ).page(params[:page])
+
+        columns = records.first.class.index_attributes
+
+        table_headers = columns.map do |attribute|
+          records.first.object.class.human_attribute_name(attribute) 
+        end
+
+        {
+          name: association,
+          records:,
+          headers: table_headers,
+          columns:
+        }
+      end
     end
 
     private
