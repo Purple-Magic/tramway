@@ -3,6 +3,7 @@
 # Test model
 class Post < ApplicationRecord
   belongs_to :user
+  has_many :comments
 
   aasm do
     state :draft, initial: true
