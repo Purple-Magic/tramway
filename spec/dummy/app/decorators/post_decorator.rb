@@ -4,6 +4,7 @@ class PostDecorator < Tramway::BaseDecorator
   delegate_attributes :title, :aasm_state
 
   association :user
+  association :comments
 
   def self.index_attributes
     %i[title user]
@@ -11,6 +12,10 @@ class PostDecorator < Tramway::BaseDecorator
 
   def show_attributes
     %i[title aasm_state user_email]
+  end
+
+  def show_associations
+    %i[comments]
   end
 
   def user_email

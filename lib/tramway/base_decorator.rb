@@ -77,6 +77,10 @@ module Tramway
       []
     end
 
+    def show_associations
+      []
+    end
+
     def show_header_content
       nil
     end
