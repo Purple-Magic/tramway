@@ -1,4 +1,7 @@
 = tramway_container do
+  - if @entity.show_header_content.present?
+    = @entity.show_header_content.call(@entity)
+
   %h1.text-4xl.font-bold.mb-4
     = @entity.title
 

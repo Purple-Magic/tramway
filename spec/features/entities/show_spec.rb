@@ -23,4 +23,12 @@ feature 'Entities Show Page', :js, type: :feature do
       end
     end
   end
+
+  scenario 'renders configured show header content' do
+    visit "/admin/posts/#{post.id}"
+
+    within '.container' do
+      expect(page).to have_content('Show header for Displayed Post')
+    end
+  end
 end

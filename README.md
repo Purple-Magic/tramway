@@ -299,6 +299,12 @@ end
 With this configuration in place, the index page will render the `Create`
 button component above the table of projects.
 
+#### Add header content to show pages
+
+To inject custom content above a record's details, define an
+object-level `show_header_content` lambda on its decorator. The lambda
+receives the decorated object and can return any rendered content.
+
 #### Decorate a single object
 
 You can use the same method to decorate a single object either

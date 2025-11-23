@@ -16,4 +16,10 @@ class PostDecorator < Tramway::BaseDecorator
   def user_email
     object.user&.email
   end
+
+  def show_header_content
+    lambda do |decorated_object|
+      "Show header for #{decorated_object.title}"
+    end
+  end
 end
