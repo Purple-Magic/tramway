@@ -13,7 +13,8 @@ module Tramway
       attribute? :namespace, Types::Coercible::String
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
-      RouteStruct = Struct.new(:index, :show)
+      ACTIONS = %i[index show].freeze
+      RouteStruct = Struct.new(*ACTIONS)
 
       # HumanName Struct contains human names forms for the entity
       HumanNameStruct = Struct.new(:single, :plural)
@@ -53,9 +54,9 @@ module Tramway
       end
 
       def route_helper_methods
-        %i[index show].map do |action|
+        ACTIONS.map do |action|
           page(action).present? ? send("#{action}_helper_method") : nil
-        end.compact
+        end
       end
 
       def build_helper_method(base_name, route: nil, namespace: nil, plural: false)

@@ -12,10 +12,15 @@ Tramway::Engine.routes.draw do
     resource_name = segments.pop
 
     define_resource = proc do
-      resources resource_name.pluralize.to_sym,
-                only: entity.pages.map(&:action),
-                controller: '/tramway/entities',
-                defaults: { entity: entity }
+      entity.pages.each do |page|
+        case page.action
+        when 'index'
+          get resource_name.pluralize, to: '/tramway/entities#index', defaults: { entity: }, as: resource_name.pluralize
+        when 'show'
+          get "#{resource_name.pluralize}/:id", to: '/tramway/entities#show', defaults: { entity: },
+                                                as: resource_name.singularize
+        end
+      end
     end
 
     if segments.empty?
