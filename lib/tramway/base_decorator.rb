@@ -81,6 +81,10 @@ module Tramway
       nil
     end
 
+    def show_associations
+      []
+    end
+
     # :reek:ManualDispatch { enabled: false } because there is the idea to manual dispatch
     def method_missing(method_name, *, &)
       url_helpers = Rails.application.routes.url_helpers
