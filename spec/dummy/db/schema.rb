@@ -12,44 +12,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 20_250_318_222_237) do
+ActiveRecord::Schema[8.1].define(version: 20_251_123_223_821) do
   create_table 'articles', force: :cascade do |t|
-    t.string 'title'
-    t.string 'text'
     t.datetime 'created_at', null: false
+    t.string 'text'
+    t.string 'title'
     t.datetime 'updated_at', null: false
   end
 
   create_table 'comments', force: :cascade do |t|
-    t.integer 'post_id'
-    t.integer 'user_id'
-    t.text 'text'
     t.datetime 'created_at', null: false
+    t.integer 'post_id'
+    t.text 'text'
+    t.datetime 'updated_at', null: false
+    t.integer 'user_id'
+  end
+
+  create_table 'likes', force: :cascade do |t|
+    t.datetime 'created_at', null: false
+    t.integer 'post_id'
     t.datetime 'updated_at', null: false
   end
 
   create_table 'posts', force: :cascade do |t|
-    t.integer 'user_id'
-    t.string 'title'
-    t.string 'text'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
     t.string 'aasm_state'
+    t.datetime 'created_at', null: false
+    t.string 'text'
+    t.string 'title'
+    t.datetime 'updated_at', null: false
+    t.integer 'user_id'
   end
 
   create_table 'users', force: :cascade do |t|
-    t.string 'email'
-    t.string 'first_name'
-    t.string 'last_name'
-    t.string 'encrypted_password'
-    t.string 'role'
-    t.string 'reset_password_token'
-    t.datetime 'reset_password_sent_at'
-    t.datetime 'remember_created_at'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
     t.string 'avatar'
     t.string 'country'
+    t.datetime 'created_at', null: false
+    t.string 'email'
+    t.string 'encrypted_password'
+    t.string 'first_name'
+    t.string 'last_name'
     t.string 'personal_info'
+    t.datetime 'remember_created_at'
+    t.datetime 'reset_password_sent_at'
+    t.string 'reset_password_token'
+    t.string 'role'
+    t.datetime 'updated_at', null: false
   end
 end

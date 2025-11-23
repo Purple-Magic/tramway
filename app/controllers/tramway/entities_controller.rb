@@ -28,24 +28,7 @@ module Tramway
         namespace: entity.namespace
       ).with(view_context:)
 
-      @associations = @record.show_associations.map do |association|
-        records = Kaminari.paginate_array(
-          @record.public_send(association.name),
-        ).page(params[:page])
-
-        columns = records.first.class.index_attributes
-
-        table_headers = columns.map do |attribute|
-          records.first.object.class.human_attribute_name(attribute) 
-        end
-
-        {
-          name: association,
-          records:,
-          headers: table_headers,
-          columns:
-        }
-      end
+      set_associations
     end
 
     private
@@ -60,6 +43,20 @@ module Tramway
 
     def index_scope
       entity.page(:index).scope
+    end
+
+    def set_associations
+      @associations = @record.show_associations.map do |association|
+        next unless @record.public_send(association.name).any?
+
+        records = Kaminari.paginate_array(@record.public_send(association.name)).page(params[:page])
+
+        {
+          name: association,
+          decorator: records.first.class,
+          records:
+        }
+      end.compact
     end
   end
 end

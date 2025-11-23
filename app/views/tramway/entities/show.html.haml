@@ -32,11 +32,11 @@
 
     = tramway_table class: 'mt-4' do 
       -# FIXME: don't use first object for getting association decorator
-      = tramway_header headers: association[:headers]
+      = tramway_header headers: association[:records].first.table_headers
 
       - association[:records].each do |record|
         = tramway_row do
-          - association[:columns].each do |column|
+          - association[:decorator].index_attributes.each do |column|
             = tramway_cell do
               = record.public_send(column)
 

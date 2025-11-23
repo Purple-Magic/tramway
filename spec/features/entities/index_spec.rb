@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+
 feature 'Entities Index Page', :js, type: :feature do
   before { Post.destroy_all }
 
@@ -36,11 +37,10 @@ feature 'Entities Index Page', :js, type: :feature do
     end
 
     scenario 'shows info message about `index_attributes` method' do
-      visit '/admin/comments'
+      visit '/admin/likes'
 
-      # binding.break
       expect(page).to have_content(
-        'You should fill class-level method `self.index_attributes` inside your CommentDecorator'
+        'You should fill class-level method `self.index_attributes` inside your LikeDecorator'
       )
     end
 

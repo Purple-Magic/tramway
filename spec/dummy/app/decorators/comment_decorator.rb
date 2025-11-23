@@ -5,8 +5,10 @@ class CommentDecorator < Tramway::BaseDecorator
 
   association :user
 
-  def self.index_attributes
-    %i[text user_email]
+  class << self
+    def index_attributes
+      %i[text user_email]
+    end
   end
 
   def user_email

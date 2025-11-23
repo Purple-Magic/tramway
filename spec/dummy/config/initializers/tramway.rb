@@ -34,6 +34,14 @@ Tramway.configure do |config|
     },
     {
       name: :user
+    },
+    {
+      name: :like,
+      pages: [
+        {
+          action: :index
+        }
+      ]
     }
   ]
 end

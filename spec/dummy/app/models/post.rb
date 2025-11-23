@@ -4,6 +4,7 @@
 class Post < ApplicationRecord
   belongs_to :user
   has_many :comments
+  has_many :likes
 
   aasm do
     state :draft, initial: true
