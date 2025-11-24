@@ -15,7 +15,7 @@ feature 'Entities Show Page', :js, type: :feature do
     visit "/admin/posts/#{post.id}"
 
     within '.div-table' do
-      expect(page).to have_selector('.div-table-row', count: 3)
+      expect(page).to have_selector('.div-table-row', count: 3), page.text
 
       rows = [['Title', 'Displayed Post'], ['Aasm state', 'published'], ['User email', user.email]]
       rows.each_with_index do |(label, value), index|

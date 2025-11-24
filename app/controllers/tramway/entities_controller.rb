@@ -47,7 +47,7 @@ module Tramway
 
     def set_associations
       @associations = @record.show_associations.map do |association|
-        next unless @record.public_send(association.name).any?
+        next unless @record.public_send(association).any?
 
         records = Kaminari.paginate_array(@record.public_send(association.name)).page(params[:page])
 
