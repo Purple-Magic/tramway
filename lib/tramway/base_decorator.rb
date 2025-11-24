@@ -34,7 +34,6 @@ module Tramway
       include Tramway::Helpers::ComponentHelper
       include Tramway::Utils::Render
 
-      # :reek:NilCheck { enabled: false } because checking for nil is not a type-checking issue but business logic
       def decorate(object_or_array)
         return if object_or_array.nil?
 
@@ -77,11 +76,14 @@ module Tramway
       []
     end
 
+    def show_associations
+      []
+    end
+
     def show_header_content
       nil
     end
 
-    # :reek:ManualDispatch { enabled: false } because there is the idea to manual dispatch
     def method_missing(method_name, *, &)
       url_helpers = Rails.application.routes.url_helpers
 
@@ -95,9 +97,14 @@ module Tramway
       super
     end
 
-    # :reek:BooleanParameter { enabled: false } because it's a part of the duck-typing
     def respond_to_missing?(method_name, include_private = false)
       method_name.to_s.end_with?('_path', '_url') || super
+    end
+
+    def table_headers
+      self.class.index_attributes.map do |attribute|
+        object.class.human_attribute_name(attribute)
+      end
     end
   end
 end
