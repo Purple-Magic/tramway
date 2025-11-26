@@ -11,6 +11,7 @@ module Tramway
       load_views_helper
       load_decorator_helper
       load_form_helper
+      load_routes_helper
       configure_pagination if Tramway.config.pagination[:enabled]
     end
 
@@ -52,8 +53,20 @@ module Tramway
       end
     end
 
-    # :reek:NestedIterators { enabled: false }
-    # :reek:TooManyStatements { enabled: false }
+    def load_routes_helper
+      ActiveSupport.on_load(:action_controller) do |loaded_class|
+        require 'tramway/helpers/routes_helper'
+
+        loaded_class.include Tramway::Helpers::RoutesHelper
+      end
+
+      ActiveSupport.on_load(:action_view) do |loaded_class|
+        require 'tramway/helpers/routes_helper'
+
+        loaded_class.include Tramway::Helpers::RoutesHelper
+      end
+    end
+
     def configure_pagination
       ActiveSupport.on_load(:action_controller) do
         # Detecting tramway views path

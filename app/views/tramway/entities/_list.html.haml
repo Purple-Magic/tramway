@@ -1,5 +1,7 @@
 - decorator = Tramway::Decorators::ClassHelper.decorator_class_name(@model_class, @namespace)
 - index_attributes = decorator.constantize.index_attributes
+- custom_path_method = "#{@model_class.model_name.plural}_path"
+- custom_path_method = "#{@entity.namespace.gsub('/', '_')}_#{custom_path_method}" if @entity.namespace.present?
 
 .mt-8.w-full
   - content_for :title, page_title
@@ -9,7 +11,7 @@
       = content_for(:title)
 
     - if Tramway.config.pagination[:enabled]
-      = paginate @entities, custom_path_method: "#{@model_class.model_name.plural}_path"
+      = paginate @entities, custom_path_method:
   .flex.justify-end.mt-2
     = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
 
@@ -25,4 +27,4 @@
 
       - if Tramway.config.pagination[:enabled]
         .flex.mt-4
-          = paginate @entities, custom_path_method: "#{@model_class.model_name.plural}_path"
+          = paginate @entities, custom_path_method:

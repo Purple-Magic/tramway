@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'tramway/helpers/routes_helper'
+
 # rubocop:disable Metrics/BlockLength
 Tramway::Engine.routes.draw do
   Tramway.config.entities.each do |entity|
@@ -41,3 +43,9 @@ Tramway::Engine.routes.draw do
   end
 end
 # rubocop:enable Metrics/BlockLength
+
+Tramway::Engine.routes.routes.map(&:name).compact.each do |route_name|
+  %w[path url].each do |suffix|
+    Tramway::Helpers::RoutesHelper.define_route_helper("#{route_name}_#{suffix}")
+  end
+end
