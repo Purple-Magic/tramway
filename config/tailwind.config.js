@@ -162,6 +162,8 @@ module.exports = {
     'max-h-select',
     'overflow-y-auto',
     'cursor-pointer',
+    'dark:border-gray-600',
+    'dark:text-gray-100',
 
     // === Multiselect option styling ===
     'border-b',
