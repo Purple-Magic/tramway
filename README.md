@@ -819,6 +819,14 @@ Tramway ships with helpers for common UI patterns built on top of Tailwind compo
   <%= tramway_button path: user_path(user), text: 'View profile', color: :emerald, data: { turbo: false } %>
   ```
 
+* `tramway_badge` renders a Tailwind-styled badge with the provided `text`. Pass a semantic `type` (for example, `:success` or
+  `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When you opt into a
+  custom color, ensure the corresponding background utilities are available in your Tailwind safelist.
+
+  ```erb
+  <%= tramway_badge text: 'Active', type: :success %>
+  ```
+
 * `tramway_back_button` renders a standardized "Back" link.
 
   ```erb
