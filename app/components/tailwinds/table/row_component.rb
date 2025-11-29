@@ -25,7 +25,7 @@ module Tailwinds
       def desktop_row_classes(cells_count)
         [
           'div-table-row', 'grid', 'gap-4', 'bg-white', 'border-b', 'last:border-b-0', 'dark:bg-gray-800',
-          'dark:border-gray-700', "grid-cols-#{cells_count}"
+          'dark:border-gray-700', "md:grid-cols-#{cells_count}", 'grid-cols-1'
         ].join(' ')
       end
 

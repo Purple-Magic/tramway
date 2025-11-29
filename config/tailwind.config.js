@@ -11,6 +11,8 @@ module.exports = {
     'div-table-cell',
     'sm:text-base',
     'last:border-b-0',
+    'md:block',
+    'first:block',
 
     // === Visibility and typography helpers ===
     'hidden',

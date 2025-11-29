@@ -1,5 +1,6 @@
 = helpers.component 'tailwinds/table/row/preview'
 
 - width_class = options[:class]&.include?('w-') ? '' : 'w-full'
+
 .div-table.text-left.rtl:text-right.text-gray-500.dark:text-gray-400{ class: "#{options[:class]} #{width_class}", **options.except(:class) }
   = content
