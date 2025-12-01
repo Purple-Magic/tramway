@@ -49,6 +49,10 @@ module Tailwinds
                ), &)
       end
 
+      def date_field(attribute, **, &)
+        common_field(:date_field, :date_field, attribute, **, &)
+      end
+
       def file_field(attribute, **options, &)
         sanitized_options = sanitize_options(options)
         input = super(attribute, **sanitized_options.merge(class: :hidden))
