@@ -1,0 +1,8 @@
+.mb-4
+  - if @label
+    = component('tailwinds/form/label', for: @for) do
+      = @label
+  - base_classes = 'w-full bg-white border border-gray-300 rounded focus:outline-none focus:border-red-500 '
+  - base_classes += 'dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:focus:border-red-400 dark:placeholder-white'
+  - classes = "#{size_class(:text_input)} #{base_classes}"
+  = @input.call @attribute, **@options.merge(class: classes), value: @value

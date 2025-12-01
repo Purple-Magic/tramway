@@ -87,6 +87,25 @@ describe Tailwinds::Form::Builder, type: :view do
     end
   end
 
+  describe '#date_field' do
+    let(:output) { builder.date_field :remember_created_at }
+
+    it 'renders date input with tailwind classes' do
+      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'input[type="date"].text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+    end
+
+    context 'with value from object' do
+      let(:value) { Date.new(2024, 1, 15) }
+
+      before { resource.remember_created_at = value }
+
+      it 'gets value from object' do
+        expect(output).to have_selector "input[value='#{value}']"
+      end
+    end
+  end
+
   describe '#password_field' do
     let(:output) do
       builder.password_field :password
