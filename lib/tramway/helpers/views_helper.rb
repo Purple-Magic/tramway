@@ -4,6 +4,8 @@ module Tramway
   module Helpers
     # Provides view-oriented helpers for ActionView
     module ViewsHelper
+      include Tramway::Helpers::ComponentHelper
+
       def tramway_form_for(object, *, size: :middle, **options, &)
         form_for(
           object,
