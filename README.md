@@ -1,6 +1,11 @@
 # Tramway
 Unite Ruby on Rails brilliance. Streamline development with Tramway.
 
+[![RubyGems Version](https://img.shields.io/gem/v/tramway.svg)](https://rubygems.org/gems/tramway)
+[![Tests](https://github.com/Purple-Magic/tramway/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Purple-Magic/tramway/actions/workflows/test.yml)
+[![Lint](https://github.com/Purple-Magic/tramway/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/Purple-Magic/tramway/actions/workflows/lint.yml)
+[![RubyGems Downloads (total)](https://img.shields.io/gem/dt/tramway.svg)](https://rubygems.org/gems/tramway)
+
 * [Installation](https://github.com/Purple-Magic/tramway#installation)
 * [Getting Started](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#getting-started)
 * [Usage](https://github.com/Purple-Magic/tramway#usage)
