@@ -12,6 +12,7 @@ module Tailwinds
     option :method, optional: true, default: -> { :get }
     option :link, optional: true, default: -> { false }
     option :options, optional: true, default: -> { {} }
+    option :form_options, optional: true, default: -> { {} }
 
     def size_classes
       {

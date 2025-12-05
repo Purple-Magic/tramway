@@ -91,6 +91,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
         path: '/dashboard',
         method: :get,
         link: false,
+        form_options: {},
         color: nil,
         type: nil,
         size: nil,
@@ -136,6 +137,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
           method: :delete,
           link: false,
           color: :red,
+          form_options: {},
           type: :primary,
           size: :small,
           options: { data: { turbo_confirm: 'Are you sure?' } }
@@ -148,6 +150,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
           text: 'Edit',
           method: :delete,
           color: :red,
+          form_options: {},
           type: :primary,
           size: :small,
           data: { turbo_confirm: 'Are you sure?' }
@@ -161,6 +164,25 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
           .and_return(:custom_button_output)
 
         expect(view.tramway_button(**custom_helper_arguments)).to eq :custom_button_output
+      end
+
+      context 'with form options' do
+        let(:form_component_arguments) do
+          default_component_arguments.merge(form_options: { data: { turbo_frame: '_top' } })
+        end
+
+        let(:form_helper_arguments) do
+          default_helper_arguments.merge(form_options: { data: { turbo_frame: '_top' } })
+        end
+
+        it 'delegates form options to the tailwinds button component' do
+          expect(view)
+            .to receive(:component)
+            .with('tailwinds/button', **form_component_arguments)
+            .and_return(:form_button_output)
+
+          expect(view.tramway_button(**form_helper_arguments)).to eq :form_button_output
+        end
       end
     end
   end
