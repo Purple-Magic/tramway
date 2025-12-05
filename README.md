@@ -786,6 +786,15 @@ Tramway ships with helpers for common UI patterns built on top of Tailwind compo
 
   All additional keyword arguments are forwarded to the underlying component as HTML attributes.
 
+  You can also pass HTML attributes for the generated `<form>` separately via `form_options:` while keeping button-specific
+  attributes in `options:`:
+
+  ```erb
+  <%= tramway_button path: user_path(user), text: 'Create',
+    form_options: { data: { turbo: false } },
+    options: { data: { controller: 'submit-once' } } %>
+  ```
+
   The `type` option maps semantic intent to Tailwind color families. The full set of supported values is:
 
   | Type | Color |

@@ -33,6 +33,10 @@ RSpec/MessageSpies:
 RSpec/StubbedMock:
   Enabled: false
 
+RSpec/SpecFilePathFormat:
+  Exclude:
+    - spec/tramway/helpers/views_helpers/*_spec.rb
+
 Gemspec/RequiredRubyVersion:
   Enabled: false
 
