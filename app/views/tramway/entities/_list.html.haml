@@ -13,6 +13,10 @@
     - if Tramway.config.pagination[:enabled]
       = paginate @entities, custom_path_method:
   .flex.justify-end.mt-2
+    - if @entity.page(:create).present?
+      = tramway_button text: t('tramway.actions.new'),
+        path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.new)
+
     = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
 
   - if index_attributes.empty?
