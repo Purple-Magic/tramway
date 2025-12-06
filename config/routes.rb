@@ -14,22 +14,56 @@ Tramway::Engine.routes.draw do
     resource_name = segments.pop
 
     define_resource = proc do
-      entity.pages.each do |page|
+      actions = entity.pages.reduce([]) do |acc, page|
         case page.action
         when 'index'
-          get resource_name.pluralize, to: '/tramway/entities#index', defaults: { entity: }, as: resource_name.pluralize
+          acc << :index
         when 'show'
-          get "#{resource_name.pluralize}/:id", to: '/tramway/entities#show', defaults: { entity: },
-                                                as: resource_name.singularize
+          acc << :show
+        when 'create'
+          acc += %i[create new]
+        else
+          acc
         end
       end
+
+      resources resource_name.pluralize.to_sym,
+          only: actions.map(&:to_sym),
+          controller: '/tramway/entities',
+          defaults: { entity: }
+
+      # entity.pages.each do |page|
+      #   case page.action
+      #   when 'index'
+      #     get resource_name.pluralize,
+      #       to: '/tramway/entities#index',
+      #       defaults: { entity: },
+      #       as: resource_name.pluralize
+
+      #   when 'show'
+      #     get "#{resource_name.pluralize}/:id",
+      #       to: '/tramway/entities#show',
+      #       defaults: { entity: },
+      #       as: resource_name.singularize
+
+      #   when 'create'
+      #     post resource_name.pluralize,
+      #       to: '/tramway/entities#create',
+      #       defaults: { entity: }
+
+      #     get "#{resource_name.pluralize}/new",
+      #       to: '/tramway/entities#new',
+      #       defaults: { entity: }
+      #   end
+      # end
     end
 
     if segments.empty?
       define_resource.call
     else
       nest = lambda do |names|
-        namespace names.first.to_sym do
+        namespace_name = names.first.to_sym 
+        namespace namespace_name do
           if names.size > 1
             nest.call(names.drop(1))
           else
