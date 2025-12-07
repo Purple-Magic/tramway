@@ -9,7 +9,7 @@
   - @record.class.fields.each do |(attribute, field_type)|
     = f.tramway_field field_type, attribute
 
-  .form-actions
+  .flex.flex-row.space-x-2
     = f.submit t('tramway.actions.save')
     = tramway_button text: t('tramway.actions.cancel'),
       path: public_send(@entity.index_helper_method),
