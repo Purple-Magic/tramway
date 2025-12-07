@@ -49,7 +49,7 @@ feature 'Entities Create Page', :js, type: :feature do
     end
 
     scenario 'creates new record with needed data' do
-      sleep 2 # wait for DB transaction to complete
+      expect(page).to have_content('The record is created')
 
       post = Post.last
 
