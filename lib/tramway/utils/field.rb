@@ -9,7 +9,7 @@ module Tramway
           name = field_name(field_type[:type])
           value = field_type[:value].call
 
-          public_send(name, attribute, value:, **, &)
+          public_send(name, attribute, value:, **field_type.except(:type, :value), **, &)
         else
           public_send(field_name(field_type), attribute, **, &)
         end
