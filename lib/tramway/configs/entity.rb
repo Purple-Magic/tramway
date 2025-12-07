@@ -39,6 +39,22 @@ module Tramway
         pages.find { |page| page.action == name.to_s }
       end
 
+      def show_helper_method
+        build_helper_method(name, route:, namespace:, plural: false)
+      end
+
+      def index_helper_method
+        build_helper_method(name, route:, namespace:, plural: true)
+      end
+
+      def new_helper_method
+        build_helper_method(name, route:, namespace:, plural: false, action: :new)
+      end
+
+      def create_helper_method
+        build_helper_method(name, route:, namespace:, plural: true)
+      end
+
       private
 
       def pluralized(model_name)
@@ -78,22 +94,6 @@ module Tramway
         namespaced_method_name = namespace.present? ? "#{namespace}_#{method_name}" : method_name
 
         action.present? ? "#{action}_#{namespaced_method_name}" : namespaced_method_name
-      end
-
-      def show_helper_method
-        build_helper_method(name, route:, namespace:, plural: false)
-      end
-
-      def index_helper_method
-        build_helper_method(name, route:, namespace:, plural: true)
-      end
-
-      def new_helper_method
-        build_helper_method(name, route:, namespace:, plural: false, action: :new)
-      end
-
-      def create_helper_method
-        build_helper_method(name, route:, namespace:, plural: true)
       end
 
       def route_helper_engine

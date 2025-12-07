@@ -31,6 +31,10 @@ module Tramway
       set_associations
     end
 
+    def new
+      @record = tramway_form model_class.new, namespace: entity.namespace
+    end
+
     private
 
     def model_class

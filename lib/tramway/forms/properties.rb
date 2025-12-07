@@ -38,7 +38,6 @@ module Tramway
           (__ancestor_properties + @properties).uniq
         end
 
-        # :reek:ManualDispatch { enabled: false }
         def __ancestor_properties(klass = superclass)
           superklass = klass.superclass
 
@@ -47,7 +46,6 @@ module Tramway
           klass.properties + __ancestor_properties(superklass)
         end
 
-        # :reek:UtilityFunction { enabled: false }
         def __initialize_properties(subclass)
           subclass.instance_variable_set(:@properties, [])
         end
