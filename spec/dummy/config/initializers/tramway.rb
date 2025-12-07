@@ -13,6 +13,9 @@ Tramway.configure do |config|
         },
         {
           action: :show
+        },
+        {
+          action: :create
         }
       ]
     },
