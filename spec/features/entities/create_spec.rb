@@ -49,6 +49,8 @@ feature 'Entities Create Page', :js, type: :feature do
     end
 
     scenario 'creates new record with needed data' do
+      sleep 2 # wait for DB transaction to complete
+
       post = Post.last
 
       expect(post.title).to eq('Test Post')
