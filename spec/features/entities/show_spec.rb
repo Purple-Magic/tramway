@@ -9,15 +9,15 @@ feature 'Entities Show Page', :js, type: :feature do
   end
 
   let(:user) { create :user, email: 'show@example.com' }
-  let!(:post) { create :post, aasm_state: :published, title: 'Displayed Post', user: }
+  let!(:post) { create :post, aasm_state: :published, title: 'Displayed Post', text: 'This is test', user: }
 
   scenario 'renders configured show attributes' do
     visit "/admin/posts/#{post.id}"
 
     within '.div-table' do
-      expect(page).to have_selector('.div-table-row', count: 3), page.text
+      expect(page).to have_selector('.div-table-row', count: 4), page.text
 
-      rows = [['Title', 'Displayed Post'], ['Aasm state', 'published'], ['User email', user.email]]
+      rows = [['Title', 'Displayed Post'], ['Text', 'This is test'], ['Aasm state', 'published'], ['User email', user.email]]
       rows.each_with_index do |(label, value), index|
         within all('.div-table-row')[index] do
           expect(page).to have_selector('.div-table-cell', text: label)

@@ -1,4 +1,4 @@
-class PostForm < Tramway::BaseForm
+class Admin::PostForm < Tramway::BaseForm
   properties :title, :text, :user_id
 
   fields title: :text,

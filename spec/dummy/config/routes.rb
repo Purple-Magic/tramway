@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount Tramway::Engine, at: '/admin'
+  mount Tramway::Engine, at: '/'
 
   resources :users
   resources :clients

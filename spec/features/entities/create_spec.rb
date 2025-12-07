@@ -37,7 +37,7 @@ feature 'Entities Create Page', :js, type: :feature do
 
       click_button 'Save'
 
-      expect(page).to have_content('The record was successfully created.')
+      expect(page).to have_content('The record is created')
       expect(page).to have_content('Test Post')
       expect(page).to have_content('This is a test post.')
 

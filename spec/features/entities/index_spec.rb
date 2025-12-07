@@ -40,7 +40,7 @@ feature 'Entities Index Page', :js, type: :feature do
       visit '/admin/likes'
 
       expect(page).to have_content(
-        'You should fill class-level method `self.index_attributes` inside your LikeDecorator'
+        'You should fill class-level method `self.index_attributes` inside your Admin::LikeDecorator'
       )
     end
 

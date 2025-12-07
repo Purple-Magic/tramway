@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-class PostDecorator < Tramway::BaseDecorator
-  delegate_attributes :title, :aasm_state
+class Admin::PostDecorator < Tramway::BaseDecorator
+  delegate_attributes :title, :aasm_state, :text
 
   association :user
-  association :comments
+  association :comments, decorator: Admin::CommentDecorator
 
   def self.index_attributes
     %i[title user]
   end
 
   def show_attributes
-    %i[title aasm_state user_email]
+    %i[title text aasm_state user_email]
   end
 
   def show_associations

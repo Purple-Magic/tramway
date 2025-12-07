@@ -6,6 +6,7 @@ Tramway.configure do |config|
   config.entities = [
     {
       name: :post,
+      namespace: :admin,
       pages: [
         {
           action: :index,
@@ -21,6 +22,7 @@ Tramway.configure do |config|
     },
     {
       name: :comment,
+      namespace: :admin,
       pages: [
         {
           action: :index
@@ -29,6 +31,7 @@ Tramway.configure do |config|
     },
     {
       name: :article,
+      namespace: :admin,
       pages: [
         {
           action: :index
@@ -40,6 +43,7 @@ Tramway.configure do |config|
     },
     {
       name: :like,
+      namespace: :admin,
       pages: [
         {
           action: :index

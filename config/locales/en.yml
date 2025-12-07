@@ -4,4 +4,4 @@ en:
       new:
         title: "Create %{model_name}"
     notices:
-      created: "The record has been successfully created"
+      created: "The record is created"

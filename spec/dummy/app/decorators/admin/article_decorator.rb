@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ArticleDecorator < Tramway::BaseDecorator
+class Admin::ArticleDecorator < Tramway::BaseDecorator
   delegate_attributes :title
 
   def self.index_attributes

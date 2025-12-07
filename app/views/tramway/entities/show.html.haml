@@ -27,7 +27,7 @@
 
       %div
         = paginate association[:records],
-          custom_path_method: "#{@model_class.model_name.to_s.underscore}_path",
+          custom_path_method: @entity.index_helper_method,
           custom_path_arguments: [@record.id]
 
     = tramway_table class: 'mt-4' do 
@@ -42,5 +42,5 @@
 
     .mt-4
       = paginate association[:records],
-        custom_path_method: "#{@model_class.model_name.to_s.underscore}_path",
+        custom_path_method: @entity.index_helper_method,
         custom_path_arguments: [@record.id]
