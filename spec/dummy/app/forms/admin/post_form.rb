@@ -1,10 +1,14 @@
-class Admin::PostForm < Tramway::BaseForm
-  properties :title, :text, :user_id
+# frozen_string_literal: true
 
-  fields title: :text,
-    text: :text_area,
-    user_id: {
-      type: :hidden,
-      value: -> { User.first.id }
-    }
+module Admin
+  class PostForm < Tramway::BaseForm
+    properties :title, :text, :user_id
+
+    fields title: :text,
+           text: :text_area,
+           user_id: {
+             type: :hidden,
+             value: -> { User.first.id }
+           }
+  end
 end

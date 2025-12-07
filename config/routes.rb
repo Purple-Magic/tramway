@@ -21,16 +21,16 @@ Tramway::Engine.routes.draw do
         when 'show'
           acc << :show
         when 'create'
-          acc += %i[create new]
+          acc + %i[create new]
         else
           acc
         end
       end
 
       resources resource_name.pluralize.to_sym,
-          only: actions.map(&:to_sym),
-          controller: '/tramway/entities',
-          defaults: { entity: }
+                only: actions.map(&:to_sym),
+                controller: '/tramway/entities',
+                defaults: { entity: }
 
       # entity.pages.each do |page|
       #   case page.action
@@ -62,7 +62,7 @@ Tramway::Engine.routes.draw do
       define_resource.call
     else
       nest = lambda do |names|
-        namespace_name = names.first.to_sym 
+        namespace_name = names.first.to_sym
         namespace namespace_name do
           if names.size > 1
             nest.call(names.drop(1))

@@ -35,6 +35,7 @@ module Tramway
       @record = tramway_form model_class.new, namespace: entity.namespace
     end
 
+    # rubocop:disable Metrics/AbcSize
     def create
       @record = tramway_form model_class.new, namespace: entity.namespace
 
@@ -44,6 +45,7 @@ module Tramway
         render :new
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 

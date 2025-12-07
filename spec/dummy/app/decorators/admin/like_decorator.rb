@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-class Admin::LikeDecorator < Tramway::BaseDecorator
+module Admin
+  class LikeDecorator < Tramway::BaseDecorator
+  end
 end

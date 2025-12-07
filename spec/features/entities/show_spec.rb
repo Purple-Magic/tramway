@@ -17,7 +17,8 @@ feature 'Entities Show Page', :js, type: :feature do
     within '.div-table' do
       expect(page).to have_selector('.div-table-row', count: 4), page.text
 
-      rows = [['Title', 'Displayed Post'], ['Text', 'This is test'], ['Aasm state', 'published'], ['User email', user.email]]
+      rows = [['Title', 'Displayed Post'], ['Text', 'This is test'], ['Aasm state', 'published'],
+              ['User email', user.email]]
       rows.each_with_index do |(label, value), index|
         within all('.div-table-row')[index] do
           expect(page).to have_selector('.div-table-cell', text: label)

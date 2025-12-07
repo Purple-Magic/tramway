@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 describe 'Tramway::Engine load_routes initializer', type: :routing do
-  it 'defines routes for each entity in Tramway::Config.entities' do
-    entity_options = {
+  let(:entity_options) do
+    {
       name: 'post',
       namespace: :admin,
       pages: [
@@ -20,7 +20,9 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
         }
       ]
     }
+  end
 
+  it 'defines routes for each entity in Tramway::Config.entities' do
     expect(get: '/admin/posts').to route_to(
       controller: 'tramway/entities',
       action: 'index',

@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 module Tramway
   module Forms
+    # Provides field definitions for tramway_form_for
     module Fields
+      # Class methods for defining fields
       module ClassMethods
         def fields(**attributes)
           @fields.merge! attributes

@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
-class Admin::CommentDecorator < Tramway::BaseDecorator
-  delegate_attributes :text
+module Admin
+  class CommentDecorator < Tramway::BaseDecorator
+    delegate_attributes :text
 
-  association :user
+    association :user
 
-  class << self
-    def index_attributes
-      %i[text user_email]
+    class << self
+      def index_attributes
+        %i[text user_email]
+      end
     end
-  end
 
-  def user_email
-    object.user&.email
+    def user_email
+      object.user&.email
+    end
   end
 end

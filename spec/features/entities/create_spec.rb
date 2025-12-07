@@ -27,7 +27,7 @@ feature 'Entities Create Page', :js, type: :feature do
   end
 
   context 'with creating checks' do
-    scenario 'creates new record' do
+    before do
       visit '/admin/posts'
 
       click_button 'New'
@@ -36,11 +36,15 @@ feature 'Entities Create Page', :js, type: :feature do
       fill_in 'post[text]', with: 'This is a test post.'
 
       click_button 'Save'
+    end
 
+    scenario 'creates new record' do
       expect(page).to have_content('The record is created')
       expect(page).to have_content('Test Post')
       expect(page).to have_content('This is a test post.')
+    end
 
+    scenario 'creates new record with needed data' do
       post = Post.last
 
       expect(post.title).to eq('Test Post')
