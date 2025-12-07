@@ -7,9 +7,11 @@ module Tramway
       def tramway_field(field_type, attribute, **, &)
         if field_type.is_a?(Hash)
           name = field_name(field_type[:type])
-          value = field_type[:value].call
+          value = field_type[:value]&.call
 
-          public_send(name, attribute, value:, **field_type.except(:type, :value), **, &)
+          hash = { value:, **field_type.except(:type, :value) }.compact
+
+          public_send(name, attribute, **hash, **, &)
         else
           public_send(field_name(field_type), attribute, **, &)
         end
