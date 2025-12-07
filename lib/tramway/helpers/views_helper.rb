@@ -63,6 +63,10 @@ module Tramway
                   type:,
                   color:
       end
+
+      def tramway_title(text: nil, &)
+        component 'tailwinds/title', text:, &
+      end
     end
   end
 end

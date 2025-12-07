@@ -11,7 +11,7 @@ describe Tramway::EntityComponent, type: :component do
     it 'decorates the provided item with the entity namespace' do
       component = described_class.new(entity:, item: post)
 
-      expect(component.decorated_item).to be_a(PostDecorator)
+      expect(component.decorated_item).to be_a(Admin::PostDecorator)
       expect(component.decorated_item.object).to eq(post)
     end
   end
@@ -22,7 +22,7 @@ describe Tramway::EntityComponent, type: :component do
 
       it 'builds the show route using the engine helpers' do
         component = described_class.new(entity:, item: post)
-        expected_path = Tramway::Engine.routes.url_helpers.post_path(component.decorated_item.id)
+        expected_path = Tramway::Engine.routes.url_helpers.admin_post_path(component.decorated_item.id)
 
         expect(component.href).to eq(expected_path)
       end
@@ -32,13 +32,14 @@ describe Tramway::EntityComponent, type: :component do
       let(:entity_without_show) do
         Tramway::Configs::Entity.new(
           name: :post,
+          namespace: :admin,
           pages: [Tramway::Configs::Entities::Page.new(action: :index)]
         )
       end
       let(:post) { create :post, aasm_state: :published }
 
       it 'falls back to the decorated item show_path' do
-        allow_any_instance_of(PostDecorator).to receive(:show_path).and_return('/custom/show/path')
+        allow_any_instance_of(Admin::PostDecorator).to receive(:show_path).and_return('/custom/show/path')
 
         component = described_class.new(entity: entity_without_show, item: post)
 

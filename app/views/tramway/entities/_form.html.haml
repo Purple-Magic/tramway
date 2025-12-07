@@ -1,0 +1,17 @@
+= tramway_form_for @record, local: true, url: public_send(@entity.create_helper_method), method: :post do |f|
+  - if @record.errors.any?
+    .alert.alert-danger
+      %h4= "#{pluralize(@record.errors.count, 'error')} prohibited this record from being saved:"
+      %ul
+        - @record.errors.full_messages.each do |message|
+          %li= message
+
+  - @record.class.fields.each do |(attribute, field_type)|
+    = f.tramway_field field_type, attribute
+
+  .flex.flex-row.space-x-2
+    = f.submit t('tramway.actions.save')
+    = tramway_button text: t('tramway.actions.cancel'),
+      path: public_send(@entity.index_helper_method),
+      type: :secondary,
+      link: true

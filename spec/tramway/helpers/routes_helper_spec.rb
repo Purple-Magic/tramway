@@ -23,7 +23,7 @@ describe Tramway::Helpers::RoutesHelper do
     end
 
     it 'delegates route helpers to the Tramway engine url helpers' do
-      expect(helper_instance.posts_path).to eq(Tramway::Engine.routes.url_helpers.posts_path)
+      expect(helper_instance.admin_posts_path).to eq(Tramway::Engine.routes.url_helpers.admin_posts_path)
     end
   end
 end

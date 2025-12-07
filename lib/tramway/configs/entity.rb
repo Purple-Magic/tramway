@@ -13,7 +13,7 @@ module Tramway
       attribute? :namespace, Types::Coercible::String
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
-      ACTIONS = %i[index show].freeze
+      ACTIONS = %i[index show new create].freeze
       RouteStruct = Struct.new(*ACTIONS)
 
       # HumanName Struct contains human names forms for the entity
@@ -39,6 +39,22 @@ module Tramway
         pages.find { |page| page.action == name.to_s }
       end
 
+      def show_helper_method
+        build_helper_method(name, route:, namespace:, plural: false)
+      end
+
+      def index_helper_method
+        build_helper_method(name, route:, namespace:, plural: true)
+      end
+
+      def new_helper_method
+        build_helper_method(name, route:, namespace:, plural: false, action: :new)
+      end
+
+      def create_helper_method
+        build_helper_method(name, route:, namespace:, plural: true)
+      end
+
       private
 
       def pluralized(model_name)
@@ -55,11 +71,18 @@ module Tramway
 
       def route_helper_methods
         ACTIONS.map do |action|
-          page(action).present? ? send("#{action}_helper_method") : nil
+          case action
+          when :index, :show
+            page(action).present?
+          when :new, :create
+            page(:create).present?
+          end => existing_condition
+
+          send("#{action}_helper_method") if existing_condition
         end
       end
 
-      def build_helper_method(base_name, route: nil, namespace: nil, plural: false)
+      def build_helper_method(base_name, route: nil, namespace: nil, plural: false, action: nil)
         if plural
           base_name.to_s.parameterize.underscore.pluralize
         else
@@ -67,15 +90,10 @@ module Tramway
         end => underscored
 
         method_name = route.present? ? route.helper_method_by(underscored) : "#{underscored}_path"
-        namespace.present? ? "#{namespace}_#{method_name}" : method_name
-      end
 
-      def show_helper_method
-        build_helper_method(name, route:, namespace:, plural: false)
-      end
+        namespaced_method_name = namespace.present? ? "#{namespace}_#{method_name}" : method_name
 
-      def index_helper_method
-        build_helper_method(name, route:, namespace:, plural: true)
+        action.present? ? "#{action}_#{namespaced_method_name}" : namespaced_method_name
       end
 
       def route_helper_engine

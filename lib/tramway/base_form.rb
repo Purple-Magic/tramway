@@ -2,6 +2,7 @@
 
 require 'tramway/forms/properties'
 require 'tramway/forms/normalizations'
+require 'tramway/forms/fields'
 require 'tramway/duck_typing'
 
 module Tramway
@@ -9,6 +10,7 @@ module Tramway
   #
   class BaseForm
     include Tramway::Forms::Properties
+    include Tramway::Forms::Fields
     include Tramway::Forms::Normalizations
     include Tramway::DuckTyping::ActiveRecordCompatibility
 
@@ -24,6 +26,7 @@ module Tramway
       def inherited(subclass)
         __initialize_properties subclass
         __initialize_normalizations subclass
+        __initialize_fields subclass
 
         super
       end

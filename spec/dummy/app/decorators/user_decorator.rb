@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserDecorator < Tramway::BaseDecorator
-  association :posts
+  association :posts, decorator: Admin::PostDecorator
 
   def published_posts
     tramway_decorate object.posts.published

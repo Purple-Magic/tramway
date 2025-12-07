@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require 'tramway/utils/field'
+
 module Tailwinds
   module Form
     # Provides Tailwind-styled forms
-    # :reek:InstanceVariableAssumption
     class Builder < Tramway::Views::FormBuilder
+      include Tramway::Utils::Field
+
       def initialize(object_name, object, template, options)
         super
 
@@ -105,8 +108,6 @@ module Tailwinds
         { attribute:, label: label_build(attribute, options), for: for_id(attribute), options:, size: form_size }
       end
 
-      # :reek:UtilityFunction
-      # :reek:NilCheck
       def label_build(attribute, options)
         label_option = options[:label]
 
@@ -125,7 +126,6 @@ module Tailwinds
       end
 
       # REMOVE IT. WE MUST UNDERSTAND WHY INCLUDE_BLANK DOES NOT WORK
-      # :reek:UtilityFunction
       def explicitly_add_blank_option(collection, options)
         if options[:include_blank]
           collection = collection.to_a if collection.is_a? Hash

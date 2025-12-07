@@ -18,7 +18,7 @@ describe UserDecorator do
     end
 
     it 'returns posts' do
-      expect(decorated_object.posts.first).to be_a(PostDecorator)
+      expect(decorated_object.posts.first).to be_a(Admin::PostDecorator)
     end
   end
 
@@ -35,7 +35,7 @@ describe UserDecorator do
   end
 end
 
-describe PostDecorator do
+describe Admin::PostDecorator do
   subject(:decorated_object) { described_class.decorate(post) }
 
   let(:post) { create :post }

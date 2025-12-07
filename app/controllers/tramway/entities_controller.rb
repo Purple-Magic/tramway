@@ -31,6 +31,22 @@ module Tramway
       set_associations
     end
 
+    def new
+      @record = tramway_form model_class.new, namespace: entity.namespace
+    end
+
+    # rubocop:disable Metrics/AbcSize
+    def create
+      @record = tramway_form model_class.new, namespace: entity.namespace
+
+      if @record.submit params[model_class.model_name.param_key]
+        redirect_to public_send(entity.show_helper_method, @record.id), notice: t('tramway.notices.created')
+      else
+        render :new
+      end
+    end
+    # rubocop:enable Metrics/AbcSize
+
     private
 
     def model_class
