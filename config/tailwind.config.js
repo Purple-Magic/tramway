@@ -198,18 +198,18 @@ module.exports = {
 
     // === Flash message styles ===
     'fixed',
-    'top-6'
+    'top-6',
     'right-4',
     'z-50',
     'space-y-2',
-    'flash'
+    'flash',
     'opacity-100',
     'bg-green-700',
     'text-white',
     'px-4',
     'py-2',
     'rounded',
-    'shadow'.
+    'shadow',
     'bg-yellow-700',
     'text-black'
   ],
