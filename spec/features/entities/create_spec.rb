@@ -28,6 +28,8 @@ feature 'Entities Create Page', :js, type: :feature do
 
   context 'with creating checks' do
     before do
+      create :user
+
       visit '/admin/posts'
 
       click_button 'New'
