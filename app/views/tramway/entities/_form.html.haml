@@ -5,8 +5,9 @@
       %ul
         - @record.errors.full_messages.each do |message|
           %li= message
+
   - @record.class.fields.each do |(attribute, field_type)|
-    = f.public_send("#{field_type}_field", attribute)
+    = f.tramway_field field_type, attribute
 
   .form-actions
     = f.submit t('tramway.actions.save')

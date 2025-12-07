@@ -88,6 +88,17 @@ module Tailwinds
         render(Tailwinds::Form::SubmitButtonComponent.new(action, size: form_size, **sanitized_options), &)
       end
 
+      def tramway_field(field_type, attribute, **options, &)
+        case field_type.to_sym
+        when :text_area, :select, :multiselect
+          field_type
+        else
+          "#{field_type}_field"
+        end => field_name
+
+        public_send(field_name, attribute, **options, &)
+      end
+
       private
 
       attr_reader :form_size

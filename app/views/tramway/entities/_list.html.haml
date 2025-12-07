@@ -7,8 +7,8 @@
   - content_for :title, page_title
 
   .flex.justify-between.items-center
-    %h1.font-bold.text-4xl.dark:text-white
-      = content_for(:title)
+    = tramway_title do
+      = content_for :title
 
     - if Tramway.config.pagination[:enabled]
       = paginate @entities, custom_path_method:

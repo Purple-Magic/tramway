@@ -35,6 +35,16 @@ module Tramway
       @record = tramway_form model_class.new, namespace: entity.namespace
     end
 
+    def create
+      @record = tramway_form model_class.new, namespace: entity.namespace
+
+      if @record.submit params[model_class.model_name.param_key]
+        redirect_to public_send(entity.show_helper_method, @record.id), notice: t('tramway.notices.created')
+      else
+        render :new
+      end
+    end
+
     private
 
     def model_class
