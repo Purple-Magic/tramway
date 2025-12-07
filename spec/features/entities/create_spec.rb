@@ -3,7 +3,11 @@
 require 'rails_helper'
 
 feature 'Entities Create Page', :js, type: :feature do
-  before { Post.destroy_all }
+  before do
+    Post.destroy_all
+
+    create :user
+  end
 
   context 'with index page checks' do
     scenario 'displays new button' do
@@ -28,8 +32,6 @@ feature 'Entities Create Page', :js, type: :feature do
 
   context 'with creating checks' do
     before do
-      create :user
-
       visit '/admin/posts'
 
       click_button 'New'
