@@ -67,6 +67,10 @@ module Tramway
       def tramway_title(text: nil, &)
         component 'tailwinds/title', text:, &
       end
+
+      def tramway_flash(text:, type:, **options)
+        component 'tailwinds/flash', text:, type:, options:
+      end
     end
   end
 end
