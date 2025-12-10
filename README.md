@@ -13,6 +13,7 @@ Unite Ruby on Rails brilliance. Streamline development with Tramway.
   * [Tramway Decorators](https://github.com/Purple-Magic/tramway#tramway-decorators)
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
+  * [Tramway Flash](https://github.com/Purple-Magic/tramway#tramway-flash)
   * [Tramway Table Component](https://github.com/Purple-Magic/tramway#tramway-table-component)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
     * [Stimulus-based inputs](https://github.com/Purple-Magic/tramway#stimulus-based-inputs)
@@ -707,6 +708,27 @@ tramway_navbar title: 'Purple Magic' do |nav|
   end
 end
 ```
+
+### Tramway Flash
+
+`tramway_flash` renders the Tailwind-styled flash component that Tramway uses in its layouts. Pass the flash text and type, and
+the helper will resolve the proper Tailwind color (for example `:success` -> green, `:warning` -> orange). You can also provide
+custom HTML options directly (e.g., `class:`, `data:`) and they will be merged into the flash container.
+
+```haml
+-# Haml example
+= tramway_flash text: flash[:notice], type: :success
+= tramway_flash text: 'Double check your data', type: :warning, class: 'mt-2', data: { turbo: 'false' }
+```
+
+```erb
+<%# ERB example %>
+<%= tramway_flash text: flash[:alert], type: :danger %>
+<%= tramway_flash text: 'Saved!', type: :success, data: { controller: 'dismissible' } %>
+```
+
+Use the `type` argument for semantic colors (`:success`, `:warning`, `:danger`, and more) or provide a `color:` keyword to set
+the Tailwind color family explicitly.
 
 ### Tramway Table Component
 
