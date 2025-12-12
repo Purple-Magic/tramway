@@ -1059,7 +1059,7 @@ end
 * [Behave as ActiveRecord. Why do we want objects to be AR lookalikes?](https://kalashnikovisme.medium.com/behave-as-activerecord-why-do-we-want-objects-to-be-ar-lookalikes-d494d692e1d3)
 * [Decorating associations in Rails with Tramway](https://kalashnikovisme.medium.com/decorating-associations-in-rails-with-tramway-b46a28392f9e)
 * [Easy-to-use Tailwind-styled multi-select built with Stimulus](https://medium.com/@kalashnikovisme/easy-to-use-tailwind-styled-multi-select-built-with-stimulus-b3daa9e307aa)
-* [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette)
+* [Lantern Color Palette]([https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette](https://kalashnikovisme.medium.com/lantern-buttons-in-rails-ff61688fd8e3?postPublishedType=repub))
 
 ## Contributing
 
