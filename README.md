@@ -817,19 +817,7 @@ Tramway ships with helpers for common UI patterns built on top of Tailwind compo
     options: { data: { controller: 'submit-once' } } %>
   ```
 
-  The `type` option maps semantic intent to Tailwind color families. The full set of supported values is:
-
-  | Type | Color |
-  | ---- | ----- |
-  | `default`, `life` | Gray |
-  | `primary`, `hope` | Blue |
-  | `secondary` | Zinc |
-  | `success`, `will` | Green |
-  | `warning`, `greed` | Orange |
-  | `danger`, `rage` | Red |
-  | `love` | Violet |
-  | `compassion` | Indigo |
-  | `fear` | Yellow |
+  The `type` option maps semantic intent to Lantern Color Pallette.
 
   If none of the predefined semantic types fit your needs, you can supply a Tailwind color family directly using the `color`
   option—for example: `color: :gray`. When you pass a custom color ensure the corresponding utility classes exist in your
@@ -1049,6 +1037,20 @@ Tramway.configure do |config|
   config.application_controller = 'Admin::ApplicationController'
 end
 ```
+
+## Lantern Color Palette
+
+  | Type | Color |
+  | ---- | ----- |
+  | `default`, `life` | Gray |
+  | `primary`, `hope` | Blue |
+  | `secondary` | Zinc |
+  | `success`, `will` | Green |
+  | `warning`, `greed` | Orange |
+  | `danger`, `rage` | Red |
+  | `love` | Violet |
+  | `compassion` | Indigo |
+  | `fear` | Yellow |
 
 ## Articles
 * [Tramway on Rails](https://kalashnikovisme.medium.com/tramway-on-rails-32158c35ed68)
