@@ -727,7 +727,7 @@ custom HTML options directly (e.g., `class:`, `data:`) and they will be merged i
 <%= tramway_flash text: 'Saved!', type: :will, data: { controller: 'dismissible' } %>
 ```
 
-Use the `type` argument is compatible with Lantern color pallete or provide a `color:` keyword to set
+Use the `type` argument is compatible to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette) or provide a `color:` keyword to set
 the Tailwind color family explicitly.
 
 ### Tramway Table Component
@@ -817,7 +817,7 @@ Tramway ships with helpers for common UI patterns built on top of Tailwind compo
     options: { data: { controller: 'submit-once' } } %>
   ```
 
-  The `type` option maps semantic intent to Lantern Color Pallette.
+  The `type` option maps semantic intent to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette).
 
   If none of the predefined semantic types fit your needs, you can supply a Tailwind color family directly using the `color`
   option—for example: `color: :gray`. When you pass a custom color ensure the corresponding utility classes exist in your
@@ -1059,6 +1059,7 @@ end
 * [Behave as ActiveRecord. Why do we want objects to be AR lookalikes?](https://kalashnikovisme.medium.com/behave-as-activerecord-why-do-we-want-objects-to-be-ar-lookalikes-d494d692e1d3)
 * [Decorating associations in Rails with Tramway](https://kalashnikovisme.medium.com/decorating-associations-in-rails-with-tramway-b46a28392f9e)
 * [Easy-to-use Tailwind-styled multi-select built with Stimulus](https://medium.com/@kalashnikovisme/easy-to-use-tailwind-styled-multi-select-built-with-stimulus-b3daa9e307aa)
+* [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette)
 
 ## Contributing
 
