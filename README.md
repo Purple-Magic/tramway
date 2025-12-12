@@ -717,17 +717,17 @@ custom HTML options directly (e.g., `class:`, `data:`) and they will be merged i
 
 ```haml
 -# Haml example
-= tramway_flash text: flash[:notice], type: :success
-= tramway_flash text: 'Double check your data', type: :warning, class: 'mt-2', data: { turbo: 'false' }
+= tramway_flash text: flash[:notice], type: :hope
+= tramway_flash text: 'Double check your data', type: :greed, class: 'mt-2', data: { turbo: 'false' }
 ```
 
 ```erb
 <%# ERB example %>
-<%= tramway_flash text: flash[:alert], type: :danger %>
-<%= tramway_flash text: 'Saved!', type: :success, data: { controller: 'dismissible' } %>
+<%= tramway_flash text: flash[:alert], type: :rage %>
+<%= tramway_flash text: 'Saved!', type: :will, data: { controller: 'dismissible' } %>
 ```
 
-Use the `type` argument for semantic colors (`:success`, `:warning`, `:danger`, and more) or provide a `color:` keyword to set
+Use the `type` argument is compatible with Lantern color pallete or provide a `color:` keyword to set
 the Tailwind color family explicitly.
 
 ### Tramway Table Component
