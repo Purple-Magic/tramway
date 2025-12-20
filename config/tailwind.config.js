@@ -117,6 +117,7 @@ module.exports = {
     'text-xs',
     'whitespace-nowrap',
     'h-fit',
+    'gap-1',
 
     // === Button color presets ===
     'bg-gray-500',
