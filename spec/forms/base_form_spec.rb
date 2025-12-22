@@ -132,10 +132,10 @@ describe UserForm do
     end
   end
 
-  it 'does not respond to to_model method' do
+  it 'responds to to_model method' do
     form = described_class.new(create(:user))
 
-    expect(form).not_to respond_to(:to_model)
+    expect(form).to respond_to(:to_model)
   end
 end
 # rubocop:enable RSpec/SpecFilePathFormat

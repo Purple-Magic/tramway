@@ -64,6 +64,8 @@ module Tramway
       method_name.to_s.end_with?('=') || super
     end
 
+    delegate :to_model, to: :object
+
     private
 
     def __submit(params)
