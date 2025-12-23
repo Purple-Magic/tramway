@@ -5,6 +5,7 @@ require 'tramway/decorators/association'
 require 'tramway/decorators/collection_decorator'
 require 'tramway/helpers/decorate_helper'
 require 'tramway/helpers/component_helper'
+require 'tramway/helpers/views_helper'
 require 'tramway/utils/render'
 require 'tramway/duck_typing'
 
@@ -17,6 +18,7 @@ module Tramway
     include Tramway::DuckTyping::ActiveRecordCompatibility
     include Tramway::Helpers::DecorateHelper
     include Tramway::Helpers::ComponentHelper
+    include Tramway::Helpers::ViewsHelper
 
     attr_reader :object, :view_context
 
