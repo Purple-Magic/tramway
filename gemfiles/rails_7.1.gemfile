@@ -26,7 +26,9 @@ end
 
 group :test do
   gem 'base64'
+  gem 'benchmark'
   gem 'capybara'
+  gem 'cgi'
   gem 'database_cleaner-active_record'
   gem 'drb'
   gem 'factory_bot_rails'

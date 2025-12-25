@@ -1,5 +1,5 @@
 install:
-	bundle
+	bundle install
 	bundle exec appraisal install
 	lefthook install
 	npm install eslint @eslint/js

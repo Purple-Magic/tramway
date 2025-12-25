@@ -56,5 +56,5 @@ RSpec/NamedSubject:
   Enabled: false
 
 AllCops:
-  TargetRubyVersion: 3.4
+  TargetRubyVersion: 4.0
   NewCops: enable
