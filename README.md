@@ -29,6 +29,7 @@ Tramway is actively verified against the following Ruby and Rails versions.
 | 3.2           | ✅   | ✅  | ✅  | ✅  |
 | 3.3           | ✅   | ✅  | ✅  | ✅  |
 | 3.4           | ✅   | ✅  | ✅  | ✅  |
+| 4.0           | ✅   | ✅  | ✅  | ✅  |
 
 \* Rails 7.1 receives only residual support because it no longer receives updates from the Rails core team. See the [announcement](https://rubyonrails.org/2025/10/29/new-rails-releases-and-end-of-support-announcement) for details.
 
