@@ -20,7 +20,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler-cache: true
+
+      - name: Cache Ruby gems
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.appraisal }}-${{ hashFiles('Gemfile.lock', 'gemfiles/*.gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.appraisal }}-
+            ${{ runner.os }}-gems-${{ matrix.ruby }}-
 
       - name: Install Chrome for headless testing
         run: |
