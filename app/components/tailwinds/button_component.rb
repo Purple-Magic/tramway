@@ -24,8 +24,7 @@ module Tailwinds
 
     def classes
       (default_classes +
-        light_mode_classes +
-        dark_mode_classes +
+        color_classes +
         (link ? %w[px-1 h-fit] : ['cursor-pointer'])).compact.join(' ')
     end
 
@@ -36,19 +35,11 @@ module Tailwinds
       ]
     end
 
-    def light_mode_classes
+    def color_classes
       [
-        "bg-#{resolved_color}-500",
-        "hover:bg-#{resolved_color}-700",
-        'text-white'
-      ]
-    end
-
-    def dark_mode_classes
-      [
-        "dark:bg-#{resolved_color}-600",
-        "dark:hover:bg-#{resolved_color}-800",
-        'dark:text-gray-300'
+        "bg-#{resolved_color}-600",
+        "hover:bg-#{resolved_color}-800",
+        'text-gray-300'
       ]
     end
   end

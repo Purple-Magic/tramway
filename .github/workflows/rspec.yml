@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: ['3.2', '3.3', '3.4']
+        ruby: ['3.2', '3.3', '3.4', '4.0']
         appraisal: ['rails-7.1', 'rails-7.2', 'rails-8.0', 'rails-8.1']
 
     runs-on: ubuntu-latest
@@ -29,7 +29,8 @@ jobs:
 
       - name: Install dependencies for Appraisal
         run: |
-          bundle install --jobs 4 --retry 3 --path vendor/bundle
+          bundle config set path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
           bundle exec appraisal install
 
       - name: Precompile assets

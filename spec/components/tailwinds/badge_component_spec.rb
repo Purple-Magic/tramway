@@ -7,7 +7,7 @@ describe Tailwinds::BadgeComponent, type: :component do
     render_inline(described_class.new(text: 'Active'))
 
     expect(page).to have_css(
-      'span.flex.px-3.py-1.text-sm.font-semibold.text-white.bg-gray-500.dark\\:bg-gray-600.rounded-full.w-fit',
+      'span.flex.px-3.py-1.text-sm.font-semibold.bg-gray-600.rounded-full.w-fit',
       text: 'Active'
     )
   end
@@ -17,7 +17,7 @@ describe Tailwinds::BadgeComponent, type: :component do
       render_inline(described_class.new(text: 'Approved', type: :success))
 
       expect(page).to have_css(
-        'span.bg-green-500.dark\\:bg-green-600',
+        'span.bg-green-600',
         text: 'Approved'
       )
     end
@@ -28,7 +28,7 @@ describe Tailwinds::BadgeComponent, type: :component do
       render_inline(described_class.new(text: 'Alert', color: :red))
 
       expect(page).to have_css(
-        'span.bg-red-500.dark\\:bg-red-600',
+        'span.bg-red-600',
         text: 'Alert'
       )
     end

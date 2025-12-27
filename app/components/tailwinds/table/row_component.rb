@@ -24,13 +24,13 @@ module Tailwinds
 
       def desktop_row_classes(cells_count)
         [
-          'div-table-row', 'grid', 'gap-4', 'bg-white', 'border-b', 'last:border-b-0', 'dark:bg-gray-800',
-          'dark:border-gray-700', "md:grid-cols-#{cells_count}", 'grid-cols-1'
+          'div-table-row', 'grid', 'gap-4', 'border-b', 'last:border-b-0', 'bg-gray-800',
+          'border-gray-700', "md:grid-cols-#{cells_count}", 'grid-cols-1'
         ].join(' ')
       end
 
       def link_row_classes
-        'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700'
+        'cursor-pointer hover:bg-gray-700'
       end
     end
   end

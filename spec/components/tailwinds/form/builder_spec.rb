@@ -13,8 +13,8 @@ describe Tailwinds::Form::Builder, type: :view do
       let(:output) { builder.text_field :email }
 
       it 'gets default value' do
-        expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
-        expect(output).to have_selector 'input.text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+        expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
+        expect(output).to have_selector 'input.text-base.px-3.py-2.w-full.border.rounded'
       end
     end
 
@@ -73,8 +73,8 @@ describe Tailwinds::Form::Builder, type: :view do
     let(:output) { builder.email_field :email }
 
     it 'renders email input with tailwind classes' do
-      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
-      expect(output).to have_selector 'input[type="email"].text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+      expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'input[type="email"].text-base.px-3.py-2.w-full.border.rounded'
     end
   end
 
@@ -82,8 +82,8 @@ describe Tailwinds::Form::Builder, type: :view do
     let(:output) { builder.number_field :id }
 
     it 'renders number input with tailwind classes' do
-      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
-      expect(output).to have_selector 'input[type="number"].text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+      expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'input[type="number"].text-base.px-3.py-2.w-full.border.rounded'
     end
   end
 
@@ -91,8 +91,8 @@ describe Tailwinds::Form::Builder, type: :view do
     let(:output) { builder.date_field :remember_created_at }
 
     it 'renders date input with tailwind classes' do
-      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
-      expect(output).to have_selector 'input[type="date"].text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+      expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'input[type="date"].text-base.px-3.py-2.w-full.border.rounded'
     end
 
     context 'with value from object' do
@@ -112,8 +112,8 @@ describe Tailwinds::Form::Builder, type: :view do
     end
 
     it do
-      expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
-      expect(output).to have_selector 'input.text-base.px-3.py-2.w-full.border.border-gray-300.rounded'
+      expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
+      expect(output).to have_selector 'input.text-base.px-3.py-2.w-full.border.rounded'
     end
   end
 
@@ -123,7 +123,7 @@ describe Tailwinds::Form::Builder, type: :view do
     end
 
     it do
-      expect(output).to have_selector 'label.inline-block.text-base.px-4.py-2.bg-blue-500.text-white.font-bold.rounded'
+      expect(output).to have_selector 'label.inline-block.text-base.px-4.py-2.font-bold.rounded'
     end
 
     context 'with small size' do
@@ -162,11 +162,11 @@ describe Tailwinds::Form::Builder, type: :view do
       let(:output) { builder.select :role, %i[admin user] }
 
       it 'has the label' do
-        expect(output).to have_selector 'label.block.text-gray-700.text-sm.font-bold.mb-2'
+        expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
       end
 
       it 'has the select' do
-        expect(output).to have_selector 'select.text-base.bg-white.border.border-gray-300.text-gray-700'
+        expect(output).to have_selector 'select.text-base.border'
         expect(output).to have_selector 'option[value="admin"]'
         expect(output).to have_selector 'option[value="user"]'
       end

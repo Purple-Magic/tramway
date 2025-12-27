@@ -7,8 +7,7 @@ module Tailwinds
     class ItemComponent < TailwindComponent
       def style
         @style ||= [
-          'text-white', 'hover:bg-gray-300', 'hover:text-gray-800', 'px-4', 'py-2', 'rounded', 'whitespace-nowrap',
-          'dark:hover:bg-gray-700', 'dark:hover:text-gray-400', 'dark:text-white'
+          'px-4', 'py-2', 'rounded', 'whitespace-nowrap', 'hover:bg-gray-700', 'hover:text-gray-400', 'text-white'
         ].join(' ')
       end
     end

@@ -11,21 +11,20 @@ feature 'Table Base Spec', :js, type: :feature do
   end
 
   scenario 'check table' do
-    expect(page).to have_selector('.div-table.text-left.rtl\\:text-right.text-gray-500.dark\\:text-gray-400.w-full')
+    expect(page).to have_selector('.div-table.text-left.rtl\\:text-right.text-gray-400.w-full')
   end
 
   scenario 'check rows' do
     selector = [
-      'div-table-row', 'grid', 'gap-4', 'bg-white', 'border-b', 'last\\:border-b-0', 'dark\\:bg-gray-800',
-      'dark\\:border-gray-700', 'grid-cols-1'
+      'div-table-row', 'grid', 'gap-4', 'border-b', 'last\\:border-b-0', 'bg-gray-800', 'border-gray-700', 'grid-cols-1'
     ].join('.')
 
     expect(page).to have_selector(".#{selector}", count: User.count)
   end
 
   scenario 'check cells' do
-    selector = [
-      'div-table-cell', 'px-6', 'py-4', 'font-medium', 'text-gray-900', 'dark\\:text-white', 'text-base'
+    selector = %w[
+      div-table-cell px-6 py-4 font-medium text-white text-base
     ].join('.')
 
     expect(page).to have_selector(".#{selector}", count: User.count)
