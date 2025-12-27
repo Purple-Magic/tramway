@@ -13,8 +13,7 @@ module Tramway
     attr_config(
       pagination: { enabled: false },
       entities: [],
-      application_controller: 'ActionController::Base',
-      theme: :dark
+      application_controller: 'ActionController::Base'
     )
 
     def entities=(collection)

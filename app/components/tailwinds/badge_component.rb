@@ -10,8 +10,8 @@ module Tailwinds
 
     def classes
       [
-        'flex', 'px-3', 'py-1', 'text-sm', 'font-semibold', 'text-white', "bg-#{resolved_color}-500",
-        "dark:bg-#{resolved_color}-600", 'rounded-full', 'w-fit', 'h-fit'
+        'flex', 'px-3', 'py-1', 'text-sm', 'font-semibold', 'text-white',
+        "bg-#{resolved_color}-600", 'rounded-full', 'w-fit', 'h-fit'
       ]
     end
   end

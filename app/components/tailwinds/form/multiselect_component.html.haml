@@ -2,9 +2,9 @@
   - if @label
     = component('tailwinds/form/label', for: @for) do
       = @label
-  .flex.flex-col.relative.dark:text-gray-100{ data: multiselect_hash, id: "#{@for}_multiselect" }
+  .flex.flex-col.relative.text-gray-100{ data: multiselect_hash, id: "#{@for}_multiselect" }
     .min-w-96.w-fit
-      .p-1.flex.border.border-gray-200.bg-white.rounded.dark:border-gray-600.dark:bg-gray-800{ data: { "multiselect-target" => "dropdown" } }
+      .p-1.flex.border.rounded.border-gray-600.bg-gray-800{ data: { "multiselect-target" => "dropdown" } }
         .flex.flex-auto.flex-wrap{ data: { "multiselect-target" => "showSelectedArea" } }
-        .text-gray-300.w-8.py-1.pl-2.pr-1.border-l.flex.items-center.border-gray-200.dark:text-gray-500.dark:border-gray-600
+        .w-8.py-1.pl-2.pr-1.border-l.flex.items-center.text-gray-500.border-gray-600
           ^
