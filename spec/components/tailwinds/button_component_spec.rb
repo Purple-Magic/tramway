@@ -10,8 +10,8 @@ describe Tailwinds::ButtonComponent, type: :component do
       render_inline(component)
 
       expect(page).to have_css(
-        "form[action='/projects'] button.btn.btn-primary.flex.flex-row.py-2.px-4.cursor-pointer.bg-gray-500." \
-        'hover\\:bg-gray-700.text-white.dark\\:bg-gray-600.dark\\:hover\\:bg-gray-800.dark\\:text-gray-300',
+        "form[action='/projects'] button.btn.btn-primary.flex.flex-row.py-2.px-4.cursor-pointer." \
+        'bg-gray-600.hover\\:bg-gray-800.text-gray-300',
         text: 'View projects'
       )
     end
@@ -33,7 +33,7 @@ describe Tailwinds::ButtonComponent, type: :component do
       render_inline(component)
 
       expect(page).to have_css(
-        "form[action='/projects/1'] button.bg-red-500.hover\\:bg-red-700.text-sm.py-1.px-2." \
+        "form[action='/projects/1'] button.text-sm.py-1.px-2." \
         "extra-class[data-turbo-confirm='Are you sure?']",
         text: 'Delete'
       )
@@ -55,8 +55,8 @@ describe Tailwinds::ButtonComponent, type: :component do
       render_inline(component)
 
       expect(page).to have_css(
-        "a[href='/projects'].btn.btn-primary.flex.flex-row.py-2.px-4.bg-gray-500.hover\\:bg-gray-700.text-white." \
-        'dark\\:bg-gray-600.dark\\:hover\\:bg-gray-800.dark\\:text-gray-300.px-1.h-fit',
+        "a[href='/projects'].btn.btn-primary.flex.flex-row.py-2.px-4." \
+        'bg-gray-600.hover\\:bg-gray-800.text-gray-300.px-1.h-fit',
         text: 'View projects'
       )
     end
@@ -69,8 +69,7 @@ describe Tailwinds::ButtonComponent, type: :component do
       render_inline(component)
 
       expect(page).to have_css(
-        "form[action='/projects'] button.bg-violet-500.hover\\:bg-violet-700.dark\\:bg-violet-600" \
-        '.dark\\:hover\\:bg-violet-800',
+        "form[action='/projects'] button.bg-violet-600.hover\\:bg-violet-800",
         text: 'Celebrate'
       )
     end
