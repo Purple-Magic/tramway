@@ -121,41 +121,55 @@ module.exports = {
 
     // === Button color presets ===
     'bg-gray-500',
-    'hover:bg-gray-700',
     'bg-gray-600',
+    'hover:bg-gray-700',
     'hover:bg-gray-800',
+
     'bg-blue-500',
-    'hover:bg-blue-700',
     'bg-blue-600',
+    'hover:bg-blue-700',
     'hover:bg-blue-800',
+
     'bg-zinc-500',
-    'hover:bg-zinc-700',
     'bg-zinc-600',
+    'hover:bg-zinc-700',
     'hover:bg-zinc-800',
+
+    'bg-green-400',
     'bg-green-500',
-    'hover:bg-green-700',
     'bg-green-600',
+    'hover:bg-green-700',
     'hover:bg-green-800',
+
     'bg-orange-500',
-    'hover:bg-orange-700',
     'bg-orange-600',
+    'hover:bg-orange-700',
     'hover:bg-orange-800',
+
     'bg-red-500',
-    'hover:bg-red-700',
     'bg-red-600',
+    'hover:bg-red-700',
     'hover:bg-red-800',
+
     'bg-violet-500',
-    'hover:bg-violet-700',
     'bg-violet-600',
+    'hover:bg-violet-700',
     'hover:bg-violet-800',
+
     'bg-indigo-500',
-    'hover:bg-indigo-700',
     'bg-indigo-600',
+    'hover:bg-indigo-700',
     'hover:bg-indigo-800',
+
     'bg-yellow-500',
-    'hover:bg-yellow-700',
     'bg-yellow-600',
+    'hover:bg-yellow-700',
     'hover:bg-yellow-800',
+
+    // === Button Disabled state ===
+    'bg-gray-400',
+    'text-gray-400',
+    'text-gray-100',
 
     // === Form state helpers ===
     'disabled:bg-gray-100',

@@ -74,4 +74,19 @@ describe Tailwinds::ButtonComponent, type: :component do
       )
     end
   end
+
+  context 'when disabled: true is provided in options' do
+    let(:component) do
+      described_class.new(path: '/projects', text: 'Celebrate', type: :love, options: { disabled: true })
+    end
+
+    it 'renders button with disabled styles' do
+      render_inline(component)
+
+      expect(page).to have_css(
+        "form[action='/projects'] button[disabled='disabled'].bg-gray-400.text-gray-100",
+        text: 'Celebrate'
+      )
+    end
+  end
 end

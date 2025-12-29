@@ -25,7 +25,7 @@ module Tailwinds
     def classes
       (default_classes +
         color_classes +
-        (link ? %w[px-1 h-fit] : ['cursor-pointer'])).compact.join(' ')
+        (link ? %w[px-1 h-fit] : [cursor_class])).compact.join(' ')
     end
 
     def default_classes
@@ -36,11 +36,29 @@ module Tailwinds
     end
 
     def color_classes
-      [
-        "bg-#{resolved_color}-600",
-        "hover:bg-#{resolved_color}-800",
-        'text-gray-300'
-      ]
+      if disabled?
+        %w[bg-gray-400 text-gray-100]
+      else
+        [
+          "bg-#{resolved_color}-600",
+          "hover:bg-#{resolved_color}-800",
+          'text-gray-300'
+        ]
+      end
+    end
+
+    def disabled?
+      options[:disabled] || false
+    end
+
+    private
+
+    def cursor_class
+      if !link && !disabled?
+        'cursor-pointer'
+      else
+        'cursor-not-allowed'
+      end
     end
   end
 end
