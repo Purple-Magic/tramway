@@ -5,70 +5,8 @@ require 'fileutils'
 
 module Tramway
   module Generators
-    # Running `rails generate tramway:install` will invoke this generator
-    #
-    class InstallGenerator < Rails::Generators::Base
-      desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
-
-      def ensure_agents_file
-        return create_file(agents_file_path, agents_template) unless File.exist?(agents_file_path)
-
-        content = File.read(agents_file_path)
-        return if content.include?(agents_section_heading)
-
-        separator = if content.empty?
-                      ''
-                    else
-                      (content.end_with?("\n") ? "\n" : "\n\n")
-                    end
-        File.open(agents_file_path, 'a') do |file|
-          file.write("#{separator}#{agents_template}")
-        end
-      end
-
-      def ensure_dependencies
-        missing_dependencies = gem_dependencies.reject do |dependency|
-          gemfile_contains?(dependency[:name])
-        end
-
-        return if missing_dependencies.empty?
-
-        append_to_file 'Gemfile', <<~GEMS
-
-          # Tramway dependencies
-          #{missing_dependencies.pluck(:declaration).join("\n")}
-
-        GEMS
-      end
-
-      def ensure_tailwind_safelist
-        return create_tailwind_config unless File.exist?(tailwind_config_path)
-
-        source_entries = extract_safelist_entries(File.read(gem_tailwind_config_path))
-        target_content = File.read(tailwind_config_path)
-        target_entries = extract_safelist_entries(target_content)
-
-        missing_entries = source_entries - target_entries
-        return if missing_entries.empty?
-
-        File.write(tailwind_config_path, insert_entries(target_content, missing_entries))
-      end
-
-      def ensure_tailwind_application_stylesheet
-        path = tailwind_application_stylesheet_path
-        FileUtils.mkdir_p(File.dirname(path))
-
-        return create_file(path, "#{tailwind_css_import_line}\n") unless File.exist?(path)
-
-        content = File.read(path)
-        return if content.include?(tailwind_css_import_line)
-
-        File.open(path, 'a') do |file|
-          file.write("\n") unless content.empty? || content.end_with?("\n")
-          file.write("#{tailwind_css_import_line}\n")
-        end
-      end
-
+    # nodoc
+    module InstallGeneratorHelpers
       private
 
       def gem_dependencies
@@ -159,6 +97,79 @@ module Tramway
         line_start = content.rindex("\n", index - 1) || 0
         line = content[line_start..index]
         line[/^\s*/] || '  '
+      end
+
+      def append_agents_template(content)
+        separator = agents_separator(content)
+        File.open(agents_file_path, 'a') do |file|
+          file.write("#{separator}#{agents_template}")
+        end
+      end
+
+      def agents_separator(content)
+        return '' if content.empty?
+
+        content.end_with?("\n") ? "\n" : "\n\n"
+      end
+    end
+
+    # Running `rails generate tramway:install` will invoke this generator
+    #
+    class InstallGenerator < Rails::Generators::Base
+      include InstallGeneratorHelpers
+
+      desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
+
+      def ensure_agents_file
+        return create_file(agents_file_path, agents_template) unless File.exist?(agents_file_path)
+
+        content = File.read(agents_file_path)
+        return if content.include?(agents_section_heading)
+
+        append_agents_template(content)
+      end
+
+      def ensure_dependencies
+        missing_dependencies = gem_dependencies.reject do |dependency|
+          gemfile_contains?(dependency[:name])
+        end
+
+        return if missing_dependencies.empty?
+
+        append_to_file 'Gemfile', <<~GEMS
+
+          # Tramway dependencies
+          #{missing_dependencies.pluck(:declaration).join("\n")}
+
+        GEMS
+      end
+
+      def ensure_tailwind_safelist
+        return create_tailwind_config unless File.exist?(tailwind_config_path)
+
+        source_entries = extract_safelist_entries(File.read(gem_tailwind_config_path))
+        target_content = File.read(tailwind_config_path)
+        target_entries = extract_safelist_entries(target_content)
+
+        missing_entries = source_entries - target_entries
+        return if missing_entries.empty?
+
+        File.write(tailwind_config_path, insert_entries(target_content, missing_entries))
+      end
+
+      def ensure_tailwind_application_stylesheet
+        path = tailwind_application_stylesheet_path
+        FileUtils.mkdir_p(File.dirname(path))
+
+        return create_file(path, "#{tailwind_css_import_line}\n") unless File.exist?(path)
+
+        content = File.read(path)
+        return if content.include?(tailwind_css_import_line)
+
+        File.open(path, 'a') do |file|
+          file.write("\n") unless content.empty? || content.end_with?("\n")
+          file.write("#{tailwind_css_import_line}\n")
+        end
       end
     end
   end

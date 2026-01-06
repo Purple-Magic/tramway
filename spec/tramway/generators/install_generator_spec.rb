@@ -7,12 +7,6 @@ require 'generators/tramway/install/install_generator'
 
 RSpec.describe Tramway::Generators::InstallGenerator do
   let(:destination_root) { Dir.mktmpdir }
-  let(:gemfile_path) { File.join(destination_root, 'Gemfile') }
-  let(:tailwind_config_path) { File.join(destination_root, 'config/tailwind.config.js') }
-  let(:tailwind_application_path) { File.join(destination_root, 'app/assets/tailwind/application.css') }
-  let(:template_tailwind_config_path) { File.expand_path('../../../config/tailwind.config.js', __dir__) }
-  let(:agents_path) { File.join(destination_root, 'AGENTS.md') }
-  let(:template_agents_path) { File.expand_path('../../../docs/AGENTS.md', __dir__) }
 
   after do
     FileUtils.rm_rf(destination_root)
@@ -24,6 +18,30 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     generator = described_class.new
     generator.destination_root = destination_root
     generator.invoke_all
+  end
+
+  def gemfile_path
+    File.join(destination_root, 'Gemfile')
+  end
+
+  def tailwind_config_path
+    File.join(destination_root, 'config/tailwind.config.js')
+  end
+
+  def tailwind_application_path
+    File.join(destination_root, 'app/assets/tailwind/application.css')
+  end
+
+  def template_tailwind_config_path
+    File.expand_path('../../../config/tailwind.config.js', __dir__)
+  end
+
+  def agents_path
+    File.join(destination_root, 'AGENTS.md')
+  end
+
+  def template_agents_path
+    File.expand_path('../../../docs/AGENTS.md', __dir__)
   end
 
   describe 'ensuring gem dependencies' do
