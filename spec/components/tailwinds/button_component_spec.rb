@@ -89,4 +89,19 @@ describe Tailwinds::ButtonComponent, type: :component do
       )
     end
   end
+
+  context 'when rendering a link by params' do
+    let(:path) { '/projects?resource_id=1' }
+    let(:component) { described_class.new(path:, text: 'View projects') }
+
+    it 'renders a link_to element' do
+      render_inline(component)
+
+      expect(page).to have_css(
+        "a[href='#{path}'].btn.btn-primary.flex.flex-row.py-2.px-4." \
+        'bg-gray-600.hover\\:bg-gray-800.text-gray-300.px-1.h-fit',
+        text: 'View projects'
+      )
+    end
+  end
 end

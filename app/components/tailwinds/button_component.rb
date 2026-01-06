@@ -25,7 +25,7 @@ module Tailwinds
     def classes
       (default_classes +
         color_classes +
-        (link ? %w[px-1 h-fit] : [cursor_class])).compact.join(' ')
+        (render_a_tag? ? %w[px-1 h-fit] : [cursor_class])).compact.join(' ')
     end
 
     def default_classes
@@ -51,10 +51,20 @@ module Tailwinds
       options[:disabled] || false
     end
 
+    def render_a_tag?
+      return true if link
+
+      uri = URI.parse(path)
+
+      return true if method.to_s.downcase == 'get' && uri.query && !uri.query.empty?
+
+      false
+    end
+
     private
 
     def cursor_class
-      if !link && !disabled?
+      if !render_a_tag? && !disabled?
         'cursor-pointer'
       else
         'cursor-not-allowed'
