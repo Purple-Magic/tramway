@@ -10,6 +10,22 @@ module Tramway
     class InstallGenerator < Rails::Generators::Base
       desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
 
+      def ensure_agents_file
+        return create_file(agents_file_path, agents_template) unless File.exist?(agents_file_path)
+
+        content = File.read(agents_file_path)
+        return if content.include?(agents_section_heading)
+
+        separator = if content.empty?
+                      ''
+                    else
+                      (content.end_with?("\n") ? "\n" : "\n\n")
+                    end
+        File.open(agents_file_path, 'a') do |file|
+          file.write("#{separator}#{agents_template}")
+        end
+      end
+
       def ensure_dependencies
         missing_dependencies = gem_dependencies.reject do |dependency|
           gemfile_contains?(dependency[:name])
@@ -89,6 +105,22 @@ module Tramway
 
       def tailwind_css_import_line
         '@import "tailwindcss";'
+      end
+
+      def agents_file_path
+        @agents_file_path ||= File.join(destination_root, 'AGENTS.md')
+      end
+
+      def gem_agents_file_path
+        @gem_agents_file_path ||= File.expand_path('../../../../docs/AGENTS.md', __dir__)
+      end
+
+      def agents_template
+        @agents_template ||= File.read(gem_agents_file_path)
+      end
+
+      def agents_section_heading
+        @agents_section_heading ||= agents_template.lines.first&.strip
       end
 
       def create_tailwind_config

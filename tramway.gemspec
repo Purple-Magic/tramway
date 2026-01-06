@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.metadata['changelog_uri'] = 'https://github.com/purple-magic/tramway'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
+    Dir['{app,config,db,lib}/**/*', 'docs/AGENTS.md', 'MIT-LICENSE', 'Rakefile', 'README.md']
   end
 
   spec.add_dependency 'anyway_config'
