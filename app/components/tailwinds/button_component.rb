@@ -25,7 +25,7 @@ module Tailwinds
     def classes
       (default_classes +
         color_classes +
-        (render_a_tag? ? %w[px-1 h-fit] : [cursor_class])).compact.join(' ')
+        (render_a_tag? ? %w[px-1 h-fit w-fit] : [cursor_class])).compact.join(' ')
     end
 
     def default_classes
