@@ -1,20 +1,20 @@
 - if text.present?
   - if render_a_tag?
-    = link_to text, path, class: classes, **options.except(:class)
+    = link_to text, path, class: classes, **render_options
   - else
     - if type&.to_sym == :submit
-      %button{ type: :submit, name: :commit, class: classes, **options.except(:class) }
+      %button{ type: :submit, name: :commit, class: classes, **render_options }
         = text
     - else
-      = button_to text, path, method:, form: form_options, class: classes, **options.except(:class)
+      = button_to text, path, method:, form: form_options, class: classes, **render_options
 - else
   - if render_a_tag?
-    = link_to path, class: classes, **options.except(:class) do
+    = link_to path, class: classes, **render_options do
       = content
   - else
     - if type&.to_sym == :submit
-      %button{ type: :submit, name: :commit, class: classes, **options.except(:class) }
+      %button{ type: :submit, name: :commit, class: classes, **render_options }
         = content
     - else
-      = button_to path, method:, class: classes, form: form_options, **options.except(:class) do
+      = button_to path, method:, class: classes, form: form_options, **render_options do
         = content

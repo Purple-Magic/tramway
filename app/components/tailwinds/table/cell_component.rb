@@ -4,6 +4,22 @@ module Tailwinds
   module Table
     # Component for rendering a cell in a table
     class CellComponent < Tramway::BaseComponent
+      def around_render
+        ensure_view_context_accessor
+        previous_flag = view_context.tramway_inside_cell
+        view_context.tramway_inside_cell = true
+        yield
+      ensure
+        view_context.tramway_inside_cell = previous_flag
+      end
+
+      private
+
+      def ensure_view_context_accessor
+        return if view_context.respond_to?(:tramway_inside_cell=)
+
+        view_context.singleton_class.attr_accessor :tramway_inside_cell
+      end
     end
   end
 end

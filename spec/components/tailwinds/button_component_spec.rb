@@ -104,4 +104,26 @@ describe Tailwinds::ButtonComponent, type: :component do
       )
     end
   end
+
+  context 'when rendering inside a table cell' do
+    it 'adds stopPropagation onclick' do
+      render_inline(Tailwinds::Table::CellComponent.new) do
+        render(described_class.new(path: '/projects', text: 'View projects'))
+      end
+
+      expect(page).to have_css(
+        "form[action='/projects'] button[onclick='event.stopPropagation();']",
+        text: 'View projects'
+      )
+    end
+  end
+
+  context 'when rendering outside of a table cell' do
+    it 'does not add stopPropagation onclick' do
+      render_inline(described_class.new(path: '/projects', text: 'View projects'))
+
+      expect(page).to have_css("form[action='/projects'] button", text: 'View projects')
+      expect(page).to have_no_css("form[action='/projects'] button[onclick]")
+    end
+  end
 end

@@ -61,7 +61,24 @@ module Tailwinds
       false
     end
 
+    def render_options
+      base_options = options.except(:class)
+      return base_options unless stop_cell_propagation?
+
+      base_options.merge(onclick: merged_onclick(base_options[:onclick]))
+    end
+
     private
+
+    def stop_cell_propagation?
+      view_context.respond_to?(:tramway_inside_cell) && view_context.tramway_inside_cell
+    end
+
+    def merged_onclick(existing_onclick)
+      return 'event.stopPropagation();' if existing_onclick.blank?
+
+      "#{existing_onclick}; event.stopPropagation();"
+    end
 
     def cursor_class
       if !render_a_tag? && !disabled?
