@@ -14,10 +14,11 @@ module Tramway
     include Tramway::Forms::Normalizations
     include Tramway::DuckTyping::ActiveRecordCompatibility
 
-    attr_reader :object
+    attr_reader :object, :initial_object
 
     def initialize(object)
       @object = object
+      @initial_object = object.dup
 
       self.class.delegate object.class.primary_key, to: :object
     end
