@@ -49,11 +49,11 @@ module Tramway
         component 'tailwinds/back_button'
       end
 
-      def tramway_container(id: nil, &)
+      def tramway_container(id: nil, **options, &)
         if id.present?
-          component 'tailwinds/containers/narrow', id: id, &
+          component 'tailwinds/containers/narrow', id:, options:, &
         else
-          component 'tailwinds/containers/narrow', &
+          component 'tailwinds/containers/narrow', options:, &
         end
       end
 
