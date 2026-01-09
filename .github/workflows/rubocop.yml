@@ -20,4 +20,4 @@ jobs:
 
       - name: Rubocop
         run: |
-          bundle exec rubocop -d -c .rubocop.yml
+          rubocop -d -c .rubocop.yml
