@@ -82,7 +82,7 @@ config/
 - Use Tramway Flash for user notifications.
 - Use Tramway Table for tabular data display.
 - Use Tramway Button for buttons.
-- Use `tramway_form_for` and provided inputs in forms.
+- Use `tramway_form_for` instead `form_with`, `form_for`
 - Inherit all components from Tramway::BaseComponent
 
 ## Controller Patterns
