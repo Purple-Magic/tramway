@@ -59,7 +59,9 @@ module Tramway
 
         uri = URI.parse(agents_template_url)
         response = Net::HTTP.get_response(uri)
-        @agents_template_body = response.body.to_s
+        body = response.body.to_s
+        body = body.dup.force_encoding(Encoding::UTF_8)
+        @agents_template_body = body.encode(Encoding::UTF_8, invalid: :replace, undef: :replace, replace: '')
       end
 
       def agents_section_start
@@ -157,7 +159,7 @@ module Tramway
         updated = replace_agents_section(content)
         return if updated == content
 
-        File.write(agents_file_path, updated)
+        File.write(agents_file_path, updated, mode: 'w:UTF-8')
       end
 
       def ensure_dependencies

@@ -17,7 +17,7 @@ module Tailwinds
     def size_classes
       {
         small: 'text-sm py-1 px-2 rounded',
-        middle: 'py-2 px-4',
+        middle: 'py-2 px-4 h-10',
         large: 'text-lg px-5 py-3'
       }[size]
     end
