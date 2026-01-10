@@ -1,3 +1,5 @@
+## Start of Tramway AGENTS.md
+
 # AGENTS.md: Tramway Code Generation Standards
 
 This document guides AI-assisted code generation for Rails applications built with **Tramway**. It is designed for founders, designers, PMs, and engineers who rely on AI tools (ChatGPT/Copilot/etc.) to build maintainable Rails code that fits Tramway’s conventions without a senior engineer reworking everything.
@@ -160,3 +162,5 @@ end
 - [ ] Controller actions are concise with guard clauses.
 - [ ] Reusable UI is a ViewComponent using Tailwind utilities and accessible semantics.
 - [ ] Tailwind safelist covers dynamic classes.
+
+## End of Tramway AGENTS.md

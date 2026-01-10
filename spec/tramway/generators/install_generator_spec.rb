@@ -3,6 +3,7 @@
 require 'spec_helper'
 require 'tmpdir'
 require 'fileutils'
+require 'stringio'
 require 'generators/tramway/install/install_generator'
 
 RSpec.describe Tramway::Generators::InstallGenerator do
@@ -40,8 +41,25 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     File.join(destination_root, 'AGENTS.md')
   end
 
-  def template_agents_path
-    File.expand_path('../../../docs/AGENTS.md', __dir__)
+  def remote_agents_content
+    <<~MARKDOWN
+      # Remote AGENTS content
+      - Rule one
+      - Rule two
+    MARKDOWN
+  end
+
+  def wrapped_agents_content
+    [
+      '## Start of Tramway AGENTS.md',
+      remote_agents_content.rstrip,
+      '## End of Tramway AGENTS.md'
+    ].join("\n")
+  end
+
+  before do
+    response = instance_double(Net::HTTPResponse, body: remote_agents_content)
+    allow(Net::HTTP).to receive(:get_response).and_return(response)
   end
 
   describe 'ensuring gem dependencies' do
@@ -149,7 +167,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       run_generator
 
       expect(File).to exist(agents_path)
-      expect(File.read(agents_path)).to eq(File.read(template_agents_path))
+      expect(File.read(agents_path)).to eq("#{wrapped_agents_content}\n")
     end
 
     it 'appends Tramway instructions to existing AGENTS file' do
@@ -157,7 +175,30 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       run_generator
 
-      expect(File.read(agents_path)).to eq("# Existing instructions\n\n#{File.read(template_agents_path)}")
+      expect(File.read(agents_path)).to eq("# Existing instructions\n\n#{wrapped_agents_content}")
+    end
+
+    it 'replaces Tramway instructions between headers' do
+      File.write(
+        agents_path,
+        <<~MARKDOWN
+          # Existing instructions
+          ## Start of Tramway AGENTS.md
+          Old content
+          ## End of Tramway AGENTS.md
+          # Footer
+        MARKDOWN
+      )
+
+      run_generator
+
+      expect(File.read(agents_path)).to eq(
+        <<~MARKDOWN
+          # Existing instructions
+          #{wrapped_agents_content}
+          # Footer
+        MARKDOWN
+      )
     end
 
     it 'is idempotent when instructions already exist' do

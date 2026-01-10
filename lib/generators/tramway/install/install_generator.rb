@@ -2,6 +2,7 @@
 
 require 'rails/generators'
 require 'fileutils'
+require 'net/http'
 
 module Tramway
   module Generators
@@ -49,16 +50,32 @@ module Tramway
         @agents_file_path ||= File.join(destination_root, 'AGENTS.md')
       end
 
-      def gem_agents_file_path
-        @gem_agents_file_path ||= File.expand_path('../../../../docs/AGENTS.md', __dir__)
+      def agents_template_url
+        'https://raw.githubusercontent.com/TrinityMonsters/tramway/refs/heads/main/docs/AGENTS.md'
+      end
+
+      def agents_template_body
+        return @agents_template_body if defined?(@agents_template_body)
+
+        uri = URI.parse(agents_template_url)
+        response = Net::HTTP.get_response(uri)
+        @agents_template_body = response.body.to_s
+      end
+
+      def agents_section_start
+        '## Start of Tramway AGENTS.md'
+      end
+
+      def agents_section_end
+        '## End of Tramway AGENTS.md'
       end
 
       def agents_template
-        @agents_template ||= File.read(gem_agents_file_path)
+        @agents_template ||= [agents_section_start, agents_template_body.rstrip, agents_section_end].join("\n")
       end
 
-      def agents_section_heading
-        @agents_section_heading ||= agents_template.lines.first&.strip
+      def agents_section_present?(content)
+        content.include?(agents_section_start) && content.include?(agents_section_end)
       end
 
       def create_tailwind_config
@@ -99,17 +116,24 @@ module Tramway
         line[/^\s*/] || '  '
       end
 
-      def append_agents_template(content)
+      def insert_agents_template(content)
         separator = agents_separator(content)
-        File.open(agents_file_path, 'a') do |file|
-          file.write("#{separator}#{agents_template}")
-        end
+        "#{content}#{separator}#{agents_template}"
       end
 
       def agents_separator(content)
         return '' if content.empty?
 
         content.end_with?("\n") ? "\n" : "\n\n"
+      end
+
+      def replace_agents_section(content)
+        return insert_agents_template(content) unless agents_section_present?(content)
+
+        content.sub(
+          /#{Regexp.escape(agents_section_start)}.*?#{Regexp.escape(agents_section_end)}/m,
+          agents_template
+        )
       end
     end
 
@@ -121,12 +145,19 @@ module Tramway
       desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
 
       def ensure_agents_file
-        return create_file(agents_file_path, agents_template) unless File.exist?(agents_file_path)
+        say_status(
+          :info,
+          "Tramway will replace the content between \"#{agents_section_start}\" and " \
+          "\"#{agents_section_end}\" in AGENTS.md."
+        )
+
+        return create_file(agents_file_path, "#{agents_template}\n") unless File.exist?(agents_file_path)
 
         content = File.read(agents_file_path)
-        return if content.include?(agents_section_heading)
+        updated = replace_agents_section(content)
+        return if updated == content
 
-        append_agents_template(content)
+        File.write(agents_file_path, updated)
       end
 
       def ensure_dependencies
