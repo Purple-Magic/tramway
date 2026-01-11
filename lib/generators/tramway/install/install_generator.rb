@@ -146,20 +146,30 @@ module Tramway
 
       desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
 
+      # rubocop:disable Metrics/MethodLength
       def ensure_agents_file
-        say_status(
-          :info,
-          "Tramway will replace the content between \"#{agents_section_start}\" and " \
-          "\"#{agents_section_end}\" in AGENTS.md."
-        )
+        with_agents_update_fallback do
+          say_status(
+            :info,
+            "Tramway will replace the content between \"#{agents_section_start}\" and " \
+            "\"#{agents_section_end}\" in AGENTS.md."
+          )
 
-        return create_file(agents_file_path, "#{agents_template}\n") unless File.exist?(agents_file_path)
+          return create_file(agents_file_path, "#{agents_template}\n") unless File.exist?(agents_file_path)
 
-        content = File.read(agents_file_path)
-        updated = replace_agents_section(content)
-        return if updated == content
+          content = File.read(agents_file_path)
+          updated = replace_agents_section(content)
+          return if updated == content
 
-        File.write(agents_file_path, updated, mode: 'w:UTF-8')
+          File.write(agents_file_path, updated, mode: 'w:UTF-8')
+        end
+      end
+      # rubocop:enable Metrics/MethodLength
+
+      def with_agents_update_fallback
+        yield
+      rescue StandardError => e
+        say_status(:warning, "Skipping AGENTS.md update: #{e.message}")
       end
 
       def ensure_dependencies

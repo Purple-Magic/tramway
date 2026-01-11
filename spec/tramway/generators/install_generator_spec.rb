@@ -210,5 +210,12 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       expect(second_run).to eq(first_run)
     end
+
+    it 'skips AGENTS update when template cannot be fetched' do
+      allow(Net::HTTP).to receive(:get_response).and_raise(StandardError, 'boom')
+
+      expect { run_generator }.to output(/Skipping AGENTS\.md update: boom/).to_stdout
+      expect(File).not_to exist(agents_path)
+    end
   end
 end
