@@ -149,6 +149,7 @@ module.exports = {
 
     'bg-red-500',
     'bg-red-600',
+    'bg-red-700',
     'hover:bg-red-700',
     'hover:bg-red-800',
 
@@ -178,7 +179,6 @@ module.exports = {
     'disabled:cursor-not-allowed',
     'mb-4',
     'bg-red-500',
-    'hover:bg-red-700',
 
     // === Multiselect dropdown positioning ===
     'absolute',
