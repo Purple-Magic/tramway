@@ -1,1 +1,19 @@
-= tramway_row cells:, href:
+= tramway_row href: do
+  - cells.each do |(attribute, value)|
+    = tramway_cell do
+      = value
+  - if @entity.page(:update).present? || @entity.page(:destroy).present?
+    = tramway_cell do
+      = component 'tramway/actions_buttons_container' do
+        - if @entity.page(:update).present?
+          = tramway_button text: t('tramway.actions.edit'),
+            path: Tramway::Engine.routes.url_helpers.public_send(entity.routes.edit, item.id),
+            type: :will,
+            size: :small
+
+        - if @entity.page(:destroy).present?
+          = tramway_button text: t('tramway.actions.destroy'),
+            path: Tramway::Engine.routes.url_helpers.public_send(entity.routes.destroy, item.id),
+            type: :rage,
+            method: :delete,
+            size: :small

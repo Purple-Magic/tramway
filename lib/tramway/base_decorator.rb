@@ -103,10 +103,14 @@ module Tramway
       method_name.to_s.end_with?('_path', '_url') || super
     end
 
-    def table_headers
-      self.class.index_attributes.map do |attribute|
+    def table_headers(entity = nil)
+      headers = self.class.index_attributes.map do |attribute|
         object.class.human_attribute_name(attribute)
       end
+
+      headers += ['Actions'] if entity&.page(:update).present? || entity&.page(:destroy).present?
+
+      headers
     end
   end
 end

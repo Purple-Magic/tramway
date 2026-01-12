@@ -26,7 +26,7 @@
       = decorator
   - else
     = tramway_table class: 'mt-4' do
-      = tramway_header headers: index_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
+      = tramway_header headers: @entities.first.table_headers(@entity)
       - @entities.each do |item|
         = component 'tramway/entity', entity: @entity, item: item
 

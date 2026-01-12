@@ -17,7 +17,7 @@ module Tramway
         model_class.order(id: :desc)
       end.page(params[:page]) => entities
 
-      @entities = entities
+      @entities = tramway_decorate entities, namespace: entity.namespace
 
       @namespace = entity.namespace
     end
