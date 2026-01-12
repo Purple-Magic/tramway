@@ -13,7 +13,7 @@ module Tramway
       attribute? :namespace, Types::Coercible::String
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
-      ACTIONS = %i[index show new create].freeze
+      ACTIONS = %i[index show new create edit update destroy].freeze
       RouteStruct = Struct.new(*ACTIONS)
 
       # HumanName Struct contains human names forms for the entity
@@ -55,12 +55,16 @@ module Tramway
         build_helper_method(name, route:, namespace:, plural: true)
       end
 
-      private
+      def edit_helper_method
+        build_helper_method(name, route:, namespace:, plural: false, action: :edit)
+      end
 
-      def pluralized(model_name)
-        local_plural = I18n.t("#{name}.many", scope: 'activerecord.plural.models', default: nil)
+      def update_helper_method
+        build_helper_method(name, route:, namespace:, plural: false)
+      end
 
-        local_plural.presence || model_name.pluralize
+      def destroy_helper_method
+        build_helper_method(name, route:, namespace:, plural: false)
       end
 
       def model_class
@@ -69,16 +73,23 @@ module Tramway
         nil
       end
 
+      private
+
+      def pluralized(model_name)
+        local_plural = I18n.t("#{name}.many", scope: 'activerecord.plural.models', default: nil)
+
+        local_plural.presence || model_name.pluralize
+      end
+
       def route_helper_methods
         ACTIONS.map do |action|
-          case action
-          when :index, :show
-            page(action).present?
-          when :new, :create
-            page(:create).present?
-          end => existing_condition
+          cond = case action
+                 when :index, :show, :destroy   then page(action).present?
+                 when :new, :create             then page(:create).present?
+                 when :edit, :update            then page(:update).present?
+                 end
 
-          send("#{action}_helper_method") if existing_condition
+          send("#{action}_helper_method") if cond
         end
       end
 

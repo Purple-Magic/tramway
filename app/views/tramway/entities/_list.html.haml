@@ -12,7 +12,7 @@
 
     - if Tramway.config.pagination[:enabled]
       = paginate @entities, custom_path_method:
-  .flex.justify-end.mt-2
+  = component 'tramway/actions_buttons_container' do
     - if @entity.page(:create).present?
       = tramway_button text: t('tramway.actions.new'),
         path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.new),
@@ -26,7 +26,7 @@
       = decorator
   - else
     = tramway_table class: 'mt-4' do
-      = tramway_header headers: index_attributes.map { |attribute| @model_class.human_attribute_name(attribute) }
+      = tramway_header headers: decorator.constantize.table_headers(entity: @entity)
       - @entities.each do |item|
         = component 'tramway/entity', entity: @entity, item: item
 

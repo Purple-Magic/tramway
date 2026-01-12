@@ -3,6 +3,18 @@
     %h1.text-4xl.font-bold.mb-4
       = @record.title
 
+  = component 'tramway/actions_buttons_container' do
+    - if @entity.page(:update).present?
+      = tramway_button text: t('tramway.actions.edit'),
+        path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.edit, @record.id),
+        type: :will
+
+    - if @entity.page(:destroy).present?
+      = tramway_button text: t('tramway.actions.destroy'),
+        path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.destroy, @record.id),
+        type: :rage,
+        method: :delete
+
   .flex.justify-end.mt-2
     - if @record.show_header_content.present?
       = @record.show_header_content
@@ -31,8 +43,7 @@
           custom_path_arguments: [@record.id]
 
     = tramway_table class: 'mt-4' do 
-      -# FIXME: don't use first object for getting association decorator
-      = tramway_header headers: association[:records].first.table_headers
+      = tramway_header headers: association[:decorator].table_headers(model_class: association[:model_class])
 
       - association[:records].each do |record|
         = tramway_row do

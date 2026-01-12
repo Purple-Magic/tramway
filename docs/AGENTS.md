@@ -78,7 +78,7 @@ config/
 
 ## Rules
 
-- Use Tramway Entities and Tramway actions (index, show, create) by default unless custom behavior is needed. Configure in `config/initializers/tramway.rb`.
+- Use Tramway Entities and Tramway actions (index, show, create, update, destroy) by default unless custom behavior is needed. Configure in `config/initializers/tramway.rb`.
 - Normalize input with `normalizes` (from Tramway) for attributes like email, phone, etc.
 - Use Tramway Navbar for navigation
 - Use Tramway Flash for user notifications.

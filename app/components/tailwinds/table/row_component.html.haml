@@ -8,8 +8,8 @@
   - cells = Nokogiri::HTML.fragment(content).xpath('./*[@class and contains(concat(" ", normalize-space(@class), " "), " div-table-cell ")]')
 
   - if href.present?
-    = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' '), **options do
+    = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' '), **default_attributes do
       = content
   - else
-    = tag.div class: desktop_row_classes(cells.count), **options do
+    = tag.div class: desktop_row_classes(cells.count), **default_attributes do
       = content

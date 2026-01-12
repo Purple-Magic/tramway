@@ -1,4 +1,7 @@
-= tramway_form_for @record, local: true, url: public_send(@entity.create_helper_method), method: :post do |f|
+- url = @record.new_record? ? public_send(@entity.create_helper_method) : public_send(@entity.update_helper_method, @record.id)
+- method = @record.new_record? ? :post : :patch
+
+= tramway_form_for @record, local: true, url:, method: do |f|
   - if @record.errors.any?
     .alert.alert-danger
       %h4= "#{pluralize(@record.errors.count, 'error')} prohibited this record from being saved:"

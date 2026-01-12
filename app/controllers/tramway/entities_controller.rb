@@ -35,6 +35,10 @@ module Tramway
       @record = tramway_form model_class.new, namespace: entity.namespace
     end
 
+    def edit
+      @record = tramway_form model_class.find(params[:id]), namespace: entity.namespace
+    end
+
     # rubocop:disable Metrics/AbcSize
     def create
       @record = tramway_form model_class.new, namespace: entity.namespace
@@ -45,7 +49,25 @@ module Tramway
         render :new
       end
     end
+
+    def update
+      @record = tramway_form model_class.find(params[:id]), namespace: entity.namespace
+
+      if @record.submit params[model_class.model_name.param_key]
+        redirect_to public_send(entity.show_helper_method, @record.id), notice: t('tramway.notices.updated')
+      else
+        render :edit
+      end
+    end
     # rubocop:enable Metrics/AbcSize
+
+    def destroy
+      @record = model_class.find(params[:id])
+
+      @record.destroy
+
+      redirect_to public_send(entity.index_helper_method), notice: t('tramway.notices.deleted')
+    end
 
     private
 
@@ -70,7 +92,8 @@ module Tramway
         {
           name: association,
           decorator: records.first.class,
-          records:
+          records:,
+          model_class: records.first.object.class
         }
       end.compact
     end

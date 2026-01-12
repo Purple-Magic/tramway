@@ -1,6 +1,9 @@
 # Tramway
 Unite Ruby on Rails brilliance. Streamline development with Tramway.
 
+Tramway ships with full CRUD (index, show, create, update, destroy) out of the box, and it includes a great AGENTS.md guide
+that helps you generate good, Tramway-native code with all the framework features.
+
 [![RubyGems Version](https://img.shields.io/gem/v/tramway.svg)](https://rubygems.org/gems/tramway)
 [![Tests](https://github.com/Purple-Magic/tramway/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Purple-Magic/tramway/actions/workflows/test.yml)
 [![Lint](https://github.com/Purple-Magic/tramway/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/Purple-Magic/tramway/actions/workflows/lint.yml)
@@ -60,7 +63,13 @@ Tramway.configure do |config|
   config.entities = [
     {
       name: :user,
-      pages: [{ action: :index }],
+      pages: [
+        { action: :index },
+        { action: :show },
+        { action: :create },
+        { action: :update },
+        { action: :destroy }
+      ],
     }
   ]
 end
@@ -214,6 +223,63 @@ end
 
 With this configuration in place, visiting the show page displays a two-column table where the left column contains the
 localized attribute names and the right column renders their values.
+
+**create page**
+
+To render a create page for an entity, declare a `:create` action inside the `pages` array in
+`config/initializers/tramway.rb`. Tramway will generate the route and render the form fields based on your form object.
+
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      pages: [
+        { action: :index },
+        { action: :create }
+      ]
+    }
+  ]
+end
+```
+
+**update page**
+
+To render an update page, declare an `:update` action inside the `pages` array in `config/initializers/tramway.rb`.
+Tramway will generate the edit route and reuse the same form partial as create.
+
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      pages: [
+        { action: :index },
+        { action: :update }
+      ]
+    }
+  ]
+end
+```
+
+**destroy page**
+
+To render a destroy action, declare a `:destroy` action inside the `pages` array in `config/initializers/tramway.rb`.
+Tramway will generate the destroy route and render the delete action button.
+
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      pages: [
+        { action: :index },
+        { action: :destroy }
+      ]
+    }
+  ]
+end
+```
 
 **route_helper**
 
