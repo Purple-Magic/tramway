@@ -6,3 +6,4 @@ en:
     notices:
       created: "The record is created"
       updated: "The record is updated"
+      deleted: "The record is deleted"

@@ -61,6 +61,14 @@ module Tramway
     end
     # rubocop:enable Metrics/AbcSize
 
+    def destroy
+      @record = model_class.find(params[:id])
+
+      @record.destroy
+
+      redirect_to public_send(entity.index_helper_method), notice: t('tramway.notices.deleted')
+    end
+
     private
 
     def model_class

@@ -3,6 +3,18 @@
     %h1.text-4xl.font-bold.mb-4
       = @record.title
 
+  = component 'tramway/actions_buttons_container' do
+    - if @entity.page(:update).present?
+      = tramway_button text: t('tramway.actions.edit'),
+        path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.edit, @record.id),
+        type: :will
+
+    - if @entity.page(:destroy).present?
+      = tramway_button text: t('tramway.actions.destroy'),
+        path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.destroy, @record.id),
+        type: :rage,
+        method: :delete
+
   .flex.justify-end.mt-2
     - if @record.show_header_content.present?
       = @record.show_header_content
@@ -11,12 +23,6 @@
     %p.text-center.mt-10
       You should fill object-level method `show_attributes` inside your
       = @record.class.name
-
-  = component 'tramway/actions_buttons_container' do
-    - if @entity.page(:update).present?
-      = tramway_button text: t('tramway.actions.edit'),
-        path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.edit, @record.id),
-        type: :will
 
   = tramway_table class: 'mt-4' do
     - @record.show_attributes.each do |attribute|

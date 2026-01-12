@@ -24,6 +24,8 @@ Tramway::Engine.routes.draw do
           acc + %i[create new]
         when 'update'
           acc + %i[edit update]
+        when 'destroy'
+          acc << :destroy
         else
           acc
         end
