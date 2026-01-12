@@ -3,6 +3,14 @@ en:
     pages:
       new:
         title: "Create %{model_name}"
+      edit:
+        title: "Edit %{model_name}"
+    actions:
+      new: "New"
+      edit: "Edit"
+      destroy: "Destroy"
+      save: "Save"
+      cancel: "Cancel"
     notices:
       created: "The record is created"
       updated: "The record is updated"

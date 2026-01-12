@@ -17,6 +17,12 @@ Tramway.configure do |config|
         },
         {
           action: :create
+        },
+        {
+          action: :update
+        },
+        {
+          action: :destroy
         }
       ]
     },

@@ -101,5 +101,29 @@ feature 'Entities Index Page', :js, type: :feature do
 
       expect(page).to have_css(".div-table a.div-table-row[href='/admin/posts/#{post.id}']")
     end
+
+    scenario 'displays edit and destroy buttons' do
+      visit '/admin/posts'
+
+      expect(page).to have_button('Edit')
+      expect(page).to have_button('Destroy')
+    end
+
+    scenario 'navigates to edit page from edit button' do
+      visit '/admin/posts'
+
+      click_button 'Edit'
+
+      expect(page).to have_current_path("/admin/posts/#{post.id}/edit")
+    end
+
+    scenario 'destroys record from destroy button' do
+      visit '/admin/posts'
+
+      expect { click_button 'Destroy' }.to change(Post, :count).by(-1)
+
+      expect(page).to have_current_path('/admin/posts')
+      expect(page).to have_content('The record is deleted')
+    end
   end
 end

@@ -34,6 +34,30 @@ feature 'Entities Show Page', :js, type: :feature do
     expect(page).to have_content('Show header for Displayed Post')
   end
 
+  scenario 'displays edit and destroy buttons' do
+    visit "/admin/posts/#{post.id}"
+
+    expect(page).to have_button('Edit')
+    expect(page).to have_button('Destroy')
+  end
+
+  scenario 'navigates to edit page from edit button' do
+    visit "/admin/posts/#{post.id}"
+
+    click_button 'Edit'
+
+    expect(page).to have_current_path("/admin/posts/#{post.id}/edit")
+  end
+
+  scenario 'destroys record from destroy button' do
+    visit "/admin/posts/#{post.id}"
+
+    expect { click_button 'Destroy' }.to change(Post, :count).by(-1)
+
+    expect(page).to have_current_path('/admin/posts')
+    expect(page).to have_content('The record is deleted')
+  end
+
   context 'with show associations' do
     let!(:original_per_page) { Kaminari.config.default_per_page }
     let(:tables) { all('.div-table') }
