@@ -125,7 +125,11 @@ feature 'Entities Index Page', :js, type: :feature do
       click_button 'Destroy'
 
       expect(page).to have_current_path('/admin/posts')
+
+      sleep 0.5 # wait for the page to reload
+
       expect(Post.count).to eq(previous_count - 1)
+
       expect(Post).not_to exist(post.id)
 
       expect(page).to have_content('The record is deleted')
