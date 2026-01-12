@@ -67,18 +67,18 @@ module Tramway
         build_helper_method(name, route:, namespace:, plural: false)
       end
 
+      def model_class
+        name.classify.constantize
+      rescue StandardError
+        nil
+      end
+
       private
 
       def pluralized(model_name)
         local_plural = I18n.t("#{name}.many", scope: 'activerecord.plural.models', default: nil)
 
         local_plural.presence || model_name.pluralize
-      end
-
-      def model_class
-        name.classify.constantize
-      rescue StandardError
-        nil
       end
 
       def route_helper_methods

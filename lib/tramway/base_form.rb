@@ -66,6 +66,7 @@ module Tramway
     end
 
     delegate :to_model, to: :object
+    delegate :new_record?, to: :object
 
     private
 

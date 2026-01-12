@@ -63,6 +63,16 @@ module Tramway
         nil
       end
 
+      def table_headers(entity)
+        headers = index_attributes.map do |attribute|
+          entity.model_class.human_attribute_name(attribute)
+        end
+
+        headers += ['Actions'] if entity&.page(:update).present? || entity&.page(:destroy).present?
+
+        headers
+      end
+
       include Tramway::Decorators::AssociationClassMethods
     end
 
@@ -101,16 +111,6 @@ module Tramway
 
     def respond_to_missing?(method_name, include_private = false)
       method_name.to_s.end_with?('_path', '_url') || super
-    end
-
-    def table_headers(entity = nil)
-      headers = self.class.index_attributes.map do |attribute|
-        object.class.human_attribute_name(attribute)
-      end
-
-      headers += ['Actions'] if entity&.page(:update).present? || entity&.page(:destroy).present?
-
-      headers
     end
   end
 end

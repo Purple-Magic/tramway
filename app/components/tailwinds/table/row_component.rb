@@ -8,9 +8,11 @@ module Tailwinds
       option :href, optional: true
       option :options, optional: true, default: -> { {} }
 
-      def row_tag(**options, &)
-        default_attributes = { role: :row }
+      def default_attributes
+        { role: :row }
+      end
 
+      def row_tag(**options, &)
         if href.present?
           link_to(href, options.merge(class: "#{options[:class] || ''} #{link_row_classes}", **default_attributes)) do
             yield if block_given?

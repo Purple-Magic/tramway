@@ -7,17 +7,21 @@ module Tramway
     option :item
     option :entity
 
+    def decorated_item
+      tramway_decorate item, namespace: entity.namespace
+    end
+
     def href
       if entity.pages.find { _1.action == 'show' }.present?
-        Tramway::Engine.routes.url_helpers.public_send entity.routes.show, item.id
+        Tramway::Engine.routes.url_helpers.public_send entity.routes.show, decorated_item.id
       else
-        item.show_path
+        decorated_item.show_path
       end
     end
 
     def cells
-      item.class.index_attributes.reduce({}) do |hash, attribute|
-        hash.merge! attribute => item.public_send(attribute)
+      decorated_item.class.index_attributes.reduce({}) do |hash, attribute|
+        hash.merge! attribute => decorated_item.public_send(attribute)
       end
     end
   end

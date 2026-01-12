@@ -1,5 +1,5 @@
-- url = @action == 'new' ? public_send(@entity.create_helper_method) : public_send(@entity.update_helper_method, @record.id)
-- method = @action == 'new' ? :post : :patch
+- url = @record.new_record? ? public_send(@entity.create_helper_method) : public_send(@entity.update_helper_method, @record.id)
+- method = @record.new_record? ? :post : :patch
 
 = tramway_form_for @record, local: true, url:, method: do |f|
   - if @record.errors.any?
