@@ -17,6 +17,12 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
         },
         {
           action: :create
+        },
+        {
+          action: :update
+        },
+        {
+          action: :destroy
         }
       ]
     }
