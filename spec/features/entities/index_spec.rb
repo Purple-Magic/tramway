@@ -120,9 +120,14 @@ feature 'Entities Index Page', :js, type: :feature do
     scenario 'destroys record from destroy button' do
       visit '/admin/posts'
 
-      expect { click_button 'Destroy' }.to change(Post, :count).by(-1)
+      previous_count = Post.count
+
+      click_button 'Destroy'
 
       expect(page).to have_current_path('/admin/posts')
+      expect(Post.count).to eq(previous_count - 1)
+      expect(Post).not_to exist(post.id)
+
       expect(page).to have_content('The record is deleted')
     end
   end
