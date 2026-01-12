@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'tramway/helpers/decorate_helper'
 
 describe Tramway::EntityComponent, type: :component do
-  include Tramway::Helpers::DecorateHelper
-
   let(:entity) { Tramway.config.entities.find { |config| config.name == 'post' } }
 
   describe '#href' do
     let(:post) do
-      tramway_decorate create(:post, aasm_state: :published), namespace: entity.namespace
+      create(:post, aasm_state: :published)
     end
 
     context 'when the entity defines a show page' do
@@ -43,7 +40,7 @@ describe Tramway::EntityComponent, type: :component do
 
   describe '#cells' do
     let(:post) do
-      tramway_decorate create(:post, aasm_state: :published, title: 'Cells Spec Post'), namespace: entity.namespace
+      create(:post, aasm_state: :published, title: 'Cells Spec Post')
     end
 
     it 'returns the decorated index attributes and their values' do

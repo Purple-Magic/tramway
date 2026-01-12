@@ -63,9 +63,9 @@ module Tramway
         nil
       end
 
-      def table_headers(entity)
+      def table_headers(entity: nil, model_class: nil)
         headers = index_attributes.map do |attribute|
-          entity.model_class.human_attribute_name(attribute)
+          (model_class || entity.model_class).human_attribute_name(attribute)
         end
 
         headers += ['Actions'] if entity&.page(:update).present? || entity&.page(:destroy).present?

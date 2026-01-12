@@ -43,8 +43,7 @@
           custom_path_arguments: [@record.id]
 
     = tramway_table class: 'mt-4' do 
-      -# FIXME: don't use first object for getting association decorator
-      = tramway_header headers: association[:records].first.table_headers
+      = tramway_header headers: association[:decorator].table_headers(model_class: association[:model_class])
 
       - association[:records].each do |record|
         = tramway_row do

@@ -92,7 +92,8 @@ module Tramway
         {
           name: association,
           decorator: records.first.class,
-          records:
+          records:,
+          model_class: records.first.object.class
         }
       end.compact
     end

@@ -26,7 +26,7 @@
       = decorator
   - else
     = tramway_table class: 'mt-4' do
-      = tramway_header headers: decorator.constantize.table_headers(@entity)
+      = tramway_header headers: decorator.constantize.table_headers(entity: @entity)
       - @entities.each do |item|
         = component 'tramway/entity', entity: @entity, item: item
 
