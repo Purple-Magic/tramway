@@ -12,6 +12,12 @@
       You should fill object-level method `show_attributes` inside your
       = @record.class.name
 
+  = component 'tramway/actions_buttons_container' do
+    - if @entity.page(:update).present?
+      = tramway_button text: t('tramway.actions.edit'),
+        path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.edit, @record.id),
+        type: :will
+
   = tramway_table class: 'mt-4' do
     - @record.show_attributes.each do |attribute|
       = tramway_row do

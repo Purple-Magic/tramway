@@ -22,6 +22,8 @@ Tramway::Engine.routes.draw do
           acc << :show
         when 'create'
           acc + %i[create new]
+        when 'update'
+          acc + %i[edit update]
         else
           acc
         end
@@ -31,31 +33,6 @@ Tramway::Engine.routes.draw do
                 only: actions.map(&:to_sym),
                 controller: '/tramway/entities',
                 defaults: { entity: }
-
-      # entity.pages.each do |page|
-      #   case page.action
-      #   when 'index'
-      #     get resource_name.pluralize,
-      #       to: '/tramway/entities#index',
-      #       defaults: { entity: },
-      #       as: resource_name.pluralize
-
-      #   when 'show'
-      #     get "#{resource_name.pluralize}/:id",
-      #       to: '/tramway/entities#show',
-      #       defaults: { entity: },
-      #       as: resource_name.singularize
-
-      #   when 'create'
-      #     post resource_name.pluralize,
-      #       to: '/tramway/entities#create',
-      #       defaults: { entity: }
-
-      #     get "#{resource_name.pluralize}/new",
-      #       to: '/tramway/entities#new',
-      #       defaults: { entity: }
-      #   end
-      # end
     end
 
     if segments.empty?

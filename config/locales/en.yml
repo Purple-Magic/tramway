@@ -5,3 +5,4 @@ en:
         title: "Create %{model_name}"
     notices:
       created: "The record is created"
+      updated: "The record is updated"
