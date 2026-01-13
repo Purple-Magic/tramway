@@ -11,10 +11,24 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
   end
 
   describe '#tramway_flash' do
-    it 'renders flash message with text and resolved color class' do
-      fragment = view.tramway_flash text: 'Saved!', type: :success
+    shared_examples 'flash theme classes' do |theme_classes|
+      it 'renders flash message with text and resolved color class' do
+        fragment = view.tramway_flash text: 'Saved!', type: :success
 
-      expect(fragment).to have_css('.flash.bg-green-700', text: 'Saved!')
+        expect(fragment).to have_css(".flash.#{class_selector(theme_classes)}", text: 'Saved!')
+      end
+    end
+
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'flash theme classes', %w[bg-green-700 text-white]
+    end
+
+    context 'with neomorphism theme' do
+      around { |example| with_theme(:neomorphism) { example.run } }
+
+      it_behaves_like 'flash theme classes', %w[bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100]
     end
 
     it 'applies custom HTML options to the container' do

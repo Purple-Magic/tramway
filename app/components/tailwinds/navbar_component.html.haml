@@ -1,10 +1,10 @@
-%nav.py-2.px-4.sm:px-8.flex.justify-between.items-center.bg-gray-800
+%nav{ class: navbar_classes }
   .flex.justify-between.w-full
     - if @title[:text].present? || @left_items.present?
       .flex.items-center
         - if @title[:text].present?
           = link_to @title[:link] do
-            .text-xl.font-bold.text-white
+            .text-xl{ class: title_classes }
               = @title[:text]
         - if @left_items.present?
           %ul.flex-row.items-center.space-x-4.ml-4.hidden.md:flex
@@ -12,7 +12,7 @@
               = item
 
     .block.sm:hidden
-      %button#mobile-menu-button.text-white.focus:outline-none
+      %button#mobile-menu-button{ class: mobile_button_classes }
         ☰
 
   - if @right_items.present?
@@ -20,7 +20,7 @@
       - @right_items.each do |item|
         = item
 
-#mobile-menu.hidden.flex-col.sm:hidden.bg-gray-800
+#mobile-menu{ class: mobile_menu_classes }
   - if @left_items.present?
     %ul.flex.flex-col.space-y-2
       - @left_items.each do |item|

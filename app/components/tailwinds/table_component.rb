@@ -4,5 +4,12 @@ module Tailwinds
   # Table component for rendering a table
   class TableComponent < Tramway::BaseComponent
     option :options, optional: true, default: -> { {} }
+
+    def table_classes
+      theme_classes(
+        classic: 'div-table text-left rtl:text-right text-gray-400',
+        neomorphism: 'div-table text-left rtl:text-right text-gray-500 dark:text-gray-300'
+      )
+    end
   end
 end

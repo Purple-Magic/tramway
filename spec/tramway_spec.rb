@@ -22,4 +22,16 @@ RSpec.describe Tramway do
       expect(described_class.config).to eq(config)
     end
   end
+
+  describe 'theme configuration' do
+    it 'defaults to classic' do
+      expect(described_class.config.theme).to eq(:classic)
+    end
+
+    it 'allows overriding the theme' do
+      with_theme(:neomorphism) do
+        expect(described_class.config.theme).to eq(:neomorphism)
+      end
+    end
+  end
 end
