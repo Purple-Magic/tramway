@@ -13,6 +13,7 @@ module.exports = {
     'last:border-b-0',
     'md:block',
     'first:block',
+    'rounded-t-xl',
 
     // === Visibility and typography helpers ===
     'hidden',

@@ -14,7 +14,7 @@ module Tailwinds
       def header_row_classes
         theme_classes(
           classic: 'div-table-row grid text-small gap-4 bg-gray-700 text-gray-400 grid-cols-1',
-          neomorphism: 'div-table-row grid text-small gap-4 bg-gray-200 text-gray-600 grid-cols-1 ' \
+          neomorphism: 'div-table-row rounded-t-xl grid text-small gap-4 bg-gray-200 text-gray-600 grid-cols-1 ' \
                        'dark:bg-gray-800 dark:text-gray-300'
         )
       end
