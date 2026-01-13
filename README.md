@@ -228,6 +228,7 @@ localized attribute names and the right column renders their values.
 
 To render a create page for an entity, declare a `:create` action inside the `pages` array in
 `config/initializers/tramway.rb`. Tramway will generate the route and render the form fields based on your form object.
+See the [form_fields method](#form_fields-method) for details on configuring fields.
 
 ```ruby
 Tramway.configure do |config|
@@ -246,7 +247,8 @@ end
 **update page**
 
 To render an update page, declare an `:update` action inside the `pages` array in `config/initializers/tramway.rb`.
-Tramway will generate the edit route and reuse the same form partial as create.
+Tramway will generate the edit route and reuse the same form partial as create. See the
+[form_fields method](#form_fields-method) for details on configuring fields.
 
 ```ruby
 Tramway.configure do |config|
@@ -260,6 +262,32 @@ Tramway.configure do |config|
     }
   ]
 end
+```
+
+**form_fields method**
+
+Use `form_fields` in your form class to customize which form helpers get rendered and which options are passed to them.
+Each field must map to a form helper method name. When you need to pass options, use a hash where `:type` is the helper
+method name and the remaining keys are passed as named arguments.
+
+```ruby
+class UserForm < Tramway::BaseForm
+  properties :email, :about_me
+
+  fields email: :email,
+    about_me: {
+      type: :text_area,
+      rows: 5
+    }
+end
+```
+
+The configuration above renders:
+
+```erb
+<%= tramway_form_for .... do |f| %>
+  <%= f.email_field :email %>
+  <%= f.text_area :about_me, rows: 5 %>
 ```
 
 **destroy page**
