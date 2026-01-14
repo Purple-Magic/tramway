@@ -7,6 +7,8 @@ module.exports = {
     'transform',
     'left-1/2',
     '-translate-x-1/2',
+    'md:left-auto',
+    'md:translate-x-0',
     'border-white',
     'h-screen',
     'w-screen',
@@ -19,6 +21,7 @@ module.exports = {
     '-translate-x-full',
     'duration-300',
     'space-y-3',
+    'md:justify-between',
     
     // === Custom table layout utilities ===
     'div-table',
