@@ -110,23 +110,21 @@ describe Tailwinds::ButtonComponent, type: :component do
     it_behaves_like 'button theme classes',
                     default: %w[
                       btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                      shadow-md py-2 px-4 h-10 bg-gray-200 hover:bg-gray-300 text-gray-800 cursor-pointer
-                      dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-100
+                      shadow-md py-2 px-4 h-10 bg-gray-700 hover:bg-gray-800 text-white cursor-pointer
                     ],
                     non_get: %w[
-                      text-sm py-1 px-2 extra-class bg-red-200 hover:bg-red-300 text-red-800
-                      dark:bg-red-700 dark:hover:bg-red-600 dark:text-red-100
+                      btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
+                      shadow-md text-sm py-1 px-2 rounded extra-class bg-red-700 hover:bg-red-800 text-white
+                      cursor-pointer
                     ],
                     link: %w[
                       btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                      shadow-md py-2 px-4 h-10 bg-gray-200 hover:bg-gray-300 text-gray-800 px-1 h-fit w-fit
-                      dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-100
+                      shadow-md py-2 px-4 h-10 bg-gray-700 hover:bg-gray-800 text-white px-1 h-fit w-fit
                     ],
                     semantic: %w[
-                      bg-violet-200 hover:bg-violet-300 text-violet-800 dark:bg-violet-700 dark:hover:bg-violet-600
-                      dark:text-violet-100
+                      bg-violet-700 hover:bg-violet-800 text-white
                     ],
-                    disabled: %w[bg-gray-200 text-gray-400 shadow-inner dark:bg-gray-800 dark:text-gray-500]
+                    disabled: %w[bg-gray-800 text-gray-500 shadow-inner]
   end
 
   context 'when rendering outside of a table cell' do

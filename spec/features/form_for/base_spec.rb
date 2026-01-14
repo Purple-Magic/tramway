@@ -36,20 +36,17 @@ feature 'Form For Base Test', :js, type: :feature do
 
     it_behaves_like 'form for theme classes',
                     text_input: %w[
-                      w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner
-                      focus:outline-none focus:ring-2 focus:ring-gray-300 placeholder-gray-400 dark:bg-gray-900
-                      dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:ring-gray-600
+                      w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner
+                      focus:outline-none focus:ring-2 focus:ring-gray-600 placeholder-gray-500
                     ],
                     file_button: %w[
-                      font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 hover:bg-blue-200 text-blue-800
-                      shadow-md dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800
+                      inline-block text-blue-100 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-900
+                      hover:bg-blue-800 shadow-md
                     ],
                     select: %w[
-                      w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner
-                      focus:outline-none focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed
-                      disabled:bg-gray-200 disabled:text-gray-400 dark:bg-gray-900 dark:border-gray-700
-                      dark:text-gray-100 dark:focus:ring-gray-600 dark:disabled:bg-gray-800
-                      dark:disabled:text-gray-500
+                      w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner
+                      focus:outline-none focus:ring-2 focus:ring-gray-600 disabled:cursor-not-allowed
+                      disabled:bg-gray-800 disabled:text-gray-500
                     ]
   end
 end

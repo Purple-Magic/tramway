@@ -6,20 +6,20 @@ require 'support/view_helpers'
 CLASSIC_FORM_CLASSES = {
   label: %w[block text-sm font-semibold mb-2 text-white],
   text_input: %w[
-    w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
-    focus:ring-2 focus:ring-gray-300 placeholder-gray-400
+    w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
+    focus:ring-2 focus:ring-gray-600 placeholder-gray-500
   ],
   select_input: %w[
-    w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
-    focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400
+    w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
+    focus:ring-2 focus:ring-gray-600 disabled:cursor-not-allowed disabled:bg-gray-800 disabled:text-gray-500
   ],
   file_button: %w[
-    inline-block text-blue-800 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 hover:bg-blue-200
+    inline-block text-blue-100 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-900 hover:bg-blue-800
     shadow-md
   ],
   submit_button: %w[
-    font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer bg-green-100
-    hover:bg-green-200 shadow-md
+    font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-700 cursor-pointer bg-green-900
+    hover:bg-green-800 shadow-md
   ]
 }.freeze
 

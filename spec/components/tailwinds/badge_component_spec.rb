@@ -41,10 +41,9 @@ describe Tailwinds::BadgeComponent, type: :component do
 
     it_behaves_like 'badge theme classes',
                     default: %w[
-                      flex px-3 py-1 text-sm font-semibold rounded-full w-fit h-fit bg-gray-200 text-gray-800 shadow-md
-                      dark:bg-gray-700 dark:text-gray-100
+                      flex px-3 py-1 text-sm font-semibold rounded-full w-fit h-fit bg-gray-700 text-gray-100 shadow-md
                     ],
-                    type: %w[bg-green-200 text-green-800 dark:bg-green-700 dark:text-green-100],
-                    custom: %w[bg-red-200 text-red-800 dark:bg-red-700 dark:text-red-100]
+                    type: %w[bg-green-700 text-green-100],
+                    custom: %w[bg-red-700 text-red-100]
   end
 end
