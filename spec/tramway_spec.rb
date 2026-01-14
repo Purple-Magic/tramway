@@ -29,8 +29,8 @@ RSpec.describe Tramway do
     end
 
     it 'allows overriding the theme' do
-      with_theme(:neomorphism) do
-        expect(described_class.config.theme).to eq(:neomorphism)
+      with_theme(:modern) do
+        expect(described_class.config.theme).to eq(:modern)
       end
     end
   end

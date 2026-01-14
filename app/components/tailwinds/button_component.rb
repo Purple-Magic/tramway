@@ -30,9 +30,8 @@ module Tailwinds
 
     def default_classes
       base_classes = theme_classes(
-        classic: %w[btn btn-primary flex flex-row font-bold rounded-sm whitespace-nowrap items-center gap-1],
-        neomorphism: %w[btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                        shadow-md]
+        classic: %w[btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
+                    shadow-md]
       )
 
       base_classes + [size_classes.to_s, options[:class].to_s]
@@ -41,17 +40,11 @@ module Tailwinds
     def color_classes
       if disabled?
         theme_classes(
-          classic: %w[bg-gray-400 text-gray-100],
-          neomorphism: %w[bg-gray-200 text-gray-400 shadow-inner dark:bg-gray-800 dark:text-gray-500]
+          classic: %w[bg-gray-200 text-gray-400 shadow-inner dark:bg-gray-800 dark:text-gray-500]
         )
       else
         theme_classes(
           classic: [
-            "bg-#{resolved_color}-600",
-            "hover:bg-#{resolved_color}-800",
-            'text-gray-300'
-          ],
-          neomorphism: [
             "bg-#{resolved_color}-200",
             "hover:bg-#{resolved_color}-300",
             "text-#{resolved_color}-800",

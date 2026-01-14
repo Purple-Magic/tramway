@@ -25,15 +25,6 @@ describe Tailwinds::BackButtonComponent, type: :component do
 
     it_behaves_like 'back button theme classes',
                     %w[
-                      btn btn-delete bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded ml-2
-                    ]
-  end
-
-  context 'with neomorphism theme' do
-    around { |example| with_theme(:neomorphism) { example.run } }
-
-    it_behaves_like 'back button theme classes',
-                    %w[
                       btn btn-delete bg-orange-100 hover:bg-orange-200 text-orange-800 font-semibold py-2 px-4
                       rounded-xl ml-2 shadow-md dark:bg-orange-800 dark:text-orange-100 dark:hover:bg-orange-700
                     ]

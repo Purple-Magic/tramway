@@ -41,17 +41,6 @@ describe Tailwinds::BadgeComponent, type: :component do
 
     it_behaves_like 'badge theme classes',
                     default: %w[
-                      flex px-3 py-1 text-sm font-semibold text-white bg-gray-600 rounded-full w-fit h-fit
-                    ],
-                    type: %w[bg-green-600],
-                    custom: %w[bg-red-600]
-  end
-
-  context 'with neomorphism theme' do
-    around { |example| with_theme(:neomorphism) { example.run } }
-
-    it_behaves_like 'badge theme classes',
-                    default: %w[
                       flex px-3 py-1 text-sm font-semibold rounded-full w-fit h-fit bg-gray-200 text-gray-800 shadow-md
                       dark:bg-gray-700 dark:text-gray-100
                     ],

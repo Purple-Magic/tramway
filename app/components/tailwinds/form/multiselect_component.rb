@@ -28,24 +28,21 @@ module Tailwinds
 
       def wrapper_classes
         theme_classes(
-          classic: 'flex flex-col relative text-gray-100',
-          neomorphism: 'flex flex-col relative text-gray-700 dark:text-gray-200'
+          classic: 'flex flex-col relative text-gray-700 dark:text-gray-200'
         )
       end
 
       def dropdown_classes
         theme_classes(
-          classic: 'p-1 flex border rounded border-gray-600 bg-gray-800',
-          neomorphism: 'p-1 flex border rounded-xl border-gray-200 bg-gray-100 shadow-inner ' \
-                       'dark:bg-gray-900 dark:border-gray-700'
+          classic: 'p-1 flex border rounded-xl border-gray-200 bg-gray-100 shadow-inner ' \
+                   'dark:bg-gray-900 dark:border-gray-700'
         )
       end
 
       def dropdown_indicator_classes
         theme_classes(
-          classic: 'w-8 py-1 pl-2 pr-1 border-l flex items-center text-gray-500 border-gray-600',
-          neomorphism: 'w-8 py-1 pl-2 pr-1 border-l flex items-center text-gray-400 border-gray-200 ' \
-                       'dark:text-gray-500 dark:border-gray-700'
+          classic: 'w-8 py-1 pl-2 pr-1 border-l flex items-center text-gray-400 border-gray-200 ' \
+                   'dark:text-gray-500 dark:border-gray-700'
         )
       end
 

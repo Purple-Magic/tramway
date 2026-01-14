@@ -109,25 +109,6 @@ describe Tailwinds::ButtonComponent, type: :component do
 
     it_behaves_like 'button theme classes',
                     default: %w[
-                      btn btn-primary flex flex-row font-bold rounded-sm whitespace-nowrap items-center gap-1
-                      py-2 px-4 h-10 bg-gray-600 hover:bg-gray-800 text-gray-300 cursor-pointer
-                    ],
-                    non_get: %w[
-                      text-sm py-1 px-2 extra-class bg-red-600 hover:bg-red-800 text-gray-300
-                    ],
-                    link: %w[
-                      btn btn-primary flex flex-row font-bold rounded-sm whitespace-nowrap items-center gap-1
-                      py-2 px-4 h-10 bg-gray-600 hover:bg-gray-800 text-gray-300 px-1 h-fit w-fit
-                    ],
-                    semantic: %w[bg-violet-600 hover:bg-violet-800],
-                    disabled: %w[bg-gray-400 text-gray-100]
-  end
-
-  context 'with neomorphism theme' do
-    around { |example| with_theme(:neomorphism) { example.run } }
-
-    it_behaves_like 'button theme classes',
-                    default: %w[
                       btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
                       shadow-md py-2 px-4 h-10 bg-gray-200 hover:bg-gray-300 text-gray-800 cursor-pointer
                       dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-100

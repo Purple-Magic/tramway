@@ -10,23 +10,20 @@ module Tailwinds
 
     def container_classes
       theme_classes(
-        classic: 'fixed top-4 right-4 z-50 space-y-2',
-        neomorphism: 'fixed top-4 right-4 z-50 space-y-2'
+        classic: 'fixed top-4 right-4 z-50 space-y-2'
       )
     end
 
     def flash_classes
       theme_classes(
-        classic: "flash opacity-100 text-white px-4 py-2 rounded shadow bg-#{resolved_color}-700",
-        neomorphism: "flash opacity-100 px-4 py-2 rounded-xl shadow-md bg-#{resolved_color}-100 " \
-                     "text-#{resolved_color}-800 dark:bg-#{resolved_color}-900 dark:text-#{resolved_color}-100"
+        classic: "flash opacity-100 px-4 py-2 rounded-xl shadow-md bg-#{resolved_color}-100 " \
+                 "text-#{resolved_color}-800 dark:bg-#{resolved_color}-900 dark:text-#{resolved_color}-100"
       )
     end
 
     def title_classes
       theme_classes(
-        classic: 'text-xl font-bold',
-        neomorphism: 'text-xl font-semibold'
+        classic: 'text-xl font-semibold'
       )
     end
   end

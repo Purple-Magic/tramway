@@ -40,50 +40,41 @@ class TailwindComponent < Tramway::BaseComponent
 
   def text_input_base_classes
     theme_classes(
-      classic: 'w-full border rounded focus:outline-none bg-gray-800 border-gray-600 text-white ' \
-               'focus:border-red-400 placeholder-white',
-      neomorphism: 'w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner ' \
-                   'focus:outline-none focus:ring-2 focus:ring-gray-300 placeholder-gray-400 ' \
-                   'dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-500 ' \
-                   'dark:focus:ring-gray-600'
+      classic: 'w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner ' \
+               'focus:outline-none focus:ring-2 focus:ring-gray-300 placeholder-gray-400 ' \
+               'dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-500 ' \
+               'dark:focus:ring-gray-600'
     )
   end
 
   def select_base_classes
     theme_classes(
-      classic: 'w-full border rounded focus:outline-none focus:ring-2 focus:border-transparent ' \
-               'disabled:cursor-not-allowed bg-gray-800 border-gray-600 text-gray-100 ' \
-               'focus:ring-red-400 disabled:bg-gray-800 disabled:text-gray-500',
-      neomorphism: 'w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner ' \
-                   'focus:outline-none focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed ' \
-                   'disabled:bg-gray-200 disabled:text-gray-400 dark:bg-gray-900 dark:border-gray-700 ' \
-                   'dark:text-gray-100 dark:focus:ring-gray-600 dark:disabled:bg-gray-800 ' \
-                   'dark:disabled:text-gray-500'
+      classic: 'w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner ' \
+               'focus:outline-none focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed ' \
+               'disabled:bg-gray-200 disabled:text-gray-400 dark:bg-gray-900 dark:border-gray-700 ' \
+               'dark:text-gray-100 dark:focus:ring-gray-600 dark:disabled:bg-gray-800 ' \
+               'dark:disabled:text-gray-500'
     )
   end
 
   def file_button_base_classes
     theme_classes(
-      classic: 'inline-block text-white font-bold rounded cursor-pointer mt-4 bg-blue-600 hover:bg-blue-500',
-      neomorphism: 'inline-block text-blue-800 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 ' \
-                   'hover:bg-blue-200 shadow-md dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800'
+      classic: 'inline-block text-blue-800 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 ' \
+               'hover:bg-blue-200 shadow-md dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800'
     )
   end
 
   def submit_button_base_classes
     theme_classes(
-      classic: 'hover:bg-red-700 font-bold rounded focus:outline-none focus:shadow-outline cursor-pointer ' \
-               'text-white bg-red-600 hover:bg-red-500 focus:ring-2 focus:ring-red-400',
-      neomorphism: 'font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer ' \
-                   'text-red-800 bg-red-100 hover:bg-red-200 shadow-md dark:bg-red-900 dark:text-red-100 ' \
-                   'dark:hover:bg-red-800 dark:focus:ring-red-700'
+      classic: 'font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer ' \
+               'text-red-800 bg-red-100 hover:bg-red-200 shadow-md dark:bg-red-900 dark:text-red-100 ' \
+               'dark:hover:bg-red-800 dark:focus:ring-red-700'
     )
   end
 
   def form_label_classes
     theme_classes(
-      classic: 'block text-sm font-bold mb-2 text-white',
-      neomorphism: 'block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-200'
+      classic: 'block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-200'
     )
   end
 

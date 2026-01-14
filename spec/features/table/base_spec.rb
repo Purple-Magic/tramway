@@ -32,19 +32,6 @@ feature 'Table Base Spec', :js, type: :feature do
     before { visit users_path }
 
     it_behaves_like 'table theme classes',
-                    table: %w[div-table text-left rtl:text-right text-gray-400],
-                    row: %w[
-                      div-table-row grid gap-4 border-b last:border-b-0 bg-gray-800 border-gray-700 grid-cols-1
-                    ],
-                    cell: %w[div-table-cell px-6 py-4 font-medium text-white text-base]
-  end
-
-  context 'with neomorphism theme' do
-    around { |example| with_theme(:neomorphism) { example.run } }
-
-    before { visit users_path }
-
-    it_behaves_like 'table theme classes',
                     table: %w[div-table text-left rtl:text-right text-gray-500 dark:text-gray-300],
                     row: %w[
                       div-table-row grid gap-4 border-b last:border-b-0 bg-gray-100 border-gray-200 grid-cols-1

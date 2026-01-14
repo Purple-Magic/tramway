@@ -22,12 +22,6 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
     context 'with classic theme' do
       around { |example| with_theme(:classic) { example.run } }
 
-      it_behaves_like 'flash theme classes', %w[bg-green-700 text-white]
-    end
-
-    context 'with neomorphism theme' do
-      around { |example| with_theme(:neomorphism) { example.run } }
-
       it_behaves_like 'flash theme classes', %w[bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100]
     end
 

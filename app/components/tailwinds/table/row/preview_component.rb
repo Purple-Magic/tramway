@@ -7,15 +7,13 @@ module Tailwinds
       class PreviewComponent < Tramway::BaseComponent
         def preview_classes
           theme_classes(
-            classic: 'fixed hidden inset-x-0 bottom-0 shadow-lg z-50 bg-gray-800 animate-roll-up h-1/2',
-            neomorphism: 'fixed hidden inset-x-0 bottom-0 shadow-lg z-50 bg-gray-100 animate-roll-up h-1/2'
+            classic: 'fixed hidden inset-x-0 bottom-0 shadow-lg z-50 bg-gray-100 animate-roll-up h-1/2'
           )
         end
 
         def close_button_classes
           theme_classes(
-            classic: 'absolute top-4 right-4 text-gray-400 hover:text-gray-200',
-            neomorphism: 'absolute top-4 right-4 text-gray-500 hover:text-gray-700'
+            classic: 'absolute top-4 right-4 text-gray-500 hover:text-gray-700'
           )
         end
       end

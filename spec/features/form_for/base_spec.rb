@@ -36,26 +36,6 @@ feature 'Form For Base Test', :js, type: :feature do
 
     it_behaves_like 'form for theme classes',
                     text_input: %w[
-                      w-full border rounded focus:outline-none bg-gray-800 border-gray-600 text-white
-                      focus:border-red-400 placeholder-white
-                    ],
-                    file_button: %w[
-                      font-bold rounded cursor-pointer mt-4 bg-blue-600 hover:bg-blue-500 text-white
-                    ],
-                    select: %w[
-                      w-full border rounded focus:outline-none focus:ring-2 focus:border-transparent
-                      disabled:cursor-not-allowed bg-gray-800 border-gray-600 text-gray-100 focus:ring-red-400
-                      disabled:bg-gray-800 disabled:text-gray-500
-                    ]
-  end
-
-  context 'with neomorphism theme' do
-    around { |example| with_theme(:neomorphism) { example.run } }
-
-    before { visit new_user_path }
-
-    it_behaves_like 'form for theme classes',
-                    text_input: %w[
                       w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner
                       focus:outline-none focus:ring-2 focus:ring-gray-300 placeholder-gray-400 dark:bg-gray-900
                       dark:border-gray-700 dark:text-gray-100 dark:placeholder-gray-500 dark:focus:ring-gray-600

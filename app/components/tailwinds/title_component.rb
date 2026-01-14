@@ -7,8 +7,7 @@ module Tailwinds
 
     def title_classes
       theme_classes(
-        classic: 'font-bold text-4xl text-white',
-        neomorphism: 'font-semibold text-4xl text-gray-800 dark:text-gray-100'
+        classic: 'font-semibold text-4xl text-gray-800 dark:text-gray-100'
       )
     end
   end

@@ -5,25 +5,6 @@ require 'support/view_helpers'
 
 describe Tailwinds::Form::Builder, type: :view do
   CLASSIC_FORM_CLASSES = {
-    label: %w[block text-sm font-bold mb-2 text-white],
-    text_input: %w[
-      w-full border rounded focus:outline-none bg-gray-800 border-gray-600 text-white focus:border-red-400
-      placeholder-white
-    ],
-    select_input: %w[
-      w-full border rounded focus:outline-none focus:ring-2 focus:border-transparent disabled:cursor-not-allowed
-      bg-gray-800 border-gray-600 text-gray-100 focus:ring-red-400 disabled:bg-gray-800 disabled:text-gray-500
-    ],
-    file_button: %w[
-      inline-block text-white font-bold rounded cursor-pointer mt-4 bg-blue-600 hover:bg-blue-500
-    ],
-    submit_button: %w[
-      hover:bg-red-700 font-bold rounded focus:outline-none focus:shadow-outline cursor-pointer text-white bg-red-600
-      hover:bg-red-500 focus:ring-2 focus:ring-red-400
-    ]
-  }.freeze
-
-  NEOMORPHISM_FORM_CLASSES = {
     label: %w[block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-200],
     text_input: %w[
       w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
@@ -102,12 +83,6 @@ describe Tailwinds::Form::Builder, type: :view do
 
         it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
       end
-
-      context 'with neomorphism theme' do
-        around { |example| with_theme(:neomorphism) { example.run } }
-
-        it_behaves_like 'form label and text input classes', NEOMORPHISM_FORM_CLASSES
-      end
     end
 
     context 'with small size' do
@@ -172,15 +147,6 @@ describe Tailwinds::Form::Builder, type: :view do
                       type: 'email',
                       input: CLASSIC_FORM_CLASSES[:text_input]
     end
-
-    context 'with neomorphism theme' do
-      around { |example| with_theme(:neomorphism) { example.run } }
-
-      it_behaves_like 'form label and text input type classes',
-                      label: NEOMORPHISM_FORM_CLASSES[:label],
-                      type: 'email',
-                      input: NEOMORPHISM_FORM_CLASSES[:text_input]
-    end
   end
 
   describe '#number_field' do
@@ -194,15 +160,6 @@ describe Tailwinds::Form::Builder, type: :view do
                       type: 'number',
                       input: CLASSIC_FORM_CLASSES[:text_input]
     end
-
-    context 'with neomorphism theme' do
-      around { |example| with_theme(:neomorphism) { example.run } }
-
-      it_behaves_like 'form label and text input type classes',
-                      label: NEOMORPHISM_FORM_CLASSES[:label],
-                      type: 'number',
-                      input: NEOMORPHISM_FORM_CLASSES[:text_input]
-    end
   end
 
   describe '#date_field' do
@@ -215,15 +172,6 @@ describe Tailwinds::Form::Builder, type: :view do
                       label: CLASSIC_FORM_CLASSES[:label],
                       type: 'date',
                       input: CLASSIC_FORM_CLASSES[:text_input]
-    end
-
-    context 'with neomorphism theme' do
-      around { |example| with_theme(:neomorphism) { example.run } }
-
-      it_behaves_like 'form label and text input type classes',
-                      label: NEOMORPHISM_FORM_CLASSES[:label],
-                      type: 'date',
-                      input: NEOMORPHISM_FORM_CLASSES[:text_input]
     end
 
     context 'with value from object' do
@@ -247,12 +195,6 @@ describe Tailwinds::Form::Builder, type: :view do
 
       it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
     end
-
-    context 'with neomorphism theme' do
-      around { |example| with_theme(:neomorphism) { example.run } }
-
-      it_behaves_like 'form label and text input classes', NEOMORPHISM_FORM_CLASSES
-    end
   end
 
   describe '#file_field' do
@@ -264,12 +206,6 @@ describe Tailwinds::Form::Builder, type: :view do
       around { |example| with_theme(:classic) { example.run } }
 
       it_behaves_like 'file field classes', CLASSIC_FORM_CLASSES[:file_button]
-    end
-
-    context 'with neomorphism theme' do
-      around { |example| with_theme(:neomorphism) { example.run } }
-
-      it_behaves_like 'file field classes', NEOMORPHISM_FORM_CLASSES[:file_button]
     end
 
     context 'with small size' do
@@ -293,12 +229,6 @@ describe Tailwinds::Form::Builder, type: :view do
       it_behaves_like 'submit button classes', CLASSIC_FORM_CLASSES[:submit_button]
     end
 
-    context 'with neomorphism theme' do
-      around { |example| with_theme(:neomorphism) { example.run } }
-
-      it_behaves_like 'submit button classes', NEOMORPHISM_FORM_CLASSES[:submit_button]
-    end
-
     context 'with large size' do
       let(:form_options) { { size: :large } }
       let(:output) { builder.submit 'Create' }
@@ -319,14 +249,6 @@ describe Tailwinds::Form::Builder, type: :view do
         it_behaves_like 'select field classes',
                         label: CLASSIC_FORM_CLASSES[:label],
                         select: CLASSIC_FORM_CLASSES[:select_input]
-      end
-
-      context 'with neomorphism theme' do
-        around { |example| with_theme(:neomorphism) { example.run } }
-
-        it_behaves_like 'select field classes',
-                        label: NEOMORPHISM_FORM_CLASSES[:label],
-                        select: NEOMORPHISM_FORM_CLASSES[:select_input]
       end
     end
 
