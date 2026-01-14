@@ -5,27 +5,26 @@ require 'support/view_helpers'
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Tailwinds::Form::Builder, type: :view do
-  let(:classic_form_classes) do
-    {
-      label: %w[block text-sm font-semibold mb-2 text-white],
-      text_input: %w[
+  classic_form_classes = {
+    label: %w[block text-sm font-semibold mb-2 text-white],
+    text_input: %w[
         w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
         focus:ring-2 focus:ring-gray-300 placeholder-gray-400
-      ],
+    ],
       select_input: %w[
         w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
         focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400
-      ],
+    ],
       file_button: %w[
         inline-block text-blue-800 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 hover:bg-blue-200
         shadow-md
-      ],
+    ],
       submit_button: %w[
         font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer bg-green-100
         hover:bg-green-200 shadow-md
-      ]
-    }.freeze
-  end
+    ]
+  }.freeze
+
   let(:resource) { build :user }
   let(:form_options) { {} }
   let(:builder) { described_class.new :user, resource, view, form_options }
