@@ -29,7 +29,8 @@ module Tailwinds
 
     def mobile_menu_classes
       theme_classes(
-        classic: 'hidden inset-0 flex-col bg-gray-900 shadow-inner h-screen fixed z-50 w-screen transition-transform transform -translate-x-full duration-300'
+        classic: "hidden inset-0 flex-col bg-gray-900 shadow-inner h-screen fixed z-50 w-screen transition-transform \
+                  transform -translate-x-full duration-300 ease-in-out"
       )
     end
   end

@@ -22,32 +22,45 @@
 
 #mobile-menu{ class: mobile_menu_classes }
   - if @left_items.present?
-    %ul.flex.flex-col.space-y-2
+    %ul.flex.flex-col.space-y-3.text-2xl.font-bold
       - @left_items.each do |item|
         = item
 
   - if @right_items.present?
-    %ul.flex.flex-col.space-y-2
+    %ul.flex.flex-col.space-y-3.text-2xl.font-bold
       - @right_items.each do |item|
         = item
 
-  %span.fixed.top-4.right-4.text-4xl.cursor-pointer.text-white#mobile-menu-close-button
+  %span.absolute.top-4.right-6.text-4xl.cursor-pointer.text-white#mobile-menu-close-button
     ⨯
 
 :javascript
-  const button = document.getElementById('mobile-menu-button');
+  const button      = document.getElementById('mobile-menu-button');
   const closeButton = document.getElementById('mobile-menu-close-button');
-  const menu   = document.getElementById('mobile-menu');
-  const root   = document.documentElement;
-  const toggleMenu = (() => {
-    const isHidden = menu.classList.toggle('hidden');
+  const menu        = document.getElementById('mobile-menu');
+  const root        = document.documentElement;
 
-    if (isHidden) {
-      root.classList.remove('overflow-hidden');
+  const toggleMenu = () => {
+    const isHiddenNow = menu.classList.contains('hidden');
+
+    if (isHiddenNow) {
+      menu.classList.remove('hidden');              
+      requestAnimationFrame(() => {
+        menu.classList.remove('-translate-x-full'); 
+        root.classList.add('overflow-hidden');      
+      });
     } else {
-      root.classList.add('overflow-hidden');
+      menu.classList.add('-translate-x-full');      
+      root.classList.remove('overflow-hidden');     
+
+      menu.addEventListener(
+        'transitionend',
+        () => menu.classList.add('hidden'),
+        { once: true }
+      );
     }
-  });
+  };
 
   button.addEventListener('click', toggleMenu);
   closeButton.addEventListener('click', toggleMenu);
+

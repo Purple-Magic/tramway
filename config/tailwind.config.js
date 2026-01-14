@@ -13,8 +13,12 @@ module.exports = {
     'z-50',
     'inset-0',
     'top-4',
-    'right-4',
+    'right-6',
     'text-4xl',
+    'transition-transform',
+    '-translate-x-full',
+    'duration-300',
+    'space-y-3',
     
     // === Custom table layout utilities ===
     'div-table',
