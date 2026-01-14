@@ -39,11 +39,10 @@ module Tailwinds
 
     def color_classes
       if disabled?
-        %w[bg-gray-200 text-gray-400 shadow-inner dark:bg-gray-800 dark:text-gray-500]
+        %w[bg-gray-800 text-gray-500 shadow-inner]
       else
         [
-          "bg-#{resolved_color}-200", "hover:bg-#{resolved_color}-300", "text-#{resolved_color}-800",
-          "dark:bg-#{resolved_color}-700", "dark:hover:bg-#{resolved_color}-600", "dark:text-#{resolved_color}-100"
+          "bg-#{resolved_color}-700", "hover:bg-#{resolved_color}-800", 'text-white'
         ]
       end => classes_collection
 

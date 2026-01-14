@@ -13,8 +13,7 @@ module Tailwinds
 
       def header_row_classes
         theme_classes(
-          classic: 'div-table-row grid text-small gap-4 bg-gray-200 text-gray-600 grid-cols-1 ' \
-                   'dark:bg-gray-800 dark:text-gray-300'
+          classic: 'div-table-row grid text-small gap-4 bg-gray-800 text-gray-500 grid-cols-1'
         )
       end
 

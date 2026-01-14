@@ -6,7 +6,7 @@ module Tailwinds
     class GapComponent < Tramway::BaseComponent
       def gap_classes
         theme_classes(
-          classic: 'page gap px-3 py-2 text-sm font-medium text-gray-600 sm:flex hidden dark:text-gray-400'
+          classic: 'page gap px-3 py-2 text-sm font-medium text-gray-400 sm:flex hidden'
         )
       end
     end

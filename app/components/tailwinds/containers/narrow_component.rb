@@ -10,7 +10,7 @@ module Tailwinds
       def container_classes
         theme_classes(
           classic: 'container p-4 flex align-center justify-center w-full mx-auto bg-gray-100 text-gray-700 ' \
-                   'shadow-inner rounded-xl dark:bg-gray-900 dark:text-gray-100'
+                   'shadow-inner rounded-xl bg-gray-900 text-gray-100'
         )
       end
     end

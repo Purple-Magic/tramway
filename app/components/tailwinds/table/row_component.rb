@@ -27,23 +27,21 @@ module Tailwinds
       def desktop_row_classes(cells_count)
         theme_classes(
           classic: [
-            'div-table-row', 'grid', 'gap-4', 'border-b', 'last:border-b-0', 'bg-gray-100',
-            'border-gray-200', "md:grid-cols-#{cells_count}", 'grid-cols-1',
-            'dark:bg-gray-900', 'dark:border-gray-700'
+            'div-table-row', 'grid', 'gap-4', 'border-b', 'last:border-b-0', 'bg-gray-900',
+            'border-gray-700', "md:grid-cols-#{cells_count}", 'grid-cols-1'
           ]
         ).join(' ')
       end
 
       def link_row_classes
         theme_classes(
-          classic: 'cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800'
+          classic: 'cursor-pointer hover:bg-gray-800'
         )
       end
 
       def cell_classes
         theme_classes(
-          classic: 'div-table-cell px-6 py-4 font-medium text-gray-700 text-xs sm:text-base ' \
-                   'dark:text-gray-100'
+          classic: 'div-table-cell px-6 py-4 font-medium text-gray-100 text-xs sm:text-base'
         )
       end
     end

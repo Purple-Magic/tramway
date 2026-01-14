@@ -59,10 +59,8 @@ export default class TableRowPreview extends Controller {
   createTableRow(key, value) {
     const keyRow = document.createElement("div");
     keyRow.classList.add("div-table-row");
-    keyRow.classList.add("bg-purple-300");
-    keyRow.classList.add("text-purple-700");
-    keyRow.classList.add("dark:text-white");
-    keyRow.classList.add("dark:bg-gray-700");
+    keyRow.classList.add("bg-gray-700");
+    keyRow.classList.add("text-white");
     keyRow.classList.add("px-2");
     keyRow.classList.add("py-1");
     keyRow.classList.add("text-xs");
@@ -71,7 +69,7 @@ export default class TableRowPreview extends Controller {
 
     const valueRow = document.createElement("div"); 
     valueRow.classList.add("div-table-row");
-    valueRow.classList.add("dark:bg-gray-800");
+    valueRow.classList.add("bg-gray-800");
     valueRow.classList.add("px-2");
     valueRow.classList.add("py-2");
     valueRow.textContent = value;

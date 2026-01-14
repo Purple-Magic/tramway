@@ -12,8 +12,7 @@ module Tailwinds
       theme_classes(
         classic: [
           'flex', 'px-3', 'py-1', 'text-sm', 'font-semibold', 'rounded-full', 'w-fit', 'h-fit',
-          "bg-#{resolved_color}-200", "text-#{resolved_color}-800", 'shadow-md',
-          "dark:bg-#{resolved_color}-700", "dark:text-#{resolved_color}-100"
+          "bg-#{resolved_color}-700", "text-#{resolved_color}-100", 'shadow-md'
         ]
       )
     end

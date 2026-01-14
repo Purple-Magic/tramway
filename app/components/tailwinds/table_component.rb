@@ -7,7 +7,7 @@ module Tailwinds
 
     def table_classes
       theme_classes(
-        classic: 'div-table text-left rtl:text-right text-gray-500 dark:text-gray-300'
+        classic: 'div-table text-left rtl:text-right text-gray-300'
       )
     end
   end
