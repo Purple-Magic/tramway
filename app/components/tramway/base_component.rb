@@ -11,5 +11,18 @@ module Tramway
     include Tramway::Helpers::ComponentHelper
     include Tramway::Helpers::DecorateHelper
     include Tramway::Helpers::ViewsHelper
+
+    private
+
+    def tramway_theme
+      Tramway.config.theme.to_sym
+    rescue NoMethodError
+      :classic
+    end
+
+    def theme_classes(mapping = {}, fallback: :classic, **keyword_mapping)
+      resolved_mapping = mapping.merge(keyword_mapping)
+      resolved_mapping.fetch(tramway_theme) { resolved_mapping.fetch(fallback) }
+    end
   end
 end

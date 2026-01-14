@@ -985,6 +985,16 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
 
 will render [this](https://play.tailwindcss.com/xho3LfjKkK)
 
+Use `size:` to control the form sizing (`:small`, `:middle`, or `:large`). The default is `:middle`, and all fields rendered
+within the form will use the same size value.
+
+```erb
+<%= tramway_form_for @user, size: :large do |f| %>
+  <%= f.text_field :text %>
+  <%= f.submit 'Create User' %>
+<% end %>
+```
+
 Available form helpers:
 * text_field
 * email_field

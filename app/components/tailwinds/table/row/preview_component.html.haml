@@ -13,6 +13,6 @@
     animation: roll-up 0.5s ease-in-out;
   }
 
-#roll-up.fixed.hidden.inset-x-0.bottom-0.shadow-lg.z-50.bg-gray-800.animate-roll-up{ class: 'h-1/2' }
-  %button.absolute.top-4.right-4.text-gray-400.hover:text-gray-200{ "data-action" => "click->preview#close", "data-controller" => "preview" }
+#roll-up{ class: preview_classes }
+  %button{ class: close_button_classes, "data-action" => "click->preview#close", "data-controller" => "preview" }
     &#x2715;

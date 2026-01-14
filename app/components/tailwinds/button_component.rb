@@ -18,7 +18,7 @@ module Tailwinds
       {
         small: 'text-sm py-1 px-2 rounded',
         middle: 'py-2 px-4 h-10',
-        large: 'text-lg px-5 py-3'
+        large: 'text-xl px-5 py-3 h-12'
       }[size]
     end
 
@@ -29,22 +29,25 @@ module Tailwinds
     end
 
     def default_classes
-      [
-        'btn', 'btn-primary', 'flex', 'flex-row', 'font-bold', 'rounded-sm', 'flex', 'flex-row', 'whitespace-nowrap',
-        'items-center', 'gap-1', size_classes.to_s, options[:class].to_s
-      ]
+      base_classes = theme_classes(
+        classic: %w[btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
+                    shadow-md]
+      )
+
+      base_classes + [size_classes.to_s, options[:class].to_s]
     end
 
     def color_classes
       if disabled?
-        %w[bg-gray-400 text-gray-100]
+        %w[bg-gray-200 text-gray-400 shadow-inner dark:bg-gray-800 dark:text-gray-500]
       else
         [
-          "bg-#{resolved_color}-600",
-          "hover:bg-#{resolved_color}-800",
-          'text-gray-300'
+          "bg-#{resolved_color}-200", "hover:bg-#{resolved_color}-300", "text-#{resolved_color}-800",
+          "dark:bg-#{resolved_color}-700", "dark:hover:bg-#{resolved_color}-600", "dark:text-#{resolved_color}-100"
         ]
-      end
+      end => classes_collection
+
+      theme_classes classic: classes_collection
     end
 
     def disabled?

@@ -5,6 +5,12 @@ module Tailwinds
     # Form label for all tailwind-styled forms
     class LabelComponent < Tramway::BaseComponent
       option :for
+
+      def form_label_classes
+        theme_classes(
+          classic: 'block text-sm font-semibold mb-2 text-white'
+        )
+      end
     end
   end
 end

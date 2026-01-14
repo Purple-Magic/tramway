@@ -1,12 +1,11 @@
 .flex.items-center.justify-between
-  - base_classes = 'hover:bg-red-700 font-bold rounded focus:outline-none focus:shadow-outline cursor-pointer '
-  - base_classes += 'text-white bg-red-600 hover:bg-red-500 focus:ring-2 focus:ring-red-400'
-  - classes = "#{size_class(:submit_button)} #{base_classes}"
+  - classes = "#{size_class(:submit_button)} #{submit_button_base_classes}"
 
   = helpers.tramway_button text: @text,
     type: :submit,
     name: :commit,
     size:,
+    class: classes,
     **@options
 
   = @content

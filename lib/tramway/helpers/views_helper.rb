@@ -6,11 +6,13 @@ module Tramway
     module ViewsHelper
       include Tramway::Helpers::ComponentHelper
 
+      FORM_SIZES = %i[small middle large].freeze
+
       def tramway_form_for(object, *, size: :middle, **options, &)
         form_for(
           object,
           *,
-          **options.merge(builder: Tailwinds::Form::Builder, size:),
+          **options.merge(builder: Tailwinds::Form::Builder, size: normalize_form_size(size)),
           &
         )
       end
@@ -57,6 +59,10 @@ module Tramway
         end
       end
 
+      def tramway_main_container(**options, &)
+        component 'tailwinds/containers/main', options:, &
+      end
+
       def tramway_badge(text:, type: nil, color: nil)
         component 'tailwinds/badge',
                   text:,
@@ -70,6 +76,12 @@ module Tramway
 
       def tramway_flash(text:, type:, **options)
         component 'tailwinds/flash', text:, type:, options:
+      end
+
+      private
+
+      def normalize_form_size(size)
+        FORM_SIZES.include?(size) ? size : :middle
       end
     end
   end

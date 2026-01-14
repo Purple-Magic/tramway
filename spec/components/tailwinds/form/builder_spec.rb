@@ -3,18 +3,82 @@
 require 'rails_helper'
 require 'support/view_helpers'
 
+CLASSIC_FORM_CLASSES = {
+  label: %w[block text-sm font-semibold mb-2 text-white],
+  text_input: %w[
+    w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
+    focus:ring-2 focus:ring-gray-300 placeholder-gray-400
+  ],
+  select_input: %w[
+    w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
+    focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400
+  ],
+  file_button: %w[
+    inline-block text-blue-800 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 hover:bg-blue-200
+    shadow-md
+  ],
+  submit_button: %w[
+    font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer bg-green-100
+    hover:bg-green-200 shadow-md
+  ]
+}.freeze
+
 describe Tailwinds::Form::Builder, type: :view do
   let(:resource) { build :user }
   let(:form_options) { {} }
   let(:builder) { described_class.new :user, resource, view, form_options }
 
+  shared_examples 'form label and text input classes' do |theme_classes|
+    it 'gets default value' do
+      expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
+      expect(output).to have_selector "input.text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:text_input))}"
+    end
+  end
+
+  shared_examples 'form label and text input type classes' do |theme_classes|
+    it 'renders input with tailwind classes' do
+      expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
+      expect(output).to have_selector(
+        "input[type=\"#{theme_classes.fetch(:type)}\"].text-base.px-3.py-2." \
+        "#{class_selector(theme_classes.fetch(:input))}"
+      )
+    end
+  end
+
+  shared_examples 'file field classes' do |theme_classes|
+    it 'renders file label classes' do
+      expect(output).to have_selector "label.inline-block.text-base.px-4.py-2.#{class_selector(theme_classes)}"
+    end
+  end
+
+  shared_examples 'submit button classes' do |theme_classes|
+    it 'renders submit button classes' do
+      within 'div.flex.items-center.justify-between' do
+        expect(output).to have_selector "button.text-base.#{class_selector(theme_classes)}"
+      end
+    end
+  end
+
+  shared_examples 'select field classes' do |theme_classes|
+    it 'has the label' do
+      expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
+    end
+
+    it 'has the select' do
+      expect(output).to have_selector "select.text-base.#{class_selector(theme_classes.fetch(:select))}"
+      expect(output).to have_selector 'option[value="admin"]'
+      expect(output).to have_selector 'option[value="user"]'
+    end
+  end
+
   describe '#text_field' do
     context 'with default behaviour' do
       let(:output) { builder.text_field :email }
 
-      it 'gets default value' do
-        expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
-        expect(output).to have_selector 'input.text-base.px-3.py-2.w-full.border.rounded'
+      context 'with classic theme' do
+        around { |example| with_theme(:classic) { example.run } }
+
+        it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
       end
     end
 
@@ -32,7 +96,7 @@ describe Tailwinds::Form::Builder, type: :view do
       let(:output) { builder.text_field :email }
 
       it 'applies large spacing' do
-        expect(output).to have_selector 'input.text-lg.px-4.py-3'
+        expect(output).to have_selector 'input.text-xl.px-4.py-3'
       end
     end
 
@@ -72,27 +136,39 @@ describe Tailwinds::Form::Builder, type: :view do
   describe '#email_field' do
     let(:output) { builder.email_field :email }
 
-    it 'renders email input with tailwind classes' do
-      expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
-      expect(output).to have_selector 'input[type="email"].text-base.px-3.py-2.w-full.border.rounded'
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'form label and text input type classes',
+                      label: CLASSIC_FORM_CLASSES[:label],
+                      type: 'email',
+                      input: CLASSIC_FORM_CLASSES[:text_input]
     end
   end
 
   describe '#number_field' do
     let(:output) { builder.number_field :id }
 
-    it 'renders number input with tailwind classes' do
-      expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
-      expect(output).to have_selector 'input[type="number"].text-base.px-3.py-2.w-full.border.rounded'
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'form label and text input type classes',
+                      label: CLASSIC_FORM_CLASSES[:label],
+                      type: 'number',
+                      input: CLASSIC_FORM_CLASSES[:text_input]
     end
   end
 
   describe '#date_field' do
     let(:output) { builder.date_field :remember_created_at }
 
-    it 'renders date input with tailwind classes' do
-      expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
-      expect(output).to have_selector 'input[type="date"].text-base.px-3.py-2.w-full.border.rounded'
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'form label and text input type classes',
+                      label: CLASSIC_FORM_CLASSES[:label],
+                      type: 'date',
+                      input: CLASSIC_FORM_CLASSES[:text_input]
     end
 
     context 'with value from object' do
@@ -111,9 +187,10 @@ describe Tailwinds::Form::Builder, type: :view do
       builder.password_field :password
     end
 
-    it do
-      expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
-      expect(output).to have_selector 'input.text-base.px-3.py-2.w-full.border.rounded'
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
     end
   end
 
@@ -122,8 +199,10 @@ describe Tailwinds::Form::Builder, type: :view do
       builder.file_field :file
     end
 
-    it do
-      expect(output).to have_selector 'label.inline-block.text-base.px-4.py-2.font-bold.rounded'
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'file field classes', CLASSIC_FORM_CLASSES[:file_button]
     end
 
     context 'with small size' do
@@ -141,10 +220,10 @@ describe Tailwinds::Form::Builder, type: :view do
       builder.submit 'Create'
     end
 
-    it do
-      within 'div.flex.items-center.justify-between' do
-        expect(output).to have_selector('button.text-base.bg-red-500.text-white')
-      end
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'submit button classes', CLASSIC_FORM_CLASSES[:submit_button]
     end
 
     context 'with large size' do
@@ -152,7 +231,7 @@ describe Tailwinds::Form::Builder, type: :view do
       let(:output) { builder.submit 'Create' }
 
       it 'renders larger button' do
-        expect(output).to have_selector 'button.text-lg.px-5.py-3'
+        expect(output).to have_selector 'button.text-xl.px-5.py-3'
       end
     end
   end
@@ -161,14 +240,12 @@ describe Tailwinds::Form::Builder, type: :view do
     context 'with default behaviour' do
       let(:output) { builder.select :role, %i[admin user] }
 
-      it 'has the label' do
-        expect(output).to have_selector 'label.block.text-sm.font-bold.mb-2'
-      end
+      context 'with classic theme' do
+        around { |example| with_theme(:classic) { example.run } }
 
-      it 'has the select' do
-        expect(output).to have_selector 'select.text-base.border'
-        expect(output).to have_selector 'option[value="admin"]'
-        expect(output).to have_selector 'option[value="user"]'
+        it_behaves_like 'select field classes',
+                        label: CLASSIC_FORM_CLASSES[:label],
+                        select: CLASSIC_FORM_CLASSES[:select_input]
       end
     end
 

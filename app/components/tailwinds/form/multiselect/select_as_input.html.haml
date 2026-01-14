@@ -1,4 +1,3 @@
 .flex-1
-  - base_classes = 'bg-transparent appearance-none outline-none h-full w-full hidden text-white placeholder-white'
-  - classes = "#{@size_class} #{base_classes}"
-  = @input.call(@attribute, @options.merge(placeholder: "{{placeholder}}", class: classes, data: { 'multiselect-target' => 'hiddenInput' }))
+- classes = "#{@size_class} #{base_classes}"
+= @input.call(@attribute, @options.merge(placeholder: "{{placeholder}}", class: classes, data: { 'multiselect-target' => 'hiddenInput' }))

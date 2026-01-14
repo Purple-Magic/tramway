@@ -35,5 +35,15 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
 
       expect(view).to have_received(:form_for).with(object, hash_including(expected_options))
     end
+
+    it 'falls back to middle size when provided size is invalid' do
+      object = Struct.new(:id).new(3)
+
+      allow(view).to receive(:form_for).with(object, hash_including(size: :middle))
+
+      view.tramway_form_for(object, size: :huge)
+
+      expect(view).to have_received(:form_for).with(object, hash_including(size: :middle))
+    end
   end
 end

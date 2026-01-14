@@ -17,7 +17,7 @@
     animation: fadeout 2.7s ease-out forwards;
   }
 
-.fixed.top-4.right-4.z-50.space-y-2{ **options }
-  .flash.opacity-100.text-white.px-4.py-2.rounded.shadow{ class: "bg-#{resolved_color}-700" }
-    .text-xl.font-bold
+%div{ class: container_classes, **options }
+  %div{ class: flash_classes }
+    %div{ class: title_classes }
       = text
