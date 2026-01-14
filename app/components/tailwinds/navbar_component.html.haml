@@ -35,32 +35,43 @@
     ⨯
 
 :javascript
-  const button      = document.getElementById('mobile-menu-button');
-  const closeButton = document.getElementById('mobile-menu-close-button');
-  const menu        = document.getElementById('mobile-menu');
-  const root        = document.documentElement;
+  (() => {
+    const button = document.getElementById('mobile-menu-button');
+    const closeButton = document.getElementById('mobile-menu-close-button');
+    const menu = document.getElementById('mobile-menu');
+    const root = document.documentElement;
 
-  const toggleMenu = () => {
-    const isHiddenNow = menu.classList.contains('hidden');
-
-    if (isHiddenNow) {
-      menu.classList.remove('hidden');              
-      requestAnimationFrame(() => {
-        menu.classList.remove('-translate-x-full'); 
-        root.classList.add('overflow-hidden');      
-      });
-    } else {
-      menu.classList.add('-translate-x-full');      
-      root.classList.remove('overflow-hidden');     
-
-      menu.addEventListener(
-        'transitionend',
-        () => menu.classList.add('hidden'),
-        { once: true }
-      );
+    if (!button || !closeButton || !menu) {
+      return;
     }
-  };
 
-  button.addEventListener('click', toggleMenu);
-  closeButton.addEventListener('click', toggleMenu);
+    if (button.dataset.navbarBound === 'true') {
+      return;
+    }
 
+    button.dataset.navbarBound = 'true';
+
+    const toggleMenu = () => {
+      const isHiddenNow = menu.classList.contains('hidden');
+
+      if (isHiddenNow) {
+        menu.classList.remove('hidden');
+        requestAnimationFrame(() => {
+          menu.classList.remove('-translate-x-full');
+          root.classList.add('overflow-hidden');
+        });
+      } else {
+        menu.classList.add('-translate-x-full');
+        root.classList.remove('overflow-hidden');
+
+        menu.addEventListener(
+          'transitionend',
+          () => menu.classList.add('hidden'),
+          { once: true }
+        );
+      }
+    };
+
+    button.addEventListener('click', toggleMenu);
+    closeButton.addEventListener('click', toggleMenu);
+  })();
