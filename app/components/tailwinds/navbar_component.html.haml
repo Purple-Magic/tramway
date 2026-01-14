@@ -1,7 +1,11 @@
 %nav{ class: navbar_classes }
-  .flex.justify-between.w-full
+  .flex.md:justify-between.w-full.items-center.relative
+    .block.sm:hidden
+      %button#mobile-menu-button{ class: mobile_button_classes }
+        ☰
+
     - if @title[:text].present? || @left_items.present?
-      .flex.items-center
+      .flex.items-center.absolute.transform{ class: 'left-1/2 -translate-x-1/2' }
         - if @title[:text].present?
           = link_to @title[:link] do
             .text-xl{ class: title_classes }
@@ -10,10 +14,6 @@
           %ul.flex-row.items-center.space-x-4.ml-4.hidden.md:flex
             - @left_items.each do |item|
               = item
-
-    .block.sm:hidden
-      %button#mobile-menu-button{ class: mobile_button_classes }
-        ☰
 
   - if @right_items.present?
     %ul.items-center.space-x-4.hidden.md:flex

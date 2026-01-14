@@ -4,6 +4,9 @@ module.exports = {
     'ml-4',
     'text-white',
     'md:flex',
+    'transform',
+    'left-1/2',
+    '-translate-x-1/2',
     
     // === Custom table layout utilities ===
     'div-table',
