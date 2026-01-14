@@ -1,6 +1,7 @@
 .mb-4
   - if @label
-  - classes = "#{size_class(:file_button)} #{file_button_base_classes}"
-  %label{ for: @for, class: classes }
+    - classes = "#{size_class(:file_button)} #{file_button_base_classes}"
+
+    %label{ for: @for, class: classes }
       = @label
   = @input
