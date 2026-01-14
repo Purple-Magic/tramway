@@ -8,7 +8,7 @@ module Tailwinds
     option :path, optional: true, default: -> { '#' }
     option :color, optional: true
     option :type, optional: true
-    option :size, default: -> { :middle }
+    option :size, default: -> { :medium }
     option :method, optional: true, default: -> { :get }
     option :link, optional: true, default: -> { false }
     option :options, optional: true, default: -> { {} }
@@ -17,7 +17,7 @@ module Tailwinds
     def size_classes
       {
         small: 'text-sm py-1 px-2 rounded',
-        middle: 'py-2 px-4 h-10',
+        medium: 'py-2 px-4 h-10',
         large: 'text-xl px-5 py-3 h-12'
       }[size]
     end

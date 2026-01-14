@@ -31,8 +31,23 @@
       - @right_items.each do |item|
         = item
 
+  %span.fixed.top-4.right-4.text-4xl.cursor-pointer.text-white#mobile-menu-close-button
+    ⨯
+
 :javascript
-  document.getElementById('mobile-menu-button').addEventListener('click', function() {
-    var menu = document.getElementById('mobile-menu');
-    menu.classList.toggle('hidden');
+  const button = document.getElementById('mobile-menu-button');
+  const closeButton = document.getElementById('mobile-menu-close-button');
+  const menu   = document.getElementById('mobile-menu');
+  const root   = document.documentElement;
+  const toggleMenu = (() => {
+    const isHidden = menu.classList.toggle('hidden');
+
+    if (isHidden) {
+      root.classList.remove('overflow-hidden');
+    } else {
+      root.classList.add('overflow-hidden');
+    }
   });
+
+  button.addEventListener('click', toggleMenu);
+  closeButton.addEventListener('click', toggleMenu);
