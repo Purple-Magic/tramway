@@ -4,6 +4,21 @@ module.exports = {
     'ml-4',
     'text-white',
     'md:flex',
+    'transform',
+    'left-1/2',
+    '-translate-x-1/2',
+    'border-white',
+    'h-screen',
+    'w-screen',
+    'z-50',
+    'inset-0',
+    'top-4',
+    'right-6',
+    'text-4xl',
+    'transition-transform',
+    '-translate-x-full',
+    'duration-300',
+    'space-y-3',
     
     // === Custom table layout utilities ===
     'div-table',
@@ -15,10 +30,12 @@ module.exports = {
     'first:block',
     'rounded-t-xl',
 
+    // === Title Component ===
+    'md:text-4xl',
+
     // === Visibility and typography helpers ===
     'hidden',
     'text-xl',
-    'text-4xl',
     'font-bold',
 
     // === Grid templates used for configurable layouts ===

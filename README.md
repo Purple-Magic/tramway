@@ -985,7 +985,7 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
 
 will render [this](https://play.tailwindcss.com/xho3LfjKkK)
 
-Use `size:` to control the form sizing (`:small`, `:middle`, or `:large`). The default is `:middle`, and all fields rendered
+Use `size:` to control the form sizing (`:small`, `:medium`, or `:large`). The default is `:medium`, and all fields rendered
 within the form will use the same size value.
 
 ```erb
