@@ -17,7 +17,7 @@ module Tailwinds
     def flash_classes
       theme_classes(
         classic: "flash opacity-100 px-4 py-2 rounded-xl shadow-md bg-#{resolved_color}-100 " \
-                 "text-#{resolved_color}-800 dark:bg-#{resolved_color}-900 dark:text-#{resolved_color}-100"
+                 "text-#{resolved_color}-800"
       )
     end
 

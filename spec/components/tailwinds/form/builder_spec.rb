@@ -3,30 +3,32 @@
 require 'rails_helper'
 require 'support/view_helpers'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe Tailwinds::Form::Builder, type: :view do
-  CLASSIC_FORM_CLASSES = {
-    label: %w[block text-sm font-semibold mb-2 text-gray-700 dark:text-gray-200],
-    text_input: %w[
-      w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
-      focus:ring-2 focus:ring-gray-300 placeholder-gray-400 dark:bg-gray-900 dark:border-gray-700
-      dark:text-gray-100 dark:placeholder-gray-500 dark:focus:ring-gray-600
-    ],
-    select_input: %w[
-      w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
-      focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400
-      dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100 dark:focus:ring-gray-600
-      dark:disabled:bg-gray-800 dark:disabled:text-gray-500
-    ],
-    file_button: %w[
-      inline-block text-blue-800 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 hover:bg-blue-200
-      shadow-md dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800
-    ],
-    submit_button: %w[
-      font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer text-red-800
-      bg-red-100 hover:bg-red-200 shadow-md dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800
-      dark:focus:ring-red-700
-    ]
-  }.freeze
+  let(:classic_form_classes) do
+    {
+      label: %w[block text-sm font-semibold mb-2 text-white],
+      text_input: %w[
+        w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
+        focus:ring-2 focus:ring-gray-300 placeholder-gray-400
+      ],
+      select_input: %w[
+        w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
+        focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400
+      ],
+      file_button: %w[
+        inline-block text-blue-800 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 hover:bg-blue-200
+        shadow-md
+      ],
+      submit_button: %w[
+        font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer bg-green-100
+        hover:bg-green-200 shadow-md
+      ]
+    }.freeze
+  end
+  let(:resource) { build :user }
+  let(:form_options) { {} }
+  let(:builder) { described_class.new :user, resource, view, form_options }
 
   shared_examples 'form label and text input classes' do |theme_classes|
     it 'gets default value' do
@@ -39,7 +41,8 @@ describe Tailwinds::Form::Builder, type: :view do
     it 'renders input with tailwind classes' do
       expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
       expect(output).to have_selector(
-        "input[type=\"#{theme_classes.fetch(:type)}\"].text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:input))}"
+        "input[type=\"#{theme_classes.fetch(:type)}\"]\
+        .text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:input))}"
       )
     end
   end
@@ -70,10 +73,6 @@ describe Tailwinds::Form::Builder, type: :view do
     end
   end
 
-  let(:resource) { build :user }
-  let(:form_options) { {} }
-  let(:builder) { described_class.new :user, resource, view, form_options }
-
   describe '#text_field' do
     context 'with default behaviour' do
       let(:output) { builder.text_field :email }
@@ -81,7 +80,7 @@ describe Tailwinds::Form::Builder, type: :view do
       context 'with classic theme' do
         around { |example| with_theme(:classic) { example.run } }
 
-        it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
+        it_behaves_like 'form label and text input classes', classic_form_classes
       end
     end
 
@@ -99,7 +98,7 @@ describe Tailwinds::Form::Builder, type: :view do
       let(:output) { builder.text_field :email }
 
       it 'applies large spacing' do
-        expect(output).to have_selector 'input.text-lg.px-4.py-3'
+        expect(output).to have_selector 'input.text-xl.px-4.py-3'
       end
     end
 
@@ -143,9 +142,9 @@ describe Tailwinds::Form::Builder, type: :view do
       around { |example| with_theme(:classic) { example.run } }
 
       it_behaves_like 'form label and text input type classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
+                      label: classic_form_classes[:label],
                       type: 'email',
-                      input: CLASSIC_FORM_CLASSES[:text_input]
+                      input: classic_form_classes[:text_input]
     end
   end
 
@@ -156,9 +155,9 @@ describe Tailwinds::Form::Builder, type: :view do
       around { |example| with_theme(:classic) { example.run } }
 
       it_behaves_like 'form label and text input type classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
+                      label: classic_form_classes[:label],
                       type: 'number',
-                      input: CLASSIC_FORM_CLASSES[:text_input]
+                      input: classic_form_classes[:text_input]
     end
   end
 
@@ -169,9 +168,9 @@ describe Tailwinds::Form::Builder, type: :view do
       around { |example| with_theme(:classic) { example.run } }
 
       it_behaves_like 'form label and text input type classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
+                      label: classic_form_classes[:label],
                       type: 'date',
-                      input: CLASSIC_FORM_CLASSES[:text_input]
+                      input: classic_form_classes[:text_input]
     end
 
     context 'with value from object' do
@@ -193,7 +192,7 @@ describe Tailwinds::Form::Builder, type: :view do
     context 'with classic theme' do
       around { |example| with_theme(:classic) { example.run } }
 
-      it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
+      it_behaves_like 'form label and text input classes', classic_form_classes
     end
   end
 
@@ -205,7 +204,7 @@ describe Tailwinds::Form::Builder, type: :view do
     context 'with classic theme' do
       around { |example| with_theme(:classic) { example.run } }
 
-      it_behaves_like 'file field classes', CLASSIC_FORM_CLASSES[:file_button]
+      it_behaves_like 'file field classes', classic_form_classes[:file_button]
     end
 
     context 'with small size' do
@@ -226,7 +225,7 @@ describe Tailwinds::Form::Builder, type: :view do
     context 'with classic theme' do
       around { |example| with_theme(:classic) { example.run } }
 
-      it_behaves_like 'submit button classes', CLASSIC_FORM_CLASSES[:submit_button]
+      it_behaves_like 'submit button classes', classic_form_classes[:submit_button]
     end
 
     context 'with large size' do
@@ -234,7 +233,7 @@ describe Tailwinds::Form::Builder, type: :view do
       let(:output) { builder.submit 'Create' }
 
       it 'renders larger button' do
-        expect(output).to have_selector 'button.text-lg.px-5.py-3'
+        expect(output).to have_selector 'button.text-xl.px-5.py-3'
       end
     end
   end
@@ -247,8 +246,8 @@ describe Tailwinds::Form::Builder, type: :view do
         around { |example| with_theme(:classic) { example.run } }
 
         it_behaves_like 'select field classes',
-                        label: CLASSIC_FORM_CLASSES[:label],
-                        select: CLASSIC_FORM_CLASSES[:select_input]
+                        label: classic_form_classes[:label],
+                        select: classic_form_classes[:select_input]
       end
     end
 
@@ -281,3 +280,4 @@ describe Tailwinds::Form::Builder, type: :view do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

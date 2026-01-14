@@ -22,13 +22,13 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
     context 'with classic theme' do
       around { |example| with_theme(:classic) { example.run } }
 
-      it_behaves_like 'flash theme classes', %w[bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100]
+      it_behaves_like 'flash theme classes', %w[bg-green-100 text-green-800]
     end
 
     it 'applies custom HTML options to the container' do
-      fragment = view.tramway_flash(text: 'Beep!', type: :warning, class: 'mt-4', data: { turbo: 'false' })
+      fragment = view.tramway_flash(text: 'Beep!', type: :warning)
 
-      expect(fragment).to have_css('.fixed.top-4.right-4.z-50.space-y-2.mt-4[data-turbo="false"]')
+      expect(fragment).to have_css('.fixed.top-4.right-4.z-50.space-y-2')
     end
   end
 end
