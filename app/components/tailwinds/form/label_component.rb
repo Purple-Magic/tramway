@@ -8,7 +8,7 @@ module Tailwinds
 
       def form_label_classes
         theme_classes(
-          classic: 'block text-sm font-semibold mb-2 text-gray-700'
+          classic: 'block text-sm font-semibold mb-2 text-white'
         )
       end
     end

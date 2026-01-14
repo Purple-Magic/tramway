@@ -2,6 +2,7 @@
 
 module Tailwinds
   module Containers
+    # Main container for tailwind-styled layout
     class MainComponent < Tramway::BaseComponent
       def container_classes
         theme_classes(

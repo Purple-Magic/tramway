@@ -49,6 +49,7 @@ module.exports = {
     'mx-auto',
     'align-center',
     'justify-center',
+    'min-h-dvh',
 
     // === Flexbox layout utilities ===
     'flex',
@@ -114,6 +115,7 @@ module.exports = {
     'shadow-md',
     'shadow-inner',
     'shadow-lg',
+    'h-12',
 
     // === Button color presets ===
     'bg-gray-100',
@@ -192,6 +194,10 @@ module.exports = {
     'hover:border-gray-300',
     'border-teal-200',
     'border-teal-700',
+
+    // === Form size helpers ===
+    'px-5',
+    'py-3',
 
     // === Dark mode helpers ===
     'dark:bg-gray-700',

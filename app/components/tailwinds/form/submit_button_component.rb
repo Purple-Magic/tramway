@@ -14,7 +14,7 @@ module Tailwinds
           options: options.except(:type),
           label: nil,
           for: nil,
-          size:
+          size:,
         )
       end
     end

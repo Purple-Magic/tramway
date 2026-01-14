@@ -28,11 +28,11 @@ class TailwindComponent < Tramway::BaseComponent
       multiselect_input: 'text-base px-3 py-2'
     },
     large: {
-      text_input: 'text-lg px-4 py-3',
-      select_input: 'text-lg px-4 py-3',
-      file_button: 'text-lg px-5 py-3',
-      submit_button: 'text-lg px-5 py-3',
-      multiselect_input: 'text-lg px-4 py-3'
+      text_input: 'text-xl px-4 py-3',
+      select_input: 'text-xl px-4 py-3',
+      file_button: 'text-xl px-5 py-3',
+      submit_button: 'text-xl px-5 py-3',
+      multiselect_input: 'text-xl px-4 py-3'
     }
   }.freeze
 
@@ -67,8 +67,8 @@ class TailwindComponent < Tramway::BaseComponent
   def submit_button_base_classes
     theme_classes(
       classic: 'font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer ' \
-               'text-red-800 bg-red-100 hover:bg-red-200 shadow-md dark:bg-red-900 dark:text-red-100 ' \
-               'dark:hover:bg-red-800 dark:focus:ring-red-700'
+               'bg-green-100 hover:bg-green-200 shadow-md dark:bg-green-900 ' \
+               'dark:hover:bg-green-800 dark:focus:ring-red-700'
     )
   end
 
