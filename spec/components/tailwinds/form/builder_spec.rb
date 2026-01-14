@@ -3,28 +3,27 @@
 require 'rails_helper'
 require 'support/view_helpers'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
-describe Tailwinds::Form::Builder, type: :view do
-  classic_form_classes = {
-    label: %w[block text-sm font-semibold mb-2 text-white],
-    text_input: %w[
-        w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
-        focus:ring-2 focus:ring-gray-300 placeholder-gray-400
-    ],
-      select_input: %w[
-        w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
-        focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400
-    ],
-      file_button: %w[
-        inline-block text-blue-800 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 hover:bg-blue-200
-        shadow-md
-    ],
-      submit_button: %w[
-        font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer bg-green-100
-        hover:bg-green-200 shadow-md
-    ]
-  }.freeze
+CLASSIC_FORM_CLASSES = {
+  label: %w[block text-sm font-semibold mb-2 text-white],
+  text_input: %w[
+    w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
+    focus:ring-2 focus:ring-gray-300 placeholder-gray-400
+  ],
+  select_input: %w[
+    w-full rounded-xl border border-gray-200 bg-gray-100 text-gray-700 shadow-inner focus:outline-none
+    focus:ring-2 focus:ring-gray-300 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400
+  ],
+  file_button: %w[
+    inline-block text-blue-800 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-100 hover:bg-blue-200
+    shadow-md
+  ],
+  submit_button: %w[
+    font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-200 cursor-pointer bg-green-100
+    hover:bg-green-200 shadow-md
+  ]
+}.freeze
 
+describe Tailwinds::Form::Builder, type: :view do
   let(:resource) { build :user }
   let(:form_options) { {} }
   let(:builder) { described_class.new :user, resource, view, form_options }
@@ -40,8 +39,8 @@ describe Tailwinds::Form::Builder, type: :view do
     it 'renders input with tailwind classes' do
       expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
       expect(output).to have_selector(
-        "input[type=\"#{theme_classes.fetch(:type)}\"]\
-        .text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:input))}"
+        "input[type=\"#{theme_classes.fetch(:type)}\"].text-base.px-3.py-2." \
+        "#{class_selector(theme_classes.fetch(:input))}"
       )
     end
   end
@@ -79,7 +78,7 @@ describe Tailwinds::Form::Builder, type: :view do
       context 'with classic theme' do
         around { |example| with_theme(:classic) { example.run } }
 
-        it_behaves_like 'form label and text input classes', classic_form_classes
+        it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
       end
     end
 
@@ -141,9 +140,9 @@ describe Tailwinds::Form::Builder, type: :view do
       around { |example| with_theme(:classic) { example.run } }
 
       it_behaves_like 'form label and text input type classes',
-                      label: classic_form_classes[:label],
+                      label: CLASSIC_FORM_CLASSES[:label],
                       type: 'email',
-                      input: classic_form_classes[:text_input]
+                      input: CLASSIC_FORM_CLASSES[:text_input]
     end
   end
 
@@ -154,9 +153,9 @@ describe Tailwinds::Form::Builder, type: :view do
       around { |example| with_theme(:classic) { example.run } }
 
       it_behaves_like 'form label and text input type classes',
-                      label: classic_form_classes[:label],
+                      label: CLASSIC_FORM_CLASSES[:label],
                       type: 'number',
-                      input: classic_form_classes[:text_input]
+                      input: CLASSIC_FORM_CLASSES[:text_input]
     end
   end
 
@@ -167,9 +166,9 @@ describe Tailwinds::Form::Builder, type: :view do
       around { |example| with_theme(:classic) { example.run } }
 
       it_behaves_like 'form label and text input type classes',
-                      label: classic_form_classes[:label],
+                      label: CLASSIC_FORM_CLASSES[:label],
                       type: 'date',
-                      input: classic_form_classes[:text_input]
+                      input: CLASSIC_FORM_CLASSES[:text_input]
     end
 
     context 'with value from object' do
@@ -191,7 +190,7 @@ describe Tailwinds::Form::Builder, type: :view do
     context 'with classic theme' do
       around { |example| with_theme(:classic) { example.run } }
 
-      it_behaves_like 'form label and text input classes', classic_form_classes
+      it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
     end
   end
 
@@ -203,7 +202,7 @@ describe Tailwinds::Form::Builder, type: :view do
     context 'with classic theme' do
       around { |example| with_theme(:classic) { example.run } }
 
-      it_behaves_like 'file field classes', classic_form_classes[:file_button]
+      it_behaves_like 'file field classes', CLASSIC_FORM_CLASSES[:file_button]
     end
 
     context 'with small size' do
@@ -224,7 +223,7 @@ describe Tailwinds::Form::Builder, type: :view do
     context 'with classic theme' do
       around { |example| with_theme(:classic) { example.run } }
 
-      it_behaves_like 'submit button classes', classic_form_classes[:submit_button]
+      it_behaves_like 'submit button classes', CLASSIC_FORM_CLASSES[:submit_button]
     end
 
     context 'with large size' do
@@ -245,8 +244,8 @@ describe Tailwinds::Form::Builder, type: :view do
         around { |example| with_theme(:classic) { example.run } }
 
         it_behaves_like 'select field classes',
-                        label: classic_form_classes[:label],
-                        select: classic_form_classes[:select_input]
+                        label: CLASSIC_FORM_CLASSES[:label],
+                        select: CLASSIC_FORM_CLASSES[:select_input]
       end
     end
 
@@ -279,4 +278,3 @@ describe Tailwinds::Form::Builder, type: :view do
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers
