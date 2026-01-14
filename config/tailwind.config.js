@@ -7,6 +7,7 @@ module.exports = {
     'transform',
     'left-1/2',
     '-translate-x-1/2',
+    'border-white',
     
     // === Custom table layout utilities ===
     'div-table',
