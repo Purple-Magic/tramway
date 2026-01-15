@@ -977,6 +977,7 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
   <%= f.password_field :password %>
   <%= f.select :role, [:admin, :user] %>
   <%= f.date_field :birth_date %>
+  <%= f.datetime_field :confirmed_at %>
   <%= f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
   <%= f.file_field :file %>
   <%= f.submit 'Create User' %>
@@ -1002,6 +1003,7 @@ Available form helpers:
 * file_field
 * select
 * date_field
+* datetime_field
 * multiselect ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
 

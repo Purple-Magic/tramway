@@ -182,6 +182,28 @@ describe Tailwinds::Form::Builder, type: :view do
     end
   end
 
+  describe '#datetime_field' do
+    let(:output) { builder.datetime_field :remember_created_at }
+
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'form label and text input type classes',
+                      label: CLASSIC_FORM_CLASSES[:label],
+                      type: 'datetime-local',
+                      input: CLASSIC_FORM_CLASSES[:text_input]
+    end
+
+    context 'with value from options' do
+      let(:value) { '2024-01-15T13:30' }
+      let(:output) { builder.datetime_field :remember_created_at, value: }
+
+      it 'gets value from options' do
+        expect(output).to have_selector "input[value='#{value}']"
+      end
+    end
+  end
+
   describe '#password_field' do
     let(:output) do
       builder.password_field :password
