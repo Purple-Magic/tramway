@@ -23,6 +23,7 @@ module.exports = {
     'space-y-3',
     'md:justify-between',
     'pt-16',
+    'min-h-8',
     
     // === Custom table layout utilities ===
     'div-table',
