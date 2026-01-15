@@ -14,12 +14,12 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
     it 'calls form_for with the correct builder and default size' do
       object = Struct.new(:id).new(1)
 
-      allow(view).to receive(:form_for).with(object, hash_including(builder: Tailwinds::Form::Builder, size: :middle))
+      allow(view).to receive(:form_for).with(object, hash_including(builder: Tailwinds::Form::Builder, size: :medium))
 
       view.tramway_form_for(object)
 
       expect(view).to have_received(:form_for).with(
-        object, hash_including(builder: Tailwinds::Form::Builder, size: :middle)
+        object, hash_including(builder: Tailwinds::Form::Builder, size: :medium)
       )
     end
 
@@ -36,14 +36,14 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
       expect(view).to have_received(:form_for).with(object, hash_including(expected_options))
     end
 
-    it 'falls back to middle size when provided size is invalid' do
+    it 'falls back to medium size when provided size is invalid' do
       object = Struct.new(:id).new(3)
 
-      allow(view).to receive(:form_for).with(object, hash_including(size: :middle))
+      allow(view).to receive(:form_for).with(object, hash_including(size: :medium))
 
       view.tramway_form_for(object, size: :huge)
 
-      expect(view).to have_received(:form_for).with(object, hash_including(size: :middle))
+      expect(view).to have_received(:form_for).with(object, hash_including(size: :medium))
     end
   end
 end
