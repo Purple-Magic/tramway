@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module Tramway
-  VERSION = '2.2.2.3'
+  VERSION = '2.2.2.4'
 end
