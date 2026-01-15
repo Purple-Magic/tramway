@@ -15,6 +15,10 @@ module Tailwinds
     option :form_options, optional: true, default: -> { {} }
 
     def size_classes
+      unless size.in?(%i[small medium large])
+        raise ArgumentError, "Invalid size: #{size}. Valid sizes are :small, :medium, :large."
+      end
+
       {
         small: 'text-sm py-1 px-2 rounded',
         medium: 'py-2 px-4 h-10',

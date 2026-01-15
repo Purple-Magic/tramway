@@ -11,7 +11,7 @@ module Tailwinds
       def initialize(object_name, object, template, options)
         super
 
-        @form_size = options[:size] || options['size'] || :middle
+        @form_size = options[:size] || options['size'] || :medium
       end
 
       def common_field(component_name, input_method, attribute, **options, &)

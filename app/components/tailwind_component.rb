@@ -10,7 +10,7 @@ class TailwindComponent < Tramway::BaseComponent
   option :options
   option :label
   option :for
-  option :size, default: -> { :middle }
+  option :size, default: -> { :medium }
 
   SIZE_CLASSES = {
     small: {
@@ -20,7 +20,7 @@ class TailwindComponent < Tramway::BaseComponent
       submit_button: 'text-sm px-3 py-1',
       multiselect_input: 'text-sm px-2 py-1'
     },
-    middle: {
+    medium: {
       text_input: 'text-base px-3 py-2',
       select_input: 'text-base px-3 py-2',
       file_button: 'text-base px-4 py-2',
@@ -74,7 +74,7 @@ class TailwindComponent < Tramway::BaseComponent
   end
 
   def size_class(key)
-    size_classes = SIZE_CLASSES.fetch(size) { SIZE_CLASSES[:middle] }
-    size_classes.fetch(key) { SIZE_CLASSES[:middle].fetch(key) }
+    size_classes = SIZE_CLASSES.fetch(size) { SIZE_CLASSES[:medium] }
+    size_classes.fetch(key) { SIZE_CLASSES[:medium].fetch(key) }
   end
 end

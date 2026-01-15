@@ -6,9 +6,9 @@ module Tramway
     module ViewsHelper
       include Tramway::Helpers::ComponentHelper
 
-      FORM_SIZES = %i[small middle large].freeze
+      FORM_SIZES = %i[small medium large].freeze
 
-      def tramway_form_for(object, *, size: :middle, **options, &)
+      def tramway_form_for(object, *, size: :medium, **options, &)
         form_for(
           object,
           *,
@@ -81,7 +81,7 @@ module Tramway
       private
 
       def normalize_form_size(size)
-        FORM_SIZES.include?(size) ? size : :middle
+        FORM_SIZES.include?(size) ? size : :medium
       end
     end
   end
