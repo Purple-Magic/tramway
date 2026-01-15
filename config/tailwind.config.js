@@ -22,6 +22,7 @@ module.exports = {
     'duration-300',
     'space-y-3',
     'md:justify-between',
+    'pt-16',
     
     // === Custom table layout utilities ===
     'div-table',
