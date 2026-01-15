@@ -59,6 +59,7 @@ module Tailwinds
 
     def render_a_tag?
       return true if link
+      return true if path == '#'
 
       uri = URI.parse(path)
 
