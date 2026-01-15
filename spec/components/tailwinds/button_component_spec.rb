@@ -61,6 +61,19 @@ describe Tailwinds::ButtonComponent, type: :component do
       end
     end
 
+    context 'when path is a hash placeholder' do
+      let(:component) { described_class.new(path: '#', text: 'View projects') }
+
+      it 'renders a link_to element' do
+        render_inline(component)
+
+        expect(page).to have_css(
+          "a[href='#'].#{class_selector(theme_classes.fetch(:link))}",
+          text: 'View projects'
+        )
+      end
+    end
+
     context 'when a semantic type is provided' do
       let(:component) { described_class.new(path: '/projects', text: 'Celebrate', type: :love) }
 
