@@ -24,6 +24,9 @@ module.exports = {
     'md:justify-between',
     'pt-16',
     'min-h-8',
+
+    // === Entities Index Page ===
+    'md:mt-8',
     
     // === Custom table layout utilities ===
     'div-table',

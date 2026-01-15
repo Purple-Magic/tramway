@@ -3,7 +3,7 @@
 - custom_path_method = "#{@model_class.model_name.plural}_path"
 - custom_path_method = "#{@entity.namespace.gsub('/', '_')}_#{custom_path_method}" if @entity.namespace.present?
 
-.mt-8.w-full
+.md:mt-8.w-full
   - content_for :title, page_title
 
   .flex.justify-between.items-center
