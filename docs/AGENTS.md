@@ -147,6 +147,148 @@ end
 ### Rule 10
 Do not use `strong_parameters` in controllers. Use Tramway Form pattern for parameter whitelisting.
 
+### Rule 11
+Create tests for show models pages inside `spec/features/#{pluralized model_name}/show_spec.rb` using RSpec and Capybara if it needed.
+
+Here is an example for `Task` model:
+
+```ruby
+describe 'Tasks Show Page', type: :feature do
+  let!(:task) do
+    create(:task)
+  end
+
+  it 'displays the task' do
+    visit task_path(task)
+
+    expect(page).to have_current_path(task_path(task))
+    expect(page).to have_content(task.name)
+    expect(page).to have_content('Pending')
+  end
+end
+```
+
+### Rule 12
+Create tests for index models pages inside `spec/features/#{pluralized model_name}/index_spec.rb` using RSpec and Capybara if it needed.
+
+Here is an example for `Project` model:
+
+```ruby
+describe 'Projects Index Page', type: :feature do
+  let!(:projects) { create_list(:project, 3) }
+
+  describe 'visiting the index page' do
+    before do
+      visit projects_path
+    end
+
+    it 'displays all projects' do
+      expect(page).to have_current_path(projects_path)
+
+      projects.each do |project|
+        expect(page).to have_content(project.name)
+      end
+    end
+  end
+end
+```
+
+### Rule 13
+Create tests for create models pages inside `spec/features/#{pluralized model_name}/create_spec.rb` using RSpec and Capybara if it needed.
+
+Here is an example for `Project` model:
+
+```ruby
+describe 'Projects Create', type: :feature do
+  let!(:project_attributes) do
+    attributes_for(:project)
+  end
+  
+  let(:project) { Project.last }
+
+  it 'creates a new project' do
+    visit new_project_path
+
+    expect(page).to have_current_path(new_project_path)
+
+    fill_in 'project[name]', with: project_attributes[:name]
+    fill_in 'project[description]', with: project_attributes[:description]
+    select project_attributes[:project_type], from: 'project[project_type]'
+
+    click_on 'Save'
+
+    expect(project).to have_attributes(
+      name: project_attributes[:name],
+      description: project_attributes[:description],
+    )
+  end
+end
+```
+
+### Rule 14
+Create tests for update models pages inside `spec/features/#{pluralized model_name}/update_spec.rb` using RSpec and Capybara if it needed.
+
+Here is an example for `Project` model:
+
+```ruby
+describe 'Projects Update', type: :feature do
+  let!(:project) do
+    create('project', user: current_user)
+  end
+
+  let!(:project_attributes) do
+    attributes_for(:project)
+  end
+
+  it 'updates the project' do
+    visit edit_project_path(project)
+
+    expect(page).to have_current_path(edit_project_path(project))
+
+    fill_in 'project[name]', with: project_attributes[:name]
+    fill_in 'project[description]', with: project_attributes[:description]
+
+    click_on 'Save'
+
+    expect(page).to have_content('Project was successfully updated.')
+    expect(page).to have_content(project_attributes[:name])
+    expect(page).to have_content(project_attributes[:description])
+
+    project.reload
+
+    expect(project).to have_attributes(
+      name: project_attributes[:name],
+      description: project_attributes[:description]
+    )
+  end
+end
+```
+
+### Rule 15
+Create tests for destroy models pages inside `spec/features/#{pluralized model_name}/destroy_spec.rb` using RSpec and Capybara if it needed.
+
+Here is an example for `Project` model:
+
+```ruby
+describe 'Project Destroy', type: :feature do
+  let!(:project) do
+    create('project')
+  end
+
+  it 'destroys the project' do
+    visit project_path(project)
+
+    expect(page).to have_current_path(project_path(project))
+
+    click_on 'Delete'
+
+    expect(page).to have_content('Project was successfully destroyed.')
+
+    expect { Project.find(project.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
+end
+```
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
