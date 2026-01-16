@@ -329,6 +329,9 @@ class ParticipantDecorator < Tramway::BaseDecorator
 end
 ```
 
+### Rule 19
+In specs ALWAYS use factories (FactoryBot gem) to create models and attributes hash. In case there is no factory for the model, create one inside `spec/factories/#{pluralized model_name}.rb`.
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
