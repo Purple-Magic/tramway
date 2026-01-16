@@ -137,6 +137,7 @@ class UserForm < Tramway::BaseForm
   properties :email, :about_me
 
   fields email: :email,
+    name: :text,
     about_me: {
       type: :text_area,
       rows: 5

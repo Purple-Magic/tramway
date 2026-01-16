@@ -264,7 +264,7 @@ Tramway.configure do |config|
 end
 ```
 
-**form_fields method**
+**fields method**
 
 Use `form_fields` in your form class to customize which form helpers get rendered and which options are passed to them.
 Each field must map to a form helper method name. When you need to pass options, use a hash where `:type` is the helper
@@ -275,6 +275,7 @@ class UserForm < Tramway::BaseForm
   properties :email, :about_me
 
   fields email: :email,
+    name: :text,
     about_me: {
       type: :text_area,
       rows: 5
@@ -287,6 +288,7 @@ The configuration above renders:
 ```erb
 <%= tramway_form_for .... do |f| %>
   <%= f.email_field :email %>
+  <%= f.text_field :name %>
   <%= f.text_area :about_me, rows: 5 %>
 ```
 
