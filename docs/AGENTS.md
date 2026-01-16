@@ -79,7 +79,7 @@ config/
 ## Rules
 
 ### Rule 1
-If CRUD is requested or some default actions like (index, show, create, update, destroy) are requestsed, use Tramway Entities by default unless custom behavior is needed. Configure in `config/initializers/tramway.rb`.
+If CRUD is requested or some default actions like (index, show, create, update, destroy) are requestsed, use Tramway Entities by default unless custom behavior is needed. Configure in `config/initializers/tramway.rb`. Do not create controllers, views, or routes manually for CRUD actions if Tramway Entities can handle it.
 
 Example of CRUD configuration for model `Participant`:
 
@@ -141,6 +141,9 @@ class UserForm < Tramway::BaseForm
     }
 end
 ```
+
+### Rule 10
+Do not use `strong_parameters` in controllers. Use Tramway Form pattern for parameter whitelisting.
 
 ## Controller Patterns
 
