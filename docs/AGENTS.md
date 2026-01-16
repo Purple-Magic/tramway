@@ -289,6 +289,16 @@ describe 'Project Destroy', type: :feature do
 end
 ```
 
+### Rule 16
+If application has authentication in the web then use `application_controller` config in `config/initializers/tramway.rb` to setup authentication method for Tramway Entities.
+
+*config/initializers/tramway.rb*:
+```ruby
+Tramway.configure do |config|
+  config.application_controller = 'ApplicationController'
+end
+```
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
