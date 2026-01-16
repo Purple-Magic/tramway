@@ -81,6 +81,8 @@ config/
 ### Rule 1
 If CRUD is requested or some default actions like (index, show, create, update, destroy) are requestsed, use Tramway Entities by default unless custom behavior is needed. Configure in `config/initializers/tramway.rb`. Do not create controllers, views, or routes manually for CRUD actions if Tramway Entities can handle it.
 
+When `namespace` is mentioned in the request, configure it in the entity definition.
+
 Example of CRUD configuration for model `Participant`:
 
 *config/initializers/tramway.rb*:
