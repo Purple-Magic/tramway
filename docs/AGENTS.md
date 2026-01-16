@@ -78,14 +78,69 @@ config/
 
 ## Rules
 
-- Use Tramway Entities and Tramway actions (index, show, create, update, destroy) by default unless custom behavior is needed. Configure in `config/initializers/tramway.rb`.
-- Normalize input with `normalizes` (from Tramway) for attributes like email, phone, etc.
-- Use Tramway Navbar for navigation
-- Use Tramway Flash for user notifications.
-- Use Tramway Table for tabular data display.
-- Use Tramway Button for buttons.
-- Use `tramway_form_for` instead `form_with`, `form_for`
-- Inherit all components from Tramway::BaseComponent
+### Rule 1
+If CRUD is requested or some default actions like (index, show, create, update, destroy) are requestsed, use Tramway Entities by default unless custom behavior is needed. Configure in `config/initializers/tramway.rb`.
+
+Example of CRUD configuration for model `Participant`:
+
+*config/initializers/tramway.rb*:
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :participant,
+      pages: [
+        { action: :index },
+        { action: :show },
+        { action: :create },
+        { action: :update },
+        { action: :destroy }
+      ]
+    }
+  ]
+end
+```
+
+### Rule 2
+Normalize input with `normalizes` (from Tramway) for attributes like email, phone, etc. Don't use `normalizes` in model unless it requested explicitly.
+
+### Rule 3
+Use Tramway Navbar for navigation
+
+### Rule 4
+Use Tramway Flash for user notifications.
+
+### Rule 5
+Use Tramway Table for tabular data display.
+
+### Rule 6
+Use Tramway Button for buttons.
+
+### Rule 7
+Use `tramway_form_for` instead `form_with`, `form_for`
+
+### Rule 8
+Inherit all components from Tramway::BaseComponent
+
+### Rule 9
+If page `create` or `update` is configured for an entity, use Tramway Form pattern for forms. Visible fields are configured via `form_fields` method.
+
+Use form_fields in your form class to customize which form helpers get rendered and which options are passed to them. Each field must map to a form helper method name. When you need to pass options, use a hash where :type is the helper method name and the remaining keys are passed as named arguments.
+
+Example:
+
+*app/forms/user_form.rb*:
+```ruby
+class UserForm < Tramway::BaseForm
+  properties :email, :about_me
+
+  fields email: :email,
+    about_me: {
+      type: :text_area,
+      rows: 5
+    }
+end
+```
 
 ## Controller Patterns
 
