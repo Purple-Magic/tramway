@@ -309,6 +309,25 @@ Tramway.configure do |config|
 end
 ```
 
+### Rule 18
+If you use `index` page for Tramway Entity, make sure to create `index_attributes` method in the entity decorator.
+
+Example for `Participant` model:
+
+*app/decorators/participant_decorator.rb*:
+```ruby
+class ParticipantDecorator < Tramway::BaseDecorator
+  def self.index_attributes
+    [
+      :id,
+      :name,
+      :email,
+      :created_at
+    ]
+  end
+end
+```
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
