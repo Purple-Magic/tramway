@@ -290,6 +290,16 @@ end
 ```
 
 ### Rule 16
+If you created any tests for Tramway Entities pages, make sure to add this to `spec/rails_helper.rb`.
+
+*spec/rails_helper.rb*:
+```ruby
+RSpec.configure do |config|
+  config.include Tramway::Helpers::RoutesHelper, type: :feature
+end
+```
+
+### Rule 17
 If application has authentication in the web then use `application_controller` config in `config/initializers/tramway.rb` to setup authentication method for Tramway Entities.
 
 *config/initializers/tramway.rb*:
