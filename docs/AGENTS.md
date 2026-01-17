@@ -332,6 +332,12 @@ end
 ### Rule 19
 In specs ALWAYS use factories (FactoryBot gem) to create models and attributes hash. In case there is no factory for the model, create one inside `spec/factories/#{pluralized model_name}.rb`.
 
+### Rule 20
+In case you need enumerize for model attribute, make sure to use `enumerize` gem for that. DO NOT use `boolean` or `integer` types for enumerations.
+
+### Rule 21
+In case you need something that looks like enumerize but it's a process state, use `aasm` gem for that.
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
