@@ -355,6 +355,9 @@ end
 ### Rule 24
 In case you implementing API, use `api` namespaces for forms and decorators.
 
+### Rule 25
+DO NOT use `#{model_name}_params` method with `permit` method inside controllers. When you use `tramway_form`, it's unnecessary.
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
