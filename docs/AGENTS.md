@@ -338,6 +338,17 @@ In case you need enumerize for model attribute, make sure to use `enumerize` gem
 ### Rule 21
 In case you need something that looks like enumerize but it's a process state, use `aasm` gem for that.
 
+### Rule 22
+Use model scopes instead of creating private methods for object collections.
+
+Example
+*app/models/user.rb*
+```ruby
+class User < ApplicationRecord
+  scope :this_month_registered_users, -> { where(created_at: Time.current.all_month) }
+end
+```
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
@@ -391,6 +402,7 @@ class ParticipantsController < ApplicationController
   end
 end
 ```
+
 
 ---
 
