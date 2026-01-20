@@ -352,6 +352,9 @@ class User < ApplicationRecord
 end
 ```
 
+### Rule 24
+In case you implementing API, use `api` namespaces for forms and decorators.
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
