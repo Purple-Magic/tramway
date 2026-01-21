@@ -13,7 +13,7 @@
     = link_to path, class: classes, **render_options do
       = content
   - when :button
-    %button{ type: :submit, name: :commit, class: classes, **render_options }
+    %button{ class: classes, **render_options }
       = content
   - when :form
     = helpers.button_to path, method:, class: classes, form: form_options, **render_options do

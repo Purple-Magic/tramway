@@ -248,6 +248,14 @@ describe Tailwinds::Form::Builder, type: :view do
       it_behaves_like 'submit button classes', CLASSIC_FORM_CLASSES[:submit_button]
     end
 
+    context 'with attributes checks' do
+      let(:output) { builder.submit 'Create' }
+
+      it 'renders a submit button' do
+        expect(output).to have_selector 'button[name="commit"][type="submit"]'
+      end
+    end
+
     context 'with large size' do
       let(:form_options) { { size: :large } }
       let(:output) { builder.submit 'Create' }

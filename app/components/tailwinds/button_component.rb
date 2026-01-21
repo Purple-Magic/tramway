@@ -16,7 +16,7 @@ module Tailwinds
 
     def before_render
       return if tag.present?
-      return @tag = :button if type == :submit
+      return @tag = :button if options[:type] == :submit
 
       URI.parse(path)
 

@@ -5,6 +5,7 @@ require 'tramway/utils/field'
 module Tailwinds
   module Form
     # Provides Tailwind-styled forms
+    # rubocop:disable Metrics/ClassLength
     class Builder < Tramway::Views::FormBuilder
       include Tramway::Utils::Field
 
@@ -92,7 +93,14 @@ module Tailwinds
       def submit(action, **options, &)
         sanitized_options = sanitize_options(options)
 
-        render(Tailwinds::ButtonComponent.new(text: action, size: form_size, type: :submit, **sanitized_options), &)
+        render(
+          Tailwinds::ButtonComponent.new(
+            text: action,
+            size: form_size,
+            options: sanitized_options.merge(name: :commit, type: :submit)
+          ),
+          &
+        )
       end
 
       private
@@ -140,5 +148,6 @@ module Tailwinds
         end
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end
