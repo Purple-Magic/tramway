@@ -1,20 +1,27 @@
 - if text.present?
-  - case @tag
-  - when :a
-    = link_to text, path, class: classes, **render_options
-  - when :button
-    %button{ class: classes, **render_options }
-      = text
-  - when :form
+  - if stop_cell_propagation?
     = helpers.button_to text, path, method:, form: form_options, class: classes, **render_options
+  - else
+    - case @tag
+    - when :a
+      = link_to text, path, class: classes, **render_options
+    - when :button
+      %button{ class: classes, **render_options }
+        = text
+    - when :form
+      = helpers.button_to text, path, method:, form: form_options, class: classes, **render_options
 - else
-  - case @tag
-  - when :a
-    = link_to path, class: classes, **render_options do
-      = content
-  - when :button
-    %button{ class: classes, **render_options }
-      = content
-  - when :form
+  - if stop_cell_propagation?
     = helpers.button_to path, method:, class: classes, form: form_options, **render_options do
       = content
+  - else
+    - case @tag
+    - when :a
+      = link_to path, class: classes, **render_options do
+        = content
+    - when :button
+      %button{ class: classes, **render_options }
+        = content
+    - when :form
+      = helpers.button_to path, method:, class: classes, form: form_options, **render_options do
+        = content

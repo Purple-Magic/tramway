@@ -10,19 +10,20 @@ module Tailwinds
     option :type, optional: true
     option :size, default: -> { :medium }
     option :method, optional: true, default: -> { :get }
-    option :tag, optional: true, default: -> { false }
+    option :tag, optional: true, default: -> {}
     option :options, optional: true, default: -> { {} }
     option :form_options, optional: true, default: -> { {} }
 
     def before_render
       return if tag.present?
-      return @tag = :button if options[:type] == :submit
 
-      URI.parse(path)
-
-      return @tag = :a if method.to_s.downcase == 'get'
-
-      @tag = :form
+      @tag = if tag_button?
+               :button
+             elsif tag_a?
+               :a
+             else
+               :form
+             end
     end
 
     def size_classes
@@ -93,6 +94,19 @@ module Tailwinds
       else
         'cursor-not-allowed'
       end
+    end
+
+    def tag_button?
+      options[:type] == :submit
+    end
+
+    def tag_a?
+      return true unless path.is_a?(String)
+      return false unless method.to_s.downcase == 'get'
+
+      uri = URI.parse(path)
+
+      uri.query.nil? || (uri.query && !uri.query.empty?) # rubocop:disable Rails/Present
     end
   end
 end

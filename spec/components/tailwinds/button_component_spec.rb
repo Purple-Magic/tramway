@@ -159,5 +159,13 @@ describe Tailwinds::ButtonComponent, type: :component do
 
       expect(page).to have_css('a')
     end
+
+    it 'renders <a> tag when path is ActiveRecord object' do
+      article = Article.create!(title: 'Test Article', text: 'Content')
+
+      render_inline(described_class.new(text: 'View Article', path: article))
+
+      expect(page).to have_css('a')
+    end
   end
 end
