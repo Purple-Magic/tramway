@@ -10,9 +10,20 @@ module Tailwinds
     option :type, optional: true
     option :size, default: -> { :medium }
     option :method, optional: true, default: -> { :get }
-    option :link, optional: true, default: -> { false }
+    option :tag, optional: true, default: -> { false }
     option :options, optional: true, default: -> { {} }
     option :form_options, optional: true, default: -> { {} }
+
+    def before_render
+      return if tag.present?
+      return @tag = :button if type == :submit
+
+      URI.parse(path)
+
+      return @tag = :a if method.to_s.downcase == 'get'
+
+      @tag = :form
+    end
 
     def size_classes
       unless size.in?(%i[small medium large])
@@ -29,7 +40,7 @@ module Tailwinds
     def classes
       (default_classes +
         color_classes +
-        (render_a_tag? ? %w[px-1 h-fit w-fit] : [cursor_class])).compact.join(' ')
+        (@tag == :a ? %w[px-1 h-fit w-fit] : [cursor_class])).compact.join(' ')
     end
 
     def default_classes
@@ -57,17 +68,6 @@ module Tailwinds
       options[:disabled] || false
     end
 
-    def render_a_tag?
-      return true if link
-      return true if path == '#' && type != :submit
-
-      uri = URI.parse(path)
-
-      return true if method.to_s.downcase == 'get' && uri.query && !uri.query.empty?
-
-      false
-    end
-
     def render_options
       base_options = options.except(:class)
       return base_options unless stop_cell_propagation?
@@ -88,7 +88,7 @@ module Tailwinds
     end
 
     def cursor_class
-      if !render_a_tag? && !disabled?
+      if @tag != :a && !disabled?
         'cursor-pointer'
       else
         'cursor-not-allowed'

@@ -11,7 +11,7 @@ describe Tailwinds::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "form[action='/projects'] button.#{class_selector(theme_classes.fetch(:default))}",
+          "a.#{class_selector(theme_classes.fetch(:default))}[href='/projects']",
           text: 'View projects'
         )
       end
@@ -45,7 +45,7 @@ describe Tailwinds::ButtonComponent, type: :component do
         'Open'
       end
 
-      expect(page).to have_css "form[action='/projects'] button", text: 'Open'
+      expect(page).to have_css "a[href='/projects']", text: 'Open'
     end
 
     context 'when rendering a link explicitly' do
@@ -81,7 +81,7 @@ describe Tailwinds::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "form[action='/projects'] button.#{class_selector(theme_classes.fetch(:semantic))}",
+          "a.#{class_selector(theme_classes.fetch(:semantic))}[href='/projects']",
           text: 'Celebrate'
         )
       end
@@ -96,7 +96,7 @@ describe Tailwinds::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "form[action='/projects'] button[disabled='disabled'].#{class_selector(theme_classes.fetch(:disabled))}",
+          "a[href='/projects'][disabled='disabled'].#{class_selector(theme_classes.fetch(:disabled))}",
           text: 'Celebrate'
         )
       end
@@ -123,7 +123,7 @@ describe Tailwinds::ButtonComponent, type: :component do
     it_behaves_like 'button theme classes',
                     default: %w[
                       btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                      shadow-md py-2 px-4 h-10 bg-gray-700 hover:bg-gray-800 text-white cursor-pointer
+                      shadow-md py-2 px-4 h-10 bg-gray-700 hover:bg-gray-800 text-white
                     ],
                     non_get: %w[
                       btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
@@ -144,8 +144,20 @@ describe Tailwinds::ButtonComponent, type: :component do
     it 'does not add stopPropagation onclick' do
       render_inline(described_class.new(path: '/projects', text: 'View projects'))
 
-      expect(page).to have_css("form[action='/projects'] button", text: 'View projects')
-      expect(page).to have_no_css("form[action='/projects'] button[onclick]")
+      expect(page).to have_css("a[href='/projects']", text: 'View projects')
+      expect(page).to have_no_css("a[href='/projects'][onclick]")
+    end
+  end
+
+  context 'with special cases' do
+    it 'renders <a> tag' do
+      render_inline(described_class.new(text: 'AGENTS.md (raw)',
+                                        path: '/docs/api/AGENTS.md',
+                                        type: :secondary,
+                                        size: :small,
+                                        options: { target: '_blank' }))
+
+      expect(page).to have_css('a')
     end
   end
 end

@@ -13,7 +13,7 @@ feature 'Entities Create Page', :js, type: :feature do
     scenario 'displays new button' do
       visit '/admin/posts'
 
-      expect(page).to have_button('New')
+      expect(page).to have_link('New')
     end
   end
 
@@ -21,7 +21,7 @@ feature 'Entities Create Page', :js, type: :feature do
     scenario 'displays form fields' do
       visit '/admin/posts'
 
-      click_button 'New'
+      click_link 'New'
 
       expect(page).to have_content('Create Post')
       expect(page).to have_field('post[title]')
@@ -34,7 +34,7 @@ feature 'Entities Create Page', :js, type: :feature do
     before do
       visit '/admin/posts'
 
-      click_button 'New'
+      click_link 'New'
 
       fill_in 'post[title]', with: 'Test Post'
       fill_in 'post[text]', with: 'This is a test post.'

@@ -37,14 +37,14 @@ feature 'Entities Show Page', :js, type: :feature do
   scenario 'displays edit and destroy buttons' do
     visit "/admin/posts/#{post.id}"
 
-    expect(page).to have_button('Edit')
+    expect(page).to have_link('Edit')
     expect(page).to have_button('Destroy')
   end
 
   scenario 'navigates to edit page from edit button' do
     visit "/admin/posts/#{post.id}"
 
-    click_button 'Edit'
+    click_link 'Edit'
 
     expect(page).to have_current_path("/admin/posts/#{post.id}/edit")
   end

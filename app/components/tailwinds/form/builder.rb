@@ -92,7 +92,7 @@ module Tailwinds
       def submit(action, **options, &)
         sanitized_options = sanitize_options(options)
 
-        render(Tailwinds::Form::SubmitButtonComponent.new(action, size: form_size, **sanitized_options), &)
+        render(Tailwinds::ButtonComponent.new(text: action, size: form_size, type: :submit, **sanitized_options), &)
       end
 
       private

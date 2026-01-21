@@ -9,7 +9,8 @@
           = tramway_button text: t('tramway.actions.edit'),
             path: Tramway::Engine.routes.url_helpers.public_send(entity.routes.edit, item.id),
             type: :will,
-            size: :small
+            size: :small,
+            tag: :form
 
         - if @entity.page(:destroy).present?
           = tramway_button text: t('tramway.actions.destroy'),

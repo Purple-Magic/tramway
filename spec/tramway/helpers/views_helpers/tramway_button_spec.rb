@@ -16,11 +16,11 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
         text: nil,
         path: '/dashboard',
         method: :get,
-        link: false,
         form_options: {},
         color: nil,
         type: nil,
         size: nil,
+        tag: nil,
         options: {}
       }
     end
@@ -38,11 +38,11 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
 
     context 'with link arguments' do
       let(:link_component_arguments) do
-        default_component_arguments.merge(link: true)
+        default_component_arguments.merge(tag: :a)
       end
 
       let(:link_helper_arguments) do
-        default_helper_arguments.merge(link: true)
+        default_helper_arguments.merge(tag: :a)
       end
 
       it 'delegates to tailwinds button component when rendering a link' do
@@ -62,7 +62,7 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
             text: 'Edit',
             path: '/users/1',
             method: :delete,
-            link: false,
+            tag: nil,
             color: :red,
             form_options: {},
             type: :primary,

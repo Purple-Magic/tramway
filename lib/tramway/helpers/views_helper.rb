@@ -40,12 +40,11 @@ module Tramway
         component 'tailwinds/table/cell', &
       end
 
-      # rubocop:disable Metrics/ParameterLists
-      def tramway_button(path: nil, text: nil, method: :get, link: false, form_options: {}, **options, &)
-        component 'tailwinds/button', text:, path:, method:, link:, form_options:, color: options.delete(:color),
-                                      type: options.delete(:type), size: options.delete(:size), options:, &
+      def tramway_button(path: nil, text: nil, method: :get, form_options: {}, **options, &)
+        component 'tailwinds/button', text:, path:, method:, form_options:, color: options.delete(:color),
+                                      type: options.delete(:type), size: options.delete(:size),
+                                      tag: options.delete(:tag), options:, &
       end
-      # rubocop:enable Metrics/ParameterLists
 
       def tramway_back_button
         component 'tailwinds/back_button'
