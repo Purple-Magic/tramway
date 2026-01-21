@@ -895,13 +895,46 @@ component applies.
 
 Tramway ships with helpers for common UI patterns built on top of Tailwind components.
 
-* `tramway_button` renders a button-styled form submit by default and accepts `path`, optional `text`, HTTP `method`, and styling
-  options such as `color`, `type`, and `size`. It uses Rails' `button_to` helper by default (or when `link: false` is passed),
-  and switches to `link_to` when you set `link: true`.
+`tramway_button` helper is designed for developers who don't want to think about what type of button must be used now. It can render 3 types of buttons: `a` (links), `button`, `form` with button.
 
-  ```erb
-  <%= tramway_button path: user_path(user), text: 'Open profile', link: true %>
-  ```
+You can set a type to render explicitly:
+
+```ruby
+tramway_button tag: :a, text: 'Link' #=> <a class=BUTTON_CLASSES>Link</a>
+tramway_button tag: :button, text: 'Link' #=> <button class=BUTTON_CLASSES>Link</button>
+tramway_button tag: :form, text: 'Link' #=> <form><button class=BUTTON_CLASSES>Link</button></form>
+```
+
+OR `tramway_button` choose the most appropriate button type by the arguments received.
+
+#### `tramway_button` options
+
+**path**
+
+Example 1: rendering link
+```erb
+<%= tramway_button path: '/projects', text: 'Projects' %>
+
+#=> <a href='/projects' class="...">Projects</a>
+```
+
+Example 2: rendering form
+```erb
+<%= tramway_button path: '/projects/1', text: 'Destroy', method: :delete %>
+
+#> <form action="/projects/1"  method="post">
+#>   ....
+#>   <button class: "..." type="submit">
+#>     Delete
+#>   </button>
+```
+
+Example 3: rendering button
+```
+<%= tramway_button path: '/projects/1', text: 'Edit', tag: :button %>
+
+#> <button onclick="window.location.href='/projects/1' class="...">Edit</button>
+```
 
   All additional keyword arguments are forwarded to the underlying component as HTML attributes.
 
@@ -915,30 +948,6 @@ Tramway ships with helpers for common UI patterns built on top of Tailwind compo
   ```
 
   The `type` option maps semantic intent to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette).
-
-  If none of the predefined semantic types fit your needs, you can supply a Tailwind color family directly using the `color`
-  option—for example: `color: :gray`. When you pass a custom color ensure the corresponding utility classes exist in your
-  Tailwind configuration. Add the following safelist entries (adjusting the color name as needed) to `config/tailwind.config.js`:
-
-  ```js
-  // config/tailwind.config.js
-  module.exports = {
-    // ...
-    safelist: [
-      // existing entries …
-      {
-        pattern: /(bg|hover:bg|dark:bg|dark:hover:bg)-gray-(500|600|700|800)/,
-      },
-    ],
-  }
-  ```
-
-  Tailwind will then emit the `bg-gray-500`, `hover:bg-gray-700`, `dark:bg-gray-600`, and `dark:hover:bg-gray-800` classes that
-  Tramway buttons expect when you opt into a custom color.
-
-  ```erb
-  <%= tramway_button path: user_path(user), text: 'View profile', color: :emerald, data: { turbo: false } %>
-  ```
 
 * `tramway_badge` renders a Tailwind-styled badge with the provided `text`. Pass a semantic `type` (for example, `:success` or
   `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When you opt into a
