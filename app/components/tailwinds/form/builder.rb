@@ -97,6 +97,7 @@ module Tailwinds
           Tailwinds::ButtonComponent.new(
             text: action,
             size: form_size,
+            type: :will,
             options: sanitized_options.merge(name: :commit, type: :submit)
           ),
           &

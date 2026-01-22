@@ -18,8 +18,7 @@ CLASSIC_FORM_CLASSES = {
     shadow-md
   ],
   submit_button: %w[
-    font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-700 cursor-pointer bg-green-900
-    hover:bg-green-800 shadow-md
+    font-semibold rounded-xl cursor-pointer
   ]
 }.freeze
 
@@ -53,9 +52,7 @@ describe Tailwinds::Form::Builder, type: :view do
 
   shared_examples 'submit button classes' do |theme_classes|
     it 'renders submit button classes' do
-      within 'div.flex.items-center.justify-between' do
-        expect(output).to have_selector "button.text-base.#{class_selector(theme_classes)}"
-      end
+      expect(output).to have_selector "button.bg-green-700.#{class_selector(theme_classes)}"
     end
   end
 
