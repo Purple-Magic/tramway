@@ -4,27 +4,47 @@ module Tramway
   module Utils
     # Provides dynamic field rendering
     module Field
-      def tramway_field(field_type, attribute, **, &)
-        if field_type.is_a?(Hash)
-          name = field_name(field_type[:type])
-          value = field_type[:value]&.call
+      def tramway_field(field_data, attribute, **options, &)
+        input_type = field_type(field_data)
+        input_name = field_name input_type
+        input_options = field_options(field_data).merge(options)
 
-          hash = { value:, **field_type.except(:type, :value) }.compact
+        case input_type.to_sym
+        when :select, :multiselect
+          collection = input_options.delete(:collection)
 
-          public_send(name, attribute, **hash, **, &)
+          public_send(input_name, attribute, collection, **input_options, &)
         else
-          public_send(field_name(field_type), attribute, **, &)
+          public_send(input_name, attribute, **input_options, &)
         end
       end
 
       private
 
-      def field_name(field_type)
-        case field_type.to_sym
+      def field_name(field_data)
+        case field_data.to_sym
         when :text_area, :select, :multiselect
-          field_type
+          field_data
         else
-          "#{field_type}_field"
+          "#{field_data}_field"
+        end
+      end
+
+      def field_type(field_data)
+        if field_data.is_a?(Hash)
+          field_data[:type]
+        else
+          field_data
+        end
+      end
+
+      def field_options(field_data)
+        if field_data.is_a?(Hash)
+          value = field_data[:value]&.call
+
+          field_data.merge(value:).except(:type)
+        else
+          {}
         end
       end
     end

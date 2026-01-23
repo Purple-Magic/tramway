@@ -27,6 +27,7 @@ feature 'Entities Create Page', :js, type: :feature do
       expect(page).to have_field('post[title]')
       expect(page).to have_field('post[text]')
       expect(page).to have_field('post[user_id]', type: :hidden, with: User.first.id)
+      expect(page).to have_field('post[post_type]', type: :select, with: 'public')
     end
   end
 

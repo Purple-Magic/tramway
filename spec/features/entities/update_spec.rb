@@ -10,7 +10,12 @@ feature 'Entities Update Page', :js, type: :feature do
   end
 
   let!(:post) do
-    create :post, title: 'Original Post', text: 'Original text', user: User.first, aasm_state: :published
+    create :post,
+           title: 'Original Post',
+           text: 'Original text',
+           user: User.first,
+           aasm_state: :published,
+           post_type: 'private'
   end
 
   context 'with index page checks' do
@@ -31,6 +36,7 @@ feature 'Entities Update Page', :js, type: :feature do
       expect(page).to have_field('post[title]', with: 'Original Post')
       expect(page).to have_field('post[text]', with: 'Original text')
       expect(page).to have_field('post[user_id]', type: :hidden, with: User.first.id)
+      expect(page).to have_field('post[post_type]', type: :select, with: post.post_type)
     end
   end
 

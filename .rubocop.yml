@@ -19,7 +19,7 @@ Metrics/AbcSize:
     - lib/generators/**/*.rb
 
 RSpec/MultipleExpectations:
-  Max: 4
+  Max: 5
 
 RSpec/NestedGroups:
   Max: 5

@@ -9,6 +9,10 @@ module Admin
            user_id: {
              type: :hidden,
              value: -> { User.first.id }
+           },
+           post_type: {
+             type: :select,
+             collection: %w[public private]
            }
   end
 end
