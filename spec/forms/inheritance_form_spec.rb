@@ -39,5 +39,18 @@ describe AdminForm do
       end
     end
   end
+
+  context 'when fields' do
+    subject(:form_object) { described_class.new(user) }
+
+    let(:user) { build :user }
+    let(:fields) { { email: :email, first_name: :text } }
+
+    describe 'fields' do
+      it 'returns an array with email and role' do
+        expect(described_class.fields).to match_array(fields)
+      end
+    end
+  end
 end
 # rubocop:enable RSpec/SpecFilePathFormat
