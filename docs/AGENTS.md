@@ -358,6 +358,70 @@ In case you implementing API, use `api` namespaces for forms and decorators.
 ### Rule 25
 DO NOT use `#{model_name}_params` method with `permit` method inside controllers. When you use `tramway_form`, it's unnecessary.
 
+### Rule 26
+DO NOT create new private methods in the controller for business logic stuff. Use service objects instead.
+Create `app/services/base_service.rb` if it does not exist.
+
+```ruby
+class BaseService
+  extend Dry::Initializer[undefined: false]
+  include Dry::Monads[:do, :result]
+
+  def self.call(...)
+    new(...).call
+  end
+end
+```
+
+And instead of this in a controller
+
+```ruby
+  def create
+    user = tramway_form User.new
+
+    if user.submit params[:user]
+      notify_admin user
+
+      # other stuff
+    else
+    end
+  end
+
+  private
+
+  def notify_admin(user)
+    # stuff
+  end
+```
+
+Make this
+
+*app/services/notify_admin.rb*
+```ruby
+class NotifyAdmin < BaseService
+  option :user
+
+  def call
+    # stuff
+  end
+end
+```
+
+and in a controller
+
+```
+  def create
+    user = tramway_form User.new
+
+    if user.submit params[:user]
+      NotifyAdmin.call user:
+
+      # other stuff
+    else
+    end
+  end
+```
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
