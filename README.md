@@ -272,13 +272,17 @@ method name and the remaining keys are passed as named arguments.
 
 ```ruby
 class UserForm < Tramway::BaseForm
-  properties :email, :about_me
+  properties :email, :about_me, :user_type
 
   fields email: :email,
     name: :text,
     about_me: {
       type: :text_area,
       rows: 5
+    },
+    user_type: {
+      type: :select,
+      collection: ['regular', 'user']
     }
 end
 ```
