@@ -44,6 +44,24 @@ module Tailwinds
           classic: 'div-table-cell px-6 py-4 font-medium text-gray-100 text-xs sm:text-base'
         )
       end
+
+      def around_render
+        ensure_view_context_accessor
+        previous_flag = view_context.tramway_inside_cell
+        view_context.tramway_inside_cell = href.present?
+
+        yield
+      ensure
+        view_context.tramway_inside_cell = previous_flag
+      end
+
+      private
+
+      def ensure_view_context_accessor
+        return if view_context.respond_to?(:tramway_inside_cell=)
+
+        view_context.singleton_class.attr_accessor :tramway_inside_cell
+      end
     end
   end
 end

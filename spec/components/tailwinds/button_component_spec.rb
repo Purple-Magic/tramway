@@ -167,5 +167,19 @@ describe Tailwinds::ButtonComponent, type: :component do
 
       expect(page).to have_css('a')
     end
+
+    it 'renders <a> tag when `Edit` path is provided' do
+      render_inline(
+        described_class.new(
+          path: '/projects/236685d2-9684-48af-8aff-21fd31a4f865/payments/1/edit',
+          type: :greed,
+          size: :small
+        ) do
+          'Edit'
+        end
+      )
+
+      expect(page).to have_css('a')
+    end
   end
 end
