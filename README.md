@@ -656,7 +656,7 @@ end
 
 ### Form inheritance
 
-Tramway Form supports inheritance of `properties` and `normalizations`
+Tramway Form supports inheritance of `properties`, `normalizations`, and `fields`.
 
 **Example**
 
@@ -665,6 +665,9 @@ class UserForm < TramwayForm
   properties :email, :password
 
   normalizes :email, with: ->(value) { value.strip.downcase }
+
+  fields email: :email,
+    password: :password
 end
 
 class AdminForm < UserForm
@@ -672,7 +675,8 @@ class AdminForm < UserForm
 end
 
 AdminForm.properties # returns [:email, :password, :permissions]
-AdminForm.normalizations # contains the normalization of :email 
+AdminForm.normalizations # contains the normalization of :email
+AdminForm.fields # { email: :email, password: :password }
 ```
 
 ### Make flexible and extendable forms
