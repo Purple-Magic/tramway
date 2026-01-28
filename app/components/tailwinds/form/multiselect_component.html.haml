@@ -8,6 +8,6 @@
       .flex.flex-auto.flex-wrap.space-x-1{ data: { "multiselect-target" => "showSelectedArea" } }
       .flex.flex-col.justify-center
         .caret-down{ data: { "multiselect-target" => "caretDown" } }
-          = component 'tailwinds/form/multiselect/caret_down'
+          = component 'tailwinds/form/multiselect/caret', size: size, direction: :down
         .caret-up.hidden{ data: { "multiselect-target" => "caretUp" } }
-          = component 'tailwinds/form/multiselect/caret_up'
+          = component 'tailwinds/form/multiselect/caret', size: size, direction: :up

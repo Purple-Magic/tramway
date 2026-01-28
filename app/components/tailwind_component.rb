@@ -25,7 +25,7 @@ class TailwindComponent < Tramway::BaseComponent
       select_input: 'text-base px-3 py-2',
       file_button: 'text-base px-4 py-2',
       submit_button: 'text-base px-4 py-2',
-      multiselect_input: 'text-base px-3 py-2'
+      multiselect_input: 'text-base px-3 py-2 h-10'
     },
     large: {
       text_input: 'text-xl px-4 py-3',

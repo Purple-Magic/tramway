@@ -275,6 +275,11 @@ module.exports = {
     'hover:bg-gray-800',
     'border-gray-700',
     'h-15',
+    'h-10',
+    'w-3',
+    'h-3',
+    'w-6',
+    'h-6',
 
     // === Flash message styles ===
     'fixed',
