@@ -247,7 +247,6 @@ module.exports = {
     'absolute',
     'relative',
     'shadow',
-    'top-11',
     'z-40',
     'max-h-select',
     'overflow-y-auto',
@@ -269,6 +268,10 @@ module.exports = {
     'outline-none',
     'h-full',
     'm-1',
+    'p-1',
+    'p-2',
+    'p-3',
+    'rounded-b-xl',
 
     // === Flash message styles ===
     'fixed',
