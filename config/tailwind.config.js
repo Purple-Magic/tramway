@@ -274,9 +274,6 @@ module.exports = {
     'rounded-b-xl',
     'hover:bg-gray-800',
     'border-gray-700',
-    'border-b',
-    'border-l',
-    'border-r',
     'h-15',
 
     // === Flash message styles ===
