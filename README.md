@@ -1087,7 +1087,7 @@ eagerLoadControllersFrom("controllers", application)
 application.register('multiselect', Multiselect) // register Multiselect controller class as `multiselect` stimulus controller
 ```
 
-Use Stimulus `change` action with Tramway Multiselect
+In case you need to use Stimulus `change` action with Tramway Multiselect
 
 ```erb
 <%= tramway_form_for @user do |f| %>
