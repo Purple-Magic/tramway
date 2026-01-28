@@ -285,6 +285,8 @@ module.exports = {
     'h-6',
     'px-2',
     'py-1',
+    'flex-nowrap',
+    'overflow-x-auto',
 
     // === Flash message styles ===
     'fixed',

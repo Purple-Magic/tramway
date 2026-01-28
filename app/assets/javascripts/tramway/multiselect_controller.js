@@ -66,8 +66,6 @@ export default class Multiselect extends Controller {
       this.closeDropdown();
     }
 
-    this.caretDownTarget.classList.toggle('hidden');
-    this.caretUpTarget.classList.toggle('hidden');
   }
 
   rerenderItems() {
@@ -82,6 +80,9 @@ export default class Multiselect extends Controller {
     if (this.dropdown()) {
       this.dropdown().addEventListener('click', event => event.stopPropagation());
     }
+
+    this.caretDownTarget.classList.add('hidden');
+    this.caretUpTarget.classList.remove('hidden');
   }
 
   dropdown() {
@@ -110,6 +111,9 @@ export default class Multiselect extends Controller {
         alert(`Controller not found: ${controllerName}`); // eslint-disable-line no-undef
       }
     }
+
+    this.caretDownTarget.classList.remove('hidden');
+    this.caretUpTarget.classList.add('hidden');
   }
 
   get template() {
