@@ -32,7 +32,7 @@ class TailwindComponent < Tramway::BaseComponent
       select_input: 'text-xl px-4 py-3',
       file_button: 'text-xl px-5 py-3',
       submit_button: 'text-xl px-5 py-3',
-      multiselect_input: 'text-xl px-4 py-3'
+      multiselect_input: 'text-xl px-3 py-2 h-15'
     }
   }.freeze
 

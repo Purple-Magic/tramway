@@ -35,12 +35,6 @@ module Tailwinds
         controllers.join(' ')
       end
 
-      def dropdown_indicator_classes
-        theme_classes(
-          classic: ''
-        )
-      end
-
       private
 
       def action
@@ -84,7 +78,7 @@ module Tailwinds
       end
 
       def selected_item_template
-        component('tailwinds/form/multiselect/selected_item_template')
+        component('tailwinds/form/multiselect/selected_item_template', size:)
       end
 
       def dropdown_container
