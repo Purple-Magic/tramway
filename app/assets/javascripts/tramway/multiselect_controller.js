@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class Multiselect extends Controller {
-  static targets = ["dropdown", "showSelectedArea", "hiddenInput"];
+  static targets = ["dropdown", "showSelectedArea", "hiddenInput", "caretDown", "caretUp"]
 
   static values = {
     items: Array,
@@ -65,6 +65,9 @@ export default class Multiselect extends Controller {
     } else {
       this.closeDropdown();
     }
+
+    this.caretDownTarget.classList.toggle('hidden');
+    this.caretUpTarget.classList.toggle('hidden');
   }
 
   rerenderItems() {
