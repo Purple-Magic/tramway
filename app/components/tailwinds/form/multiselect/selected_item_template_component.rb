@@ -16,7 +16,8 @@ module Tailwinds
         def selected_item_classes
           theme_classes(
             classic: 'flex justify-center items-center font-medium py-1 px-2 rounded-xl border ' \
-                     'text-white border-gray-700 shadow-md hover:bg-gray-800 cursor-pointer space-x-1' + " #{SIZE_CLASSES[size]}"
+                     'text-white border-gray-700 shadow-md hover:bg-gray-800 cursor-pointer space-x-1 ' \
+                     'selected-option ' + SIZE_CLASSES[size].to_s
           )
         end
       end

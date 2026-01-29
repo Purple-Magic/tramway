@@ -7,10 +7,6 @@ module Tramway
       # A collection of methods that would be using in users forms
       module ClassMethods
         def property(attribute)
-          if attribute.to_sym == :fields
-            raise ArgumentError, "You should not use name `fields` as property name"
-          end
-
           @properties << attribute
 
           define_method(attribute) do

@@ -16,8 +16,13 @@ require 'database_cleaner/active_record'
 require 'support/web_driver_helper'
 require 'support/theme_helper'
 require 'support/multiselect_helpers'
+require 'fileutils'
 
 RSpec.configure do |config|
+  config.before(:suite) do
+    FileUtils.rm_rf(Rails.root.join('tmp/cache/assets'))
+  end
+
   config.use_active_record = false
   config.include ViewComponent::TestHelpers, type: :component
   config.include ViewComponent::SystemTestHelpers, type: :component

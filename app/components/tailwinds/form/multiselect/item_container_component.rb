@@ -6,7 +6,7 @@ module Tailwinds
       # Container for item in dropdown component
       class ItemContainerComponent < Tramway::BaseComponent
         option :size
-        
+
         SIZE_CLASSES = {
           small: 'p-1',
           medium: 'p-2',
@@ -15,7 +15,7 @@ module Tailwinds
 
         def item_classes
           theme_classes(
-            classic: 'cursor-pointer hover:bg-gray-800 shadow-inner' + " #{SIZE_CLASSES[size]}"
+            classic: "cursor-pointer hover:bg-gray-800 shadow-inner option #{SIZE_CLASSES[size]}"
           )
         end
       end

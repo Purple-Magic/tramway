@@ -29,6 +29,10 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
+  config.assets.compile = true
+  config.assets.debug = true
+  config.assets.digest = false
+
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 

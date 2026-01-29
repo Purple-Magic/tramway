@@ -12,6 +12,7 @@ module Tailwinds
         end.to_json
       end
 
+      # rubocop:disable Metrics/MethodLength
       def multiselect_hash
         {
           controller:,
@@ -27,12 +28,29 @@ module Tailwinds
           on_change:
         }.transform_keys { |key| key.to_s.gsub('_', '-') }
       end
+      # rubocop:enable Metrics/MethodLength
 
       def controller
         controllers = [:multiselect]
         controllers << external_action.split('->').last.split('#').first if external_action
         controllers += external_controllers
         controllers.join(' ')
+      end
+
+      def dropdown_data
+        (options[:data] || {}).merge(
+          'multiselect-target' => 'dropdown',
+          'dropdown-container' => dropdown_container,
+          'item-container' => item_container
+        )
+      end
+
+      def dropdown_options
+        options.except(:data).merge(class: input_classes)
+      end
+
+      def input_classes
+        "#{size_class(:multiselect_input)} #{select_base_classes}"
       end
 
       private

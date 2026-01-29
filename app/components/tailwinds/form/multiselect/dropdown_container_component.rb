@@ -15,8 +15,9 @@ module Tailwinds
 
         def dropdown_classes
           theme_classes(
-            classic: 'absolute border-b border-l border-r border-gray-700 w-full z-40 lef-0 rounded-b-xl max-h-select overflow-y-auto ' \
-                     'bg-gray-900 shadow-md ring-1 ring-gray-700 text-white' + " #{SIZE_CLASSES[size]}"
+            classic: 'absolute border-b border-l border-r border-gray-700 w-full z-40 lef-0 rounded-b-xl' \
+                     'max-h-select overflow-y-auto bg-gray-900 shadow-md ring-1 ring-gray-700 text-white ' \
+                     "#{SIZE_CLASSES[size]}"
           )
         end
       end

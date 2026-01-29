@@ -65,7 +65,6 @@ export default class Multiselect extends Controller {
     } else {
       this.closeDropdown();
     }
-
   }
 
   rerenderItems() {
