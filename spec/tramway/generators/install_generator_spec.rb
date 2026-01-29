@@ -33,6 +33,10 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     File.join(destination_root, 'app/assets/tailwind/application.css')
   end
 
+  def importmap_path
+    File.join(destination_root, 'config/importmap.rb')
+  end
+
   def template_tailwind_config_path
     File.expand_path('../../../config/tailwind.config.js', __dir__)
   end
@@ -157,6 +161,39 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       run_generator
       second_run = File.read(tailwind_application_path)
+
+      expect(second_run).to eq(first_run)
+    end
+  end
+
+  describe 'importmap pins' do
+    it 'appends the tramway multiselect pin when importmap exists' do
+      FileUtils.mkdir_p(File.dirname(importmap_path))
+      File.write(importmap_path, 'pin "application", preload: true')
+
+      run_generator
+
+      expect(File.read(importmap_path)).to eq(
+        "pin \"application\", preload: true\n" \
+        "pin \"@tramway/multiselect\", to: \"tramway/multiselect_controller.js\"\n"
+      )
+    end
+
+    it 'does not create importmap when missing' do
+      run_generator
+
+      expect(File).not_to exist(importmap_path)
+    end
+
+    it 'does not duplicate the pin when run multiple times' do
+      FileUtils.mkdir_p(File.dirname(importmap_path))
+      File.write(importmap_path, 'pin "application", preload: true')
+
+      run_generator
+      first_run = File.read(importmap_path)
+
+      run_generator
+      second_run = File.read(importmap_path)
 
       expect(second_run).to eq(first_run)
     end
