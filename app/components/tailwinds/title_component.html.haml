@@ -1,4 +1,4 @@
-%h1{ class: title_classes }
+%h1{ class: title_classes, **options.except(:class) }
   - if text.present?
     = text
   - else

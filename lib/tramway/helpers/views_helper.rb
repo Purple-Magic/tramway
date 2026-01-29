@@ -69,8 +69,8 @@ module Tramway
                   color:
       end
 
-      def tramway_title(text: nil, &)
-        component 'tailwinds/title', text:, &
+      def tramway_title(text: nil, **options, &)
+        component 'tailwinds/title', text:, options:, &
       end
 
       def tramway_flash(text:, type:, **options)
