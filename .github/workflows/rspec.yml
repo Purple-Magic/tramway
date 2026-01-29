@@ -11,6 +11,9 @@ jobs:
         appraisal: ['rails-7.1', 'rails-7.2', 'rails-8.0', 'rails-8.1']
 
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_DISABLE_SHARED_GEMS: true
 
     steps:
       - name: Checkout repository
@@ -30,6 +33,7 @@ jobs:
       - name: Install dependencies for Appraisal
         run: |
           bundle config set path 'vendor/bundle'
+          bundle config set disable_shared_gems 'true'
           bundle install --jobs 4 --retry 3
           bundle exec appraisal install
 
