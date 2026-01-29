@@ -55,18 +55,14 @@ end
 describe Tramway::Configs::Entity do
   context 'with entity name' do
     context 'with entity user' do
-      let(:entity) { :user }
-
       context 'with entity without namespaces' do
-        it_behaves_like 'Tramway Config Entity human_name', entity
+        it_behaves_like 'Tramway Config Entity human_name', :user
       end
     end
 
     context 'with entity episodes part' do
-      let(:entity) { 'episodes/part' }
-
       context 'with entity with namespaces' do
-        it_behaves_like 'Tramway Config Entity human_name', entity
+        it_behaves_like 'Tramway Config Entity human_name', 'episodes/part'
       end
     end
   end
