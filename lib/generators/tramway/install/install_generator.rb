@@ -46,6 +46,14 @@ module Tramway
         '@import "tailwindcss";'
       end
 
+      def importmap_path
+        @importmap_path ||= File.join(destination_root, 'config/importmap.rb')
+      end
+
+      def importmap_multiselect_pin
+        'pin "@tramway/multiselect", to: "tramway/multiselect_controller.js"'
+      end
+
       def agents_file_path
         @agents_file_path ||= File.join(destination_root, 'AGENTS.md')
       end
@@ -212,6 +220,18 @@ module Tramway
         File.open(path, 'a') do |file|
           file.write("\n") unless content.empty? || content.end_with?("\n")
           file.write("#{tailwind_css_import_line}\n")
+        end
+      end
+
+      def ensure_importmap_pin
+        return unless File.exist?(importmap_path)
+
+        content = File.read(importmap_path)
+        return if content.include?(importmap_multiselect_pin)
+
+        File.open(importmap_path, 'a') do |file|
+          file.write("\n") unless content.empty? || content.end_with?("\n")
+          file.write("#{importmap_multiselect_pin}\n")
         end
       end
     end
