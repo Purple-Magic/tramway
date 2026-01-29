@@ -7,6 +7,7 @@ require 'net/http'
 module Tramway
   module Generators
     # nodoc
+    # rubocop:disable Metrics/ModuleLength
     module InstallGeneratorHelpers
       private
 
@@ -146,6 +147,7 @@ module Tramway
         )
       end
     end
+    # rubocop:enable Metrics/ModuleLength
 
     # Running `rails generate tramway:install` will invoke this generator
     #
@@ -234,7 +236,6 @@ module Tramway
           file.write("#{importmap_multiselect_pin}\n")
         end
       end
-
     end
   end
 end
