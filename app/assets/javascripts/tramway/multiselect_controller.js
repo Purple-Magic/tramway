@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class Multiselect extends Controller {
-  static targets = ["dropdown", "showSelectedArea", "hiddenInput"];
+  static targets = ["dropdown", "showSelectedArea", "hiddenInput", "caretDown", "caretUp"]
 
   static values = {
     items: Array,
@@ -79,6 +79,9 @@ export default class Multiselect extends Controller {
     if (this.dropdown()) {
       this.dropdown().addEventListener('click', event => event.stopPropagation());
     }
+
+    this.caretDownTarget.classList.add('hidden');
+    this.caretUpTarget.classList.remove('hidden');
   }
 
   dropdown() {
@@ -107,6 +110,9 @@ export default class Multiselect extends Controller {
         alert(`Controller not found: ${controllerName}`); // eslint-disable-line no-undef
       }
     }
+
+    this.caretDownTarget.classList.remove('hidden');
+    this.caretUpTarget.classList.add('hidden');
   }
 
   get template() {
