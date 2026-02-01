@@ -106,6 +106,9 @@ end
 ### Rule 2
 Normalize input with `normalizes` (from Tramway) for attributes like email, phone, etc. Don't use `normalizes` in model unless it requested explicitly.
 
+### Rule 2.1
+When you need form-level validation, use Tramway Form `validates` on the form object. Keep data integrity validations in the model unless the request explicitly needs form-only logic.
+
 ### Rule 3
 Use Tramway Navbar for navigation
 

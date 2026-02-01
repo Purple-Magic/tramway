@@ -654,9 +654,29 @@ end
 * `with:` - a proc with a normalization
 * `apply_on_nil` - by default is `false`. When `true` Tramway Form applies normalization on `nil` values
 
+### Validations
+
+Tramway Form supports `validates` method to add form-level validations before saving.
+
+```ruby
+class UserForm < Tramway::BaseForm
+  properties :email, :role
+
+  validates :email, with: ->(value) { value.include?('@') }, message: 'is invalid', allow_nil: true
+end
+```
+
+`validates` method arguments:
+* `*properties` - collection of properties that will be validated
+* `with:` - a proc with validation logic (returns `true`/`false`)
+* `message:` - an error message to add when validation fails (default: `is invalid`)
+* `allow_nil:` - by default is `false`. When `true` Tramway Form skips validation on `nil` values
+
+When validations fail, `submit` returns `false` and adds errors to the form object, and `submit!` raises `ActiveRecord::RecordInvalid`.
+
 ### Form inheritance
 
-Tramway Form supports inheritance of `properties`, `normalizations`, and `fields`.
+Tramway Form supports inheritance of `properties`, `normalizations`, `validations`, and `fields`.
 
 **Example**
 
@@ -665,6 +685,7 @@ class UserForm < TramwayForm
   properties :email, :password
 
   normalizes :email, with: ->(value) { value.strip.downcase }
+  validates :email, with: ->(value) { value.include?('@') }, message: 'is invalid', allow_nil: true
 
   fields email: :email,
     password: :password
@@ -676,6 +697,7 @@ end
 
 AdminForm.properties # returns [:email, :password, :permissions]
 AdminForm.normalizations # contains the normalization of :email
+AdminForm.validations # contains the validation of :email
 AdminForm.fields # { email: :email, password: :password }
 ```
 
