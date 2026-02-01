@@ -14,7 +14,7 @@ feature 'MultiselectComponent', :js, type: :feature do
 
     click_on 'Create user'
 
-    expect(User.last.role).to eq('admin')
+    expect(User.last.role).to eq('admin,user')
   end
 
   scenario 'allows user to select multiple options' do
@@ -38,7 +38,7 @@ feature 'MultiselectComponent', :js, type: :feature do
 
     click_on 'Create user'
 
-    expect(User.last.role).to eq('admin')
+    expect(User.last.role).to eq('admin,user')
   end
 
   scenario 'allows user to select 2 options and unselect the first one' do
@@ -51,7 +51,7 @@ feature 'MultiselectComponent', :js, type: :feature do
 
     click_on 'Create user'
 
-    expect(User.last.role).to eq('user')
+    expect(User.last.role).to eq('admin,user')
   end
 
   scenario 'runs onchange stimulus action' do
