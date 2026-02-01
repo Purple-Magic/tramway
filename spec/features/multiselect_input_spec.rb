@@ -10,11 +10,7 @@ feature 'MultiselectComponent', :js, type: :feature do
   scenario 'allows user to select one option' do
     multiselect 'Admin', from: 'user_role'
 
-    find('body').click
-
-    click_on 'Create user'
-
-    expect(User.last.role).to eq('admin,user')
+    expect(find("input[name='user[role]']", visible: :all).value).to eq('admin')
   end
 
   scenario 'allows user to select multiple options' do
@@ -23,9 +19,7 @@ feature 'MultiselectComponent', :js, type: :feature do
     expect(page).to have_selector('.selected-option', text: /Admin/)
     expect(page).to have_selector('.selected-option', text: /User/)
 
-    click_on 'Create user'
-
-    expect(User.last.role).to eq('admin,user')
+    expect(find("input[name='user[role]']", visible: :all).value).to eq('admin,user')
   end
 
   scenario 'allows user to select 2 options and unselect the last one' do
@@ -36,9 +30,7 @@ feature 'MultiselectComponent', :js, type: :feature do
     expect(page).not_to have_selector('.selected-option', text: 'User')
     expect(page).to have_selector('.selected-option', text: 'Admin')
 
-    click_on 'Create user'
-
-    expect(User.last.role).to eq('admin,user')
+    expect(find("input[name='user[role]']", visible: :all).value).to eq('admin')
   end
 
   scenario 'allows user to select 2 options and unselect the first one' do
@@ -49,9 +41,7 @@ feature 'MultiselectComponent', :js, type: :feature do
     expect(page).not_to have_selector('.selected-option', text: 'Admin')
     expect(page).to have_selector('.selected-option', text: 'User')
 
-    click_on 'Create user'
-
-    expect(User.last.role).to eq('admin,user')
+    expect(find("input[name='user[role]']", visible: :all).value).to eq('user')
   end
 
   scenario 'runs onchange stimulus action' do
