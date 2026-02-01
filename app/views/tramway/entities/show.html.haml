@@ -1,6 +1,6 @@
 = tramway_container do
   .flex.justify-between.items-center
-    %h1.text-4xl.font-bold.mb-4
+    = tramway_title do
       = @record.title
 
   = component 'tramway/actions_buttons_container' do
