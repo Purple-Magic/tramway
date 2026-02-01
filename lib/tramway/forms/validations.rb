@@ -13,13 +13,14 @@ module Tramway
 
       # A collection of methods that would be using in users forms
       module ClassMethods
-        # :reek:UtilityFunction { enabled: false }
         def __initialize_validations(_subclass); end
       end
 
+      # rubocop:disable Naming/PredicateMethod
       def __apply_validations(_params)
         valid?
       end
+      # rubocop:enable Naming/PredicateMethod
     end
   end
 end
