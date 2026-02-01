@@ -668,7 +668,8 @@ end
 ```
 
 `validates` uses the standard ActiveModel/ActiveRecord validation options (for example `presence: true`,
-`format:`, `length:`, `allow_nil`, `allow_blank`, etc.).
+`format:`, `length:`, `allow_nil`, `allow_blank`, etc.), so `with:` is optional unless a validator
+requires it (like `format`).
 
 When validations fail, `submit` returns `false` and adds errors to the form object, and `submit!` raises `ActiveRecord::RecordInvalid`.
 
