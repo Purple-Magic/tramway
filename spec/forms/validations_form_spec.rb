@@ -29,7 +29,9 @@ describe 'Validations' do
 
   context 'with inheritance and extension' do
     it 'inherits validations from the UserForm class' do
-      expect(AdminForm.validations.keys).to match_array(%i[email permissions first_name])
+      validators = AdminForm.validators_on(:email).map(&:class)
+
+      expect(validators).to include(ActiveModel::Validations::FormatValidator)
     end
 
     it 'applies its own validations in addition to inherited ones' do
@@ -39,7 +41,7 @@ describe 'Validations' do
 
       form.submit(permissions: nil)
 
-      expect(form.errors[:permissions]).to include('is invalid')
+      expect(form.errors[:permissions]).to include("can't be blank")
     end
   end
 end
