@@ -243,6 +243,15 @@ module.exports = {
     'px-5',
     'py-3',
 
+    // === Form styles ===
+    'list-disc',
+    'list-inside',
+    'pl-6',
+    'p-4',
+    'border-red-600',
+    'bg-red-100',
+    'text-red-800',
+
     // === Multiselect dropdown positioning ===
     'absolute',
     'relative',

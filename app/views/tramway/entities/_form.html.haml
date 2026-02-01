@@ -3,9 +3,10 @@
 
 = tramway_form_for @record, local: true, url:, method: do |f|
   - if @record.errors.any?
-    .alert.alert-danger
-      %h4= "#{pluralize(@record.errors.count, 'error')} prohibited this record from being saved:"
-      %ul
+    .w-full.mb-4.p-4.border.border-red-600.bg-red-100.text-red-800.rounded-xl
+      %h2.font-bold.mb-2
+        = "#{pluralize(@record.errors.count, 'error')} prohibited this record from being saved:"
+      %ul.list-disc.list-inside.pl-6
         - @record.errors.full_messages.each do |message|
           %li= message
 
