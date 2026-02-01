@@ -6,4 +6,7 @@ class AdminForm < UserForm
 
   normalizes :permissions, with: ->(value) { value.is_a?(Array) ? value : value.split(',') }
   normalizes :first_name, :last_name, with: ->(value) { value.strip || 'Anonymous' }, apply_to_nil: true
+
+  validates :permissions, presence: true
+  validates :first_name, presence: true, allow_nil: true
 end

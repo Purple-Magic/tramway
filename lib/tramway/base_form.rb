@@ -2,6 +2,7 @@
 
 require 'tramway/forms/properties'
 require 'tramway/forms/normalizations'
+require 'tramway/forms/validations'
 require 'tramway/forms/fields'
 require 'tramway/duck_typing'
 
@@ -12,6 +13,7 @@ module Tramway
     include Tramway::Forms::Properties
     include Tramway::Forms::Fields
     include Tramway::Forms::Normalizations
+    include Tramway::Forms::Validations
     include Tramway::DuckTyping::ActiveRecordCompatibility
 
     attr_reader :object, :initial_object
@@ -27,6 +29,7 @@ module Tramway
       def inherited(subclass)
         __initialize_properties subclass
         __initialize_normalizations subclass
+        __initialize_validations subclass
         __initialize_fields subclass
 
         super
@@ -36,6 +39,8 @@ module Tramway
     def submit(params)
       __submit params
 
+      return false if object.errors.any?
+
       object.save.tap do
         __object
       end
@@ -43,6 +48,8 @@ module Tramway
 
     def submit!(params)
       __submit params
+
+      raise ActiveRecord::RecordInvalid, object if object.errors.any?
 
       object.save!.tap do
         __object
@@ -71,7 +78,10 @@ module Tramway
     private
 
     def __submit(params)
-      __apply_properties __apply_normalizations params
+      normalized_params = __apply_normalizations(params)
+
+      __apply_properties normalized_params
+      __apply_validations normalized_params
     end
 
     def __object
