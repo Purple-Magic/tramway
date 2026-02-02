@@ -440,6 +440,9 @@ Instead of this
 scope :for_role, -> (role) { where role: role }
 ```
 
+### Rule 28
+In case, you need to make a one link in tramway_table on each row. Use `tramway_row href: your_link` instead of putting the like inside a cell.
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
