@@ -425,6 +425,21 @@ and in a controller
   end
 ```
 
+### Rule 27
+Don't create scopes for enumerated values, use `scope: :shallow` of the enumerize gem.
+
+Do this 
+
+```
+enumerize :role, in: [:admin, :default], scope: :shallow
+```
+
+Instead of this
+
+```
+scope :for_role, -> (role) { where role: role }
+```
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
