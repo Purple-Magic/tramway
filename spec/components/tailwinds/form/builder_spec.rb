@@ -19,6 +19,10 @@ CLASSIC_FORM_CLASSES = {
   ],
   submit_button: %w[
     font-semibold rounded-xl cursor-pointer
+  ],
+  checkbox_input: %w[
+    rounded-full border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none focus:ring-2
+    focus:ring-gray-600
   ]
 }.freeze
 
@@ -65,6 +69,15 @@ describe Tailwinds::Form::Builder, type: :view do
       expect(output).to have_selector "select.text-base.#{class_selector(theme_classes.fetch(:select))}"
       expect(output).to have_selector 'option[value="admin"]'
       expect(output).to have_selector 'option[value="user"]'
+    end
+  end
+
+  shared_examples 'checkbox field classes' do |theme_classes|
+    it 'renders checkbox with label and classes' do
+      expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
+      expect(output).to have_selector(
+        "input[type=\"checkbox\"].h-5.w-5.#{class_selector(theme_classes.fetch(:checkbox_input))}"
+      )
     end
   end
 
@@ -231,6 +244,18 @@ describe Tailwinds::Form::Builder, type: :view do
       it 'applies small spacing' do
         expect(output).to have_selector 'label.text-sm.px-3.py-1'
       end
+    end
+  end
+
+  describe '#check_box' do
+    let(:output) { builder.check_box :permissions }
+
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'checkbox field classes',
+                      label: CLASSIC_FORM_CLASSES[:label],
+                      checkbox_input: CLASSIC_FORM_CLASSES[:checkbox_input]
     end
   end
 

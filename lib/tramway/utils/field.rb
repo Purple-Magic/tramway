@@ -23,8 +23,10 @@ module Tramway
 
       def field_name(field_data)
         case field_data.to_sym
-        when :text_area, :select, :multiselect
+        when :text_area, :select, :multiselect, :check_box
           field_data
+        when :checkbox
+          :check_box
         else
           "#{field_data}_field"
         end

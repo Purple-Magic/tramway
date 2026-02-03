@@ -6,6 +6,7 @@
   = f.file_field :avatar, label: 'Avatar'
   = f.select :country, [['Velmora', 'vm'], ['Dravara', 'dv']], label: 'Country'
   = f.text_area :personal_info, label: 'Personal info'
+  = f.check_box :permissions, label: 'Permissions'
   = f.multiselect :role, [['Admin', 'admin'], ['User', 'user']], label: false, data: { controller: 'user-form', action: 'change->user-form#updateForm' }
 
   = f.submit 'Create user'

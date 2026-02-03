@@ -68,6 +68,10 @@ module Tailwinds
         render(Tailwinds::Form::FileFieldComponent.new(input:, **default_options(attribute, sanitized_options)), &)
       end
 
+      def check_box(attribute, **, &)
+        common_field(:checkbox, :check_box, attribute, **, &)
+      end
+
       def select(attribute, collection, **options, &)
         sanitized_options = sanitize_options(options)
 

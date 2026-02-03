@@ -18,21 +18,24 @@ class TailwindComponent < Tramway::BaseComponent
       select_input: 'text-sm px-2 py-1',
       file_button: 'text-sm px-3 py-1',
       submit_button: 'text-sm px-3 py-1',
-      multiselect_input: 'text-sm px-2 py-1 h-10'
+      multiselect_input: 'text-sm px-2 py-1 h-10',
+      checkbox_input: 'h-4 w-4'
     },
     medium: {
       text_input: 'text-base px-3 py-2',
       select_input: 'text-base px-3 py-2',
       file_button: 'text-base px-4 py-2',
       submit_button: 'text-base px-4 py-2',
-      multiselect_input: 'text-base px-2 py-1 h-12'
+      multiselect_input: 'text-base px-2 py-1 h-12',
+      checkbox_input: 'h-5 w-5'
     },
     large: {
       text_input: 'text-xl px-4 py-3',
       select_input: 'text-xl px-4 py-3',
       file_button: 'text-xl px-5 py-3',
       submit_button: 'text-xl px-5 py-3',
-      multiselect_input: 'text-xl px-3 py-2 h-15'
+      multiselect_input: 'text-xl px-3 py-2 h-15',
+      checkbox_input: 'h-6 w-6'
     }
   }.freeze
 
@@ -64,6 +67,13 @@ class TailwindComponent < Tramway::BaseComponent
     theme_classes(
       classic: 'font-semibold rounded-xl focus:outline-none focus:ring-2 focus:ring-red-700 cursor-pointer ' \
                'bg-green-900 hover:bg-green-800 shadow-md'
+    )
+  end
+
+  def checkbox_base_classes
+    theme_classes(
+      classic: 'rounded-full border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none ' \
+               'focus:ring-2 focus:ring-gray-600'
     )
   end
 
