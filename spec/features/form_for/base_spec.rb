@@ -55,7 +55,7 @@ feature 'Form For Base Test', :js, type: :feature do
                       disabled:bg-gray-800 disabled:text-gray-500
                     ],
                     checkbox_input: %w[
-                      rounded border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
+                      rounded-full border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
                       focus:ring-2 focus:ring-gray-600
                     ]
   end

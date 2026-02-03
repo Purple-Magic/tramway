@@ -21,7 +21,7 @@ CLASSIC_FORM_CLASSES = {
     font-semibold rounded-xl cursor-pointer
   ],
   checkbox_input: %w[
-    rounded border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none focus:ring-2
+    rounded-full border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none focus:ring-2
     focus:ring-gray-600
   ]
 }.freeze

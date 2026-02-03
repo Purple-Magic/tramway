@@ -72,7 +72,7 @@ class TailwindComponent < Tramway::BaseComponent
 
   def checkbox_base_classes
     theme_classes(
-      classic: 'rounded border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none ' \
+      classic: 'rounded-full border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none ' \
                'focus:ring-2 focus:ring-gray-600'
     )
   end
