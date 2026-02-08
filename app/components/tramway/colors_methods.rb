@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Tramway
-  # Shared base component for Tramway components
-  class BaseComponent < Tramway::BaseComponent
+  # Color logic implementation
+  module ColorsMethods
     TYPE_COLOR_MAP = {
       default: :gray,
       life: :gray,

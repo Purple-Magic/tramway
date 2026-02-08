@@ -17,8 +17,8 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
     end
     let(:row_helper_arguments) { { cells: %w[first second], href: '/rows/1', class: 'row' } }
 
-    it 'delegates to tailwinds row component with extracted options' do
-      expect(view).to receive(:component).with('tailwinds/table/row', **row_component_arguments) do |&received_block|
+    it 'delegates to tramway row component with extracted options' do
+      expect(view).to receive(:component).with('tramway/table/row', **row_component_arguments) do |&received_block|
         expect(received_block).to be row_block
         :row_output
       end

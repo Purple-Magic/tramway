@@ -14,6 +14,8 @@ module Tramway
     option :options, optional: true, default: -> { {} }
     option :form_options, optional: true, default: -> { {} }
 
+    include Tramway::ColorsMethods
+
     def before_render
       return if tag.present?
 

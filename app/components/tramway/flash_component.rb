@@ -8,6 +8,8 @@ module Tramway
     option :color, optional: true, default: -> {}
     option :options, optional: true, default: -> { {} }
 
+    include Tramway::ColorsMethods
+
     def container_classes
       theme_classes(
         classic: 'fixed top-4 right-4 z-50 space-y-2'

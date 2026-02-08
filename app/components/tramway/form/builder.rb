@@ -8,6 +8,7 @@ module Tramway
     # rubocop:disable Metrics/ClassLength
     class Builder < Tramway::Views::FormBuilder
       include Tramway::Utils::Field
+      include Tramway::ColorsMethods
 
       def initialize(object_name, object, template, options)
         super

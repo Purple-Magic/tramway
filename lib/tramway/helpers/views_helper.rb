@@ -12,24 +12,24 @@ module Tramway
         form_for(
           object,
           *,
-          **options.merge(builder: Tailwinds::Form::Builder, size: normalize_form_size(size)),
+          **options.merge(builder: Tramway::Form::Builder, size: normalize_form_size(size)),
           &
         )
       end
 
       def tramway_table(**options, &)
-        component 'tailwinds/table', options:, &
+        component 'tramway/table', options:, &
       end
 
       def tramway_header(headers: nil, columns: nil, &)
-        component 'tailwinds/table/header',
+        component 'tramway/table/header',
                   headers:,
                   columns:,
                   &
       end
 
       def tramway_row(**options, &)
-        component 'tailwinds/table/row',
+        component 'tramway/table/row',
                   cells: options.delete(:cells),
                   href: options.delete(:href),
                   options:,
@@ -37,44 +37,44 @@ module Tramway
       end
 
       def tramway_cell(&)
-        component 'tailwinds/table/cell', &
+        component 'tramway/table/cell', &
       end
 
       def tramway_button(path: nil, text: nil, method: :get, form_options: {}, **options, &)
-        component 'tailwinds/button', text:, path:, method:, form_options:, color: options.delete(:color),
-                                      type: options.delete(:type), size: options.delete(:size),
-                                      tag: options.delete(:tag), options:, &
+        component 'tramway/button', text:, path:, method:, form_options:, color: options.delete(:color),
+                                    type: options.delete(:type), size: options.delete(:size),
+                                    tag: options.delete(:tag), options:, &
       end
 
       def tramway_back_button
-        component 'tailwinds/back_button'
+        component 'tramway/back_button'
       end
 
       def tramway_container(id: nil, **options, &)
         if id.present?
-          component 'tailwinds/containers/narrow', id:, options:, &
+          component 'tramway/containers/narrow', id:, options:, &
         else
-          component 'tailwinds/containers/narrow', options:, &
+          component 'tramway/containers/narrow', options:, &
         end
       end
 
       def tramway_main_container(**options, &)
-        component 'tailwinds/containers/main', options:, &
+        component 'tramway/containers/main', options:, &
       end
 
       def tramway_badge(text:, type: nil, color: nil)
-        component 'tailwinds/badge',
+        component 'tramway/badge',
                   text:,
                   type:,
                   color:
       end
 
       def tramway_title(text: nil, **options, &)
-        component 'tailwinds/title', text:, options:, &
+        component 'tramway/title', text:, options:, &
       end
 
       def tramway_flash(text:, type:, **options)
-        component 'tailwinds/flash', text:, type:, options:
+        component 'tramway/flash', text:, type:, options:
       end
 
       private

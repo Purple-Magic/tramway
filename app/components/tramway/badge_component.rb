@@ -8,6 +8,8 @@ module Tramway
     option :type, optional: true
     option :color, optional: true
 
+    include Tramway::ColorsMethods
+
     def classes
       theme_classes(
         classic: [
