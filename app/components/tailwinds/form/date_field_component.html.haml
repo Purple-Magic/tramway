@@ -1,6 +1,0 @@
-.mb-4
-  - if @label
-    = component('tailwinds/form/label', for: @for) do
-      = @label
-- classes = "#{size_class(:text_input)} #{text_input_base_classes}"
-= @input.call @attribute, **@options.merge(class: classes), value: @value

@@ -27,10 +27,10 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
 
     let(:default_helper_arguments) { { path: '/dashboard' } }
 
-    it 'delegates to tailwinds button component with defaults' do
+    it 'delegates to tramway button component with defaults' do
       expect(view)
         .to receive(:component)
-        .with('tailwinds/button', **default_component_arguments)
+        .with('tramway/button', **default_component_arguments)
         .and_return(:button_output)
 
       expect(view.tramway_button(**default_helper_arguments)).to eq :button_output
@@ -45,10 +45,10 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
         default_helper_arguments.merge(tag: :a)
       end
 
-      it 'delegates to tailwinds button component when rendering a link' do
+      it 'delegates to tramway button component when rendering a link' do
         expect(view)
           .to receive(:component)
-          .with('tailwinds/button', **link_component_arguments)
+          .with('tramway/button', **link_component_arguments)
           .and_return(:link_button_output)
 
         expect(view.tramway_button(**link_helper_arguments)).to eq :link_button_output
@@ -84,10 +84,10 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
           }
         end
 
-        it 'delegates to tailwinds button component with custom options' do
+        it 'delegates to tramway button component with custom options' do
           expect(view)
             .to receive(:component)
-            .with('tailwinds/button', **custom_component_arguments)
+            .with('tramway/button', **custom_component_arguments)
             .and_return(:custom_button_output)
 
           expect(view.tramway_button(**custom_helper_arguments)).to eq :custom_button_output
@@ -103,10 +103,10 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
           default_helper_arguments.merge(form_options: { data: { turbo_frame: '_top' } })
         end
 
-        it 'delegates form options to the tailwinds button component' do
+        it 'delegates form options to the tramway button component' do
           expect(view)
             .to receive(:component)
-            .with('tailwinds/button', **form_component_arguments)
+            .with('tramway/button', **form_component_arguments)
             .and_return(:form_button_output)
 
           expect(view.tramway_button(**form_helper_arguments)).to eq :form_button_output

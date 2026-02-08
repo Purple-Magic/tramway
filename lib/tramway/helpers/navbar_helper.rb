@@ -37,7 +37,7 @@ module Tramway
       end
 
       def render_navbar_component(options)
-        render(Tailwinds::NavbarComponent.new(**options))
+        render(Tramway::NavbarComponent.new(**options))
       end
     end
   end

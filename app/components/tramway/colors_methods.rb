@@ -1,0 +1,43 @@
+# frozen_string_literal: true
+
+module Tramway
+  # Color logic implementation
+  module ColorsMethods
+    TYPE_COLOR_MAP = {
+      default: :gray,
+      life: :gray,
+      primary: :blue,
+      hope: :blue,
+      secondary: :zinc,
+      success: :green,
+      will: :green,
+      warning: :orange,
+      greed: :orange,
+      danger: :red,
+      rage: :red,
+      love: :violet,
+      compassion: :indigo,
+      compassio: :indigo,
+      fear: :yellow,
+      submit: :green
+    }.freeze
+
+    def resolved_color
+      (color || type_color).to_s
+    end
+
+    def type_color
+      TYPE_COLOR_MAP.fetch(normalized_type, TYPE_COLOR_MAP[:default]).to_sym
+    end
+
+    def normalized_type
+      value = type
+      value = nil if value.respond_to?(:empty?) && value.empty?
+      value ||= :default
+      value = value.downcase if value.respond_to?(:downcase)
+      value = value.to_sym if value.respond_to?(:to_sym)
+
+      TYPE_COLOR_MAP.key?(value) ? value : :default
+    end
+  end
+end

@@ -1,0 +1,6 @@
+.mb-4
+  - if @label
+    = component('tramway/form/label', for: @for) do
+      = @label
+  - classes = "#{size_class(:select_input)} #{select_base_classes}"
+  = @input.call(@attribute, @collection, { selected: @value }, @options.merge(class: classes))

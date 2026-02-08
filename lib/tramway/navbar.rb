@@ -77,9 +77,9 @@ module Tramway
       options.merge!(href: url)
 
       if method.present? && method.to_sym != :get
-        context.render(Tailwinds::Nav::Item::ButtonComponent.new(method:, **options)) { text_or_url }
+        context.render(Tramway::Nav::Item::ButtonComponent.new(method:, **options)) { text_or_url }
       else
-        context.render(Tailwinds::Nav::Item::LinkComponent.new(method:, **options)) { text_or_url }
+        context.render(Tramway::Nav::Item::LinkComponent.new(method:, **options)) { text_or_url }
       end
     end
 
@@ -87,9 +87,9 @@ module Tramway
       options.merge!(href: text_or_url)
 
       if method.present? && method.to_sym != :get
-        context.render(Tailwinds::Nav::Item::ButtonComponent.new(method:, **options), &)
+        context.render(Tramway::Nav::Item::ButtonComponent.new(method:, **options), &)
       else
-        context.render(Tailwinds::Nav::Item::LinkComponent.new(method:, **options), &)
+        context.render(Tramway::Nav::Item::LinkComponent.new(method:, **options), &)
       end
     end
   end

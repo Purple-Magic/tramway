@@ -877,7 +877,7 @@ implementations.
 <% end %>
 ```
 
-`tramway_table` accepts the same optional `options` hash as `Tailwinds::TableComponent`. The hash is forwarded as HTML
+`tramway_table` accepts the same optional `options` hash as `Tramway::TableComponent`. The hash is forwarded as HTML
 attributes, so you can pass things like `id`, `data` attributes, or additional classes. If you do not supply your own width
 utility (e.g. a class that starts with `w-`), the component automatically appends `w-full` to keep the table responsive. This
 allows you to extend the default styling without losing the sensible defaults provided by the component.
@@ -901,12 +901,12 @@ Use the optional `href:` argument on `tramway_row` to turn an entire row into a 
 ```
 
 When you render a header you can either pass the `headers:` array, as in the examples above, or render custom header content in
-the block. `Tailwinds::Table::HeaderComponent` uses the length of the `headers` array to build the grid if the array is present.
+the block. `tramway_header` uses the length of the `headers` array to build the grid if the array is present.
 If you omit the array and provide custom content, pass the `columns:` argument so the component knows how many grid columns to
 generate.
 
 ```erb
-<%= component 'tailwinds/table/header', columns: 4 do %>
+<%= tramway_header columns: 4 do %>
   <%= tramway_cell do %>
     Custom header cell
   <% end %>
@@ -1067,7 +1067,7 @@ Available form helpers:
 
 *app/views/sessions/new.html.erb*
 ```erb
-<%= form_with url: login_path, scope: :session, local: true, builder: Tailwinds::Form::Builder do |form| %>
+<%= form_with url: login_path, scope: :session, local: true, builder: Tramway::Form::Builder do |form| %>
   <%= form.email_field :email %>
   <%= form.password_field :password %>
   <%= form.submit 'Log in' %>

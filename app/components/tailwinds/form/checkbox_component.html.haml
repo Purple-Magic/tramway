@@ -1,7 +1,0 @@
-.flex.items-start.gap-2.mb-4
-  - classes = "#{size_class(:checkbox_input)} #{checkbox_base_classes}"
-  = @input.call @attribute, **@options.merge(class: classes)
-  - if @label
-    %div
-      = component('tailwinds/form/label', for: @for) do
-        = @label

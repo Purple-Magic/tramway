@@ -11,7 +11,7 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
   end
 
   describe '#tramway_table' do
-    it 'delegates to tailwinds table component with provided options and block' do
+    it 'delegates to tramway table component with provided options and block' do
       block = proc {}
       captured = {}
 
@@ -23,7 +23,7 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
       result = view.tramway_table(class: 'table', &block)
 
       expect(result).to eq :component_output
-      expect(captured).to eq(name: 'tailwinds/table', kwargs: { options: { class: 'table' } }, block: block)
+      expect(captured).to eq(name: 'tramway/table', kwargs: { options: { class: 'table' } }, block: block)
     end
   end
 end

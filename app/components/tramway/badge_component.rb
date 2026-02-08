@@ -1,0 +1,22 @@
+# frozen_string_literal: true
+
+module Tramway
+  # Default Tramway badge
+  #
+  class BadgeComponent < Tramway::BaseComponent
+    option :text
+    option :type, optional: true
+    option :color, optional: true
+
+    include Tramway::ColorsMethods
+
+    def classes
+      theme_classes(
+        classic: [
+          'flex', 'px-3', 'py-1', 'text-sm', 'font-semibold', 'rounded-full', 'w-fit', 'h-fit',
+          "bg-#{resolved_color}-700", "text-#{resolved_color}-100", 'shadow-md'
+        ]
+      )
+    end
+  end
+end

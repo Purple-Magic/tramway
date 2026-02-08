@@ -1,0 +1,6 @@
+= helpers.component 'tramway/table/row/preview'
+
+- width_class = options[:class]&.include?('w-') ? '' : 'w-full'
+
+%div{ class: "#{table_classes} #{options[:class]} #{width_class}".strip, **options.except(:class) }
+  = content
