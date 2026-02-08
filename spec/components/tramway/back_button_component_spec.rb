@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tailwinds::BackButtonComponent, type: :component do
+describe Tramway::BackButtonComponent, type: :component do
   before do
     allow(I18n).to receive(:t).and_call_original
     allow(I18n).to receive(:t).with('actions.back').and_return('Back')

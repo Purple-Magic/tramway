@@ -26,7 +26,7 @@ CLASSIC_FORM_CLASSES = {
   ]
 }.freeze
 
-describe Tailwinds::Form::Builder, type: :view do
+describe Tramway::Form::Builder, type: :view do
   let(:resource) { build :user }
   let(:form_options) { {} }
   let(:builder) { described_class.new :user, resource, view, form_options }

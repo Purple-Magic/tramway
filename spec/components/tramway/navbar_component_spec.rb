@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tailwinds::NavbarComponent, type: :component do
+describe Tramway::NavbarComponent, type: :component do
   context 'with title checks' do
     it 'renders title' do
       render_inline(described_class.new(title: 'Purple Magic'))

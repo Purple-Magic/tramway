@@ -14,12 +14,12 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
     it 'calls form_for with the correct builder and default size' do
       object = Struct.new(:id).new(1)
 
-      allow(view).to receive(:form_for).with(object, hash_including(builder: Tailwinds::Form::Builder, size: :medium))
+      allow(view).to receive(:form_for).with(object, hash_including(builder: Tramway::Form::Builder, size: :medium))
 
       view.tramway_form_for(object)
 
       expect(view).to have_received(:form_for).with(
-        object, hash_including(builder: Tailwinds::Form::Builder, size: :medium)
+        object, hash_including(builder: Tramway::Form::Builder, size: :medium)
       )
     end
 

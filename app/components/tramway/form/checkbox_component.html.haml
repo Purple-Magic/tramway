@@ -3,5 +3,5 @@
   = @input.call @attribute, **@options.merge(class: classes)
   - if @label
     %div
-      = component('tailwinds/form/label', for: @for) do
+      = component('tramway/form/label', for: @for) do
         = @label

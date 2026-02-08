@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tailwinds::BadgeComponent, type: :component do
+describe Tramway::BadgeComponent, type: :component do
   shared_examples 'badge theme classes' do |theme_classes|
     it 'renders badge with default styling' do
       render_inline(described_class.new(text: 'Active'))

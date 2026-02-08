@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-describe Tailwinds::Nav::Item::LinkComponent, type: :component do
+describe Tramway::Nav::Item::LinkComponent, type: :component do
   it 'renders link' do
     render_inline(described_class.new(href: '/test_page')) { 'Sign In' }
 

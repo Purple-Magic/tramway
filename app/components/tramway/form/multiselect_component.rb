@@ -73,7 +73,7 @@ module Tramway
 
       def select_as_input
         component(
-          'tailwinds/form/multiselect/select_as_input',
+          'tramway/form/multiselect/select_as_input',
           options:,
           attribute:,
           input:,
@@ -96,15 +96,15 @@ module Tramway
       end
 
       def selected_item_template
-        component('tailwinds/form/multiselect/selected_item_template', size:)
+        component('tramway/form/multiselect/selected_item_template', size:)
       end
 
       def dropdown_container
-        component('tailwinds/form/multiselect/dropdown_container', size:)
+        component('tramway/form/multiselect/dropdown_container', size:)
       end
 
       def item_container
-        component('tailwinds/form/multiselect/item_container', size:)
+        component('tramway/form/multiselect/item_container', size:)
       end
     end
   end

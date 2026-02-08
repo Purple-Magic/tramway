@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Tailwinds::ButtonComponent, type: :component do
+describe Tramway::ButtonComponent, type: :component do
   shared_examples 'button theme classes' do |theme_classes|
     context 'when text is provided' do
       let(:component) { described_class.new(path: '/projects', text: 'View projects') }
