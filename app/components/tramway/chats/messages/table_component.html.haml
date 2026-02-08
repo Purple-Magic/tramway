@@ -1,27 +1,28 @@
-= tramway_table do
-  - data.each_with_index do |row, index|
-    - if index.zero?
-      = tramway_header headers: row
-    - else
-      = tramway_row do
-        - cell_width = row.count > 1 ? "w-1/#{row.count + 1}" : 'w-full'
+.mt-3.overflow-hidden.rounded-xl.border.border-gray-200.bg-white.shadow-sm.dark:border-gray-700.dark:bg-gray-900
+  = tramway_table do
+    - data.each_with_index do |row, index|
+      - if index.zero?
+        = tramway_header headers: row
+      - else
+        = tramway_row do
+          - cell_width = row.count > 1 ? "w-1/#{row.count + 1}" : 'w-full'
 
-        - row.each do |cell|
-          = tramway_cell do
-            - if cell.to_s.start_with?('http')
-              .underline
-                = link_to cell, cell, target: '_blank', class: "#{cell_width} break-all"
-            - elsif cell.is_a?(Hash)
-              - if cell['status'] == 'pending'
-                = tramway_cell do
-                  = helpers.tramway_button text: t('admin.chats.messages.table.add'), path: cell.dig('button', 'path'), color: :green, method: :post
-              - elsif cell['status'] == 'added'
-                = tramway_cell do
-                  = helpers.tramway_button text: t('admin.chats.messages.table.remove'), path: cell.dig('button', 'path'), color: :red, method: :delete
+          - row.each do |cell|
+            = tramway_cell do
+              - if cell.to_s.start_with?('http')
+                .underline
+                  = link_to cell, cell, target: '_blank', class: "#{cell_width} break-all"
+              - elsif cell.is_a?(Hash)
+                - if cell['status'] == 'pending'
+                  = tramway_cell do
+                    = helpers.tramway_button text: t('admin.chats.messages.table.add'), path: cell.dig('button', 'path'), color: :green, method: :post
+                - elsif cell['status'] == 'added'
+                  = tramway_cell do
+                    = helpers.tramway_button text: t('admin.chats.messages.table.remove'), path: cell.dig('button', 'path'), color: :red, method: :delete
+                - else
+                  = cell.inspect
+              - elsif cell.is_a?(String) && cell.size > 50
+                .text-sm
+                  = cell
               - else
-                = cell.inspect
-            - elsif cell.is_a?(String) && cell.size > 50
-              .text-sm
                 = cell
-            - else
-              = cell

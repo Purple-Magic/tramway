@@ -1,28 +1,28 @@
 - if on_the_left?
-  .flex.justify-start.flex-col
+  .flex.flex-col.items-start.gap-1
     - if text.present?
-      .bg-gray-200.dark:bg-gray-700.dark:text-white.px-4.py-2.rounded-lg.rounded-bl-none.max-w-lg
+      .max-w-lg.rounded-2xl.rounded-tl-md.bg-white.px-4.py-3.text-sm.text-gray-900.shadow-sm.ring-1.ring-gray-200.dark:bg-gray-800.dark:text-gray-100.dark:ring-gray-700
         = component 'native_text', text:, size:, klass: text_color
         - if show_sent_at?
-          .justify-end.mt-2.text-right.text-sm
+          .mt-2.text-right.text-xs.text-gray-500.dark:text-gray-400
             = message.sent_at.strftime('%d %b %Y %H:%M')
     - if data_view == :table
       = component 'chats/messages/table', data: message.data
 
 - if on_the_right?
-  .flex.justify-end
+  .flex.flex-col.items-end.gap-1
     - if text.present?
-      .flex-row.bg-blue-500.dark:bg-blue-600.rounded-lg.rounded-br-none
-        .flex-col.text-white.px-4.py-2.max-w-lg
+      .flex.max-w-lg.items-end.gap-2.rounded-2xl.rounded-tr-md.bg-blue-600.px-4.py-3.text-sm.text-white.shadow-sm.dark:bg-blue-500
+        .flex-1
           = component 'native_text', text:, size:, klass: text_color
           - if show_sent_at?
-            .justify-end.text-sm.mt-2
+            .mt-2.text-right.text-xs.text-blue-100/90
               = message.sent_at.strftime('%d %b %Y %H:%M')
         - if pending?
-          .ml-1.mb-1
+          .pb-1
             = inline_svg 'icons/spinner.svg', class: 'w-4 h-4 text-white animate-spin'
         - if failed?
-          .ml-1.mb-1
-            = inline_svg 'icons/cross.svg', class: 'w-8 h-8 text-red-500'
+          .pb-1
+            = inline_svg 'icons/cross.svg', class: 'w-6 h-6 text-red-200'
     - if data_view == :table
       = component 'chats/messages/table', data: message.data
