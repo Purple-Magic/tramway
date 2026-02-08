@@ -9,7 +9,7 @@
         = inline_svg 'icons/dots.svg', class: 'w-8 h-8 text-gray-500 mx-auto my-4'
     
     - if message_form.present?
-      .shrink-0.border-t.border-gray-200.pt-4.border-gray-700.bg-gray-900
+      .shrink-0.border-gray-200.pt-4.border-gray-700.bg-gray-900
         = form_for message_form, url: send_message_path, method: :post, html: { class: 'flex items-center gap-3' } do |f|
           - waiting_placeholder = t('chat.placeholders.waiting')
           - typing_placeholder = t('chat.placeholders.type')
@@ -20,7 +20,9 @@
             disabled: !send_messages_enabled
 
           = f.hidden_field :chat_id, value: message_form.chat_id
+
           - options.each do |(key, value)|
             = f.hidden_field key, value: value
+
           = f.submit '🡩',
             class: 'rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-blue-500 hover:bg-blue-400 cursor-pointer'
