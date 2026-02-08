@@ -48,7 +48,7 @@ module.exports = {
     'hover:bg-blue-400',
     'text-gray-100',
     'text-gray-400',
-    'placeholder:text-gray-500',
+    'placeholder:text-gray-400',
     'focus:border-blue-400',
     'focus:ring-blue-500/30',
     'ring-gray-700',

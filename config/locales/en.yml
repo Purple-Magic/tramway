@@ -16,5 +16,6 @@ en:
       updated: "The record is updated"
       deleted: "The record is deleted"
     chat:
-      waiting_for_answer: "Waiting for an answer..."
-      type_your_message: "Type your message..."
+      placeholders:
+        waiting: "Waiting for an answer..."
+        type: "Type your message..."
