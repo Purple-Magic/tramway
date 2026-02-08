@@ -3,13 +3,16 @@
 module Tramway
   module Chats
     class MessageComponent < Tramway::BaseComponent
-      option :message
-      option :size, optional: true, default: -> { :middle }
+      option :type
+      option :text, optional: true, default: -> { '' }
+      option :data, optional: true, default: -> { {} }
+      option :sent_at, optional: true, default: -> { nil }
+      option :options, optional: true, default: -> { {} }
 
       def data_view
-        if message.data.nil?
+        if data.nil?
           nil
-        elsif array2D?(message.data)
+        elsif array2D?(data)
           :table
         end
       end
@@ -31,31 +34,23 @@ module Tramway
       end
 
       def on_the_left?
-        message.message_type.in? %w[lead_message bot_message]
+        type.to_sym == :received
       end
 
       def on_the_right?
-        message.message_type.in? %w[sender_message user_message]
-      end
-
-      def text
-        if message.respond_to?(:text) && message.text.present?
-          message.text
-        else
-          message.content
-        end
+        type.to_sym == :sent
       end
 
       def show_sent_at?
-        message.respond_to?(:sent_at) && message.sent_at.present?
+        sent_at.present?
       end
 
       def pending?
-        message.respond_to?(:pending?) && message.pending?
+        options[:pending]
       end
 
       def failed?
-        message.respond_to?(:failed?) && message.failed?
+        options[:failed]
       end
     end
   end

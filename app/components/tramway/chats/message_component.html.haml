@@ -1,15 +1,26 @@
 - if on_the_left?
-  = component 'tramway/chats/messages/container', position: :left, text: message.text, size:, text_color:, sent_at: I18n.l(message.sent_at, format: :short), show_sent_at: show_sent_at? do
+  = component 'tramway/chats/messages/container',
+    position: :left,
+    text:,
+    sent_at:,
+    show_sent_at: show_sent_at? do
     - if data_view == :table
-      = component 'tramway/chats/messages/table', data: message.data
+      = component 'tramway/chats/messages/table', data:
 
 - if on_the_right?
-  = component 'tramway/chats/messages/container', position: :right, text: message.text, size:, text_color:, sent_at: I18n.l(message.sent_at, format: :short), show_sent_at: show_sent_at? do
+  = component 'tramway/chats/messages/container',
+    position: :right,
+    text:,
+    sent_at:,
+    show_sent_at: show_sent_at? do
+
     - if pending?
       .pb-1
         = inline_svg 'icons/spinner.svg', class: 'w-4 h-4 text-white animate-spin'
+
     - if failed?
       .pb-1
         = inline_svg 'icons/cross.svg', class: 'w-6 h-6 text-red-200'
+
     - if data_view == :table
-      = component 'tramway/chats/messages/table', data: message.data
+      = component 'tramway/chats/messages/table', data:
