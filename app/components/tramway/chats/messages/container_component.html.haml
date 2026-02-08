@@ -1,0 +1,8 @@
+.flex.flex-col.gap-1{ class: position_classes }
+  - if text.present?
+    .max-w-lg.rounded-2xl.rounded-tl-md.px-4.py-3.text-sm.shadow-sm.ring-1.bg-gray-800.text-gray-100.ring-gray-700
+      = component 'tramway/native_text', text:, size:, klass: text_color
+      - if show_sent_at?
+        .mt-2.text-right.text-xs.text-gray-400
+          = sent_at.strftime('%d %b %Y %H:%M')
+  = content

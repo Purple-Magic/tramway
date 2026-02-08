@@ -1,28 +1,15 @@
 - if on_the_left?
-  .flex.flex-col.items-start.gap-1
-    - if text.present?
-      .max-w-lg.rounded-2xl.rounded-tl-md.bg-white.px-4.py-3.text-sm.text-gray-900.shadow-sm.ring-1.ring-gray-200.dark:bg-gray-800.dark:text-gray-100.dark:ring-gray-700
-        = component 'native_text', text:, size:, klass: text_color
-        - if show_sent_at?
-          .mt-2.text-right.text-xs.text-gray-500.dark:text-gray-400
-            = message.sent_at.strftime('%d %b %Y %H:%M')
+  = component 'tramway/chats/messages/container', position: :left, text: message.text, size:, text_color:, sent_at: I18n.l(message.sent_at, format: :short), show_sent_at: show_sent_at? do
     - if data_view == :table
-      = component 'chats/messages/table', data: message.data
+      = component 'tramway/chats/messages/table', data: message.data
 
 - if on_the_right?
-  .flex.flex-col.items-end.gap-1
-    - if text.present?
-      .flex.max-w-lg.items-end.gap-2.rounded-2xl.rounded-tr-md.bg-blue-600.px-4.py-3.text-sm.text-white.shadow-sm.dark:bg-blue-500
-        .flex-1
-          = component 'native_text', text:, size:, klass: text_color
-          - if show_sent_at?
-            .mt-2.text-right.text-xs.text-blue-100/90
-              = message.sent_at.strftime('%d %b %Y %H:%M')
-        - if pending?
-          .pb-1
-            = inline_svg 'icons/spinner.svg', class: 'w-4 h-4 text-white animate-spin'
-        - if failed?
-          .pb-1
-            = inline_svg 'icons/cross.svg', class: 'w-6 h-6 text-red-200'
+  = component 'tramway/chats/messages/container', position: :right, text: message.text, size:, text_color:, sent_at: I18n.l(message.sent_at, format: :short), show_sent_at: show_sent_at? do
+    - if pending?
+      .pb-1
+        = inline_svg 'icons/spinner.svg', class: 'w-4 h-4 text-white animate-spin'
+    - if failed?
+      .pb-1
+        = inline_svg 'icons/cross.svg', class: 'w-6 h-6 text-red-200'
     - if data_view == :table
-      = component 'chats/messages/table', data: message.data
+      = component 'tramway/chats/messages/table', data: message.data

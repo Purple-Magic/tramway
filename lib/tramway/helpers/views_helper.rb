@@ -77,6 +77,10 @@ module Tramway
         component 'tramway/flash', text:, type:, options:
       end
 
+      def tramway_chat(chat, messages:, message_form:, send_message_path:)
+        component 'tramway/chat', chat:, messages:, message_form:, send_message_path:
+      end
+
       private
 
       def normalize_form_size(size)
