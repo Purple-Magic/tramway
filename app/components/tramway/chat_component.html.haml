@@ -1,19 +1,19 @@
 = helpers.turbo_stream_from chat.id, 'messages'
 
-#chat.mx-auto.bg-white.dark:bg-gray-800.shadow-lg.flex.flex-col.mt-4.max-h-full.w-full{ data: { controller: 'chat' }, class: 'h-[650px]' }
-  .flex-1.overflow-y-auto.p-4.space-y-4#messages{ data: { chat_target: 'messages' }, class: 'dark:text-white' }
+#chat.mx-auto.flex.flex-col.mt-6.max-h-full.w-full.rounded-2xl.border.border-gray-200.bg-white.shadow-sm.dark:border-gray-700.dark:bg-gray-900{ data: { controller: 'chat' }, class: 'h-[650px]' }
+  .flex-1.overflow-y-auto.bg-gray-50.p-6.space-y-4.dark:bg-gray-800/60#messages{ data: { chat_target: 'messages' }, class: 'text-gray-900 dark:text-gray-100' }
     - chat.messages.each do |message|
       = component "chats/message", message:, size: size
     - if disabled?
       = inline_svg 'icons/dots.svg', class: 'w-8 h-8 text-gray-500 mx-auto my-4'
   
   - if message_form.present?
-    .bg-gray-100.dark:bg-gray-700.p-4.rounded-b-lg.items-center
-      = form_for message_form, url: url_for(controller: "#{namespace}/chats/messages", action: :create), method: :post, html: { class: 'flex space-x-2' } do |f|
+    .border-t.border-gray-200.bg-white.p-4.dark:border-gray-700.dark:bg-gray-900
+      = form_for message_form, url: url_for(controller: "#{namespace}/chats/messages", action: :create), method: :post, html: { class: 'flex items-center gap-3' } do |f|
         - waiting_placeholder = t('chat.placeholders.waiting', default: I18n.t('tramway.chat.waiting_for_answer'))
         - typing_placeholder = t('chat.placeholders.typing', default: I18n.t('tramway.chat.type_your_message'))
         = f.text_field :text,
-          class: 'flex-1 px-2 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white disabled:bg-gray-600',
+          class: 'flex-1 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-blue-400 dark:focus:ring-blue-500/30',
           placeholder: message_form.disabled? ? waiting_placeholder : typing_placeholder,
           data: { chat_target: 'input' },
           disabled: message_form.disabled?
@@ -24,4 +24,4 @@
         - options.each do |(key, value)|
           = f.hidden_field key, value: value
         = f.submit t('actions.send'),
-          class: 'bg-blue-500 hover:bg-blue-400 text-white px-4 py-2 rounded-lg cursor-pointer dark:bg-blue-600 dark:hover:bg-blue-500'
+          class: 'rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:bg-blue-500 dark:hover:bg-blue-400'
