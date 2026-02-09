@@ -6,4 +6,4 @@ module TurboStreamFromHelper
   end
 end
 
-ActionView::Base.include(TurboStreamFromHelper)
+ActiveSupport.on_load(:action_view) { include TurboStreamFromHelper }
