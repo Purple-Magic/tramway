@@ -7,7 +7,7 @@ describe Tramway::ChatComponent, type: :component do
   it 'renders common chat container styles' do
     chat_id = 123
 
-    helpers.define_singleton_method(:turbo_stream_from) { '' }
+    allow_any_instance_of(ActionView::Base).to receive(:turbo_stream_from).and_return('')
 
     render_inline(described_class.new(chat_id:, messages: [], send_message_path: '/messages'))
 
