@@ -3,23 +3,12 @@
 require 'rails_helper'
 
 describe Tramway::ChatComponent, type: :component do
-  DummyMessage = Struct.new(:message_type, :text, :data, :sent_at, :pending, :failed, keyword_init: true) do
-    def pending? = pending
-    def failed? = failed
-    def content = text
-  end
-
-  DummyChat = Struct.new(:id, :messages, :disabled, keyword_init: true) do
-    def disabled? = disabled
-  end
-
   it 'renders common chat container styles' do
-    message = DummyMessage.new(message_type: 'lead_message', text: 'Hello')
-    chat = DummyChat.new(id: 123, messages: [message])
+    chat_id = 123
 
     allow(view_context).to receive(:turbo_stream_from).and_return('')
 
-    render_inline(described_class.new(chat_id: chat.id, messages: [], send_message_path: '/messages'))
+    render_inline(described_class.new(chat_id:, messages: [], send_message_path: '/messages'))
 
     expect(page).to have_css(
       "#chat.#{class_selector(%w[mx-auto flex flex-col mt-6 max-h-full w-full rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900 h-[650px]])}"
