@@ -17,6 +17,8 @@ describe Tramway::ChatComponent, type: :component do
     message = DummyMessage.new(message_type: 'lead_message', text: 'Hello')
     chat = DummyChat.new(id: 123, messages: [message])
 
+    allow(view_context).to receive(:turbo_stream_from).and_return('')
+
     render_inline(described_class.new(chat_id: chat.id, messages: [], send_message_path: '/messages'))
 
     expect(page).to have_css(
