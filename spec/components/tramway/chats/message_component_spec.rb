@@ -11,20 +11,26 @@ describe Tramway::Chats::MessageComponent, type: :component do
 
     expect(page).to have_css(
       ".#{class_selector(%w[
+                           flex
+                           flex-col
+                           gap-1
+                           items-start
+                         ])}"
+    )
+
+    expect(page).to have_css(
+      ".#{class_selector(%w[
                            max-w-lg
                            rounded-2xl
                            rounded-tl-md
-                           bg-white
+                           bg-gray-800
                            px-4
                            py-3
                            text-sm
-                           text-gray-900
                            shadow-sm
                            ring-1
-                           ring-gray-200
-                           dark:bg-gray-800
-                           dark:text-gray-100
-                           dark:ring-gray-700
+                           text-white
+                           ring-gray-700
                          ])}",
       text: 'Hello'
     )
@@ -38,9 +44,15 @@ describe Tramway::Chats::MessageComponent, type: :component do
     expect(page).to have_css(
       ".#{class_selector(%w[
                            flex
-                           max-w-lg
+                           flex-col
                            items-end
-                           gap-2
+                           gap-1
+                         ])}"
+    )
+
+    expect(page).to have_css(
+      ".#{class_selector(%w[
+                           max-w-lg
                            rounded-2xl
                            rounded-tr-md
                            bg-blue-600
@@ -49,7 +61,8 @@ describe Tramway::Chats::MessageComponent, type: :component do
                            text-sm
                            text-white
                            shadow-sm
-                           dark:bg-blue-500
+                           ring-1
+                           ring-gray-700
                          ])}",
       text: 'Hi there'
     )
