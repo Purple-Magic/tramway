@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Tramway
+  # Renders the chat container with messages and optional input form.
   class ChatComponent < Tramway::BaseComponent
     option :chat_id
     option :messages

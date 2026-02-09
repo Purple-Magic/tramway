@@ -8,6 +8,7 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
   before do
     described_class.include ViewHelpers
     view.extend described_class
+    allow(view).to receive(:turbo_stream_from).and_return('')
   end
 
   describe '#tramway_chat' do
