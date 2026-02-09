@@ -127,6 +127,11 @@ Use `tramway_form_for` instead `form_with`, `form_for`
 ### Rule 8
 Inherit all components from Tramway::BaseComponent
 
+### Rule 8.1
+When you need chat UI, use the `tramway_chat` helper. Pass `chat_id`, `messages`, `message_form`, and `send_message_path`.
+Each message must include `:id` and a `:type` of `:sent` or `:received`, and other keys (like `:text`, `:data`, `:sent_at`)
+are forwarded to `tramway/chats/message_component`. Use `message_form: nil` when you only need read-only chat rendering.
+
 ### Rule 9
 If page `create` or `update` is configured for an entity, use Tramway Form pattern for forms. Visible fields are configured via `form_fields` method.
 
