@@ -16,6 +16,7 @@ require 'database_cleaner/active_record'
 require 'support/web_driver_helper'
 require 'support/theme_helper'
 require 'support/multiselect_helpers'
+require 'support/turbo_stream_from_helper'
 require 'fileutils'
 
 RSpec.configure do |config|
