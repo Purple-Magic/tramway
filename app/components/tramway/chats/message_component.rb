@@ -13,7 +13,7 @@ module Tramway
       def data_view
         if data.nil?
           nil
-        elsif array2d?(data)
+        elsif array_2d?(data)
           :table
         end
       end
@@ -28,7 +28,7 @@ module Tramway
 
       private
 
-      def array2d?(array)
+      def array_2d?(array)
         array.is_a?(Array) && array.all? do |inner|
           inner.is_a?(Array) && inner.none? { |e| e.is_a?(Array) }
         end
