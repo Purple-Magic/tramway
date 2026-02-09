@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Chats::Messages::TableComponent, type: :component do
+describe Tramway::Chats::Messages::TableComponent, type: :component do
   it 'wraps the table in a styled container' do
     data = [
       %w[Name Value],

@@ -17,7 +17,7 @@ describe Tramway::ChatComponent, type: :component do
     message = DummyMessage.new(message_type: 'lead_message', text: 'Hello')
     chat = DummyChat.new(id: 123, messages: [message])
 
-    render_inline(described_class.new(chat:))
+    render_inline(described_class.new(chat_id: chat.id, messages: [], send_message_path: '/messages'))
 
     expect(page).to have_css(
       "#chat.#{class_selector(%w[mx-auto flex flex-col mt-6 max-h-full w-full rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900 h-[650px]])}"

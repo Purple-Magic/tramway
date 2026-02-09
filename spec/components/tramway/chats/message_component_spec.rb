@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Chats::MessageComponent, type: :component do
+describe Tramway::Chats::MessageComponent, type: :component do
   DummyMessage = Struct.new(:message_type, :text, :data, :sent_at, :pending, :failed, keyword_init: true) do
     def pending? = pending
     def failed? = failed
