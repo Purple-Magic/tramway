@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Tramway
+  # Displays text with size-based utility classes.
   class NativeTextComponent < Tramway::BaseComponent
     option :text
     option :size, optional: true, default: -> { :middle }

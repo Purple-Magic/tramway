@@ -2,17 +2,18 @@
 
 module Tramway
   module Chats
+    # Renders a single chat message with alignment and state styling.
     class MessageComponent < Tramway::BaseComponent
       option :type
       option :text, optional: true, default: -> { '' }
       option :data, optional: true, default: -> { {} }
-      option :sent_at, optional: true, default: -> { nil }
+      option :sent_at, optional: true, default: -> {}
       option :options, optional: true, default: -> { {} }
 
       def data_view
         if data.nil?
           nil
-        elsif array2D?(data)
+        elsif array2d?(data)
           :table
         end
       end
@@ -27,7 +28,7 @@ module Tramway
 
       private
 
-      def array2D?(array)
+      def array2d?(array)
         array.is_a?(Array) && array.all? do |inner|
           inner.is_a?(Array) && inner.none? { |e| e.is_a?(Array) }
         end

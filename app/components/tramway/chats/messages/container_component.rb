@@ -1,23 +1,32 @@
-class Tramway::Chats::Messages::ContainerComponent < Tramway::BaseComponent
-  option :position
-  option :text
-  option :sent_at
+# frozen_string_literal: true
 
-  def position_classes
-    case position.to_sym
-    when :left
-      ['items-start']
-    when :right
-      ['items-end']
-    end.join(' ')
-  end
+module Tramway
+  module Chats
+    module Messages
+      # Renders a message container with alignment and color styles.
+      class ContainerComponent < Tramway::BaseComponent
+        option :position
+        option :text
+        option :sent_at
 
-  def color_classes
-    case position.to_sym
-    when :left
-      ['bg-gray-800', 'rounded-tl-md']
-    when :right
-      ['bg-blue-600', 'rounded-tr-md']
-    end.join(' ')
+        def position_classes
+          case position.to_sym
+          when :left
+            %w[items-start]
+          when :right
+            %w[items-end]
+          end.join(' ')
+        end
+
+        def color_classes
+          case position.to_sym
+          when :left
+            %w[bg-gray-800 rounded-tl-md]
+          when :right
+            %w[bg-blue-600 rounded-tr-md]
+          end.join(' ')
+        end
+      end
+    end
   end
 end
