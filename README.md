@@ -17,6 +17,7 @@ that helps you generate good, Tramway-native code with all the framework feature
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
   * [Tramway Flash](https://github.com/Purple-Magic/tramway#tramway-flash)
+  * [Tramway Chat](https://github.com/Purple-Magic/tramway#tramway-chat)
   * [Tramway Table Component](https://github.com/Purple-Magic/tramway#tramway-table-component)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
     * [Stimulus-based inputs](https://github.com/Purple-Magic/tramway#stimulus-based-inputs)
@@ -855,6 +856,36 @@ custom HTML options directly (e.g., `class:`, `data:`) and they will be merged i
 
 Use the `type` argument is compatible to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette) or provide a `color:` keyword to set
 the Tailwind color family explicitly.
+
+### Tramway Chat
+
+`tramway_chat` renders the chat experience bundled with Tramway. Provide a chat ID, a list of message hashes, and the URL
+that receives new messages. Each message must include an `:id` and a `:type` (either `:sent` or `:received`). Additional
+message fields like `text`, `data`, or `sent_at` are forwarded to `tramway/chats/message_component`.
+
+```haml
+-# Haml example
+- messages = [
+-  { id: 1, type: :received, text: 'Hello 👋' },
+-  { id: 2, type: :sent, text: 'Hi there!' }
+- ]
+= tramway_chat chat_id: 'support-chat',
+  messages: messages,
+  message_form: @message_form,
+  send_message_path: chat_messages_path
+```
+
+```erb
+<%# ERB example %>
+<% messages = [{ id: 1, type: :received, text: 'Hello 👋' }] %>
+<%= tramway_chat chat_id: 'support-chat',
+  messages: messages,
+  message_form: @message_form,
+  send_message_path: chat_messages_path %>
+```
+
+If you do not want to render the message form, pass `message_form: nil`. When the form is present, `send_message_path` is
+required and the helper will generate the correct POST form.
 
 ### Tramway Table Component
 
