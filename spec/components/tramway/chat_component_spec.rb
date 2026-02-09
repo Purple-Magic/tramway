@@ -7,7 +7,7 @@ describe Tramway::ChatComponent, type: :component do
   it 'renders common chat container styles' do
     chat_id = 123
 
-    allow(view_context).to receive(:turbo_stream_from).and_return('')
+    helpers.define_singleton_method(:turbo_stream_from) { '' }
 
     render_inline(described_class.new(chat_id:, messages: [], send_message_path: '/messages'))
 
@@ -15,30 +15,32 @@ describe Tramway::ChatComponent, type: :component do
       "#chat.#{class_selector(%w[
                                 mx-auto
                                 flex
+                                flex-1
                                 flex-col
-                                mt-6
-                                max-h-full
                                 w-full
                                 rounded-2xl
                                 border
-                                border-gray-200
-                                bg-white
                                 shadow-sm
-                                dark:border-gray-700
-                                dark:bg-gray-900
-                                h-[650px]
+                                ring-gray-700
+                                md:p-4
+                                border-gray-100
+                                min-h-0
+                                overflow-hidden
                               ])}"
     )
     expect(page).to have_css(
       "#messages.#{class_selector(%w[
                                     flex-1
+                                    min-h-0
                                     overflow-y-auto
-                                    bg-gray-50
-                                    p-6
-                                    space-y-4
-                                    dark:bg-gray-800/60
-                                    text-gray-900
-                                    dark:text-gray-100
+                                    p-2
+                                    md:p-6
+                                    space-y-2
+                                    md:space-y-4
+                                    md:rounded-xl
+                                    rounded-t-xl
+                                    text-gray-100
+                                    bg-gray-800/60
                                   ])}"
     )
   end
