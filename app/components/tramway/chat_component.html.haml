@@ -1,0 +1,28 @@
+= helpers.turbo_stream_from chat_id, 'messages'
+
+.flex-1.min-h-0.flex.flex-col
+  #chat.mx-auto.flex.flex-1.flex-col.w-full.rounded-2xl.border.shadow-sm.ring-gray-700.md:p-4.border-gray-100.min-h-0.overflow-hidden{ data: { controller: 'chat' } }
+    .flex-1.min-h-0.overflow-y-auto.p-2.md:p-6.space-y-2.md:space-y-4.md:rounded-xl.rounded-t-xl#messages{ data: { chat_target: 'messages' }, class: 'text-gray-100 bg-gray-800/60' }
+      - messages.each do |message|
+        = component "tramway/chats/message", **message
+      - if disabled?
+        = inline_svg 'icons/dots.svg', class: 'w-8 h-8 text-gray-500 mx-auto my-4'
+    
+    - if message_form.present?
+      .shrink-0.border-gray-200.md:pt-2.border-gray-700
+        = form_for message_form, url: send_message_path, method: :post, html: { class: 'flex items-center md:gap-1' } do |f|
+          - waiting_placeholder = t('chat.placeholders.waiting')
+          - typing_placeholder = t('chat.placeholders.type')
+          = f.text_field :text,
+            class: 'flex-1 md:rounded-full rounded-bl-2xl md:border border-gray-300 px-4 py-2 text-sm text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-gray-100 border-gray-600 bg-gray-800 text-white focus:border-blue-400 focus:ring-blue-500/30',
+            placeholder: send_messages_enabled ? typing_placeholder : waiting_placeholder,
+            data: { chat_target: 'input' },
+            disabled: !send_messages_enabled
+
+          = f.hidden_field :chat_id, value: chat_id
+
+          - options.each do |(key, value)|
+            = f.hidden_field key, value: value
+
+          = f.submit '🡩',
+            class: 'md:rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 bg-blue-500 hover:bg-blue-400 cursor-pointer'

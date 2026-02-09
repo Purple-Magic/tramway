@@ -15,3 +15,7 @@ en:
       created: "The record is created"
       updated: "The record is updated"
       deleted: "The record is deleted"
+    chat:
+      placeholders:
+        waiting: "Waiting for an answer..."
+        type: "Type your message..."

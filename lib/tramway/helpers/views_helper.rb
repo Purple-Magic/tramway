@@ -77,6 +77,18 @@ module Tramway
         component 'tramway/flash', text:, type:, options:
       end
 
+      def tramway_chat(chat_id:, messages:, message_form:, send_message_path:)
+        unless messages.all? { _1[:id].present? && _1[:type].present? }
+          raise ArgumentError, 'Each message must have :id and :type keys'
+        end
+
+        if messages.any? { !_1[:type].to_sym.in?(%i[sent received]) }
+          raise ArgumentError, 'Message :type must be either :sent or :received'
+        end
+
+        component 'tramway/chat', chat_id:, messages:, message_form:, send_message_path:
+      end
+
       private
 
       def normalize_form_size(size)
