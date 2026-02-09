@@ -19,7 +19,7 @@
             data: { chat_target: 'input' },
             disabled: !send_messages_enabled
 
-          = f.hidden_field :chat_id, value: message_form.chat_id
+          = f.hidden_field :chat_id, value: chat_id
 
           - options.each do |(key, value)|
             = f.hidden_field key, value: value
