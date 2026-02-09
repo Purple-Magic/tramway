@@ -9,7 +9,7 @@
         = inline_svg 'icons/dots.svg', class: 'w-8 h-8 text-gray-500 mx-auto my-4'
     
     - if message_form.present?
-      .shrink-0.border-gray-200.md:pt-4.border-gray-700
+      .shrink-0.border-gray-200.md:pt-2.border-gray-700
         = form_for message_form, url: send_message_path, method: :post, html: { class: 'flex items-center md:gap-1' } do |f|
           - waiting_placeholder = t('chat.placeholders.waiting')
           - typing_placeholder = t('chat.placeholders.type')

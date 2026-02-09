@@ -95,7 +95,7 @@ module.exports = {
     'md:gap-1',
     'md:space-y-4',
     'space-y-2',
-    'md:pt-4',
+    'md:pt-2',
     'md:rounded-xl',
     'rounded-t-xl',
     'md:rounded-full',
