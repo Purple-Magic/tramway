@@ -43,11 +43,35 @@
       messages.dataset.chatScrollInitialized = 'true';
     };
 
+    const setupChatInputClear = () => {
+      const forms = document.querySelectorAll('form[action][method]');
+
+      forms.forEach((form) => {
+        if (form.dataset.chatInputClearInitialized === 'true') return;
+
+        const textInput = form.querySelector('input[name="message[text]"]');
+        if (!textInput) return;
+
+        form.addEventListener('turbo:submit-end', (event) => {
+          if (event.detail.success) {
+            textInput.value = '';
+          }
+        });
+
+        form.dataset.chatInputClearInitialized = 'true';
+      });
+    };
+
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', setupChatScroll, { once: true });
+      document.addEventListener('DOMContentLoaded', () => {
+        setupChatScroll();
+        setupChatInputClear();
+      }, { once: true });
     } else {
       setupChatScroll();
+      setupChatInputClear();
     }
 
     document.addEventListener('turbo:load', setupChatScroll);
+    document.addEventListener('turbo:load', setupChatInputClear);
   })();
