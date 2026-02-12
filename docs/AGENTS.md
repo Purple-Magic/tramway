@@ -454,6 +454,9 @@ Always use tramway decorated objects in views.
 ### Rule 30
 For Tailwind classes with `/`, `[`, `]` characters use `{ class: 'here is the complicated class' }` in HAML.
 
+### Rule 31
+Always `tramway_decorate` and `tramway_form` for creating these types of objects. Don't use decorator and form classes for this.
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
