@@ -1,8 +1,8 @@
 = helpers.turbo_stream_from chat_id, 'messages'
 
 #chat.flex.flex-1.h-full.w-full.min-h-0.min-w-0.flex-col
-  #messages.flex-1.min-h-0.overflow-y-auto.p-2.md:p-6.space-y-2.md:space-y-4.md:rounded-xl.rounded-t-xl{ data: { chat_target: 'messages' }, class: 'text-gray-100 bg-gray-800/60' }
-    - messages.each do |message|
+  #messages.flex.flex-col-reverse.flex-1.min-h-0.overflow-y-auto.p-2.md:p-6.space-y-2.space-y-reverse.md:space-y-4.md:rounded-xl.rounded-t-xl{ class: 'text-gray-100 bg-gray-800/60' }
+    - messages.reverse_each do |message|
       = component "tramway/chats/message", **message
     - if disabled?
       = inline_svg 'icons/dots.svg', class: 'w-8 h-8 text-gray-500 mx-auto my-4'
@@ -15,7 +15,6 @@
         = f.text_field :text,
           class: 'flex-1 md:rounded-full rounded-bl-2xl md:border border-gray-300 px-4 py-2 text-sm text-gray-900 shadow-sm placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-gray-100 border-gray-600 bg-gray-800 text-white focus:border-blue-400 focus:ring-blue-500/30',
           placeholder: send_messages_enabled ? typing_placeholder : waiting_placeholder,
-          data: { chat_target: 'input' },
           disabled: !send_messages_enabled
 
         = f.hidden_field :chat_id, value: chat_id
