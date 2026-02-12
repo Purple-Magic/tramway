@@ -9,13 +9,20 @@ module Tramway
         raise ArgumentError, 'message_type must be :sent or :received' unless MESSAGE_TYPES.include?(message_type.to_sym)
 
         type = message_type
-
-        broadcast_append_to(
+        args = [
           [chat_id, 'messages'],
-          target: 'messages',
-          partial: 'tramway/chats/message',
-          locals: { type:, text:, sent_at: }
-        )
+          {
+            target: 'messages',
+            partial: 'tramway/chats/message',
+            locals: { type:, text:, sent_at: }
+          }
+        ]
+
+        if respond_to?(:broadcast_append_to)
+          broadcast_append_to(*args)
+        else
+          Turbo::StreamsChannel.broadcast_append_to(*args)
+        end
       end
     end
   end
