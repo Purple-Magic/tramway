@@ -457,6 +457,9 @@ For Tailwind classes with `/`, `[`, `]` characters use `{ class: 'here is the co
 ### Rule 31
 Always `tramway_decorate` and `tramway_form` for creating these types of objects. Don't use decorator and form classes for this.
 
+### Rule 32
+In Tramway Decorators, use `delegate_attributes` method instead of `delegate :something, to: :object`
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
