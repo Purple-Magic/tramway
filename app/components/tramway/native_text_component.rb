@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'erb'
+
 module Tramway
   # Displays text with size-based utility classes.
   class NativeTextComponent < Tramway::BaseComponent
@@ -29,7 +31,7 @@ module Tramway
     end
 
     def rendered_line(line)
-      return helpers.html_escape(line) unless linkify
+      return ERB::Util.html_escape(line) unless linkify
 
       helpers.safe_join(linkified_fragments(line))
     end
@@ -45,13 +47,13 @@ module Tramway
         matched_url = match[0]
         url, trailing = strip_trailing_punctuation(matched_url)
 
-        fragments << helpers.html_escape(line[current_index...match.begin(0)])
+        fragments << ERB::Util.html_escape(line[current_index...match.begin(0)])
         fragments << helpers.link_to(shorten(url), url, target: '_blank', rel: 'noopener noreferrer')
-        fragments << helpers.html_escape(trailing) if trailing.present?
+        fragments << ERB::Util.html_escape(trailing) if trailing.present?
         current_index = match.end(0)
       end
 
-      fragments << helpers.html_escape(line[current_index..]) if current_index < line.length
+      fragments << ERB::Util.html_escape(line[current_index..]) if current_index < line.length
       fragments
     end
 
