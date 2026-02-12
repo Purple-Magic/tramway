@@ -11,6 +11,13 @@ describe Tramway::NativeTextComponent, type: :component do
     expect(page).to have_css('h3.text-2xl.font-semibold', text: 'Heading 3')
   end
 
+
+  it 'renders markdown headers when text starts with a unicode prefix' do
+    render_inline(described_class.new(text: "﻿# Heading with bom"))
+
+    expect(page).to have_css('h1.text-4xl.font-bold', text: 'Heading with bom')
+  end
+
   it 'renders bold and italic markdown in paragraph text' do
     render_inline(described_class.new(text: 'This has **bold** and *italic* and _also italic_ text.'))
 

@@ -47,8 +47,8 @@ module Tramway
       blocks = []
       list_items = []
 
-      text.split("\n").each do |line|
-        stripped_line = line.strip
+      text.split("\n").each_with_index do |line, index|
+        stripped_line = normalized_line(line, index).strip
 
         if stripped_line.blank?
           flush_list_items(blocks, list_items)
@@ -78,6 +78,12 @@ module Tramway
 
       flush_list_items(blocks, list_items)
       blocks
+    end
+
+    def normalized_line(line, index)
+      return line unless index.zero?
+
+      line.sub(/\A[\uFEFF\u200B]+/, '')
     end
 
     def flush_list_items(blocks, list_items)
