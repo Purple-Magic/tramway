@@ -108,7 +108,7 @@ module Tramway
         matched_url = match[0]
         url, trailing = strip_trailing_punctuation(matched_url)
 
-        fragments << content[current_index...match.begin(0)]
+        fragments << content[current_index...match.begin(0)].html_safe
         fragments << helpers.link_to(
           shorten(url),
           url,
@@ -116,11 +116,11 @@ module Tramway
           rel: 'noopener noreferrer',
           class: 'text-blue-400 hover:underline'
         )
-        fragments << trailing if trailing.present?
+        fragments << trailing.html_safe if trailing.present?
         current_index = match.end(0)
       end
 
-      fragments << content[current_index..] if current_index < content.length
+      fragments << content[current_index..].html_safe if current_index < content.length
       helpers.safe_join(fragments)
     end
 
