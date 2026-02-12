@@ -25,14 +25,13 @@ describe Tramway::ChatComponent, type: :component do
     expect(page).to have_css(
       "#messages.#{class_selector(%w[
                                     flex
-                                    flex-col-reverse
+                                    flex-col
                                     flex-1
                                     min-h-0
                                     overflow-y-auto
                                     p-2
                                     md:p-6
                                     space-y-2
-                                    space-y-reverse
                                     md:space-y-4
                                     md:rounded-xl
                                     rounded-t-xl
