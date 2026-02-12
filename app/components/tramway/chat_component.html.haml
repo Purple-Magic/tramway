@@ -9,7 +9,7 @@
 
   - if message_form.present?
     .shrink-0.border-gray-200.md:pt-2.border-gray-700
-      = form_for message_form, url: send_message_path, method: :post, html: { class: 'flex items-center md:gap-1' } do |f|
+      = form_for message_form, url: send_message_path, as: :message, method: :post, html: { class: 'flex items-center md:gap-1' } do |f|
         - waiting_placeholder = t('tramway.chat.placeholders.waiting')
         - typing_placeholder = t('tramway.chat.placeholders.type')
         = f.text_field :text,
