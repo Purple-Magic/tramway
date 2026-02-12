@@ -18,10 +18,10 @@ module Tramway
           }
         ]
 
-        if respond_to?(:broadcast_append_to)
-          broadcast_append_to(*args)
-        else
+        if defined?(Turbo::StreamsChannel)
           Turbo::StreamsChannel.broadcast_append_to(*args)
+        else
+          broadcast_append_to(*args)
         end
       end
     end
