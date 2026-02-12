@@ -884,8 +884,27 @@ message fields like `text`, `data`, or `sent_at` are forwarded to `tramway/chats
   send_message_path: chat_messages_path %>
 ```
 
+
 If you do not want to render the message form, pass `message_form: nil`. When the form is present, `send_message_path` is
 required and the helper will generate the correct POST form.
+
+To append messages to an already-rendered `tramway_chat` stream, use `tramway_chat_append_message`.
+The method is mixed into controllers and ActiveRecord models by Tramway and expects:
+- `chat_id:` — the same value used in `tramway_chat chat_id:`
+- `message_type:` — only `:sent` or `:received` (raises `ArgumentError` otherwise)
+- `text:` — message content
+- `sent_at:` — message timestamp
+
+```ruby
+tramway_chat_append_message(
+  chat_id: 'support-chat',
+  message_type: :received,
+  text: 'We got your request',
+  sent_at: Time.current
+)
+```
+
+It broadcasts with `target: 'messages'` and renders the `tramway/chats/message` partial so the message appears in the live chat.
 
 ### Tramway Table Component
 

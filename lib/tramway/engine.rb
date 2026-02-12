@@ -12,6 +12,7 @@ module Tramway
       load_decorator_helper
       load_form_helper
       load_routes_helper
+      load_chats_broadcast
       configure_pagination if Tramway.config.pagination[:enabled]
     end
 
@@ -64,6 +65,16 @@ module Tramway
         require 'tramway/helpers/routes_helper'
 
         loaded_class.include Tramway::Helpers::RoutesHelper
+      end
+    end
+
+    def load_chats_broadcast
+      ActiveSupport.on_load(:action_controller) do |loaded_class|
+        loaded_class.include Tramway::Chats::Broadcast
+      end
+
+      ActiveSupport.on_load(:active_record) do |loaded_class|
+        loaded_class.include Tramway::Chats::Broadcast
       end
     end
 
