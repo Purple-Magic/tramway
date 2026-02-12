@@ -13,19 +13,13 @@ describe Tramway::ChatComponent, type: :component do
 
     expect(page).to have_css(
       "#chat.#{class_selector(%w[
-                                mx-auto
                                 flex
                                 flex-1
-                                flex-col
+                                h-full
                                 w-full
-                                rounded-2xl
-                                border
-                                shadow-sm
-                                ring-gray-700
-                                md:p-4
-                                border-gray-100
+                                min-w-0
                                 min-h-0
-                                overflow-hidden
+                                flex-col
                               ])}"
     )
     expect(page).to have_css(
