@@ -6,7 +6,7 @@ module Tramway
   # Displays text with size-based utility classes.
   class NativeTextComponent < Tramway::BaseComponent
     URL_REGEX = %r{https?://[^\s<]+}.freeze
-    MAX_URL_LENGTH = 40
+    MAX_URL_LENGTH = 41
 
     option :text
     option :size, optional: true, default: -> { :middle }
