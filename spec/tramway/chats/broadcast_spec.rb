@@ -20,7 +20,7 @@ RSpec.describe Tramway::Chats::Broadcast do
     end
   end
 
-  describe '#append_message' do
+  describe '#tramway_chat_append_message' do
     it 'broadcasts a message with expected payload' do
       expect(broadcaster).to receive(:broadcast_append_to).with(
         [42, 'messages'],
@@ -33,7 +33,7 @@ RSpec.describe Tramway::Chats::Broadcast do
         }
       )
 
-      broadcaster.append_message(
+      broadcaster.tramway_chat_append_message(
         message_type: :sent,
         text: 'Hello',
         sent_at: Time.zone.parse('2026-01-01 10:00:00')
@@ -42,7 +42,7 @@ RSpec.describe Tramway::Chats::Broadcast do
 
     it 'raises when message_type is invalid' do
       expect do
-        broadcaster.append_message(message_type: :invalid, text: 'Hello', sent_at: Time.current)
+        broadcaster.tramway_chat_append_message(message_type: :invalid, text: 'Hello', sent_at: Time.current)
       end.to raise_error(ArgumentError, 'message_type must be :sent or :received')
     end
   end
