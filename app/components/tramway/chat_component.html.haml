@@ -1,12 +1,12 @@
 = helpers.turbo_stream_from chat_id, 'messages'
 
-.flex-1.min-h-0.flex.flex-col
-  #chat.flex-1.min-h-0.overflow-y-auto.p-2.md:p-6.space-y-2.md:space-y-4.md:rounded-xl.rounded-t-xl#messages{ data: { chat_target: 'messages' }, class: 'text-gray-100 bg-gray-800/60' }
+#chat.flex.flex-1.h-full.w-full.min-h-0.min-w-0.flex-col
+  #messages.flex-1.min-h-0.overflow-y-auto.p-2.md:p-6.space-y-2.md:space-y-4.md:rounded-xl.rounded-t-xl{ data: { chat_target: 'messages' }, class: 'text-gray-100 bg-gray-800/60' }
     - messages.each do |message|
       = component "tramway/chats/message", **message
     - if disabled?
       = inline_svg 'icons/dots.svg', class: 'w-8 h-8 text-gray-500 mx-auto my-4'
-  
+
   - if message_form.present?
     .shrink-0.border-gray-200.md:pt-2.border-gray-700
       = form_for message_form, url: send_message_path, method: :post, html: { class: 'flex items-center md:gap-1' } do |f|
