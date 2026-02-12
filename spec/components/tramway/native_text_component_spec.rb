@@ -28,6 +28,18 @@ describe Tramway::NativeTextComponent, type: :component do
     expect(page).to have_css('h4.text-xl.font-semibold', text: 'What is Going Wrong')
   end
 
+
+  it 'renders headers from the exact quoted payload format' do
+    text_payload = <<~TEXT
+      "#### What is Going Well\n- **Productive Hours**: Pavel logged 43h 23m this week\n\n#### What is Going Wrong\n- **Shortfall in Hours**"
+    TEXT
+
+    render_inline(described_class.new(text: text_payload))
+
+    expect(page).to have_css('h4.text-xl.font-semibold', text: 'What is Going Well')
+    expect(page).to have_css('h4.text-xl.font-semibold', text: 'What is Going Wrong')
+  end
+
   it 'renders bold and italic markdown in paragraph text' do
     render_inline(described_class.new(text: 'This has **bold** and *italic* and _also italic_ text.'))
 

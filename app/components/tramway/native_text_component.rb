@@ -98,11 +98,12 @@ module Tramway
     end
 
     def decode_serialized_text(content)
-      return content unless content.match?(/\A".*"\z/m)
+      stripped_content = content.strip
+      return content unless stripped_content.match?(/\A".*"\z/m)
 
-      JSON.parse(content)
+      JSON.parse(stripped_content)
     rescue JSON::ParserError
-      content
+      stripped_content.delete_prefix('"').delete_suffix('"')
     end
 
     def flush_list_items(blocks, list_items)
