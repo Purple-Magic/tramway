@@ -68,7 +68,7 @@ module Tramway
 
         list_match = stripped_line.match(LIST_ITEM_REGEX)
         if list_match
-          list_items << helpers.content_tag(:li, render_inline_markdown(list_match[1]), class: text_class)
+          list_items << helpers.content_tag(:li, render_inline_markdown(list_match[1]), class: "#{text_class} marker:hidden")
           next
         end
 
@@ -83,7 +83,7 @@ module Tramway
     def flush_list_items(blocks, list_items)
       return if list_items.empty?
 
-      blocks << helpers.content_tag(:ul, helpers.safe_join(list_items), class: "list-disc pl-5 my-2 #{klass}")
+      blocks << helpers.content_tag(:ul, helpers.safe_join(list_items), class: "list-none pl-5 my-2 #{klass}")
       list_items.clear
     end
 

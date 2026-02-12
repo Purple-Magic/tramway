@@ -105,6 +105,8 @@ module.exports = {
     'md:border',
     'md:gap-1',
     'hover:underline',
+    'marker:hidden',
+    'list-none',
 
     // === Custom table layout utilities ===
     'div-table',
