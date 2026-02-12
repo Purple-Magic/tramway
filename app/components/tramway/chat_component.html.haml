@@ -52,8 +52,10 @@
         const textInput = form.querySelector('input[name="message[text]"]');
         if (!textInput) return;
 
-        form.addEventListener('submit', () => {
-          textInput.value = '';
+        form.addEventListener('turbo:submit-end', (event) => {
+          if (event.detail.success) {
+            textInput.value = '';
+          }
         });
 
         form.dataset.chatInputClearInitialized = 'true';
