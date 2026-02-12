@@ -3,12 +3,20 @@
 require 'rails_helper'
 
 describe Tramway::NativeTextComponent, type: :component do
-  it 'renders markdown headers, bold and italic text' do
-    render_inline(described_class.new(text: "# Heading\nThis has **bold** and *italic* text."))
+  it 'renders markdown headers as tailwind styled heading tags' do
+    render_inline(described_class.new(text: "# Heading 1\n## Heading 2\n### Heading 3"))
 
-    expect(page).to have_css('h1.text-base', text: 'Heading')
-    expect(page).to have_css('p.text-base strong', text: 'bold')
-    expect(page).to have_css('p.text-base em', text: 'italic')
+    expect(page).to have_css('h1.text-4xl.font-bold', text: 'Heading 1')
+    expect(page).to have_css('h2.text-3xl.font-bold', text: 'Heading 2')
+    expect(page).to have_css('h3.text-2xl.font-semibold', text: 'Heading 3')
+  end
+
+  it 'renders bold and italic markdown in paragraph text' do
+    render_inline(described_class.new(text: 'This has **bold** and *italic* and _also italic_ text.'))
+
+    expect(page).to have_css('p strong', text: 'bold')
+    expect(page).to have_css('p em', text: 'italic')
+    expect(page).to have_css('p em', text: 'also italic')
   end
 
   it 'renders unordered lists from markdown list items' do

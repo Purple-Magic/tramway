@@ -9,6 +9,14 @@ module Tramway
     MAX_URL_LENGTH = 41
     HEADER_REGEX = /\A(#{Regexp.escape('#')}{1,6})\s+(.+)\z/
     LIST_ITEM_REGEX = /\A[-*]\s+(.+)\z/
+    HEADER_CLASSES = {
+      1 => 'text-4xl font-bold leading-tight mt-4 mb-2',
+      2 => 'text-3xl font-bold leading-tight mt-4 mb-2',
+      3 => 'text-2xl font-semibold leading-snug mt-3 mb-2',
+      4 => 'text-xl font-semibold leading-snug mt-3 mb-2',
+      5 => 'text-lg font-semibold leading-snug mt-2 mb-1',
+      6 => 'text-base font-semibold leading-snug mt-2 mb-1'
+    }.freeze
 
     option :text
     option :size, optional: true, default: -> { :middle }
@@ -53,7 +61,7 @@ module Tramway
           blocks << helpers.content_tag(
             "h#{header_match[1].length}",
             render_inline_markdown(header_match[2]),
-            class: text_class
+            class: header_class(header_match[1].length)
           )
           next
         end
@@ -65,7 +73,7 @@ module Tramway
         end
 
         flush_list_items(blocks, list_items)
-        blocks << helpers.content_tag(:p, render_inline_markdown(stripped_line), class: text_class)
+        blocks << helpers.content_tag(:p, render_inline_markdown(stripped_line), class: "#{text_class} my-1")
       end
 
       flush_list_items(blocks, list_items)
@@ -75,8 +83,12 @@ module Tramway
     def flush_list_items(blocks, list_items)
       return if list_items.empty?
 
-      blocks << helpers.content_tag(:ul, helpers.safe_join(list_items), class: "list-disc pl-5 #{klass}")
+      blocks << helpers.content_tag(:ul, helpers.safe_join(list_items), class: "list-disc pl-5 my-2 #{klass}")
       list_items.clear
+    end
+
+    def header_class(level)
+      "#{HEADER_CLASSES.fetch(level)} #{klass}".strip
     end
 
     def render_inline_markdown(content)
