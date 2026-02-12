@@ -104,6 +104,7 @@ module.exports = {
     'rounded-bl-2xl',
     'md:border',
     'md:gap-1',
+    'hover:underline',
 
     // === Custom table layout utilities ===
     'div-table',

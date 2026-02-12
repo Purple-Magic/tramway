@@ -50,7 +50,7 @@ module Tramway
           url,
           target: '_blank',
           rel: 'noopener noreferrer',
-          class: 'text-blue-400 underline'
+          class: 'text-blue-400 hover:underline'
         )
         fragments << ERB::Util.html_escape(trailing) if trailing.present?
         current_index = match.end(0)
