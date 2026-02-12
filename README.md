@@ -887,6 +887,9 @@ message fields like `text`, `data`, or `sent_at` are forwarded to `tramway/chats
 If you do not want to render the message form, pass `message_form: nil`. When the form is present, `send_message_path` is
 required and the helper will generate the correct POST form.
 
+
+By default, Tramway Chat uses CSS reverse-column flow so the latest messages are shown first in view without requiring JavaScript.
+
 ### Tramway Table Component
 
 Tramway provides a responsive, tailwind-styled table with light and dark themes. Use the `tramway_table`, `tramway_row`, and
