@@ -36,8 +36,12 @@ module Tramway
                   &
       end
 
-      def tramway_cell(&)
-        component 'tramway/table/cell', &
+      def tramway_cell(**options, &)
+        component 'tramway/table/cell', options:, &
+      end
+
+      def tramway_header_cell(**options, &)
+        component 'tramway/table/header_cell', options:, &
       end
 
       def tramway_button(path: nil, text: nil, method: :get, form_options: {}, **options, &)

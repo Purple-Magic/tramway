@@ -7,7 +7,7 @@ module Tramway
 
     def table_classes
       theme_classes(
-        classic: 'div-table text-left rtl:text-right text-gray-300'
+        classic: 'div-table text-left rtl:text-right text-gray-300 sm:text-base md:text-sm xl:text-base'
       )
     end
   end

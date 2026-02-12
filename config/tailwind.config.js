@@ -385,5 +385,10 @@ module.exports = {
     'rounded',
     'shadow',
     'text-black'
+
+    // === Table styles ===
+    'sm:px-6',
+    'md:px-2',
+    'xl:px-6'
   ],
 }

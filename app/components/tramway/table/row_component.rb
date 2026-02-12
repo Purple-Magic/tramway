@@ -41,7 +41,7 @@ module Tramway
 
       def cell_classes
         theme_classes(
-          classic: 'div-table-cell px-6 py-4 font-medium text-gray-100 text-xs sm:text-base'
+          classic: 'div-table-cell px-6 py-4 font-medium text-gray-100'
         )
       end
 
