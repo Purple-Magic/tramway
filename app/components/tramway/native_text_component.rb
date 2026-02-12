@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'erb'
+require 'json'
 
 module Tramway
   # Displays text with size-based utility classes.
@@ -23,7 +24,7 @@ module Tramway
     option :klass, optional: true, default: -> { '' }
 
     def rendered_html
-      return ''.html_safe if text.blank?
+      return ''.html_safe if normalized_text.blank?
 
       helpers.safe_join(rendered_blocks)
     end
@@ -47,7 +48,7 @@ module Tramway
       blocks = []
       list_items = []
 
-      text.split("\n").each_with_index do |line, index|
+      normalized_text.split("\n").each_with_index do |line, index|
         stripped_line = normalized_line(line, index).strip
 
         if stripped_line.blank?
@@ -84,6 +85,24 @@ module Tramway
       return line unless index.zero?
 
       line.sub(/\A[\uFEFF\u200B]+/, '')
+    end
+
+
+    def normalized_text
+      @normalized_text ||= begin
+        content = decode_serialized_text(text.to_s)
+        content
+          .gsub(/\r\n?/, "\n")
+          .gsub(/\\r\\n|\\n|\\r/, "\n")
+      end
+    end
+
+    def decode_serialized_text(content)
+      return content unless content.match?(/\A".*"\z/m)
+
+      JSON.parse(content)
+    rescue JSON::ParserError
+      content
     end
 
     def flush_list_items(blocks, list_items)
