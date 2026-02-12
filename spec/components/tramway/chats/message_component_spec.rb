@@ -77,6 +77,8 @@ describe Tramway::Chats::MessageComponent, type: :component do
       'https://example.com/very/long/path/with/q...',
       href: 'https://example.com/very/long/path/with/query?foo=bar'
     )
+
+    expect(page).to have_css('a.text-blue-400.underline')
   end
   # rubocop:enable RSpec/ExampleLength
 end

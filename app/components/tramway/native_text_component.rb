@@ -11,7 +11,6 @@ module Tramway
     option :text
     option :size, optional: true, default: -> { :middle }
     option :klass, optional: true, default: -> { '' }
-    option :linkify, optional: true, default: -> { false }
 
     def lines
       @lines ||= text&.split("\n")
@@ -31,8 +30,6 @@ module Tramway
     end
 
     def rendered_line(line)
-      return ERB::Util.html_escape(line) unless linkify
-
       helpers.safe_join(linkified_fragments(line))
     end
 
@@ -48,7 +45,13 @@ module Tramway
         url, trailing = strip_trailing_punctuation(matched_url)
 
         fragments << ERB::Util.html_escape(line[current_index...match.begin(0)])
-        fragments << helpers.link_to(shorten(url), url, target: '_blank', rel: 'noopener noreferrer')
+        fragments << helpers.link_to(
+          shorten(url),
+          url,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          class: 'text-blue-400 underline'
+        )
         fragments << ERB::Util.html_escape(trailing) if trailing.present?
         current_index = match.end(0)
       end
