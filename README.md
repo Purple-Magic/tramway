@@ -863,6 +863,9 @@ the Tailwind color family explicitly.
 that receives new messages. Each message must include an `:id` and a `:type` (either `:sent` or `:received`). Additional
 message fields like `text`, `data`, or `sent_at` are forwarded to `tramway/chats/message_component`.
 
+Use `send_messages_enabled:` to control whether users can send new messages from the rendered form. It defaults to `true`.
+When set to `false`, the text field is disabled and the waiting placeholder is shown.
+
 ```haml
 -# Haml example
 - messages = [
@@ -872,7 +875,8 @@ message fields like `text`, `data`, or `sent_at` are forwarded to `tramway/chats
 = tramway_chat chat_id: 'support-chat',
   messages: messages,
   message_form: @message_form,
-  send_message_path: chat_messages_path
+  send_message_path: chat_messages_path,
+  send_messages_enabled: @chat.open?
 ```
 
 ```erb
@@ -881,7 +885,8 @@ message fields like `text`, `data`, or `sent_at` are forwarded to `tramway/chats
 <%= tramway_chat chat_id: 'support-chat',
   messages: messages,
   message_form: @message_form,
-  send_message_path: chat_messages_path %>
+  send_message_path: chat_messages_path,
+  send_messages_enabled: @chat.open? %>
 ```
 
 
