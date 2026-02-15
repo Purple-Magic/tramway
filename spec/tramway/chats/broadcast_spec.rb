@@ -17,11 +17,11 @@ RSpec.describe Tramway::Chats::Broadcast do
       }
     end
 
-    let(:streams_channel) { class_double(Turbo::StreamsChannel).as_stubbed_const }
-
     before do
-      stub_const('Turbo', Module.new) unless defined?(Turbo)
+      stub_const('Turbo::StreamsChannel', Class.new)
     end
+
+    let(:streams_channel) { class_double('Turbo::StreamsChannel').as_stubbed_const }
 
     it 'broadcasts sent messages to the chat stream' do
       expect(streams_channel).to receive(:broadcast_append_to).with(
