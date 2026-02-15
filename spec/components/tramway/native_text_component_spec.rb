@@ -19,12 +19,12 @@ describe Tramway::NativeTextComponent, type: :component do
     expect(page).to have_css('p em', text: 'also italic')
   end
 
-  it 'renders unordered lists from markdown list items' do
+  it 'renders markdown unordered lists' do
     render_inline(described_class.new(text: "- First\n- Second"))
 
-    expect(page).to have_css('ul.list-disc.pl-5')
-    expect(page).to have_css('ul li.text-base', text: 'First')
-    expect(page).to have_css('ul li.text-base', text: 'Second')
+    expect(page).to have_css('ul.list-none.pl-5')
+    expect(page).to have_css('ul li.text-base.marker\\:hidden', text: 'First')
+    expect(page).to have_css('ul li.text-base.marker\\:hidden', text: 'Second')
   end
 
   it 'renders markdown and auto-links urls together' do
@@ -35,5 +35,12 @@ describe Tramway::NativeTextComponent, type: :component do
       'https://example.com/very/long/path/with/q...',
       href: 'https://example.com/very/long/path/with/query?foo=bar'
     )
+  end
+
+  it 'escapes html while still applying markdown emphasis' do
+    render_inline(described_class.new(text: '**<script>alert(1)</script>**'))
+
+    expect(page).to have_css('strong', text: '<script>alert(1)</script>')
+    expect(page).to have_no_css('script')
   end
 end
