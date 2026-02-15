@@ -3,16 +3,10 @@
 require 'rails_helper'
 
 describe Tramway::ChatComponent, type: :component do
-  let(:chat_id) { 123 }
-  let(:messages) { [] }
-  let(:message_form) { nil }
-  let(:options) { {} }
-  let(:send_messages_enabled) { true }
-
   subject(:rendered_component) do
     render_inline(
       described_class.new(
-        chat_id:,
+        chat_id: 123,
         messages:,
         message_form:,
         options:,
@@ -21,6 +15,11 @@ describe Tramway::ChatComponent, type: :component do
       )
     )
   end
+
+  let(:messages) { [] }
+  let(:message_form) { nil }
+  let(:options) { {} }
+  let(:send_messages_enabled) { true }
 
   before do
     without_partial_double_verification do
@@ -106,7 +105,7 @@ describe Tramway::ChatComponent, type: :component do
 
       expect(page).to have_css("form[action='/messages'][method='post']")
       expect(page).to have_field('message[text]', disabled: false)
-      expect(page).to have_field('message[chat_id]', type: 'hidden', with: chat_id.to_s)
+      expect(page).to have_field('message[chat_id]', type: 'hidden', with: '123')
       expect(page).to have_field('message[conversation_id]', type: 'hidden', with: '777')
       expect(page).to have_button('🡩')
     end

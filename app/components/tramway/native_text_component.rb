@@ -5,7 +5,7 @@ require 'erb'
 module Tramway
   # Displays text with size-based utility classes.
   class NativeTextComponent < Tramway::BaseComponent
-    URL_REGEX = %r{https?://[^\s<]+}.freeze
+    URL_REGEX = %r{https?://[^\s<]+}
     MAX_URL_LENGTH = 41
     HEADER_REGEX = /\A(#{Regexp.escape('#')}{1,6})\s+(.+)\z/
     LIST_ITEM_REGEX = /\A[-*]\s+(.+)\z/
@@ -68,7 +68,8 @@ module Tramway
 
         list_match = stripped_line.match(LIST_ITEM_REGEX)
         if list_match
-          list_items << helpers.content_tag(:li, render_inline_markdown(list_match[1]), class: "#{text_class} marker:hidden")
+          list_items << helpers.content_tag(:li, render_inline_markdown(list_match[1]),
+                                            class: "#{text_class} marker:hidden")
           next
         end
 
