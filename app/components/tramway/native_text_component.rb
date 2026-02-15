@@ -23,6 +23,7 @@ module Tramway
     option :klass, optional: true, default: -> { '' }
 
     def rendered_html
+      # Safe because this is an empty static string literal, not user-controlled content.
       return ''.html_safe if text.blank?
 
       helpers.safe_join(rendered_blocks)
@@ -97,6 +98,7 @@ module Tramway
       with_bold = escaped_content.gsub(/\*\*(.+?)\*\*/, '<strong>\\1</strong>')
       with_italics = with_bold.gsub(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/, '<em>\\1</em>')
       with_underscored_italics = with_italics.gsub(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/, '<em>\\1</em>')
+      # Safe because user input has already been escaped above and only controlled tags are introduced.
       linkified(with_underscored_italics).html_safe
     end
 
@@ -109,6 +111,7 @@ module Tramway
         matched_url = match[0]
         url, trailing = strip_trailing_punctuation(matched_url)
 
+        # Safe because this fragment is sliced from `content`, which was already HTML-escaped.
         fragments << content[current_index...match.begin(0)].html_safe
         fragments << helpers.link_to(
           shorten(url),
@@ -117,10 +120,12 @@ module Tramway
           rel: 'noopener noreferrer',
           class: 'text-blue-400 hover:underline'
         )
+        # Safe because `trailing` can only contain stripped URL punctuation (.,!?;:).
         fragments << trailing.html_safe if trailing.present?
         current_index = match.end(0)
       end
 
+      # Safe because this tail fragment also comes from the already escaped `content` string.
       fragments << content[current_index..].html_safe if current_index < content.length
       helpers.safe_join(fragments)
     end
