@@ -30,20 +30,13 @@ module Tramway
     end
 
     def text_class
-      case size
-      when :small
-        'text-sm'
-      when :large
-        'text-lg'
-      when :middle
-        'text-base'
-      else
-        'md:text-sm lg:text-base'
-      end + " #{klass}"
+      { small: 'text-sm', large: 'text-lg', middle: 'text-base' }.fetch(size, 'md:text-sm lg:text-base') + " #{klass}"
     end
 
     private
 
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def rendered_blocks
       blocks = []
       list_items = []
@@ -81,6 +74,8 @@ module Tramway
       flush_list_items(blocks, list_items)
       blocks
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     def flush_list_items(blocks, list_items)
       return if list_items.empty?
@@ -99,9 +94,12 @@ module Tramway
       with_italics = with_bold.gsub(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/, '<em>\\1</em>')
       with_underscored_italics = with_italics.gsub(/(?<!_)_(?!_)(.+?)(?<!_)_(?!_)/, '<em>\\1</em>')
       # Safe because user input has already been escaped above and only controlled tags are introduced.
+      # rubocop:disable Rails/OutputSafety
       linkified(with_underscored_italics).html_safe
     end
 
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def linkified(content)
       fragments = []
       current_index = 0
@@ -112,7 +110,8 @@ module Tramway
         url, trailing = strip_trailing_punctuation(matched_url)
 
         # Safe because this fragment is sliced from `content`, which was already HTML-escaped.
-        fragments << content[current_index...match.begin(0)].html_safe
+
+        fragments << content[current_index...match.begin(0)].html_safe # rubocop:disable Rails/OutputSafety
         fragments << helpers.link_to(
           shorten(url),
           url,
@@ -121,14 +120,18 @@ module Tramway
           class: 'text-blue-400 hover:underline'
         )
         # Safe because `trailing` can only contain stripped URL punctuation (.,!?;:).
-        fragments << trailing.html_safe if trailing.present?
+        fragments << trailing.html_safe if trailing.present? # rubocop:disable Rails/OutputSafety
         current_index = match.end(0)
       end
 
       # Safe because this tail fragment also comes from the already escaped `content` string.
       fragments << content[current_index..].html_safe if current_index < content.length
+      # rubocop:enable Rails/OutputSafety
+
       helpers.safe_join(fragments)
     end
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     def strip_trailing_punctuation(url)
       stripped_url = url.sub(/[.,!?;:]+\z/, '')
