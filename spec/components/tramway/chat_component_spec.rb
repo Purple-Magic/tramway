@@ -23,8 +23,10 @@ describe Tramway::ChatComponent, type: :component do
   end
 
   before do
-    allow_any_instance_of(ActionView::Base).to receive(:inline_svg)
-      .and_return('<svg class="w-8 h-8 text-gray-500 mx-auto my-4"></svg>'.html_safe)
+    without_partial_double_verification do
+      allow_any_instance_of(ActionView::Base).to receive(:inline_svg)
+        .and_return('<svg class="w-8 h-8 text-gray-500 mx-auto my-4"></svg>'.html_safe)
+    end
   end
 
   # rubocop:disable RSpec/ExampleLength
