@@ -11,8 +11,14 @@ RSpec.describe Tramway::Chats::Broadcast do
       end.new
     end
 
+    let(:streams_channel) { class_double('Turbo::StreamsChannel').as_stubbed_const }
+
+    before do
+      stub_const('Turbo', Module.new) unless defined?(Turbo)
+    end
+
     it 'broadcasts sent messages to the chat stream' do
-      expect(Turbo::StreamsChannel).to receive(:broadcast_append_to).with(
+      expect(streams_channel).to receive(:broadcast_append_to).with(
         ['chat-42', 'messages'],
         target: 'messages',
         partial: 'tramway/chats/message',
@@ -32,7 +38,7 @@ RSpec.describe Tramway::Chats::Broadcast do
     end
 
     it 'broadcasts received messages when type is passed as a string' do
-      expect(Turbo::StreamsChannel).to receive(:broadcast_append_to).with(
+      expect(streams_channel).to receive(:broadcast_append_to).with(
         ['chat-42', 'messages'],
         target: 'messages',
         partial: 'tramway/chats/message',

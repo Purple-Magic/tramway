@@ -22,6 +22,11 @@ describe Tramway::ChatComponent, type: :component do
     )
   end
 
+  before do
+    allow_any_instance_of(ActionView::Base).to receive(:inline_svg)
+      .and_return('<svg class="w-8 h-8 text-gray-500 mx-auto my-4"></svg>'.html_safe)
+  end
+
   # rubocop:disable RSpec/ExampleLength
   it 'renders common chat container styles' do
     rendered_component
@@ -84,7 +89,14 @@ describe Tramway::ChatComponent, type: :component do
   end
 
   context 'when message form is provided' do
-    let(:message_form) { Message.new }
+    let(:message_form_class) do
+      Class.new do
+        include ActiveModel::Model
+
+        attr_accessor :text, :chat_id, :conversation_id
+      end
+    end
+    let(:message_form) { message_form_class.new }
     let(:options) { { conversation_id: 777 } }
 
     it 'renders form fields and hidden values' do

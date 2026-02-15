@@ -4,7 +4,7 @@ require 'rails_helper'
 
 feature 'Chat component', :js, type: :feature do
   scenario 'renders sent and received messages on chat page' do
-    visit '/chat'
+    visit '/chat_feature'
 
     expect(page).to have_css('#chat')
     expect(page).to have_css('#messages')
