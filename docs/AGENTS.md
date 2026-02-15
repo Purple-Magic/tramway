@@ -132,6 +132,10 @@ When you need chat UI, use the `tramway_chat` helper. Pass `chat_id`, `messages`
 Each message must include `:id` and a `:type` of `:sent` or `:received`, and other keys (like `:text`, `:data`, `:sent_at`)
 are forwarded to `tramway/chats/message_component`. Use `message_form: nil` when you only need read-only chat rendering.
 
+For live updates to a rendered `tramway_chat`, use `tramway_chat_append_message(chat_id:, message_type:, text:, sent_at:)`.
+This method is included in all controllers and ActiveRecord models. `message_type` must be `:sent` or `:received`, otherwise
+it raises `ArgumentError`. `chat_id` must match the stream id used in `tramway_chat`.
+
 ### Rule 9
 If page `create` or `update` is configured for an entity, use Tramway Form pattern for forms. Visible fields are configured via `form_fields` method.
 

@@ -48,6 +48,7 @@ module.exports = {
     'hover:bg-blue-400',
     'text-gray-100',
     'text-gray-400',
+    'text-blue-400',
     'placeholder:text-gray-400',
     'focus:border-blue-400',
     'focus:ring-blue-500/30',
@@ -85,6 +86,7 @@ module.exports = {
     'bg-blue-600',
     'bg-gray-800/60',
     'min-h-0',
+    'min-w-0',
     'flex-1',
     'overflow-y-auto',
     'overflow-hidden',
@@ -102,6 +104,9 @@ module.exports = {
     'rounded-bl-2xl',
     'md:border',
     'md:gap-1',
+    'hover:underline',
+    'marker:hidden',
+    'list-none',
 
     // === Custom table layout utilities ===
     'div-table',

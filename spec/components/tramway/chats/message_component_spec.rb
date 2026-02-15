@@ -67,5 +67,18 @@ describe Tramway::Chats::MessageComponent, type: :component do
       text: 'Hi there'
     )
   end
+
+  it 'renders links as shortened clickable anchors in message text' do
+    message_text = 'Read more at https://example.com/very/long/path/with/query?foo=bar and reply'
+
+    render_inline(described_class.new(type: :sent, text: message_text))
+
+    expect(page).to have_link(
+      'https://example.com/very/long/path/with/q...',
+      href: 'https://example.com/very/long/path/with/query?foo=bar'
+    )
+
+    expect(page).to have_css('a.text-blue-400.hover\\:underline')
+  end
   # rubocop:enable RSpec/ExampleLength
 end
