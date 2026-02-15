@@ -131,6 +131,8 @@ Inherit all components from Tramway::BaseComponent
 When you need chat UI, use the `tramway_chat` helper. Pass `chat_id`, `messages`, `message_form`, and `send_message_path`.
 Each message must include `:id` and a `:type` of `:sent` or `:received`, and other keys (like `:text`, `:data`, `:sent_at`)
 are forwarded to `tramway/chats/message_component`. Use `message_form: nil` when you only need read-only chat rendering.
+Use `send_messages_enabled:` (defaults to `true`) to control whether the message input is enabled. Set it to `false`
+when chat should be visible but sending is temporarily unavailable.
 
 For live updates to a rendered `tramway_chat`, use `tramway_chat_append_message(chat_id:, message_type:, text:, sent_at:)`.
 This method is included in all controllers and ActiveRecord models. `message_type` must be `:sent` or `:received`, otherwise
