@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :clients
   resources :articles, only: :show
 
+  resource :chat, only: :show
+
   namespace :episodes do
     resources :parts
   end
