@@ -466,6 +466,9 @@ Always `tramway_decorate` and `tramway_form` for creating these types of objects
 ### Rule 32
 In Tramway Decorators, use `delegate_attributes` method instead of `delegate :something, to: :object`
 
+### Rule 33
+In case you want to use container on the page, use `tramway_container` helper instead of creating a component for that or using a plain div with Tailwind classes.
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
