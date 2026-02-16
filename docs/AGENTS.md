@@ -458,7 +458,7 @@ In case, you need to make a one link in tramway_table on each row. Use `tramway_
 Always use tramway decorated objects in views.
 
 ### Rule 30
-For Tailwind classes with `/`, `[`, `]` characters use `{ class: 'here is the complicated class' }` in HAML.
+For Tailwind classes with arbitrary values (with `/`, `[`, `]` characters) use `{ class: 'here is the complicated class' }` in HAML.
 
 ### Rule 31
 Always `tramway_decorate` and `tramway_form` for creating these types of objects. Don't use decorator and form classes for this.
