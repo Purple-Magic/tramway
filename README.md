@@ -51,7 +51,7 @@ bundle install
 bin/rails g tramway:install
 ```
 
-The install generator adds the required gems (`haml-rails`, `kaminari`, `view_component`, and `dry-initializer`) to your
+The install generator adds the required gems (`haml-rails`, `kaminari`, `view_component`, `dry-initializer`, and `dry-monads`) to your
 application's Gemfile—if they are not present—and appends the Tailwind safelist configuration Tramway ships with.
 
 ## Getting Started

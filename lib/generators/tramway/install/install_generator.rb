@@ -16,7 +16,8 @@ module Tramway
           { name: 'haml-rails', declaration: 'gem "haml-rails"' },
           { name: 'kaminari', declaration: 'gem "kaminari"' },
           { name: 'view_component', declaration: 'gem "view_component"' },
-          { name: 'dry-initializer', declaration: "gem 'dry-initializer'" }
+          { name: 'dry-initializer', declaration: "gem 'dry-initializer'" },
+          { name: 'dry-monads', declaration: "gem 'dry-monads'" }
         ]
       end
 
