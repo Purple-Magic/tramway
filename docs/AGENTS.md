@@ -356,7 +356,12 @@ In case you need something that looks like enumerize but it's a process state, u
 Use model scopes instead of creating private methods for object collections.
 
 ### Rule 23
-Use `tramway_title` for the main title on pages
+Use `tramway_title` for the main title on pages. `tramway_title text: 'Title'` OR
+
+```
+tramway_title do
+  More complicated title with HTML tags
+```
 
 Example
 *app/models/user.rb*
