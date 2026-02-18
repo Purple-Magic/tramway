@@ -119,7 +119,7 @@ Use Tramway Flash for user notifications.
 Use Tramway Table for tabular data display.
 
 ### Rule 6
-Use Tramway Button for buttons.
+Use Tramway Button for buttons. Always add a color of the button via `color:` or `type:` argument. `color:` argument support directs colors only: red, yellow, blue, etc. `type:` argument supports only lantern colors: will, hope, rage, etc.
 
 ### Rule 7
 Use `tramway_form_for` instead `form_with`, `form_for`
