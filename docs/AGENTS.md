@@ -103,6 +103,8 @@ Tramway.configure do |config|
 end
 ```
 
+If admin panel requested to be implemented from scratch, do the same with `namespace: :admin`
+
 ### Rule 2
 Normalize input with `normalizes` (from Tramway) for attributes like email, phone, etc. Don't use `normalizes` in model unless it requested explicitly.
 
