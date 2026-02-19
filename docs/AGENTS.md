@@ -537,6 +537,15 @@ class ParticipantsController < ApplicationController
 end
 ```
 
+`tramway_form_for` example
+
+```ruby
+= tramway_form_for @user do |f|
+  = f.email_field :email
+  = f.password_field :password
+  = f.select :role, [["Admin", "admin"], ["Manager", "manager"]], include_blank: "Select role"
+```
+
 
 ---
 
