@@ -239,6 +239,27 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       )
     end
 
+
+
+    it 'does not duplicate section markers when remote template already includes them' do
+      response = instance_double(
+        Net::HTTPResponse,
+        body: <<~MARKDOWN
+          ## Start of Tramway AGENTS.md
+          # Remote AGENTS content
+          - Rule one
+          - Rule two
+          ## End of Tramway AGENTS.md
+        MARKDOWN
+      )
+      allow(Net::HTTP).to receive(:get_response).and_return(response)
+
+      run_generator
+
+      content = File.read(agents_path)
+      expect(content.scan('## Start of Tramway AGENTS.md').count).to eq(1)
+      expect(content.scan('## End of Tramway AGENTS.md').count).to eq(1)
+    end
     it 'is idempotent when instructions already exist' do
       run_generator
       first_run = File.read(agents_path)
