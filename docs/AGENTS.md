@@ -544,6 +544,7 @@ end
   = f.email_field :email
   = f.password_field :password
   = f.select :role, [["Admin", "admin"], ["Manager", "manager"]], include_blank: "Select role"
+  = f.submit 'Save'
 ```
 
 
