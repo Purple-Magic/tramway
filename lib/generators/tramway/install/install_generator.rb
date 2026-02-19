@@ -78,7 +78,7 @@ module Tramway
 
       def sanitize_agents_template_body(content)
         stripped_content = content.strip
-        section_pattern = /\A#{Regexp.escape(agents_section_start)}\s*\n?(.*?)\n?#{Regexp.escape(agents_section_end)}\s*\z/m
+        section_pattern = /\A#{Regexp.escape(agents_section_start)}\s*\n?(.*?)\n?#{Regexp.escape(agents_section_end)}\s*\z/m # rubocop:disable Layout/LineLength
         match = stripped_content.match(section_pattern)
 
         return stripped_content unless match
