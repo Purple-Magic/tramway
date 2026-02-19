@@ -117,6 +117,13 @@ Use Tramway Navbar for navigation
 ### Rule 4
 Use Tramway Flash for user notifications.
 
+```
+= tramway_flash text: flash[:notice], type: :hope
+= tramway_flash text: 'Double check your data', type: :greed, class: 'mt-2', data: { turbo: 'false' }
+```
+
+`type:` argument supports lantern colors.
+
 ### Rule 5
 Use Tramway Table for tabular data display.
 
