@@ -71,7 +71,19 @@ module Tramway
         response = Net::HTTP.get_response(uri)
         body = response.body.to_s
         body = body.dup.force_encoding(Encoding::UTF_8)
-        @agents_template_body = body.encode(Encoding::UTF_8, invalid: :replace, undef: :replace, replace: '')
+        @agents_template_body = sanitize_agents_template_body(
+          body.encode(Encoding::UTF_8, invalid: :replace, undef: :replace, replace: '')
+        )
+      end
+
+      def sanitize_agents_template_body(content)
+        stripped_content = content.strip
+        section_pattern = /\A#{Regexp.escape(agents_section_start)}\s*\n?(.*?)\n?#{Regexp.escape(agents_section_end)}\s*\z/m # rubocop:disable Layout/LineLength
+        match = stripped_content.match(section_pattern)
+
+        return stripped_content unless match
+
+        match[1].to_s.strip
       end
 
       def agents_section_start
