@@ -267,13 +267,13 @@ end
 
 **fields method**
 
-Use `form_fields` in your form class to customize which form helpers get rendered and which options are passed to them.
+Use `fields` in your form class to customize which form helpers get rendered and which options are passed to them.
 Each field must map to a form helper method name. When you need to pass options, use a hash where `:type` is the helper
 method name and the remaining keys are passed as named arguments.
 
 ```ruby
 class UserForm < Tramway::BaseForm
-  properties :email, :about_me, :user_type
+  properties :email, :about_me, :user_type, :score
 
   fields email: :email,
     name: :text,
@@ -284,7 +284,15 @@ class UserForm < Tramway::BaseForm
     user_type: {
       type: :select,
       collection: ['regular', 'user']
+    },
+    score: {
+      type: :number,
+      value: -> (object) { Score.find_by(user_id: object.id).value }
     }
+
+  def score=(value)
+    Score.find_by(user_id: object.id).update(value:)
+  end
 end
 ```
 
@@ -1176,19 +1184,6 @@ In case you need to use Stimulus `change` action with Tramway Multiselect
 Tramway uses [Tailwind](https://tailwindcss.com/) by default. It has tailwind-styled pagination for [kaminari](https://github.com/kaminari/kaminari).
 
 #### How to use
-
-*Gemfile*
-```ruby
-gem 'tramway'
-gem 'kaminari'
-```
-
-*config/initializers/tramway.rb*
-```ruby
-Tramway.configure do |config|
-  config.pagination = { enabled: true } # enabled is false by default
-end
-```
 
 *app/views/users/index.html.erb*
 ```erb

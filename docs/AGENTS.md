@@ -150,21 +150,32 @@ it raises `ArgumentError`. `chat_id` must match the stream id used in `tramway_c
 ### Rule 9
 If page `create` or `update` is configured for an entity, use Tramway Form pattern for forms. Visible fields are configured via `form_fields` method.
 
-Use form_fields in your form class to customize which form helpers get rendered and which options are passed to them. Each field must map to a form helper method name. When you need to pass options, use a hash where :type is the helper method name and the remaining keys are passed as named arguments.
+Use `fields` in your form class to customize which form helpers get rendered and which options are passed to them. Each field must map to a form helper method name. When you need to pass options, use a hash where :type is the helper method name and the remaining keys are passed as named arguments.
 
 Example:
 
-*app/forms/user_form.rb*:
 ```ruby
 class UserForm < Tramway::BaseForm
-  properties :email, :about_me
+  properties :email, :about_me, :user_type, :score
 
   fields email: :email,
     name: :text,
     about_me: {
       type: :text_area,
       rows: 5
+    },
+    user_type: {
+      type: :select,
+      collection: ['regular', 'user']
+    },
+    score: {
+      type: :number,
+      value: -> (object) { Score.find_by(user_id: object.id).value }
     }
+
+  def score=(value)
+    Score.find_by(user_id: object.id).update(value:)
+  end
 end
 ```
 
