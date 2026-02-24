@@ -84,17 +84,33 @@ module Tramway
     end
 
     def set_associations
-      @associations = @record.show_associations.map do |association|
-        next unless @record.public_send(association).any?
+      @associations = @record.show_associations.map do |(association, options)|
+        options ||= {}
+        association_type = @record.object.class.reflect_on_association(association).macro
 
-        records = Kaminari.paginate_array(@record.public_send(association.name)).page(params[:page])
+        case association_type
+        when :has_many
+          records = Kaminari.paginate_array(@record.public_send(association.name)).page(params[:page])
 
-        {
-          name: association,
-          decorator: records.first.class,
-          records:,
-          model_class: records.first.object.class
-        }
+          {
+            name: association,
+            decorator: records.first&.class,
+            records:,
+            model_class: records.first&.object&.class,
+            new_record_path: options[:new_record_path],
+            association_type:
+          }
+        when :belongs_to
+          record = @record.public_send(association.name)
+
+          {
+            name: association,
+            decorator: record.class,
+            record:,
+            model_class: record.class,
+            association_type:
+          }
+        end
       end.compact
     end
   end

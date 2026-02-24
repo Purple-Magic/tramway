@@ -20,11 +20,20 @@
       = @record.show_header_content
 
   - if @record.show_attributes.empty?
-    %p.text-center.mt-10
+    %p.text-center.mt-10.text-white
       You should fill object-level method `show_attributes` inside your
       = @record.class.name
 
   = tramway_table class: 'mt-4' do
+    - @associations.select { _1[:association_type] == :belongs_to }.each do |association|
+      - if association[:record].show_path.blank?
+        = component 'tramway/comments/show_path', decorator_class: association[:record].class.name
+      = tramway_row href: association[:record].show_path do
+        = tramway_cell do
+          = @model_class.human_attribute_name(association[:name])
+        = tramway_cell do
+          = association[:record].title
+
     - @record.show_attributes.each do |attribute|
       = tramway_row do
         = tramway_cell do
@@ -32,26 +41,37 @@
         = tramway_cell do
           = @record.public_send(attribute)
 
-  - @associations.each do |association|
-    .flex.flex-row.justify-between.mt-8
+  - @associations.select { _1[:association_type] == :has_many }.each do |association|
+    .flex.flex-row.justify-between.mt-8.text-white
       %h3.text-2xl.font-bold
         = @model_class.human_attribute_name(association[:name])
 
-      %div
+      - if association[:records].any?
+        %div
+          = paginate association[:records],
+            custom_path_method: @entity.index_helper_method,
+            custom_path_arguments: [@record.id]
+
+      = tramway_button text: t('tramway.actions.new'),
+        path: association[:new_record_path],
+        type: :will
+
+    - if association[:records].any?
+      = tramway_table class: 'mt-4' do 
+        = tramway_header headers: association[:decorator].table_headers(model_class: association[:model_class])
+
+        - association[:records].each do |record|
+          - if record.show_path.blank?
+            = component 'tramway/comments/show_path', decorator_class: association[:decorator].name
+          = tramway_row href: record.show_path do
+            - if association[:decorator].index_attributes.empty?
+              .text-white
+                You should set `index_attributes` method in #{association[:decorator].name} to display the table of associated records.
+            - association[:decorator].index_attributes.each do |column|
+              = tramway_cell do
+                = record.public_send(column)
+
+      .mt-4
         = paginate association[:records],
           custom_path_method: @entity.index_helper_method,
           custom_path_arguments: [@record.id]
-
-    = tramway_table class: 'mt-4' do 
-      = tramway_header headers: association[:decorator].table_headers(model_class: association[:model_class])
-
-      - association[:records].each do |record|
-        = tramway_row do
-          - association[:decorator].index_attributes.each do |column|
-            = tramway_cell do
-              = record.public_send(column)
-
-    .mt-4
-      = paginate association[:records],
-        custom_path_method: @entity.index_helper_method,
-        custom_path_arguments: [@record.id]
