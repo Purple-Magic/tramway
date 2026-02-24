@@ -88,30 +88,35 @@ module Tramway
         options ||= {}
         association_type = @record.object.class.reflect_on_association(association).macro
 
-        case association_type
-        when :has_many
-          records = Kaminari.paginate_array(@record.public_send(association.name)).page(params[:page])
-
-          {
-            name: association,
-            decorator: records.first&.class,
-            records:,
-            model_class: records.first&.object&.class,
-            new_record_path: options[:new_record_path],
-            association_type:
-          }
-        when :belongs_to
-          record = @record.public_send(association.name)
-
-          {
-            name: association,
-            decorator: record.class,
-            record:,
-            model_class: record.class,
-            association_type:
-          }
-        end
+        {
+          name: association,
+          association_type:,
+          **send("#{association_type}_associations", options)
+        }
       end.compact
+    end
+
+    # rubocop:disable Naming/PredicatePrefix
+    def has_many_associations(options)
+      records = Kaminari.paginate_array(@record.public_send(association.name)).page(params[:page])
+
+      {
+        decorator: records.first&.class,
+        records:,
+        model_class: records.first&.object&.class,
+        new_record_path: options[:new_record_path]
+      }
+    end
+    # rubocop:enable Naming/PredicatePrefix
+
+    def belongs_to_associations(_options)
+      record = @record.public_send(association.name)
+
+      {
+        decorator: record.class,
+        record:,
+        model_class: record.class
+      }
     end
   end
 end

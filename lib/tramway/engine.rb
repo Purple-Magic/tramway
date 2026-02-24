@@ -13,7 +13,6 @@ module Tramway
       load_form_helper
       load_routes_helper
       load_chats_broadcast
-      configure_pagination if Tramway.config.pagination[:enabled]
     end
 
     initializer 'tramway.assets.precompile' do |app|

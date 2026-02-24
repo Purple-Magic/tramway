@@ -10,8 +10,7 @@
     = tramway_title do
       = content_for :title
 
-    - if Tramway.config.pagination[:enabled]
-      = paginate @entities, custom_path_method:
+    = paginate @entities, custom_path_method:
   = component 'tramway/actions_buttons_container' do
     - if @entity.page(:create).present?
       = tramway_button text: t('tramway.actions.new'),
@@ -30,6 +29,5 @@
       - @entities.each do |item|
         = component 'tramway/entity', entity: @entity, item: item
 
-      - if Tramway.config.pagination[:enabled]
-        .flex.mt-4
-          = paginate @entities, custom_path_method:
+      .flex.mt-4
+        = paginate @entities, custom_path_method:
