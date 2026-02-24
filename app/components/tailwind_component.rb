@@ -58,7 +58,7 @@ class TailwindComponent < Tramway::BaseComponent
 
   def file_button_base_classes
     theme_classes(
-      classic: 'inline-block text-blue-100 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-900 ' \
+      classic: 'inline-block text-white font-semibold rounded-xl cursor-pointer mt-4 bg-blue-600 ' \
                'hover:bg-blue-800 shadow-md'
     )
   end

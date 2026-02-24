@@ -14,7 +14,7 @@ CLASSIC_FORM_CLASSES = {
     focus:ring-2 focus:ring-gray-600 disabled:cursor-not-allowed disabled:bg-gray-800 disabled:text-gray-500
   ],
   file_button: %w[
-    inline-block text-blue-100 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-900 hover:bg-blue-800
+    inline-block text-white font-semibold rounded-xl cursor-pointer mt-4 bg-blue-600 hover:bg-blue-800
     shadow-md
   ],
   submit_button: %w[

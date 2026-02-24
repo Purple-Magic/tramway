@@ -46,7 +46,7 @@ feature 'Form For Base Test', :js, type: :feature do
                       focus:outline-none focus:ring-2 focus:ring-gray-600 placeholder-gray-500
                     ],
                     file_button: %w[
-                      inline-block text-blue-100 font-semibold rounded-xl cursor-pointer mt-4 bg-blue-900
+                      inline-block text-white font-semibold rounded-xl cursor-pointer mt-4 bg-blue-600
                       hover:bg-blue-800 shadow-md
                     ],
                     select: %w[
