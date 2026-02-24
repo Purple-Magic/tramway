@@ -124,7 +124,7 @@ module Tramway
       end
 
       def get_value(attribute, options)
-        options[:value] || form_object&.public_send(attribute) || object.presence&.public_send(attribute)
+        options[:value] || form_object&.public_send(attribute).presence || object.presence&.public_send(attribute)
       end
 
       def default_options(attribute, options)

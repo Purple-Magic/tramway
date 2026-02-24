@@ -7,7 +7,7 @@ module Tramway
       def tramway_field(field_data, attribute, **options, &)
         input_type = field_type(field_data)
         input_name = field_name input_type
-        input_options = field_options(field_data).merge(options)
+        input_options = field_options(field_data).merge(options.compact)
 
         case input_type.to_sym
         when :select, :multiselect

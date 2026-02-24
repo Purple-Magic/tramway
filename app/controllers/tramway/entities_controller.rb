@@ -91,13 +91,13 @@ module Tramway
         {
           name: association,
           association_type:,
-          **send("#{association_type}_associations", options)
+          **send("#{association_type}_associations", association, options)
         }
       end.compact
     end
 
     # rubocop:disable Naming/PredicatePrefix
-    def has_many_associations(options)
+    def has_many_associations(association, options)
       records = Kaminari.paginate_array(@record.public_send(association.name)).page(params[:page])
 
       {
@@ -109,7 +109,7 @@ module Tramway
     end
     # rubocop:enable Naming/PredicatePrefix
 
-    def belongs_to_associations(_options)
+    def belongs_to_associations(association, _options)
       record = @record.public_send(association.name)
 
       {
