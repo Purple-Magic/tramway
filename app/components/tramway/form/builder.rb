@@ -14,6 +14,7 @@ module Tramway
         super
 
         @form_size = options[:size] || options['size'] || :medium
+        @form_object_class = options[:form_object_class]
       end
 
       def common_field(component_name, input_method, attribute, **options, &)
@@ -118,8 +119,12 @@ module Tramway
         unbound_method.bind(self)
       end
 
+      def form_object
+        @form_object_class&.new object
+      end
+
       def get_value(attribute, options)
-        options[:value] || object.presence&.public_send(attribute)
+        options[:value] || form_object&.public_send(attribute).presence || object.presence&.public_send(attribute)
       end
 
       def default_options(attribute, options)

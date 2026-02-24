@@ -9,10 +9,12 @@ module Tramway
       FORM_SIZES = %i[small medium large].freeze
 
       def tramway_form_for(object, *, size: :medium, **options, &)
+        form_object_class = object.is_a?(Tramway::BaseForm) ? object.class : nil
+
         form_for(
           object,
           *,
-          **options.merge(builder: Tramway::Form::Builder, size: normalize_form_size(size)),
+          **options.merge(builder: Tramway::Form::Builder, size: normalize_form_size(size), form_object_class:),
           &
         )
       end

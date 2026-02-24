@@ -331,6 +331,7 @@ module.exports = {
     'border-red-600',
     'bg-red-100',
     'text-red-800',
+    'space-x-2',
 
     // === Multiselect dropdown positioning ===
     'absolute',

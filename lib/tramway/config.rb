@@ -11,7 +11,6 @@ module Tramway
     include Singleton
 
     attr_config(
-      pagination: { enabled: false },
       entities: [],
       application_controller: 'ActionController::Base',
       theme: :classic

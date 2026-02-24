@@ -84,18 +84,39 @@ module Tramway
     end
 
     def set_associations
-      @associations = @record.show_associations.map do |association|
-        next unless @record.public_send(association).any?
-
-        records = Kaminari.paginate_array(@record.public_send(association.name)).page(params[:page])
+      @associations = @record.show_associations.map do |(association, options)|
+        options ||= {}
+        association_type = @record.object.class.reflect_on_association(association).macro
 
         {
           name: association,
-          decorator: records.first.class,
-          records:,
-          model_class: records.first.object.class
+          association_type:,
+          **send("#{association_type}_associations", association, options)
         }
       end.compact
+    end
+
+    # rubocop:disable Naming/PredicatePrefix
+    def has_many_associations(association, options)
+      records = Kaminari.paginate_array(@record.public_send(association.name)).page(params[:page])
+
+      {
+        decorator: records.first&.class,
+        records:,
+        model_class: records.first&.object&.class,
+        new_record_path: options[:new_record_path]
+      }
+    end
+    # rubocop:enable Naming/PredicatePrefix
+
+    def belongs_to_associations(association, _options)
+      record = @record.public_send(association.name)
+
+      {
+        decorator: record.class,
+        record:,
+        model_class: record.class
+      }
     end
   end
 end
