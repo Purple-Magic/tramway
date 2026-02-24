@@ -8,7 +8,7 @@ module Admin
            text: :text_area,
            user_id: {
              type: :hidden,
-             value: -> { User.first.id }
+             value: ->(_object) { User.first.id }
            },
            post_type: {
              type: :select,
