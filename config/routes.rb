@@ -14,7 +14,7 @@ Tramway::Engine.routes.draw do
     resource_name = segments.pop
 
     define_resource = proc do
-      actions = entity.pages.reduce([]) do |acc, page|
+      entity.pages.reduce([]) do |acc, page|
         case page.action
         when 'index'
           acc << :index
@@ -29,7 +29,7 @@ Tramway::Engine.routes.draw do
         else
           acc
         end
-      end
+      end => actions
 
       resources resource_name.pluralize.to_sym,
                 only: actions.map(&:to_sym),

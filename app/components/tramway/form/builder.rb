@@ -63,6 +63,10 @@ module Tramway
         common_field(:datetime_field, :datetime_field, attribute, **, &)
       end
 
+      def time_field(attribute, **, &)
+        common_field(:time_field, :time_field, attribute, **, &)
+      end
+
       def file_field(attribute, **options, &)
         sanitized_options = sanitize_options(options)
         input = super(attribute, **sanitized_options.merge(class: :hidden))
