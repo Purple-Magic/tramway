@@ -10,14 +10,16 @@
     = tramway_title do
       = content_for :title
 
-    = paginate @entities, custom_path_method:
-  = component 'tramway/actions_buttons_container' do
-    - if @entity.page(:create).present?
-      = tramway_button text: t('tramway.actions.new'),
-        path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.new),
-        type: :will
+    = component 'tramway/actions_buttons_container' do
+      - if @entity.page(:create).present?
+        = tramway_button text: t('tramway.actions.new'),
+          path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.new),
+          type: :will
 
-    = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
+      = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
+
+  .flex.flex-row.justify-end.mt-2
+    = paginate @entities, custom_path_method:
 
   - if index_attributes.empty?
     %p.text-center.mt-10
