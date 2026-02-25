@@ -83,6 +83,12 @@ class TailwindComponent < Tramway::BaseComponent
     )
   end
 
+  def default_container_classes
+    return if options[:horizontal]
+
+    'mb-4'
+  end
+
   def size_class(key)
     size_classes = SIZE_CLASSES.fetch(size) { SIZE_CLASSES[:medium] }
     size_classes.fetch(key) { SIZE_CLASSES[:medium].fetch(key) }

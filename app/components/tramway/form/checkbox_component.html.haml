@@ -1,4 +1,4 @@
-.flex.items-start.gap-2.mb-4
+.flex.items-start.gap-2{ class: default_container_classes }
   - classes = "#{size_class(:checkbox_input)} #{checkbox_base_classes}"
   = @input.call @attribute, **@options.merge(class: classes)
   - if @label

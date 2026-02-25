@@ -15,6 +15,7 @@ module Tramway
 
         @form_size = options[:size] || options['size'] || :medium
         @form_object_class = options[:form_object_class]
+        @horizontal = options[:horizontal] || false
       end
 
       def common_field(component_name, input_method, attribute, **options, &)
@@ -132,7 +133,14 @@ module Tramway
       end
 
       def default_options(attribute, options)
-        { attribute:, label: label_build(attribute, options), for: for_id(attribute), options:, size: form_size }
+        {
+          attribute:,
+          label: label_build(attribute, options),
+          for: for_id(attribute),
+          options:,
+          size: form_size,
+          horizontal: @horizontal
+        }
       end
 
       def label_build(attribute, options)
