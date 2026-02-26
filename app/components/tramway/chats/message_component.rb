@@ -30,7 +30,7 @@ module Tramway
 
       def array_2d?(array)
         array.is_a?(Array) && array.all? do |inner|
-          inner.is_a?(Array) && inner.none? { |e| e.is_a?(Array) }
+          inner.is_a?(Array) && inner.none?(Array)
         end
       end
 

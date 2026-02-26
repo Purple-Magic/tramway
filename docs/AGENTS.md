@@ -155,6 +155,21 @@ Use Tramway Button for buttons. Always add a color of the button via `color:` or
 ### Rule 7
 Use `tramway_form_for` instead `form_with`, `form_for`
 
+Available `tramway_form_for` helpers:
+- `text_field`
+- `email_field`
+- `number_field`
+- `text_area`
+- `password_field`
+- `file_field`
+- `check_box`
+- `select`
+- `date_field`
+- `datetime_field`
+- `time_field`
+- `multiselect`
+- `submit`
+
 ### Rule 8
 Inherit all components from Tramway::BaseComponent
 

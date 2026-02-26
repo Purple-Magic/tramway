@@ -1135,11 +1135,15 @@ Use `horizontal: true` to render a horizontal form layout.
 Available form helpers:
 * text_field
 * email_field
+* number_field
+* text_area
 * password_field
 * file_field
+* check_box
 * select
 * date_field
 * datetime_field
+* time_field
 * multiselect ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
 
