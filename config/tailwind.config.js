@@ -195,6 +195,7 @@ module.exports = {
 
     // === Pagination styles ===
     'hover:bg-gray-300',
+    'gap-x-1',
 
     // === Dark mode pagination styles ===
     'bg-gray-900',

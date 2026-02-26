@@ -11,6 +11,10 @@ module Tramway
       include Tramway::ColorsMethods
 
       def initialize(object_name, object, template, options)
+        @horizontal = options[:horizontal] || false
+
+        options.merge!(class: [options[:class], 'flex flex-row items-center gap-2'].compact.join(' ')) if @horizontal
+
         super
 
         @form_size = options[:size] || options['size'] || :medium
@@ -132,7 +136,13 @@ module Tramway
       end
 
       def default_options(attribute, options)
-        { attribute:, label: label_build(attribute, options), for: for_id(attribute), options:, size: form_size }
+        {
+          attribute:,
+          label: label_build(attribute, options),
+          for: for_id(attribute),
+          options: options.merge(horizontal: @horizontal),
+          size: form_size
+        }
       end
 
       def label_build(attribute, options)

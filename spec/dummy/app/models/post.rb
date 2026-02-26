@@ -6,6 +6,8 @@ class Post < ApplicationRecord
   has_many :comments
   has_many :likes
 
+  scope :search, ->(query) { where('title LIKE ?', "%#{sanitize_sql_like(query)}%") }
+
   aasm do
     state :draft, initial: true
     state :published

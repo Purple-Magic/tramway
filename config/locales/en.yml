@@ -11,6 +11,7 @@ en:
       destroy: "Destroy"
       save: "Save"
       cancel: "Cancel"
+      search: "Search"
     notices:
       created: "The record is created"
       updated: "The record is updated"

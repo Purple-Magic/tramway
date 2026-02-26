@@ -10,7 +10,8 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
       pages: [
         {
           action: 'index',
-          scope: :published
+          scope: :published,
+          search: true
         },
         {
           action: 'show'

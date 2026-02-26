@@ -36,6 +36,16 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
       expect(view).to have_received(:form_for).with(object, hash_including(expected_options))
     end
 
+    it 'passes through horizontal option' do
+      object = Struct.new(:id).new(4)
+
+      allow(view).to receive(:form_for).with(object, hash_including(horizontal: true))
+
+      view.tramway_form_for(object, horizontal: true)
+
+      expect(view).to have_received(:form_for).with(object, hash_including(horizontal: true))
+    end
+
     it 'falls back to medium size when provided size is invalid' do
       object = Struct.new(:id).new(3)
 

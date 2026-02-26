@@ -8,7 +8,8 @@ Tramway.configure do |config|
       pages: [
         {
           action: :index,
-          scope: :published
+          scope: :published,
+          search: true
         },
         {
           action: :show
@@ -38,7 +39,8 @@ Tramway.configure do |config|
       namespace: :admin,
       pages: [
         {
-          action: :index
+          action: :index,
+          search: true
         }
       ]
     },

@@ -194,6 +194,30 @@ end
 In this example, the `Campaign` entity will display only records returned by the `active` scope on its index page, while all
 other pages continue to show every record unless another scope is specified.
 
+**search**
+
+Search is disabled by default on index pages. Enable it per-entity by setting `search: true` on the `:index` page entry:
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      pages: [
+        {
+          action: :index,
+          search: true
+        }
+      ]
+    }
+  ]
+end
+```
+
+When search is enabled, Tramway uses `Model.search(query)` if defined. If not, it falls back to `Model.tramway_search(query)` and logs a warning.
+The fallback is generic and not tailored to your data structure, so it is not intended for long-term use and may be slow or not scalable.
+
 **show page**
 
 To render a show page for an entity, declare a `:show` action inside the `pages` array in
@@ -1094,6 +1118,15 @@ within the form will use the same size value.
 
 ```erb
 <%= tramway_form_for @user, size: :large do |f| %>
+  <%= f.text_field :text %>
+  <%= f.submit 'Create User' %>
+<% end %>
+```
+
+Use `horizontal: true` to render a horizontal form layout.
+
+```erb
+<%= tramway_form_for @user, horizontal: true do |f| %>
   <%= f.text_field :text %>
   <%= f.submit 'Create User' %>
 <% end %>

@@ -1,5 +1,5 @@
 = paginator.render do
-  %nav.pagination.flex.items-center.justify-center.space-x-1
+  %nav.pagination.flex.items-center.justify-center.gap-x-1
     = first_page_tag unless current_page.first? 
     = prev_page_tag unless current_page.first?
     - each_page do |page|
@@ -9,4 +9,3 @@
         = gap_tag
     = next_page_tag unless current_page.last?
     = last_page_tag unless current_page.last?
-
