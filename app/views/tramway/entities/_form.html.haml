@@ -13,7 +13,9 @@
   - prepolulated_values = params[@entity.name.to_param]&.compact || {}
 
   - @record.class.fields.each do |(attribute, field_type)|
-    = f.tramway_field field_type, attribute, value: prepolulated_values&.dig(attribute)
+    = f.tramway_field field_type, attribute,
+      value: prepolulated_values&.dig(attribute),
+      label: @model_class.human_attribute_name(attribute)
 
   .flex.flex-row.space-x-2
     = f.submit t('tramway.actions.save')

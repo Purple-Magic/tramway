@@ -38,6 +38,16 @@ feature 'Entities Update Page', :js, type: :feature do
       expect(page).to have_field('post[user_id]', type: :hidden, with: User.first.id)
       expect(page).to have_field('post[post_type]', type: :select, with: post.post_type)
     end
+
+    scenario 'displays human attribute labels' do
+      visit '/admin/posts'
+
+      click_button 'Edit'
+
+      expect(page).to have_selector('label', text: Post.human_attribute_name(:title))
+      expect(page).to have_selector('label', text: Post.human_attribute_name(:text))
+      expect(page).to have_selector('label', text: Post.human_attribute_name(:post_type))
+    end
   end
 
   context 'with updating checks' do
