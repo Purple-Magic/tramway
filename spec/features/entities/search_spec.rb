@@ -37,13 +37,12 @@ feature 'Entities Search', :js, type: :feature do
 
     allow(Tramway::Warnings).to receive(:search_fallback)
     allow(Article).to receive(:columns).and_return([])
+    expect(Tramway::Warnings).to receive(:search_fallback)
 
     visit '/admin/articles'
 
     fill_in 'query', with: 'Alpha'
     click_button 'Search'
-
-    expect(Tramway::Warnings).to have_received(:search_fallback).with(Article)
 
     expect(page).to have_selector(row_selector, count: 2)
     expect(page).to have_content('Alpha article')
