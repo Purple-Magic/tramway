@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'tramway/warnings'
+
 module Tramway
   # Main controller for entities pages
   class EntitiesController < Tramway.config.application_controller.constantize
@@ -15,8 +17,10 @@ module Tramway
         model_class.public_send(index_scope)
       else
         model_class.order(id: :desc)
-      end.page(params[:page]) => entities
+      end => entities
 
+      entities = search(entities)
+      entities = entities.page(params[:page])
       @entities = entities
 
       @namespace = entity.namespace
@@ -112,11 +116,21 @@ module Tramway
     def belongs_to_associations(association, _options)
       record = @record.public_send(association.name)
 
-      {
-        decorator: record.class,
-        record:,
-        model_class: record.class
-      }
+      { decorator: record.class, record:, model_class: record.class }
+    end
+
+    def search(entities)
+      query = params[:query]
+
+      if entity.page(:index).search && query.present?
+        return entities.search(query) if entities.respond_to?(:search)
+
+        Tramway::Warnings.search_fallback model_class
+
+        return entities.tramway_search(query)
+      end
+
+      entities
     end
   end
 end

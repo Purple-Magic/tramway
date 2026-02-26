@@ -18,10 +18,10 @@
 
       = decorator.constantize.index_header_content.call(@entities) if decorator.constantize.index_header_content.present?
 
-  .flex.flex-row.justify-end.mt-2
+  .flex.flex-row.justify-end.mt-2.gap-4
     - if @entity.page(:index).search
       = form_with url: public_send(custom_path_method), method: :get, local: true, builder: Tramway::Form::Builder, horizontal: true do |f|
-        = f.text_field :query, label: false
+        = f.text_field :query, label: false, value: params[:query], placeholder: t('tramway.actions.search')
         = f.submit t('tramway.actions.search')
 
     = paginate @entities, custom_path_method:

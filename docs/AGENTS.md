@@ -105,6 +105,28 @@ end
 
 If admin panel requested to be implemented from scratch, do the same with `namespace: :admin`
 
+### Rule 1.1
+Search is disabled by default on index pages. Enable it with `search: true` on the `:index` page definition:
+
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :participant,
+      pages: [
+        {
+          action: :index,
+          search: true
+        }
+      ]
+    }
+  ]
+end
+```
+
+If `Model.search` exists, Tramway uses it. Otherwise it falls back to `Model.tramway_search` and logs a warning.
+The fallback is generic, not tailored to the data structure, and should not be used long-term because it may be slow or not scalable.
+
 ### Rule 2
 Normalize input with `normalizes` (from Tramway) for attributes like email, phone, etc. Don't use `normalizes` in model unless it requested explicitly.
 
@@ -555,6 +577,15 @@ end
   = f.email_field :email
   = f.password_field :password
   = f.select :role, [["Admin", "admin"], ["Manager", "manager"]], include_blank: "Select role"
+  = f.submit 'Save'
+```
+
+`tramway_form_for` supports `horizontal: true` for horizontal form layout.
+
+```ruby
+= tramway_form_for @user, horizontal: true do |f|
+  = f.email_field :email
+  = f.password_field :password
   = f.submit 'Save'
 ```
 

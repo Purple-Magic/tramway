@@ -13,6 +13,7 @@ module Tramway
       load_form_helper
       load_routes_helper
       load_chats_broadcast
+      load_searchable
     end
 
     initializer 'tramway.assets.precompile' do |app|
@@ -74,6 +75,14 @@ module Tramway
 
       ActiveSupport.on_load(:active_record) do |loaded_class|
         loaded_class.include Tramway::Chats::Broadcast
+      end
+    end
+
+    def load_searchable
+      ActiveSupport.on_load(:active_record) do |loaded_class|
+        require 'tramway/searchable'
+
+        loaded_class.include Tramway::Searchable
       end
     end
 
