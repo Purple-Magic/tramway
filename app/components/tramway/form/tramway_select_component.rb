@@ -3,7 +3,7 @@
 module Tramway
   module Form
     # Tailwind-styled multi-select field
-    class MultiselectComponent < TailwindComponent
+    class TramwaySelectComponent < TailwindComponent
       option :collection
 
       def before_render

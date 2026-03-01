@@ -122,7 +122,7 @@ module Tramway
       def tramway_select(attribute, collection, **options, &)
         sanitized_options = sanitize_options(options)
 
-        render(Tramway::Form::MultiselectComponent.new(
+        render(Tramway::Form::TramwaySelectComponent.new(
                  input: input(:text_field),
                  value: sanitized_options[:value] || sanitized_options[:selected] || object.public_send(attribute),
                  collection:,
