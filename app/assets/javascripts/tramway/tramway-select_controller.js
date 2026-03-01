@@ -100,6 +100,7 @@ export default class TramwaySelect extends Controller {
 
   closeDropdown() {
     this.dropdownState = 'closed';
+
     if (this.dropdown()) {
       this.dropdown().remove();
     }
@@ -139,6 +140,7 @@ export default class TramwaySelect extends Controller {
     if (!this.multiple()) {
       this.selectedItems = [];
       this.items.forEach(item => item.selected = false);
+      this.closeDropdown()
     }
 
     if (itemSelectedIndex !== -1) {
@@ -150,7 +152,10 @@ export default class TramwaySelect extends Controller {
     }
 
     this.renderSelectedItems();
-    this.rerenderItems();
+
+    if (this.multiple()) {
+      this.rerenderItems();
+    }
   }
 
   input() {
