@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-export default class Multiselect extends Controller {
+export default class TramwaySelect extends Controller {
   static targets = ["dropdown", "showSelectedArea", "hiddenInput", "caretDown", "caretUp"]
 
   static values = {
@@ -157,4 +157,4 @@ export default class Multiselect extends Controller {
   }
 }
 
-export { Multiselect }
+export { TramwaySelect }

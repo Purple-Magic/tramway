@@ -2,7 +2,7 @@
 
 module Tramway
   module Form
-    module Multiselect
+    module TramwaySelect
       # Container for item in dropdown component
       class ItemContainerComponent < Tramway::BaseComponent
         option :size

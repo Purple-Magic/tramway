@@ -2,8 +2,8 @@
 
 module Tramway
   module Form
-    module Multiselect
-      # Tailwind-styled multi-select field
+    module TramwaySelect
+      # Tailwind-styled tramway select field
       class SelectedItemTemplateComponent < Tramway::BaseComponent
         option :size
 

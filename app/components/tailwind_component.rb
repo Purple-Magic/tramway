@@ -18,7 +18,7 @@ class TailwindComponent < Tramway::BaseComponent
       select_input: 'text-sm px-2 py-1',
       file_button: 'text-sm px-3 py-1',
       submit_button: 'text-sm px-3 py-1',
-      multiselect_input: 'text-sm px-2 py-1 h-10',
+      tramway_select_input: 'text-sm px-2 py-1 h-10',
       checkbox_input: 'h-4 w-4'
     },
     medium: {
@@ -26,7 +26,7 @@ class TailwindComponent < Tramway::BaseComponent
       select_input: 'text-base px-3 py-2',
       file_button: 'text-base px-4 py-2',
       submit_button: 'text-base px-4 py-2',
-      multiselect_input: 'text-base px-2 py-1 h-12',
+      tramway_select_input: 'text-base px-2 py-1 h-12',
       checkbox_input: 'h-5 w-5'
     },
     large: {
@@ -34,7 +34,7 @@ class TailwindComponent < Tramway::BaseComponent
       select_input: 'text-xl px-4 py-3',
       file_button: 'text-xl px-5 py-3',
       submit_button: 'text-xl px-5 py-3',
-      multiselect_input: 'text-xl px-3 py-2 h-15',
+      tramway_select_input: 'text-xl px-3 py-2 h-15',
       checkbox_input: 'h-6 w-6'
     }
   }.freeze

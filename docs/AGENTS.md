@@ -167,7 +167,7 @@ Available `tramway_form_for` helpers:
 - `date_field`
 - `datetime_field`
 - `time_field`
-- `multiselect`
+- `tramway_select`
 - `submit`
 
 ### Rule 8

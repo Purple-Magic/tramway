@@ -90,6 +90,17 @@ module Tramway
         end
       end
 
+      def tramway_select(attribute, collection, **options, &)
+        sanitized_options = sanitize_options(options)
+
+        render(Tramway::Form::TramwaySelectComponent.new(
+                 input: input(:text_field),
+                 value: sanitized_options[:value] || sanitized_options[:selected] || object.public_send(attribute),
+                 collection:,
+                 **default_options(attribute, sanitized_options)
+               ), &)
+      end
+
       def submit(action, **options, &)
         sanitized_options = sanitize_options(options)
 
@@ -115,17 +126,6 @@ module Tramway
                  input: input(:select),
                  value: sanitized_options[:selected] || object.public_send(attribute),
                  collection: explicitly_add_blank_option(collection, sanitized_options),
-                 **default_options(attribute, sanitized_options)
-               ), &)
-      end
-
-      def tramway_select(attribute, collection, **options, &)
-        sanitized_options = sanitize_options(options)
-
-        render(Tramway::Form::TramwaySelectComponent.new(
-                 input: input(:text_field),
-                 value: sanitized_options[:value] || sanitized_options[:selected] || object.public_send(attribute),
-                 collection:,
                  **default_options(attribute, sanitized_options)
                ), &)
       end

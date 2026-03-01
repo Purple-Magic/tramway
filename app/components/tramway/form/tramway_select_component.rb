@@ -13,11 +13,11 @@ module Tramway
       end
 
       # rubocop:disable Metrics/MethodLength
-      def multiselect_hash
+      def tramway_select_hash
         {
           controller:,
           selected_item_template:,
-          multiselect_selected_items_value:,
+          tramway_select_selected_items_value:,
           dropdown_container:,
           item_container:,
           items:,
@@ -31,7 +31,7 @@ module Tramway
       # rubocop:enable Metrics/MethodLength
 
       def controller
-        controllers = [:multiselect]
+        controllers = ['tramway-select']
         controllers << external_action.split('->').last.split('#').first if external_action
         controllers += external_controllers
         controllers.join(' ')
@@ -39,7 +39,7 @@ module Tramway
 
       def dropdown_data
         (options[:data] || {}).merge(
-          'multiselect-target' => 'dropdown',
+          'tramway-select-target' => 'dropdown',
           'dropdown-container' => dropdown_container,
           'item-container' => item_container
         )
@@ -50,13 +50,13 @@ module Tramway
       end
 
       def input_classes
-        "#{size_class(:multiselect_input)} #{select_base_classes}"
+        "#{size_class(:tramway_select_input)} #{select_base_classes}"
       end
 
       private
 
       def action
-        'click->multiselect#toggleDropdown'
+        'click->tramway-select#toggleDropdown'
       end
 
       def items
@@ -67,17 +67,17 @@ module Tramway
         options[:placeholder]
       end
 
-      def multiselect_selected_items_value
+      def tramway_select_selected_items_value
         []
       end
 
       def select_as_input
         component(
-          'tramway/form/multiselect/select_as_input',
+          'tramway/form/tramway_select/select_as_input',
           options:,
           attribute:,
           input:,
-          size_class: size_class(:multiselect_input)
+          size_class: size_class(:tramway_select_input)
         )
       end
 
@@ -96,15 +96,15 @@ module Tramway
       end
 
       def selected_item_template
-        component('tramway/form/multiselect/selected_item_template', size:)
+        component('tramway/form/tramway_select/selected_item_template', size:)
       end
 
       def dropdown_container
-        component('tramway/form/multiselect/dropdown_container', size:)
+        component('tramway/form/tramway_select/dropdown_container', size:)
       end
 
       def item_container
-        component('tramway/form/multiselect/item_container', size:)
+        component('tramway/form/tramway_select/item_container', size:)
       end
     end
   end

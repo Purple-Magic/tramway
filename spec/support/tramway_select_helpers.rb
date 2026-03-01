@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module MultiselectHelpers
-  def multiselect(*options, from:)
-    id = "#{from.split('[').join('_').chomp(']')}_multiselect"
+module TramwaySelectHelpers
+  def tramway_select(*options, from:)
+    id = "#{from.split('[').join('_').chomp(']')}_tramway_select"
     find("div##{id}[role='combobox']").click
 
     options.each do |option|

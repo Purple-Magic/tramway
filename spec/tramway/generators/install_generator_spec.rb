@@ -168,7 +168,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
   end
 
   describe 'importmap pins' do
-    it 'appends the tramway multiselect pin when importmap exists' do
+    it 'appends the tramway select pin when importmap exists' do
       FileUtils.mkdir_p(File.dirname(importmap_path))
       File.write(importmap_path, 'pin "application", preload: true')
 
@@ -176,7 +176,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       expect(File.read(importmap_path)).to eq(
         "pin \"application\", preload: true\n" \
-        "pin \"@tramway/multiselect\", to: \"tramway/multiselect_controller.js\"\n"
+        "pin \"@tramway/tramway-select\", to: \"tramway/tramway-select_controller.js\"\n"
       )
     end
 

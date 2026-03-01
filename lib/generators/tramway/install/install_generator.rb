@@ -52,8 +52,8 @@ module Tramway
         @importmap_path ||= File.join(destination_root, 'config/importmap.rb')
       end
 
-      def importmap_multiselect_pin
-        'pin "@tramway/multiselect", to: "tramway/multiselect_controller.js"'
+      def importmap_tramway_select_pin
+        'pin "@tramway/tramway-select", to: "tramway/tramway-select_controller.js"'
       end
 
       def agents_file_path
@@ -242,11 +242,11 @@ module Tramway
         return unless File.exist?(importmap_path)
 
         content = File.read(importmap_path)
-        return if content.include?(importmap_multiselect_pin)
+        return if content.include?(importmap_tramway_select_pin)
 
         File.open(importmap_path, 'a') do |file|
           file.write("\n") unless content.empty? || content.end_with?("\n")
-          file.write("#{importmap_multiselect_pin}\n")
+          file.write("#{importmap_tramway_select_pin}\n")
         end
       end
     end
