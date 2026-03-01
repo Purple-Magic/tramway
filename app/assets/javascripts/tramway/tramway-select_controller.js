@@ -13,11 +13,15 @@ export default class TramwaySelect extends Controller {
     placeholder: String,
     selectAsInput: String,
     value: Array,
-    onChange: String
+    onChange: String,
+    multiple: Boolean,
+    autocomplete: Boolean
   }
 
   connect() {
     this.dropdownState = 'closed';
+    console.log("Multiple value on connect:", this.element.dataset.multiple);
+
     this.items = JSON.parse(this.element.dataset.items).map((item, index) => {
       return {
         index,
@@ -126,6 +130,11 @@ export default class TramwaySelect extends Controller {
     const itemIndex = this.items.findIndex(x => x.value === currentTarget.dataset.value);
     const itemSelectedIndex = this.selectedItems.findIndex(x => x.value === currentTarget.dataset.value);
 
+    if (!this.multiple()) {
+      this.selectedItems = [];
+      this.items.forEach(item => item.selected = false);
+    }
+
     if (itemSelectedIndex !== -1) {
       this.selectedItems = this.selectedItems.filter((_, index) => index !== itemSelectedIndex);
       this.items[itemIndex].selected = false; 
@@ -154,6 +163,14 @@ export default class TramwaySelect extends Controller {
     });
 
     this.hiddenInputTarget.value = this.selectedItems.map(item => item.value);
+  }
+
+  multiple() {
+    return this.element.dataset.multiple == 'true';
+  }
+
+  autocomplete() {
+    return this.element.dataset.autocomplete == 'true';
   }
 }
 

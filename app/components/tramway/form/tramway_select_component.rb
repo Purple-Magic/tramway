@@ -5,6 +5,8 @@ module Tramway
     # Tailwind-styled multi-select field
     class TramwaySelectComponent < TailwindComponent
       option :collection
+      option :multiple, optional: true, default: -> { false }
+      option :autocomplete, optional: true, default: -> { false }
 
       def before_render
         @collection = collection.map do |(text, value)|
@@ -25,7 +27,9 @@ module Tramway
           select_as_input:,
           placeholder:,
           value:,
-          on_change:
+          on_change:,
+          multiple: multiple.to_s,
+          autocomplete: autocomplete.to_s
         }.transform_keys { |key| key.to_s.gsub('_', '-') }
       end
       # rubocop:enable Metrics/MethodLength

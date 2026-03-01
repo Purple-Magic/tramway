@@ -90,17 +90,6 @@ module Tramway
         end
       end
 
-      def tramway_select(attribute, collection, **options, &)
-        sanitized_options = sanitize_options(options)
-
-        render(Tramway::Form::TramwaySelectComponent.new(
-                 input: input(:text_field),
-                 value: sanitized_options[:value] || sanitized_options[:selected] || object.public_send(attribute),
-                 collection:,
-                 **default_options(attribute, sanitized_options)
-               ), &)
-      end
-
       def submit(action, **options, &)
         sanitized_options = sanitize_options(options)
 
@@ -130,6 +119,18 @@ module Tramway
                ), &)
       end
 
+      def tramway_select(attribute, collection, **options, &)
+        sanitized_options = sanitize_options(options)
+
+        render(Tramway::Form::TramwaySelectComponent.new(
+                 input: input(:text_field),
+                 value: sanitized_options[:value] || sanitized_options[:selected] || object.public_send(attribute),
+                 collection:,
+                 multiple: options[:multiple],
+                 autocomplete: options[:autocomplete],
+                 **default_options(attribute, sanitized_options)
+               ), &)
+      end
       def input(method_name)
         unbound_method = self.class.superclass.instance_method(method_name)
         unbound_method.bind(self)
