@@ -34,6 +34,15 @@ module Tramway
       end
       # rubocop:enable Metrics/MethodLength
 
+      def tramway_select_classes
+        classes = ""
+   
+        classes += "select--multiple " if multiple
+        classes += "select--autocomplete " if autocomplete
+
+        classes
+      end
+
       def controller
         controllers = ['tramway-select']
         controllers << external_action.split('->').last.split('#').first if external_action
@@ -100,7 +109,7 @@ module Tramway
       end
 
       def selected_item_template
-        component('tramway/form/tramway_select/selected_item_template', size:)
+        component 'tramway/form/tramway_select/selected_item_template', size:, multiple:
       end
 
       def dropdown_container
