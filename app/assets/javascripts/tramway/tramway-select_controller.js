@@ -15,12 +15,12 @@ export default class TramwaySelect extends Controller {
     value: Array,
     onChange: String,
     multiple: Boolean,
-    autocomplete: Boolean
+    autocomplete: Boolean,
+    autocompleteInput: String
   }
 
   connect() {
     this.dropdownState = 'closed';
-    console.log("Multiple value on connect:", this.element.dataset.multiple);
 
     this.items = JSON.parse(this.element.dataset.items).map((item, index) => {
       return {
@@ -44,9 +44,15 @@ export default class TramwaySelect extends Controller {
   }
 
   renderSelectedItems() {
-    const allItems = this.fillTemplate(this.element.dataset.selectedItemTemplate, this.selectedItems);
+    const allItems = this.fillTemplate(this.element.dataset.selectedItemTemplate, this.selectedItems)
 
-    this.showSelectedAreaTarget.innerHTML = allItems;
+    let content = allItems;
+
+    if (this.autocomplete() && this.selectedItems.length === 0) {
+      content += this.element.dataset.autocompleteInput;
+    }
+
+    this.showSelectedAreaTarget.innerHTML = content;
     this.showSelectedAreaTarget.insertAdjacentHTML("beforeEnd", this.input());
     this.updateInputOptions();
   }
@@ -171,6 +177,16 @@ export default class TramwaySelect extends Controller {
 
   autocomplete() {
     return this.element.dataset.autocomplete == 'true';
+  }
+
+  search(event) {
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredItems = this.items.filter(item => item.text.toLowerCase().includes(searchTerm) && !item.selected);
+    const dropdown = this.dropdown();
+    
+    if (dropdown) {
+      dropdown.innerHTML = this.fillTemplate(this.element.dataset.itemContainer, filteredItems);
+    }
   }
 }
 

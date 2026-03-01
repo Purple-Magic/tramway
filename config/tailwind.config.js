@@ -378,6 +378,8 @@ module.exports = {
     'py-1',
     'flex-nowrap',
     'overflow-x-auto',
+    'focus:outline-none',
+    'focus:ring-0',
 
     // === Flash message styles ===
     'fixed',

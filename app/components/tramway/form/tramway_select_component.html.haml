@@ -5,7 +5,7 @@
   %div{ role: :combobox, data: tramway_select_hash, id: "#{@for}_tramway_select", class: tramway_select_classes }
     - classes = "#{size_class(:tramway_select_input)} #{select_base_classes}"
     .flex.flex-end.justify-between{ data: dropdown_data, **dropdown_options }
-      .flex.flex-row.flex-nowrap.overflow-x-auto.space-x-1{ data: { "tramway-select-target" => "showSelectedArea" } }
+      .flex.flex-row.flex-nowrap.overflow-x-auto.space-x-1.w-full{ data: { "tramway-select-target" => "showSelectedArea" } }
       .flex.flex-col.justify-center
         .caret-down{ data: { "tramway-select-target" => "caretDown" } }
           = component 'tramway/form/tramway_select/caret', size:, direction: :down

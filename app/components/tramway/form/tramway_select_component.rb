@@ -16,7 +16,7 @@ module Tramway
 
       # rubocop:disable Metrics/MethodLength
       def tramway_select_hash
-        {
+        default = {
           controller:,
           selected_item_template:,
           tramway_select_selected_items_value:,
@@ -29,10 +29,20 @@ module Tramway
           value:,
           on_change:,
           multiple: multiple.to_s,
-          autocomplete: autocomplete.to_s
+          autocomplete: autocomplete.to_s,
         }.transform_keys { |key| key.to_s.gsub('_', '-') }
+
+        if autocomplete
+          default.merge!(autocomplete_input:)
+        end
+
+        default
       end
       # rubocop:enable Metrics/MethodLength
+
+      def autocomplete_input
+        component 'tramway/form/tramway_select/autocomplete_input'
+      end
 
       def tramway_select_classes
         classes = ""
