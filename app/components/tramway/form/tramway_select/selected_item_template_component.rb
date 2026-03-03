@@ -16,12 +16,10 @@ module Tramway
 
         def selected_item_classes
           classes = 'flex justify-center items-center font-medium py-1 px-2 rounded-xl ' \
-            'text-white shadow-md hover:bg-gray-800 cursor-pointer ' \
-            'space-x-1 selected-option ' + SIZE_CLASSES[size].to_s
+                    'text-white shadow-md hover:bg-gray-800 cursor-pointer ' \
+                    'space-x-1 selected-option ' + SIZE_CLASSES[size].to_s
 
-          if multiple
-            classes += ' border border-gray-700'
-          end
+          classes += ' border border-gray-700' if multiple
 
           theme_classes classic: classes
         end

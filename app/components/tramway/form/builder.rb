@@ -131,6 +131,7 @@ module Tramway
                  **default_options(attribute, sanitized_options)
                ), &)
       end
+
       def input(method_name)
         unbound_method = self.class.superclass.instance_method(method_name)
         unbound_method.bind(self)

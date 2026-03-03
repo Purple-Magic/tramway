@@ -8,4 +8,8 @@ class UserForm < Tramway::BaseForm
   validates :email, format: { with: /@/ }, allow_nil: true
 
   fields email: :email, first_name: :text
+
+  def team; end
+
+  def team=(value); end
 end
