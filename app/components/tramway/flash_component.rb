@@ -12,7 +12,7 @@ module Tramway
 
     def container_classes
       theme_classes(
-        classic: 'fixed top-4 right-4 z-50 space-y-2'
+        classic: 'fixed top-4 right-4 z-50 space-y-2 pointer-events-none'
       )
     end
 

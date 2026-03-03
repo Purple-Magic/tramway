@@ -391,6 +391,7 @@ module.exports = {
     'py-2',
     'rounded',
     'shadow',
-    'text-black'
+    'text-black',
+    'pointer-events-none'
   ],
 }

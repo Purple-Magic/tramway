@@ -28,7 +28,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
     it 'applies custom HTML options to the container' do
       fragment = view.tramway_flash(text: 'Beep!', type: :warning)
 
-      expect(fragment).to have_css('.fixed.top-4.right-4.z-50.space-y-2')
+      expect(fragment).to have_css('.fixed.top-4.right-4.z-50.space-y-2.pointer-events-none')
     end
   end
 end
