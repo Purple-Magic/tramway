@@ -334,7 +334,7 @@ module.exports = {
     'text-red-800',
     'space-x-2',
 
-    // === Multiselect dropdown positioning ===
+    // === Tramway select dropdown positioning ===
     'absolute',
     'relative',
     'shadow',
@@ -345,7 +345,7 @@ module.exports = {
     'border-gray-600',
     'text-gray-100',
 
-    // === Multiselect option styling ===
+    // === Tramway select option styling ===
     'border-b',
     'border',
     'border-l',
@@ -378,6 +378,8 @@ module.exports = {
     'py-1',
     'flex-nowrap',
     'overflow-x-auto',
+    'focus:outline-none',
+    'focus:ring-0',
 
     // === Flash message styles ===
     'fixed',

@@ -7,6 +7,7 @@
   = f.select :country, [['Velmora', 'vm'], ['Dravara', 'dv']], label: 'Country'
   = f.text_area :personal_info, label: 'Personal info'
   = f.check_box :permissions, label: 'Permissions'
-  = f.multiselect :role, [['Admin', 'admin'], ['User', 'user']], label: false, data: { controller: 'user-form', action: 'change->user-form#updateForm' }
+  = f.select :role, [['Admin', 'admin'], ['User', 'user']], label: false, data: { controller: 'user-form', action: 'change->user-form#updateForm' }, multiple: true
+  = f.select :team, [['Team 1', 'team1'], ['Team 2', 'team2']], autocomplete: true
 
   = f.submit 'Create user'

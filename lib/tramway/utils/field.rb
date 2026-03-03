@@ -10,7 +10,7 @@ module Tramway
         input_options = field_options(field_data).merge(options.compact)
 
         case input_type.to_sym
-        when :select, :multiselect
+        when :select, :tramway_select
           collection = input_options.delete(:collection)
 
           public_send(input_name, attribute, collection, **input_options, &)
@@ -23,7 +23,7 @@ module Tramway
 
       def field_name(field_data)
         case field_data.to_sym
-        when :text_area, :select, :multiselect, :check_box
+        when :text_area, :select, :tramway_select, :check_box
           field_data
         when :checkbox
           :check_box

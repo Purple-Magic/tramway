@@ -1105,7 +1105,7 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
   <%= f.select :role, [:admin, :user] %>
   <%= f.date_field :birth_date %>
   <%= f.datetime_field :confirmed_at %>
-  <%= f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
+  <%= f.tramway_select :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
   <%= f.file_field :file %>
   <%= f.submit 'Create User' %>
 <% end %>
@@ -1144,8 +1144,19 @@ Available form helpers:
 * date_field
 * datetime_field
 * time_field
-* multiselect ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
+* tramway_select ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
+
+Autocomplete select example:
+
+```erb
+<%= tramway_form_for @user do |f| %>
+  <%= f.select :role, [:admin, :user], autocomplete: true %>
+<% end %>
+```
+
+`autocomplete: true` renders an autocomplete-enabled select. It cannot be used together with `multiselect: true` in the
+same select field.
 
 **Examples**
 
@@ -1178,41 +1189,41 @@ Available form helpers:
 
 `tramway_form_for` provides Tailwind-styled Stimulus-based custom inputs.
 
-##### Multiselect
+##### Tramway Select
 
-In case you want to use tailwind-styled multiselect this way
+In case you want to use the tailwind-styled Tramway select this way
 
 ```erb
 <%= tramway_form_for @user do |f| %>
-  <%= f.multiselect :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
+  <%= f.tramway_select :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
   <%# ... %>
 <% end %>
 ```
 
-you should add Tramway Multiselect Stimulus controller to your application.
+you should add the Tramway Select Stimulus controller to your application.
 
 Example for [importmap-rails](https://github.com/rails/importmap-rails) config
 
 *config/importmap.rb*
 ```ruby
-pin '@tramway/multiselect', to: 'tramway/multiselect_controller.js'
+pin '@tramway/tramway-select', to: 'tramway/tramway-select_controller.js'
 ```
 
 *app/javascript/controllers/index.js*
 ```js
 import { application } from "controllers/application"
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-import { Multiselect } from "@tramway/multiselect" // importing Multiselect controller class
+import { TramwaySelect } from "@tramway/tramway-select" // importing TramwaySelect controller class
 eagerLoadControllersFrom("controllers", application)
 
-application.register('multiselect', Multiselect) // register Multiselect controller class as `multiselect` stimulus controller
+application.register('tramway-select', TramwaySelect) // register TramwaySelect controller class as `tramway-select` stimulus controller
 ```
 
-In case you need to use Stimulus `change` action with Tramway Multiselect
+In case you need to use Stimulus `change` action with Tramway Select
 
 ```erb
 <%= tramway_form_for @user do |f| %>
-  <%= f.multiselect :role, data: { action: 'change->user-form#updateForm' } %>
+  <%= f.tramway_select :role, data: { action: 'change->user-form#updateForm' } %>
 <% end %>
 ```
 

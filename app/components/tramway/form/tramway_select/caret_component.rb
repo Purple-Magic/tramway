@@ -2,7 +2,7 @@
 
 module Tramway
   module Form
-    module Multiselect
+    module TramwaySelect
       # Caret icon component
       class CaretComponent < Tramway::BaseComponent
         option :direction

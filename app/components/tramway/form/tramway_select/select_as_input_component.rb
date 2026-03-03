@@ -2,7 +2,7 @@
 
 module Tramway
   module Form
-    module Multiselect
+    module TramwaySelect
       # Renders input as select
       class SelectAsInputComponent < Tramway::BaseComponent
         option :options

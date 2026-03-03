@@ -17,7 +17,7 @@ module Tramway
     end
 
     initializer 'tramway.assets.precompile' do |app|
-      app.config.assets.precompile += %w[tramway/multiselect.js]
+      app.config.assets.precompile += %w[tramway/tramway-select_controller.js]
     end
 
     private

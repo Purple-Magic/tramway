@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+
 feature 'Form For Base Test', :js, type: :feature do
   shared_examples 'form for theme classes' do |theme_classes|
     scenario 'check text_field' do

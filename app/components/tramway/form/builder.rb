@@ -83,25 +83,11 @@ module Tramway
       end
 
       def select(attribute, collection, **options, &)
-        sanitized_options = sanitize_options(options)
-
-        render(Tramway::Form::SelectComponent.new(
-                 input: input(:select),
-                 value: sanitized_options[:selected] || object.public_send(attribute),
-                 collection: explicitly_add_blank_option(collection, sanitized_options),
-                 **default_options(attribute, sanitized_options)
-               ), &)
-      end
-
-      def multiselect(attribute, collection, **options, &)
-        sanitized_options = sanitize_options(options)
-
-        render(Tramway::Form::MultiselectComponent.new(
-                 input: input(:text_field),
-                 value: sanitized_options[:value] || sanitized_options[:selected] || object.public_send(attribute),
-                 collection:,
-                 **default_options(attribute, sanitized_options)
-               ), &)
+        if options[:multiple] || options[:autocomplete]
+          tramway_select(attribute, collection, **options, &)
+        else
+          default_select(attribute, collection, **options, &)
+        end
       end
 
       def submit(action, **options, &)
@@ -121,6 +107,30 @@ module Tramway
       private
 
       attr_reader :form_size
+
+      def default_select(attribute, collection, **options, &)
+        sanitized_options = sanitize_options(options)
+
+        render(Tramway::Form::SelectComponent.new(
+                 input: input(:select),
+                 value: sanitized_options[:selected] || object.public_send(attribute),
+                 collection: explicitly_add_blank_option(collection, sanitized_options),
+                 **default_options(attribute, sanitized_options)
+               ), &)
+      end
+
+      def tramway_select(attribute, collection, **options, &)
+        sanitized_options = sanitize_options(options)
+
+        render(Tramway::Form::TramwaySelectComponent.new(
+                 input: input(:text_field),
+                 value: sanitized_options[:value] || sanitized_options[:selected] || object.public_send(attribute),
+                 collection:,
+                 multiple: options[:multiple],
+                 autocomplete: options[:autocomplete],
+                 **default_options(attribute, sanitized_options)
+               ), &)
+      end
 
       def input(method_name)
         unbound_method = self.class.superclass.instance_method(method_name)
@@ -157,8 +167,10 @@ module Tramway
 
       def sanitize_options(options)
         options.dup.tap do |opts|
-          opts.delete(:size)
-          opts.delete('size')
+          %i[size multiple autocomplete].each do |key|
+            opts.delete(key)
+            opts.delete(key.to_s)
+          end
         end
       end
 
