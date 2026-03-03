@@ -10,7 +10,6 @@ feature 'TramwayAutocompleteComponent', :js, type: :feature do
   scenario 'allows user to select an option' do
     tramway_autocomplete 'Team 1', from: 'user_team'
 
-    expect(page).to have_selector('div.option', text: 'Team 1')
-    expect(page).not_to have_selector('div.option', text: 'Team 2')
+    expect(find("input[name='user[team]']", visible: :all).value).to eq('team1')
   end
 end
