@@ -1147,6 +1147,17 @@ Available form helpers:
 * tramway_select ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
 
+Autocomplete select example:
+
+```erb
+<%= tramway_form_for @user do |f| %>
+  <%= f.select :role, [:admin, :user], autocomplete: true %>
+<% end %>
+```
+
+`autocomplete: true` renders an autocomplete-enabled select. It cannot be used together with `multiselect: true` in the
+same select field.
+
 **Examples**
 
 1. Sign In Form for `devise` authentication

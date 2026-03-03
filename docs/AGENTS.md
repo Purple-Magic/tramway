@@ -155,6 +155,9 @@ Use Tramway Button for buttons. Always add a color of the button via `color:` or
 ### Rule 7
 Use `tramway_form_for` instead `form_with`, `form_for`
 
+`tramway_form_for` has an upgraded `select` helper. Use `autocomplete: true` when you need an autocomplete select instead
+of the usual select element. Do not use `autocomplete: true` together with `multiselect: true` on the same field.
+
 Available `tramway_form_for` helpers:
 - `text_field`
 - `email_field`
@@ -594,6 +597,17 @@ end
   = f.select :role, [["Admin", "admin"], ["Manager", "manager"]], include_blank: "Select role"
   = f.submit 'Save'
 ```
+
+Autocomplete select example:
+
+```ruby
+= tramway_form_for @user do |f|
+  = f.select :role, [["Admin", "admin"], ["Manager", "manager"]], autocomplete: true
+  = f.submit 'Save'
+```
+
+`autocomplete: true` renders an autocomplete select. `autocomplete: true` and `multiselect: true` cannot be used together
+in one select field.
 
 `tramway_form_for` supports `horizontal: true` for horizontal form layout.
 
