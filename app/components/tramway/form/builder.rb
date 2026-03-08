@@ -12,13 +12,19 @@ module Tramway
 
       def initialize(object_name, object, template, options)
         @horizontal = options[:horizontal] || false
+        @remote = options[:remote_submit] || false
 
         options.merge!(class: [options[:class], 'flex flex-row items-center gap-2'].compact.join(' ')) if @horizontal
 
-        super
+        @form_object_class = options[:form_object_class]
+
+        if form_object(object)
+          super(object_name, form_object(object), template, options)
+        else
+          super
+        end
 
         @form_size = options[:size] || options['size'] || :medium
-        @form_object_class = options[:form_object_class]
       end
 
       def common_field(component_name, input_method, attribute, **options, &)
@@ -161,12 +167,15 @@ module Tramway
       end
 
       def default_options(attribute, options)
+        options.merge!(horizontal: true) if @horizontal
+        options.merge!(onchange: 'this.form.requestSubmit()') if @remote
+
         {
           attribute:,
           label: label_build(attribute, options),
           for: for_id(attribute),
-          options: options.merge(horizontal: @horizontal),
-          size: form_size
+          options: options,
+          size: form_size,
         }
       end
 
