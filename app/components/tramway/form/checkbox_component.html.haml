@@ -1,7 +1,7 @@
-.flex.items-start.gap-2{ class: default_container_classes }
+.flex.items-start.gap-2.cursor-pointer{ class: default_container_classes }
   - classes = "#{size_class(:checkbox_input)} #{checkbox_base_classes}"
   = @input.call @attribute, **@options.merge(class: classes)
   - if @label
     %div
-      = component('tramway/form/label', for: @for) do
+      = component('tramway/form/label', for: @for, options: { class: label_classes }) do
         = @label

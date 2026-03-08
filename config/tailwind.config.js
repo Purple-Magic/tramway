@@ -333,6 +333,9 @@ module.exports = {
     'bg-red-100',
     'text-red-800',
     'space-x-2',
+    'h-5',
+    'w-5',
+    'rounded-full',
 
     // === Tramway select dropdown positioning ===
     'absolute',
