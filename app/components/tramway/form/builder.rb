@@ -137,12 +137,27 @@ module Tramway
         unbound_method.bind(self)
       end
 
-      def form_object
-        @form_object_class&.new object
+      def form_object(obj = nil)
+        return obj if obj.is_a?(Tramway::BaseForm)
+        return object if object.is_a?(Tramway::BaseForm)
+
+        @form_object_class&.new(obj || object)
       end
 
       def get_value(attribute, options)
-        options[:value] || form_object&.public_send(attribute).presence || object.presence&.public_send(attribute)
+        return options[:value] if options.has_key?(:value)
+
+        if form_object.present? && !form_object&.public_send(attribute).nil?
+          return form_object&.public_send(attribute)
+        end
+
+        unless object.respond_to?(attribute)
+          form_object_part = form_object.present? ? "#{form_object.class} or " : ''
+
+          raise ArgumentError, "Neither form object nor object respond to #{attribute}. You should define #{attribute} method in #{form_object_part}#{object.class}"
+        end
+
+        object&.public_send(attribute)
       end
 
       def default_options(attribute, options)

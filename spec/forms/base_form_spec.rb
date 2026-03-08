@@ -13,6 +13,12 @@ describe UserForm do
       it 'assigns object' do
         expect(form_object).to have_attributes object:
       end
+
+      it 'works when wrapped object does not define .primary_key' do
+        wrapped_form = described_class.new(object)
+
+        expect { described_class.new(wrapped_form) }.not_to raise_error
+      end
     end
 
     describe '.property' do
