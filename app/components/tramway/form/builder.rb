@@ -173,7 +173,7 @@ module Tramway
         {
           attribute:,
           label: label_build(attribute, options),
-          for: for_id(attribute),
+          for: options[:id].presence || for_id(attribute),
           options: options,
           size: form_size,
         }
