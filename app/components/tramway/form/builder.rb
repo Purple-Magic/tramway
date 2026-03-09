@@ -157,13 +157,15 @@ module Tramway
           return form_object&.public_send(attribute)
         end
 
-        unless object.respond_to?(attribute)
+        if object.present? && !object.respond_to?(attribute)
           form_object_part = form_object.present? ? "#{form_object.class} or " : ''
 
           raise ArgumentError, "Neither form object nor object respond to #{attribute}. You should define #{attribute} method in #{form_object_part}#{object.class}"
         end
 
-        object&.public_send(attribute)
+        return if object.blank?
+
+        object.public_send(attribute)
       end
 
       def default_options(attribute, options)
