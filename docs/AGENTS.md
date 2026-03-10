@@ -532,7 +532,15 @@ Always `tramway_decorate` and `tramway_form` for creating these types of objects
 In Tramway Decorators, use `delegate_attributes` method instead of `delegate :something, to: :object`
 
 ### Rule 33
-In case you want to use container on the page, use `tramway_container` helper instead of creating a component for that or using a plain div with Tailwind classes. In case you need to use container in layout view, use `tramway_main_container` for this
+In case you want to use container on the page, use `tramway_container` helper instead of creating a component for that or using a plain div with Tailwind classes. In case you need to use container in layout view, use `tramway_main_container` for this. Here is example of using `tramway_main_container` inside application layout.
+
+```
+= tramway_main_container do
+  - if flash.any?
+    = tramway_flash text: flash[:notice].presence || flash[:alert],
+      type: flash[:notice].present? ? :will : :rage,
+      id: 'flash-container'
+```
 
 ## Controller Patterns
 
