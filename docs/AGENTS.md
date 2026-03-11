@@ -173,6 +173,10 @@ Available `tramway_form_for` helpers:
 - `tramway_select`
 - `submit`
 
+### Rule 7.1
+Use `tramway_form_for(remote: true)` only when the form must submit asynchronously and update part of the current page (for example: modal forms, inline edits, or list updates without full page reload).
+For standard create/update flows that redirect and show regular flash messages, keep it synchronous (do not set `remote: true`).
+
 ### Rule 8
 Inherit all components from Tramway::BaseComponent
 

@@ -2,7 +2,7 @@
 
 module Admin
   class PostForm < Tramway::BaseForm
-    properties :title, :text, :user_id
+    properties :title, :text, :user_id, :post_type
 
     fields title: :text,
            text: :text_area,

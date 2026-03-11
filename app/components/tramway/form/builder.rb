@@ -12,13 +12,19 @@ module Tramway
 
       def initialize(object_name, object, template, options)
         @horizontal = options[:horizontal] || false
+        @remote = options[:remote_submit] || false
 
         options.merge!(class: [options[:class], 'flex flex-row items-center gap-2'].compact.join(' ')) if @horizontal
 
-        super
+        @form_object_class = options[:form_object_class]
+
+        if form_object(object)
+          super(object_name, form_object(object), template, options)
+        else
+          super
+        end
 
         @form_size = options[:size] || options['size'] || :medium
-        @form_object_class = options[:form_object_class]
       end
 
       def common_field(component_name, input_method, attribute, **options, &)
@@ -137,20 +143,55 @@ module Tramway
         unbound_method.bind(self)
       end
 
-      def form_object
-        @form_object_class&.new object
+      def form_object(obj = nil)
+        return obj if obj.is_a?(Tramway::BaseForm)
+        return object if object.is_a?(Tramway::BaseForm)
+
+        @form_object_class&.new(obj || object)
       end
 
       def get_value(attribute, options)
-        options[:value] || form_object&.public_send(attribute).presence || object.presence&.public_send(attribute)
+        return options[:value] if options.key?(:value)
+
+        form_obj = form_object
+        form_value = form_object_value(form_obj, attribute)
+        return form_value unless form_value.nil?
+
+        ensure_object_responds!(attribute, form_obj)
+        object_value(attribute)
+      end
+
+      def form_object_value(form_obj, attribute)
+        return if form_obj.blank?
+
+        form_obj.public_send(attribute)
+      end
+
+      def ensure_object_responds!(attribute, form_obj)
+        return unless object.present? && !object.respond_to?(attribute)
+
+        form_object_part = form_obj.present? ? "#{form_obj.class} or " : ''
+        message = "Neither form object nor object respond to #{attribute}. " \
+                  "You should define #{attribute} method in #{form_object_part}#{object.class}"
+
+        raise ArgumentError, message
+      end
+
+      def object_value(attribute)
+        return if object.blank?
+
+        object.public_send(attribute)
       end
 
       def default_options(attribute, options)
+        options.merge!(horizontal: true) if @horizontal
+        options.merge!(onchange: 'this.form.requestSubmit()') if @remote
+
         {
           attribute:,
           label: label_build(attribute, options),
-          for: for_id(attribute),
-          options: options.merge(horizontal: @horizontal),
+          for: options[:id].presence || for_id(attribute),
+          options: options,
           size: form_size
         }
       end

@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'support/view_helpers'
 
 CLASSIC_FORM_CLASSES = {
-  label: %w[block text-sm font-semibold mb-2 text-white],
+  label: %w[block font-semibold text-white],
   text_input: %w[
     w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
     focus:ring-2 focus:ring-gray-600 placeholder-gray-500

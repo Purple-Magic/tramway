@@ -1227,6 +1227,17 @@ In case you need to use Stimulus `change` action with Tramway Select
 <% end %>
 ```
 
+Remote form example:
+
+```erb
+<%= tramway_form_for @user, remote: true do |f| %>
+  <%= f.text_field :name %>
+  <%= f.email_field :email %>
+<% end %>
+```
+
+With `remote: true`, Tramway submits the form on each input `change` via inline JavaScript; no additional controller setup is required.
+
 ### Tailwind-styled pagination for Kaminari
 
 Tramway uses [Tailwind](https://tailwindcss.com/) by default. It has tailwind-styled pagination for [kaminari](https://github.com/kaminari/kaminari).
