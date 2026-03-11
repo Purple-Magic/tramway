@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Extendable forms' do
+describe 'Extendable forms' do # rubocop:disable RSpec/DescribeClass
   let(:user) { create(:user, first_name: 'Pasha', last_name: 'Kalashnikov') }
 
   before do

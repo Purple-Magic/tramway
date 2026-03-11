@@ -11,14 +11,12 @@ module Tramway
       def tramway_form_for(object, *, size: :medium, **options, &)
         form_object_class = object.is_a?(Tramway::BaseForm) ? object.class : nil
 
-        form_for(
-          object,
-          *,
-          **options.merge(
-            builder: Tramway::Form::Builder, size: normalize_form_size(size), form_object_class:, remote_submit: options[:remote] || false
-          ),
-          &
-        )
+        form_for(object, *, **options.merge(
+          builder: Tramway::Form::Builder,
+          size: normalize_form_size(size),
+          form_object_class:,
+          remote_submit: options[:remote] || false
+        ), &)
       end
 
       def tramway_table(**options, &)

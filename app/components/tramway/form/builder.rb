@@ -153,15 +153,31 @@ module Tramway
       def get_value(attribute, options)
         return options[:value] if options.key?(:value)
 
-        return form_object&.public_send(attribute) if form_object.present? && !form_object&.public_send(attribute).nil?
+        form_obj = form_object
+        form_value = form_object_value(form_obj, attribute)
+        return form_value unless form_value.nil?
 
-        if object.present? && !object.respond_to?(attribute)
-          form_object_part = form_object.present? ? "#{form_object.class} or " : ''
+        ensure_object_responds!(attribute, form_obj)
+        object_value(attribute)
+      end
 
-          raise ArgumentError,
-                "Neither form object nor object respond to #{attribute}. You should define #{attribute} method in #{form_object_part}#{object.class}"
-        end
+      def form_object_value(form_obj, attribute)
+        return if form_obj.blank?
 
+        form_obj.public_send(attribute)
+      end
+
+      def ensure_object_responds!(attribute, form_obj)
+        return unless object.present? && !object.respond_to?(attribute)
+
+        form_object_part = form_obj.present? ? "#{form_obj.class} or " : ''
+        message = "Neither form object nor object respond to #{attribute}. " \
+                  "You should define #{attribute} method in #{form_object_part}#{object.class}"
+
+        raise ArgumentError, message
+      end
+
+      def object_value(attribute)
         return if object.blank?
 
         object.public_send(attribute)

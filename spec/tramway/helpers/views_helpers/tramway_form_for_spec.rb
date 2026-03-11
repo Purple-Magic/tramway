@@ -91,10 +91,7 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
       original_onchange = 'window.console.log("changed")'
       options = {
         remote: true,
-        html: {
-          class: 'form',
-          onchange: original_onchange
-        }
+        html: { class: 'form', onchange: original_onchange }
       }
 
       allow(view).to receive(:form_for).with(object, hash_including(html: hash_including(class: 'form')))
