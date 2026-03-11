@@ -15,7 +15,8 @@ module Tramway
           object,
           *,
           **options.merge(
-            builder: Tramway::Form::Builder, size: normalize_form_size(size), form_object_class:, remote_submit: options[:remote] || false),
+            builder: Tramway::Form::Builder, size: normalize_form_size(size), form_object_class:, remote_submit: options[:remote] || false
+          ),
           &
         )
       end

@@ -151,16 +151,15 @@ module Tramway
       end
 
       def get_value(attribute, options)
-        return options[:value] if options.has_key?(:value)
+        return options[:value] if options.key?(:value)
 
-        if form_object.present? && !form_object&.public_send(attribute).nil?
-          return form_object&.public_send(attribute)
-        end
+        return form_object&.public_send(attribute) if form_object.present? && !form_object&.public_send(attribute).nil?
 
         if object.present? && !object.respond_to?(attribute)
           form_object_part = form_object.present? ? "#{form_object.class} or " : ''
 
-          raise ArgumentError, "Neither form object nor object respond to #{attribute}. You should define #{attribute} method in #{form_object_part}#{object.class}"
+          raise ArgumentError,
+                "Neither form object nor object respond to #{attribute}. You should define #{attribute} method in #{form_object_part}#{object.class}"
         end
 
         return if object.blank?
@@ -177,7 +176,7 @@ module Tramway
           label: label_build(attribute, options),
           for: options[:id].presence || for_id(attribute),
           options: options,
-          size: form_size,
+          size: form_size
         }
       end
 

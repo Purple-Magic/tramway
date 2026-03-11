@@ -102,7 +102,10 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
 
       view.tramway_form_for(object, **options)
 
-      expect_received_form_for_with_remote_submit(object:, html: hash_including(class: 'form', onchange: original_onchange))
+      expect_received_form_for_with_remote_submit(object:,
+                                                  html: hash_including(
+                                                    class: 'form', onchange: original_onchange
+                                                  ))
       expect(view).to have_received(:form_for).with(object, hash_including(html: hash_including(class: 'form')))
     end
   end
