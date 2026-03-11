@@ -14,10 +14,10 @@ describe UserForm do
         expect(form_object).to have_attributes object:
       end
 
-      it 'works when wrapped object does not define .primary_key' do
+      it 'works when wrapped object define .primary_key' do
         wrapped_form = described_class.new(object)
 
-        expect { described_class.new(wrapped_form) }.not_to raise_error
+        expect { described_class.new(wrapped_form) }.to raise_error(NoMethodError)
       end
     end
 

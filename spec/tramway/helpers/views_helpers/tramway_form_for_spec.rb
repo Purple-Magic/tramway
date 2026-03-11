@@ -5,31 +5,23 @@ require 'tramway/helpers/views_helper'
 require 'support/view_helpers'
 
 RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
-  let(:remote_onchange) do
-    "if (event.target && this.contains(event.target) && event.target.type !== 'submit') { this.requestSubmit(); }"
-  end
+  def expect_form_for_with_remote_submit(object:, html: nil)
+    expected_options = { remote_submit: true }
+    expected_options[:html] = html unless html.nil?
 
-  def expect_form_for_with_remote_onchange(object:, onchange:)
     allow(view).to receive(:form_for).with(
       object,
-      hash_including(
-        remote: true,
-        html: hash_including(
-          onchange:
-        )
-      )
+      hash_including(expected_options)
     )
   end
 
-  def expect_received_form_for_with_remote_onchange(object:, onchange:)
+  def expect_received_form_for_with_remote_submit(object:, html: nil)
+    expected_options = { remote: true, remote_submit: true }
+    expected_options[:html] = html unless html.nil?
+
     expect(view).to have_received(:form_for).with(
       object,
-      hash_including(
-        remote: true,
-        html: hash_including(
-          onchange:
-        )
-      )
+      hash_including(expected_options)
     )
   end
 
@@ -84,20 +76,19 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
       expect(view).to have_received(:form_for).with(object, hash_including(size: :medium))
     end
 
-    it 'adds remote onchange behavior when remote is true' do
+    it 'passes remote_submit when remote is true' do
       object = Struct.new(:id).new(5)
 
-      expect_form_for_with_remote_onchange(object:, onchange: remote_onchange)
+      expect_form_for_with_remote_submit(object:)
 
       view.tramway_form_for(object, remote: true)
 
-      expect_received_form_for_with_remote_onchange(object:, onchange: remote_onchange)
+      expect_received_form_for_with_remote_submit(object:)
     end
 
-    it 'preserves html options and appends existing onchange for remote forms' do
+    it 'preserves html options for remote forms' do
       object = Struct.new(:id).new(6)
       original_onchange = 'window.console.log("changed")'
-      merged_onchange = "#{original_onchange}; #{remote_onchange}"
       options = {
         remote: true,
         html: {
@@ -107,11 +98,11 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
       }
 
       allow(view).to receive(:form_for).with(object, hash_including(html: hash_including(class: 'form')))
-      expect_form_for_with_remote_onchange(object:, onchange: merged_onchange)
+      expect_form_for_with_remote_submit(object:, html: hash_including(class: 'form', onchange: original_onchange))
 
       view.tramway_form_for(object, **options)
 
-      expect_received_form_for_with_remote_onchange(object:, onchange: merged_onchange)
+      expect_received_form_for_with_remote_submit(object:, html: hash_including(class: 'form', onchange: original_onchange))
       expect(view).to have_received(:form_for).with(object, hash_including(html: hash_including(class: 'form')))
     end
   end
