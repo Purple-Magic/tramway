@@ -13,6 +13,22 @@
     animation: roll-up 0.5s ease-in-out;
   }
 
-#roll-up{ class: preview_classes }
-  %button{ class: close_button_classes, "data-action" => "click->preview#close", "data-controller" => "preview" }
+  @keyframes roll-down {
+    0% {
+      transform: translateY(0%);
+    }
+
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  .animate-roll-down {
+    animation: roll-down 0.5s ease-in-out;
+  }
+
+#roll-up{ class: preview_classes, data: { controller: 'table-row-preview' } }
+  %button{ class: close_button_classes, "data-action" => "click->table-row-preview#close" }
     &#x2715;
+
+  = content

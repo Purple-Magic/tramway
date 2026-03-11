@@ -118,6 +118,16 @@ module.exports = {
     'first:block',
     'rounded-t-xl',
 
+    // === Table row preview panel ===
+    'bottom-0',
+    'left-0',
+    'right-0',
+    'h-1/2',
+    'bg-gray-100',
+    'animate-roll-up',
+    'hover:text-gray-700',
+    'pt-4',
+
     // === Title Component ===
     'md:text-4xl',
 
