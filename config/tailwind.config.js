@@ -127,6 +127,7 @@ module.exports = {
     'animate-roll-up',
     'hover:text-gray-700',
     'pt-4',
+    'md:hidden',
 
     // === Title Component ===
     'md:text-4xl',

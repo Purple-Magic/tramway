@@ -7,7 +7,7 @@ module Tramway
       class PreviewComponent < Tramway::BaseComponent
         def preview_classes
           theme_classes(
-            classic: 'fixed hidden bottom-0 left-0 right-0 w-screen shadow-lg z-50 bg-gray-900 animate-roll-up h-1/2 pt-4'
+            classic: 'fixed hidden md:hidden bottom-0 left-0 right-0 w-screen shadow-lg z-50 bg-gray-900 animate-roll-up h-1/2 pt-4'
           )
         end
 
