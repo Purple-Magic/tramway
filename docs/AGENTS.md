@@ -505,6 +505,36 @@ and in a controller
   end
 ```
 
+Use dry-monads while call these services.
+
+Instead of this 
+
+```ruby
+result = SomeService.call(args)
+
+case result
+when :success
+  # code
+when :failure
+  # code
+end
+```
+
+Do this 
+
+```ruby
+case SomeService.call(args)
+in Success(result)
+  # use result
+in Success(another_result)
+  # use another result
+in Failure(reason_or_error)
+  # do stuff
+end
+```
+
+Success and Failure must describe all possible results of calling certain service.
+
 ### Rule 27
 Don't create scopes for enumerated values, use `scope: :shallow` of the enumerize gem.
 
