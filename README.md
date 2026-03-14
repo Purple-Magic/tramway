@@ -987,6 +987,20 @@ Use the optional `href:` argument on `tramway_row` to turn an entire row into a 
 <% end %>
 ```
 
+`tramway_row` also accepts `preview:`. By default preview is enabled (`true`) for non-linked rows and renders the mobile slide-up
+details panel. Pass `preview: false` when you want a row without the preview panel.
+
+```erb
+<%= tramway_row preview: false do %>
+  <%= tramway_cell do %>
+    <%= user.name %>
+  <% end %>
+  <%= tramway_cell do %>
+    <%= user.email %>
+  <% end %>
+<% end %>
+```
+
 When you render a header you can either pass the `headers:` array, as in the examples above, or render custom header content in
 the block. `tramway_header` uses the length of the `headers` array to build the grid if the array is present.
 If you omit the array and provide custom content, pass the `columns:` argument so the component knows how many grid columns to

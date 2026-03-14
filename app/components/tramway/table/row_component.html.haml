@@ -11,9 +11,10 @@
     = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' '), **default_attributes do
       = content
   - else
-    = component 'tramway/table/row/preview' do
-      - cells.each_with_index do |cell, index|
-        - next if index.zero?
+    - if preview
+      = component 'tramway/table/row/preview' do
+        - cells.each_with_index do |cell, index|
+          - next if index.zero?
 
         = cell.to_s.html_safe
 

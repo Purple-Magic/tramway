@@ -6,6 +6,7 @@ module Tramway
     class RowComponent < Tramway::BaseComponent
       option :cells, optional: true, default: -> { [] }
       option :href, optional: true
+      option :preview, optional: true, default: -> { true }
       option :options, optional: true, default: -> { {} }
 
       def default_attributes
