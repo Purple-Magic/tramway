@@ -16,7 +16,7 @@
         - cells.each_with_index do |cell, index|
           - next if index.zero?
 
-        = cell.to_s.html_safe
+          = cell.to_s.html_safe
 
     = tag.div class: desktop_row_classes(cells.count), data: { action: "click->table-row-preview#toggle", controller: "table-row-preview" }, **default_attributes do
       = content
