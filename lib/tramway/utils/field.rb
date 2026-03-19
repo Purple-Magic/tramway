@@ -42,9 +42,13 @@ module Tramway
 
       def field_options(field_data)
         if field_data.is_a?(Hash)
-          value = field_data[:value]&.call(object)
+          if field_data[:value].present?
+            value = field_data[:value]&.call(object)
 
-          field_data.merge(value:).except(:type)
+            field_data.merge(value:)
+          else
+            field_data
+          end.except(:type)
         else
           {}
         end
