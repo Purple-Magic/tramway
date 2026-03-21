@@ -37,6 +37,10 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     File.join(destination_root, 'config/importmap.rb')
   end
 
+  def controllers_index_path
+    File.join(destination_root, 'app/javascript/controllers/index.js')
+  end
+
   def template_tailwind_config_path
     File.expand_path('../../../config/tailwind.config.js', __dir__)
   end
@@ -168,7 +172,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
   end
 
   describe 'importmap pins' do
-    it 'appends the tramway select pin when importmap exists' do
+    it 'appends tramway controller pins when importmap exists' do
       FileUtils.mkdir_p(File.dirname(importmap_path))
       File.write(importmap_path, 'pin "application", preload: true')
 
@@ -176,7 +180,8 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       expect(File.read(importmap_path)).to eq(
         "pin \"application\", preload: true\n" \
-        "pin \"@tramway/tramway-select\", to: \"tramway/tramway-select_controller.js\"\n"
+        "pin \"@tramway/tramway-select\", to: \"tramway/tramway-select_controller.js\"\n" \
+        "pin \"@tramway/table-row-preview\", to: \"tramway/table_row_preview_controller.js\"\n"
       )
     end
 
@@ -195,6 +200,70 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       run_generator
       second_run = File.read(importmap_path)
+
+      expect(second_run).to eq(first_run)
+    end
+  end
+
+  describe 'stimulus controllers index' do
+    let(:base_index_content) do
+      <<~JS
+        import { Application } from "@hotwired/stimulus"
+        import { UserForm } from "./user_form_controller"
+
+        const application = Application.start()
+
+        application.debug = false
+        window.Stimulus   = application
+        application.register('user-form', UserForm)
+
+        export { application }
+      JS
+    end
+
+    # rubocop:disable RSpec/ExampleLength
+    it 'appends tramway controller imports and registrations when index exists' do
+      FileUtils.mkdir_p(File.dirname(controllers_index_path))
+      File.write(controllers_index_path, base_index_content)
+
+      run_generator
+
+      expect(File.read(controllers_index_path)).to eq(
+        <<~JS
+          import { Application } from "@hotwired/stimulus"
+          import { UserForm } from "./user_form_controller"
+          import { TramwaySelect } from "@tramway/tramway-select"
+          import { TableRowPreview } from "@tramway/table-row-preview"
+
+          const application = Application.start()
+
+          application.debug = false
+          window.Stimulus   = application
+          application.register('user-form', UserForm)
+
+          application.register('tramway-select', TramwaySelect)
+          application.register('table-row-preview', TableRowPreview)
+          export { application }
+        JS
+      )
+    end
+    # rubocop:enable RSpec/ExampleLength
+
+    it 'does not create controllers index when missing' do
+      run_generator
+
+      expect(File).not_to exist(controllers_index_path)
+    end
+
+    it 'does not duplicate tramway controller entries when run multiple times' do
+      FileUtils.mkdir_p(File.dirname(controllers_index_path))
+      File.write(controllers_index_path, base_index_content)
+
+      run_generator
+      first_run = File.read(controllers_index_path)
+
+      run_generator
+      second_run = File.read(controllers_index_path)
 
       expect(second_run).to eq(first_run)
     end

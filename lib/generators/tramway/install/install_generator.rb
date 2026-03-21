@@ -52,8 +52,34 @@ module Tramway
         @importmap_path ||= File.join(destination_root, 'config/importmap.rb')
       end
 
+      def controllers_index_path
+        @controllers_index_path ||= File.join(destination_root, 'app/javascript/controllers/index.js')
+      end
+
       def importmap_tramway_select_pin
         'pin "@tramway/tramway-select", to: "tramway/tramway-select_controller.js"'
+      end
+
+      def importmap_table_row_preview_pin
+        'pin "@tramway/table-row-preview", to: "tramway/table_row_preview_controller.js"'
+      end
+
+      def importmap_tramway_pins
+        [importmap_tramway_select_pin, importmap_table_row_preview_pin]
+      end
+
+      def stimulus_controller_imports
+        [
+          'import { TramwaySelect } from "@tramway/tramway-select"',
+          'import { TableRowPreview } from "@tramway/table-row-preview"'
+        ]
+      end
+
+      def stimulus_controller_registrations
+        [
+          "application.register('tramway-select', TramwaySelect)",
+          "application.register('table-row-preview', TableRowPreview)"
+        ]
       end
 
       def agents_file_path
@@ -159,6 +185,43 @@ module Tramway
           agents_template
         )
       end
+
+      # rubocop:disable Metrics/MethodLength
+      def append_missing_imports(content)
+        missing_imports = stimulus_controller_imports.reject { |line| content.include?(line) }
+        return content if missing_imports.empty?
+
+        import_lines = content.each_line.with_index.filter_map do |line, index|
+          index if line.lstrip.start_with?('import ')
+        end
+        insertion = "#{missing_imports.join("\n")}\n"
+        updated = content.dup
+
+        if import_lines.any?
+          insertion_index = updated.lines[0..import_lines.max].join.length
+          updated.insert(insertion_index, insertion)
+        else
+          updated.prepend(insertion)
+        end
+
+        updated
+      end
+      # rubocop:enable Metrics/MethodLength
+
+      def append_missing_registrations(content)
+        missing_registrations = stimulus_controller_registrations.reject { |line| content.include?(line) }
+        return content if missing_registrations.empty?
+
+        insertion = "#{missing_registrations.join("\n")}\n"
+        export_match = /^(?:export\s*\{[^}]+\}\s*;?\s*)$/m.match(content)
+
+        return content.dup.insert(export_match.begin(0), insertion) if export_match
+
+        updated = content.dup
+        updated << "\n" unless updated.empty? || updated.end_with?("\n")
+        updated << insertion
+        updated
+      end
     end
     # rubocop:enable Metrics/ModuleLength
 
@@ -242,12 +305,24 @@ module Tramway
         return unless File.exist?(importmap_path)
 
         content = File.read(importmap_path)
-        return if content.include?(importmap_tramway_select_pin)
+        missing_pins = importmap_tramway_pins.reject { |pin| content.include?(pin) }
+        return if missing_pins.empty?
 
         File.open(importmap_path, 'a') do |file|
           file.write("\n") unless content.empty? || content.end_with?("\n")
-          file.write("#{importmap_tramway_select_pin}\n")
+          file.write("#{missing_pins.join("\n")}\n")
         end
+      end
+
+      def ensure_stimulus_controller_registration
+        return unless File.exist?(controllers_index_path)
+
+        content = File.read(controllers_index_path)
+        updated = append_missing_imports(content)
+        updated = append_missing_registrations(updated)
+        return if updated == content
+
+        File.write(controllers_index_path, updated)
       end
     end
   end

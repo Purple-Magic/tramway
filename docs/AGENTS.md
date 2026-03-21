@@ -149,6 +149,9 @@ Use Tramway Flash for user notifications.
 ### Rule 5
 Use Tramway Table for tabular data display.
 
+`tramway_row` supports `href:` for clickable rows and `preview:` for mobile row preview behavior. Keep `preview: true` as the
+default unless the request explicitly needs preview disabled.
+
 ### Rule 6
 Use Tramway Button for buttons. Always add a color of the button via `color:` or `type:` argument. `color:` argument support directs colors only: red, yellow, blue, etc. `type:` argument supports only lantern colors: will, hope, rage, etc.
 

@@ -76,7 +76,7 @@ describe Tramway::Form::Builder, type: :view do
     it 'renders checkbox with label and classes' do
       expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
       expect(output).to have_selector(
-        "input[type=\"checkbox\"].h-5.w-5.#{class_selector(theme_classes.fetch(:checkbox_input))}"
+        "input[type=\"checkbox\"].min-h-5.min-w-5.#{class_selector(theme_classes.fetch(:checkbox_input))}"
       )
     end
   end

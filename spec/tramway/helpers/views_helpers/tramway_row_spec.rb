@@ -13,7 +13,7 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
   describe '#tramway_row' do
     let(:row_block) { proc {} }
     let(:row_component_arguments) do
-      { cells: %w[first second], href: '/rows/1', options: { class: 'row' } }
+      { cells: %w[first second], href: '/rows/1', preview: nil, options: { class: 'row' } }
     end
     let(:row_helper_arguments) { { cells: %w[first second], href: '/rows/1', class: 'row' } }
 
@@ -24,6 +24,25 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
       end
 
       expect(view.tramway_row(**row_helper_arguments, &row_block)).to eq :row_output
+    end
+
+    context 'with preview option' do
+      let(:row_component_arguments) do
+        { cells: %w[first second], href: '/rows/1', preview: false, options: { class: 'row' } }
+      end
+
+      let(:row_helper_arguments) do
+        { cells: %w[first second], href: '/rows/1', preview: false, class: 'row' }
+      end
+
+      it 'forwards preview to tramway row component' do
+        expect(view).to receive(:component).with('tramway/table/row', **row_component_arguments) do |&received_block|
+          expect(received_block).to be row_block
+          :row_output
+        end
+
+        expect(view.tramway_row(**row_helper_arguments, &row_block)).to eq :row_output
+      end
     end
   end
 end

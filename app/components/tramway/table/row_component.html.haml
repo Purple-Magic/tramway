@@ -5,11 +5,18 @@
         = value
 
 - else
-  - cells = Nokogiri::HTML.fragment(content).xpath('./*[@class and contains(concat(" ", normalize-space(@class), " "), " div-table-cell ")]')
+  - cells = visible_cells_from(content)
 
   - if href.present?
     = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' '), **default_attributes do
       = content
   - else
-    = tag.div class: desktop_row_classes(cells.count), **default_attributes do
+    - if preview
+      = component 'tramway/table/row/preview' do
+        - cells.each_with_index do |cell, index|
+          - next if index.zero?
+
+          = cell.to_s.html_safe
+
+    = tag.div class: desktop_row_classes(cells.count), data: { action: "click->table-row-preview#toggle", controller: "table-row-preview" }, **default_attributes do
       = content

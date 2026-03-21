@@ -31,7 +31,7 @@ feature 'Form For Base Test', :js, type: :feature do
 
     scenario 'check checkbox' do
       expect(page).to have_selector(
-        "input[type='checkbox'].h-5.w-5.#{class_selector(theme_classes.fetch(:checkbox_input))}"
+        "input[type='checkbox'].min-h-5.min-w-5.#{class_selector(theme_classes.fetch(:checkbox_input))}"
       )
     end
   end
