@@ -186,11 +186,14 @@ module Tramway
         )
       end
 
+      # rubocop:disable Metrics/MethodLength
       def append_missing_imports(content)
         missing_imports = stimulus_controller_imports.reject { |line| content.include?(line) }
         return content if missing_imports.empty?
 
-        import_lines = content.each_line.with_index.filter_map { |line, index| index if line.lstrip.start_with?('import ') }
+        import_lines = content.each_line.with_index.filter_map do |line, index|
+          index if line.lstrip.start_with?('import ')
+        end
         insertion = "#{missing_imports.join("\n")}\n"
         updated = content.dup
 
@@ -203,6 +206,7 @@ module Tramway
 
         updated
       end
+      # rubocop:enable Metrics/MethodLength
 
       def append_missing_registrations(content)
         missing_registrations = stimulus_controller_registrations.reject { |line| content.include?(line) }

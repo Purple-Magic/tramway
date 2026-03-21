@@ -60,7 +60,9 @@ module Tramway
 
       def visible_cells_from(content)
         fragment = Nokogiri::HTML.fragment(content)
-        parsed_cells = fragment.xpath('./*[@class and contains(concat(" ", normalize-space(@class), " "), " div-table-cell ")]')
+        parsed_cells = fragment.xpath(
+          './*[@class and contains(concat(" ", normalize-space(@class), " "), " div-table-cell ")]'
+        )
 
         parsed_cells.each { |cell| remove_hidden_class!(cell) }
       end

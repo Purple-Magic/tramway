@@ -221,6 +221,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       JS
     end
 
+    # rubocop:disable RSpec/ExampleLength
     it 'appends tramway controller imports and registrations when index exists' do
       FileUtils.mkdir_p(File.dirname(controllers_index_path))
       File.write(controllers_index_path, base_index_content)
@@ -246,6 +247,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
         JS
       )
     end
+    # rubocop:enable RSpec/ExampleLength
 
     it 'does not create controllers index when missing' do
       run_generator
