@@ -191,6 +191,8 @@ For live updates to a rendered `tramway_chat`, use `tramway_chat_append_message(
 This method is included in all controllers and ActiveRecord models. `message_type` must be `:sent` or `:received`, otherwise
 it raises `ArgumentError`. `chat_id` must match the stream id used in `tramway_chat`.
 
+`message_form` object must be a `Tramway::BaseForm` or an inherited class object. It must contain `text` attribute.
+
 ### Rule 9
 If page `create` or `update` is configured for an entity, use Tramway Form pattern for forms. Visible fields are configured via `form_fields` method.
 
