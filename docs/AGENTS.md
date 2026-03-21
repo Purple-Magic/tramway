@@ -192,6 +192,67 @@ This method is included in all controllers and ActiveRecord models. `message_typ
 it raises `ArgumentError`. `chat_id` must match the stream id used in `tramway_chat`.
 
 `message_form` object must be a `Tramway::BaseForm` or an inherited class object. It must contain `text` attribute.
+`send_message_path` must be a `POST` route that receives data on sending messsage submition.
+
+Here an example of usage:
+
+*app/views/chats/show.html.haml*
+```haml
+= tramway_chat chat_id: @chat.id,
+  messages: @chat.messages_for_chat,
+  message_form: @message_form,
+  send_message_path: chats_messages_path
+```
+
+*app/decorators/chat_decorator.rb*
+```ruby
+class ChatDecorator < Tramway::BaseDecorator
+  def messages_for_chat
+    object.messages.map do |message|
+      {
+        id: message.id,
+        type: :sent, # or received
+        text: message.text,
+        sent_at: message.created_at,
+      }
+    end
+  end
+end
+```
+
+*app/controllers/chats_controller.rb*
+```ruby
+  def show
+    @chat = tramway_decorate Chat.find params[:id]
+    @message_form = tramway_form chat.messages.build
+  end
+```
+
+**app/forms/message_form.rb**
+```ruby
+class Chats::MessageForm < Tramway::BaseForm
+  properties :text, :chat_id
+end
+```
+
+**config/routes.rb**
+```ruby
+    resources :messages, only: :create
+```
+
+**app/controllers/messages_controller.rb**
+```ruby
+  def create
+    @message = tramway_form chat.creator.messages.build(chat:)
+
+    if @message.submit params[:message]
+      tramway_chat_append_message chat_id: @message.object.chat.id,
+        type: :sent,
+        text: @message.object.text,
+        sent_at: @message.object.created_at
+    end
+  end
+```
 
 ### Rule 9
 If page `create` or `update` is configured for an entity, use Tramway Form pattern for forms. Visible fields are configured via `form_fields` method.
