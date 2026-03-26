@@ -477,7 +477,7 @@ end
 In specs ALWAYS use factories (FactoryBot gem) to create models and attributes hash. In case there is no factory for the model, create one inside `spec/factories/#{pluralized model_name}.rb`.
 
 ### Rule 20
-In case you need enumerize for model attribute, make sure to use `enumerize` gem for that. DO NOT use `boolean` or `integer` types for enumerations.
+In case you need enumerize for model attribute, make sure to use `enumerize` gem for that. DO NOT use `boolean` or `integer` types for enumerations. Make sure you made `extend Enumerize` in `ApplicationRecord`.
 
 ### Rule 21
 In case you need something that looks like enumerize but it's a process state, use `aasm` gem for that.
