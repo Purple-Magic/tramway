@@ -134,7 +134,7 @@ Normalize input with `normalizes` (from Tramway) for attributes like email, phon
 When you need form-level validation, use Tramway Form `validates` on the form object (ActiveModel/ActiveRecord validation options like `presence: true` work, and `with:` is optional unless a validator requires it). Keep data integrity validations in the model unless the request explicitly needs form-only logic.
 
 ### Rule 3
-Use Tramway Navbar for navigation
+Use Tramway Navbar for navigation. Put there basic links: Login, Logout.
 
 ### Rule 4
 Use Tramway Flash for user notifications.
