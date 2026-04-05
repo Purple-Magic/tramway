@@ -2,11 +2,15 @@ name: Tests
 
 on:
   pull_request:
+    paths-ignore:
+      - '**/*.md'
   release:
     types: [created]
   push:
     branches:
       - main
+    paths-ignore:
+      - '**/*.md'
 
 jobs:
   build:
