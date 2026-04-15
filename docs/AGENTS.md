@@ -645,6 +645,15 @@ In case you want to use container on the page, use `tramway_container` helper in
 ### Rule 34
 If for some model already has index and show pages via Tramway Entity, and the request explicitly needs state management. Do not create a new controller for that. Instead, create a new component for buttons and use it via `show_header_content` in Tramway Decorator for show page and new columns (Actions) in `list_attributes` for index page. This column should be rendered via the component and contain buttons for state management.
 
+### Rule 35
+If you need select input for an attribute that enumerized via `enumerize` gem, use `collection: Model.attribute.values` in the field definition.
+
+Example for `User` model with `role` attribute:
+
+```ruby
+= f.select :model_attribute, User.role.values.map { [it.humanize, it] }
+```
+
 ## Controller Patterns
 
 - Keep actions short and explicit with guard clauses.
