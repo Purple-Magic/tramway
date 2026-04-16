@@ -86,6 +86,10 @@ module Tramway
         @agents_file_path ||= File.join(destination_root, 'AGENTS.md')
       end
 
+      def project_tramway_agents_path
+        @project_tramway_agents_path ||= File.join(destination_root, 'docs/agents/tramway.md')
+      end
+
       def agents_template_url
         'https://github.com/Purple-Magic/base_project/blob/main/docs/agents/tramway.md'
       end
@@ -235,6 +239,11 @@ module Tramway
       # rubocop:disable Metrics/MethodLength
       def ensure_agents_file
         with_agents_update_fallback do
+          if File.exist?(project_tramway_agents_path)
+            say_status(:info, "Skipping AGENTS.md update because #{project_tramway_agents_path} exists.")
+            return
+          end
+
           say_status(
             :info,
             "Tramway will replace the content between \"#{agents_section_start}\" and " \

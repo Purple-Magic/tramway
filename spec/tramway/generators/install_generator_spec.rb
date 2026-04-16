@@ -49,6 +49,10 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     File.join(destination_root, 'AGENTS.md')
   end
 
+  def project_tramway_agents_path
+    File.join(destination_root, 'docs/agents/tramway.md')
+  end
+
   def remote_agents_content
     <<~MARKDOWN
       # Remote AGENTS content
@@ -343,6 +347,17 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       expect { run_generator }.to output(/Skipping AGENTS\.md update: boom/).to_stdout
       expect(File).not_to exist(agents_path)
+    end
+
+    it 'does not update AGENTS when docs/agents/tramway.md exists' do
+      FileUtils.mkdir_p(File.dirname(project_tramway_agents_path))
+      File.write(project_tramway_agents_path, '# Project-specific Tramway instructions')
+      File.write(agents_path, '# Existing instructions')
+
+      run_generator
+
+      expect(File.read(agents_path)).to eq('# Existing instructions')
+      expect(Net::HTTP).not_to have_received(:get_response)
     end
   end
 end
