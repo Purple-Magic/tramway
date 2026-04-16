@@ -87,7 +87,7 @@ module Tramway
       end
 
       def agents_template_url
-        'https://raw.githubusercontent.com/TrinityMonsters/tramway/refs/heads/main/docs/AGENTS.md'
+        'https://github.com/Purple-Magic/base_project/blob/main/docs/agents/tramway.md'
       end
 
       def agents_template_body
