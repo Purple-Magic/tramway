@@ -1,7 +1,7 @@
 = helpers.turbo_stream_from chat_id, 'messages'
 
 #chat.flex.flex-1.h-full.w-full.min-h-0.min-w-0.flex-col
-  #messages.flex.flex-col.flex-1.min-h-0.overflow-y-auto.p-2.md:p-6.space-y-2.md:space-y-4.md:rounded-xl.rounded-t-xl{ class: 'text-gray-100 bg-gray-800/60' }
+  #messages.flex.flex-col.flex-1.min-h-0.overflow-y-auto.overflow-x-hidden.p-2.md:p-6.space-y-2.md:space-y-4.md:rounded-xl.rounded-t-xl{ class: 'text-gray-100 bg-gray-800/60' }
     - messages.each do |message|
       = component "tramway/chats/message", **message
     - if disabled?

@@ -50,6 +50,7 @@ describe Tramway::ChatComponent, type: :component do
                                     flex-1
                                     min-h-0
                                     overflow-y-auto
+                                    overflow-x-hidden
                                     p-2
                                     md:p-6
                                     space-y-2
