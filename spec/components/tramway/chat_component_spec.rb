@@ -3,6 +3,14 @@
 require 'rails_helper'
 
 describe Tramway::ChatComponent, type: :component do
+  def build_message_form
+    Class.new do
+      include ActiveModel::Model
+
+      attr_accessor :text, :chat_id, :conversation_id
+    end.new
+  end
+
   subject(:rendered_component) do
     render_inline(
       described_class.new(
@@ -91,15 +99,11 @@ describe Tramway::ChatComponent, type: :component do
       }
     end
 
-    it 'connects the tramway-chat stimulus controller to the messages container' do
+    it 'renders the messages container without tramway-chat stimulus bindings' do
       rendered_component
 
-      expect(page).to have_css(
-        '#messages[data-controller="tramway-chat"]' \
-        '[data-tramway-chat-path-value="/messages/lazy"]' \
-        '[data-tramway-chat-predefined-params-value="{&quot;chat_id&quot;:123,&quot;scope&quot;:&quot;archived&quot;}"]' \
-        '[data-tramway-chat-offset-value="20"]'
-      )
+      expect(page).to have_css('#messages')
+      expect(page).not_to have_css('#messages[data-controller="tramway-chat"]')
     end
   end
 
@@ -114,14 +118,7 @@ describe Tramway::ChatComponent, type: :component do
   end
 
   context 'when message form is provided' do
-    let(:message_form_class) do
-      Class.new do
-        include ActiveModel::Model
-
-        attr_accessor :text, :chat_id, :conversation_id
-      end
-    end
-    let(:message_form) { message_form_class.new }
+    let(:message_form) { build_message_form }
     let(:options) { { conversation_id: 777 } }
 
     it 'renders form fields and hidden values' do

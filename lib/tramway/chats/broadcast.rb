@@ -26,7 +26,10 @@ module Tramway
 
       def tramway_chat_append_messages(chat_id:, messages:)
         messages.each do |message|
-          raise ArgumentError, 'Each message must have :id and :type keys' unless MESSAGE_TYPES.include?(message[:type].to_sym)
+          unless MESSAGE_TYPES.include?(message[:type].to_sym)
+            raise ArgumentError,
+                  'Each message must have :id and :type keys'
+          end
         end
 
         Turbo::StreamsChannel.broadcast_append_to [chat_id, 'messages'],
@@ -37,7 +40,10 @@ module Tramway
 
       def tramway_chat_prepend_messages(chat_id:, messages:)
         messages.each do |message|
-          raise ArgumentError, 'Each message must have :id and :type keys' unless MESSAGE_TYPES.include?(message[:type].to_sym)
+          unless MESSAGE_TYPES.include?(message[:type].to_sym)
+            raise ArgumentError,
+                  'Each message must have :id and :type keys'
+          end
         end
 
         Turbo::StreamsChannel.broadcast_prepend_to [chat_id, 'messages'],
