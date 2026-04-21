@@ -3,6 +3,14 @@
 require 'rails_helper'
 
 describe Tramway::ChatComponent, type: :component do
+  def build_message_form
+    Class.new do
+      include ActiveModel::Model
+
+      attr_accessor :text, :chat_id, :conversation_id
+    end.new
+  end
+
   subject(:rendered_component) do
     render_inline(
       described_class.new(
@@ -11,7 +19,8 @@ describe Tramway::ChatComponent, type: :component do
         message_form:,
         options:,
         send_message_path: '/messages',
-        send_messages_enabled:
+        send_messages_enabled:,
+        lazy:
       )
     )
   end
@@ -20,6 +29,7 @@ describe Tramway::ChatComponent, type: :component do
   let(:message_form) { nil }
   let(:options) { {} }
   let(:send_messages_enabled) { true }
+  let(:lazy) { nil }
 
   before do
     without_partial_double_verification do
@@ -80,6 +90,23 @@ describe Tramway::ChatComponent, type: :component do
     end
   end
 
+  context 'when lazy loading is configured' do
+    let(:lazy) do
+      {
+        messages_path: '/messages/lazy',
+        predefined_params: { chat_id: 123, scope: 'archived' },
+        offset: 20
+      }
+    end
+
+    it 'renders the messages container without tramway-chat stimulus bindings' do
+      rendered_component
+
+      expect(page).to have_css('#messages')
+      expect(page).not_to have_css('#messages[data-controller="tramway-chat"]')
+    end
+  end
+
   context 'when chat is disabled' do
     let(:options) { { disabled: true } }
 
@@ -91,14 +118,7 @@ describe Tramway::ChatComponent, type: :component do
   end
 
   context 'when message form is provided' do
-    let(:message_form_class) do
-      Class.new do
-        include ActiveModel::Model
-
-        attr_accessor :text, :chat_id, :conversation_id
-      end
-    end
-    let(:message_form) { message_form_class.new }
+    let(:message_form) { build_message_form }
     let(:options) { { conversation_id: 777 } }
 
     it 'renders form fields and hidden values' do

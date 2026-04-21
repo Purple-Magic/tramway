@@ -91,7 +91,7 @@ module Tramway
       end
 
       def agents_template_url
-        'https://github.com/Purple-Magic/base_project/blob/main/docs/agents/tramway.md'
+        'https://raw.githubusercontent.com/Purple-Magic/tramway-skill/refs/heads/main/skills/tramway-skill/agents/tramway.md'
       end
 
       def agents_template_body

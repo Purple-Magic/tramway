@@ -925,23 +925,66 @@ When set to `false`, the text field is disabled and the waiting placeholder is s
 If you do not want to render the message form, pass `message_form: nil`. When the form is present, `send_message_path` is
 required and the helper will generate the correct POST form.
 
-To append messages to an already-rendered `tramway_chat` stream, use `tramway_chat_append_message`.
+To append a message to an already-rendered `tramway_chat` stream, use `tramway_chat_append_message`.
 The method is mixed into controllers and ActiveRecord models by Tramway and expects:
 - `chat_id:` — the same value used in `tramway_chat chat_id:`
-- `message_type:` — only `:sent` or `:received` (raises `ArgumentError` otherwise)
+- `type:` — only `:sent` or `:received` (raises `ArgumentError` otherwise)
 - `text:` — message content
 - `sent_at:` — message timestamp
 
 ```ruby
 tramway_chat_append_message(
   chat_id: 'support-chat',
-  message_type: :received,
+  type: :received,
   text: 'We got your request',
   sent_at: Time.current
 )
 ```
 
 It broadcasts with `target: 'messages'` and renders the `tramway/chats/message` partial so the message appears in the live chat.
+
+To prepend a message to the same stream, use `tramway_chat_prepend_message`. It accepts the same arguments and validation rules,
+but inserts the rendered `tramway/chats/message` partial at the beginning of the `messages` target instead of the end.
+
+```ruby
+tramway_chat_prepend_message(
+  chat_id: 'support-chat',
+  type: :received,
+  text: 'Earlier message from history',
+  sent_at: 5.minutes.ago
+)
+```
+
+To append multiple messages at once, use `tramway_chat_append_messages`. The method expects:
+- `chat_id:` — the same value used in `tramway_chat chat_id:`
+- `messages:` — an array of hashes, where each hash includes `type:`, `text:`, and `sent_at:`
+
+Each message `type:` must be `:sent` or `:received` or the helper raises `ArgumentError`. It broadcasts with `target:
+'messages'` and renders the `tramway/chats/messages` partial so the full collection appears in the live chat.
+
+```ruby
+tramway_chat_append_messages(
+  chat_id: 'support-chat',
+  messages: [
+    { type: :received, text: 'First update', sent_at: 2.minutes.ago },
+    { type: :sent, text: 'Thanks, checking now', sent_at: 1.minute.ago }
+  ]
+)
+```
+
+To prepend multiple messages, use `tramway_chat_prepend_messages`. It accepts the same `chat_id:` and `messages:` arguments
+as `tramway_chat_append_messages`, validates each `type:`, and prepends the rendered `tramway/chats/messages` partial to the
+beginning of the `messages` target.
+
+```ruby
+tramway_chat_prepend_messages(
+  chat_id: 'support-chat',
+  messages: [
+    { type: :received, text: 'Older history item', sent_at: 10.minutes.ago },
+    { type: :sent, text: 'Reply from earlier', sent_at: 9.minutes.ago }
+  ]
+)
+```
 
 ### Tramway Table Component
 
