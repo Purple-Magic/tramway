@@ -11,7 +11,8 @@ describe Tramway::ChatComponent, type: :component do
         message_form:,
         options:,
         send_message_path: '/messages',
-        send_messages_enabled:
+        send_messages_enabled:,
+        lazy:
       )
     )
   end
@@ -20,6 +21,7 @@ describe Tramway::ChatComponent, type: :component do
   let(:message_form) { nil }
   let(:options) { {} }
   let(:send_messages_enabled) { true }
+  let(:lazy) { nil }
 
   before do
     without_partial_double_verification do
@@ -77,6 +79,27 @@ describe Tramway::ChatComponent, type: :component do
 
       expect(page).to have_css('.items-end', text: 'Hello there')
       expect(page).to have_css('.items-start', text: 'Hi!')
+    end
+  end
+
+  context 'when lazy loading is configured' do
+    let(:lazy) do
+      {
+        messages_path: '/messages/lazy',
+        predefined_params: { chat_id: 123, scope: 'archived' },
+        offset: 20
+      }
+    end
+
+    it 'connects the tramway-chat stimulus controller to the messages container' do
+      rendered_component
+
+      expect(page).to have_css(
+        '#messages[data-controller="tramway-chat"]' \
+        '[data-tramway-chat-path-value="/messages/lazy"]' \
+        '[data-tramway-chat-predefined-params-value="{&quot;chat_id&quot;:123,&quot;scope&quot;:&quot;archived&quot;}"]' \
+        '[data-tramway-chat-offset-value="20"]'
+      )
     end
   end
 

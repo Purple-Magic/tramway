@@ -9,6 +9,7 @@ module Tramway
     option :options, optional: true, default: -> { {} }
     option :send_message_path
     option :send_messages_enabled, optional: true, default: -> { true }
+    option :scroll_to_bottom_on_update, optional: true, default: -> { true }
 
     def disabled?
       options[:disabled]
