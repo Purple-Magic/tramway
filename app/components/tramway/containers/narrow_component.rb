@@ -8,9 +8,11 @@ module Tramway
       option :options, optional: true, default: proc { {} }
 
       def container_classes
+        options_classes = options[:class] || ''
+
         theme_classes(
           classic: 'container p-4 flex align-center justify-center w-full mx-auto bg-gray-100 text-gray-700 ' \
-                   'shadow-inner rounded-xl bg-gray-900 text-gray-100'
+                   'shadow-inner rounded-xl bg-gray-900 text-gray-100' + options_classes
         )
       end
     end
