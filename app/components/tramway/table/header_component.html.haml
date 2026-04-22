@@ -1,4 +1,5 @@
-%div{ class: "#{header_row_classes} md:grid-cols-#{columns_count}", aria: { label: "Table Header" }, role: "row" }
+- parsed_cells = headers.any? ? nil : visible_cells_from(content)
+%div{ class: "#{header_row_classes} md:grid-cols-#{columns_count(parsed_cells: parsed_cells)}", aria: { label: "Table Header" }, role: "row" }
   - if headers.any?
     - headers.each do |header|
       .div-table-cell{ class: header_cell_classes }
