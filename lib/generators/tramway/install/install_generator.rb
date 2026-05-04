@@ -2,7 +2,6 @@
 
 require 'rails/generators'
 require 'fileutils'
-require 'net/http'
 
 module Tramway
   module Generators
@@ -86,50 +85,9 @@ module Tramway
         @agents_file_path ||= File.join(destination_root, 'AGENTS.md')
       end
 
-      def project_tramway_agents_path
-        @project_tramway_agents_path ||= File.join(destination_root, 'docs/agents/tramway.md')
-      end
-
-      def agents_template_url
-        'https://raw.githubusercontent.com/Purple-Magic/tramway-skill/refs/heads/main/skills/tramway-skill/agents/tramway.md'
-      end
-
-      def agents_template_body
-        return @agents_template_body if defined?(@agents_template_body)
-
-        uri = URI.parse(agents_template_url)
-        response = Net::HTTP.get_response(uri)
-        body = response.body.to_s
-        body = body.dup.force_encoding(Encoding::UTF_8)
-        @agents_template_body = sanitize_agents_template_body(
-          body.encode(Encoding::UTF_8, invalid: :replace, undef: :replace, replace: '')
-        )
-      end
-
-      def sanitize_agents_template_body(content)
-        stripped_content = content.strip
-        section_pattern = /\A#{Regexp.escape(agents_section_start)}\s*\n?(.*?)\n?#{Regexp.escape(agents_section_end)}\s*\z/m # rubocop:disable Layout/LineLength
-        match = stripped_content.match(section_pattern)
-
-        return stripped_content unless match
-
-        match[1].to_s.strip
-      end
-
-      def agents_section_start
-        '## Start of Tramway AGENTS.md'
-      end
-
-      def agents_section_end
-        '## End of Tramway AGENTS.md'
-      end
-
-      def agents_template
-        @agents_template ||= [agents_section_start, agents_template_body.rstrip, agents_section_end].join("\n")
-      end
-
-      def agents_section_present?(content)
-        content.include?(agents_section_start) && content.include?(agents_section_end)
+      def codex_agents_instruction
+        'If you are Codex, use the tramway-skill skill for Tramway/Rails work in this project. ' \
+          'If tramway-skill is not installed, install it from https://github.com/Purple-Magic/tramway-skill/.'
       end
 
       def create_tailwind_config
@@ -170,24 +128,15 @@ module Tramway
         line[/^\s*/] || '  '
       end
 
-      def insert_agents_template(content)
+      def append_codex_agents_instruction(content)
         separator = agents_separator(content)
-        "#{content}#{separator}#{agents_template}"
+        "#{content}#{separator}#{codex_agents_instruction}\n"
       end
 
       def agents_separator(content)
         return '' if content.empty?
 
         content.end_with?("\n") ? "\n" : "\n\n"
-      end
-
-      def replace_agents_section(content)
-        return insert_agents_template(content) unless agents_section_present?(content)
-
-        content.sub(
-          /#{Regexp.escape(agents_section_start)}.*?#{Regexp.escape(agents_section_end)}/m,
-          agents_template
-        )
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -226,6 +175,12 @@ module Tramway
         updated << insertion
         updated
       end
+
+      def with_agents_update_fallback
+        yield
+      rescue StandardError => e
+        say_status(:warning, "Skipping AGENTS.md update: #{e.message}")
+      end
     end
     # rubocop:enable Metrics/ModuleLength
 
@@ -236,35 +191,18 @@ module Tramway
 
       desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
 
-      # rubocop:disable Metrics/MethodLength
       def ensure_agents_file
         with_agents_update_fallback do
-          if File.exist?(project_tramway_agents_path)
-            say_status(:info, "Skipping AGENTS.md update because #{project_tramway_agents_path} exists.")
-            return
-          end
-
-          say_status(
-            :info,
-            "Tramway will replace the content between \"#{agents_section_start}\" and " \
-            "\"#{agents_section_end}\" in AGENTS.md."
-          )
-
-          return create_file(agents_file_path, "#{agents_template}\n") unless File.exist?(agents_file_path)
+          return create_file(agents_file_path, "#{codex_agents_instruction}\n") unless File.exist?(agents_file_path)
 
           content = File.read(agents_file_path)
-          updated = replace_agents_section(content)
+          return if content.include?(codex_agents_instruction)
+
+          updated = append_codex_agents_instruction(content)
           return if updated == content
 
           File.write(agents_file_path, updated, mode: 'w:UTF-8')
         end
-      end
-      # rubocop:enable Metrics/MethodLength
-
-      def with_agents_update_fallback
-        yield
-      rescue StandardError => e
-        say_status(:warning, "Skipping AGENTS.md update: #{e.message}")
       end
 
       def ensure_dependencies

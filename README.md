@@ -1,8 +1,8 @@
 # Tramway
 Unite Ruby on Rails brilliance. Streamline development with Tramway.
 
-Tramway ships with full CRUD (index, show, create, update, destroy) out of the box, and it includes a great AGENTS.md guide
-that helps you generate good, Tramway-native code with all the framework features.
+Tramway ships with full CRUD (index, show, create, update, destroy) out of the box. Its install generator also adds a
+Codex instruction that points agents to the Tramway skill for Tramway-native code generation.
 
 [![RubyGems Version](https://img.shields.io/gem/v/tramway.svg)](https://rubygems.org/gems/tramway)
 [![Tests](https://github.com/Purple-Magic/tramway/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/Purple-Magic/tramway/actions/workflows/test.yml)

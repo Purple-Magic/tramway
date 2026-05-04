@@ -32,7 +32,7 @@ Generated code should:
 bin/rails g tramway:install
 ```
 
-- The install generator appends missing gems, copies Tailwind safelist config, ensures `app/assets/tailwind/application.css` imports Tailwind, and writes an `AGENTS.md` guide in the project root.
+- The install generator appends missing gems, copies Tailwind safelist config, ensures `app/assets/tailwind/application.css` imports Tailwind, and adds a Codex instruction to use or install `tramway-skill`.
 
 ---
 

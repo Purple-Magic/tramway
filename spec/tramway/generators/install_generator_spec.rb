@@ -49,29 +49,9 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     File.join(destination_root, 'AGENTS.md')
   end
 
-  def project_tramway_agents_path
-    File.join(destination_root, 'docs/agents/tramway.md')
-  end
-
-  def remote_agents_content
-    <<~MARKDOWN
-      # Remote AGENTS content
-      - Rule one
-      - Rule two
-    MARKDOWN
-  end
-
-  def wrapped_agents_content
-    [
-      '## Start of Tramway AGENTS.md',
-      remote_agents_content.rstrip,
-      '## End of Tramway AGENTS.md'
-    ].join("\n")
-  end
-
-  before do
-    response = instance_double(Net::HTTPResponse, body: remote_agents_content)
-    allow(Net::HTTP).to receive(:get_response).and_return(response)
+  def codex_agents_instruction
+    'If you are Codex, use the tramway-skill skill for Tramway/Rails work in this project. ' \
+      'If tramway-skill is not installed, install it from https://github.com/Purple-Magic/tramway-skill/.'
   end
 
   describe 'ensuring gem dependencies' do
@@ -274,65 +254,22 @@ RSpec.describe Tramway::Generators::InstallGenerator do
   end
 
   describe 'AGENTS instructions' do
-    it 'creates AGENTS file from template when missing' do
+    it 'creates AGENTS file with Codex tramway-skill instruction when missing' do
       run_generator
 
       expect(File).to exist(agents_path)
-      expect(File.read(agents_path)).to eq("#{wrapped_agents_content}\n")
+      expect(File.read(agents_path)).to eq("#{codex_agents_instruction}\n")
     end
 
-    it 'appends Tramway instructions to existing AGENTS file' do
+    it 'appends Codex tramway-skill instruction to existing AGENTS file' do
       File.write(agents_path, '# Existing instructions')
 
       run_generator
 
-      expect(File.read(agents_path)).to eq("# Existing instructions\n\n#{wrapped_agents_content}")
+      expect(File.read(agents_path)).to eq("# Existing instructions\n\n#{codex_agents_instruction}\n")
     end
 
-    it 'replaces Tramway instructions between headers' do
-      File.write(
-        agents_path,
-        <<~MARKDOWN
-          # Existing instructions
-          ## Start of Tramway AGENTS.md
-          Old content
-          ## End of Tramway AGENTS.md
-          # Footer
-        MARKDOWN
-      )
-
-      run_generator
-
-      expect(File.read(agents_path)).to eq(
-        <<~MARKDOWN
-          # Existing instructions
-          #{wrapped_agents_content}
-          # Footer
-        MARKDOWN
-      )
-    end
-
-    it 'does not duplicate section markers when remote template already includes them' do
-      response = instance_double(
-        Net::HTTPResponse,
-        body: <<~MARKDOWN
-          ## Start of Tramway AGENTS.md
-          # Remote AGENTS content
-          - Rule one
-          - Rule two
-          ## End of Tramway AGENTS.md
-        MARKDOWN
-      )
-      allow(Net::HTTP).to receive(:get_response).and_return(response)
-
-      run_generator
-
-      content = File.read(agents_path)
-      expect(content.scan('## Start of Tramway AGENTS.md').count).to eq(1)
-      expect(content.scan('## End of Tramway AGENTS.md').count).to eq(1)
-    end
-
-    it 'is idempotent when instructions already exist' do
+    it 'does not duplicate Codex tramway-skill instruction when run multiple times' do
       run_generator
       first_run = File.read(agents_path)
 
@@ -340,24 +277,6 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       second_run = File.read(agents_path)
 
       expect(second_run).to eq(first_run)
-    end
-
-    it 'skips AGENTS update when template cannot be fetched' do
-      allow(Net::HTTP).to receive(:get_response).and_raise(StandardError, 'boom')
-
-      expect { run_generator }.to output(/Skipping AGENTS\.md update: boom/).to_stdout
-      expect(File).not_to exist(agents_path)
-    end
-
-    it 'does not update AGENTS when docs/agents/tramway.md exists' do
-      FileUtils.mkdir_p(File.dirname(project_tramway_agents_path))
-      File.write(project_tramway_agents_path, '# Project-specific Tramway instructions')
-      File.write(agents_path, '# Existing instructions')
-
-      run_generator
-
-      expect(File.read(agents_path)).to eq('# Existing instructions')
-      expect(Net::HTTP).not_to have_received(:get_response)
     end
   end
 end
