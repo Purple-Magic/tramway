@@ -18,13 +18,11 @@ module Tramway
       end
 
       def header_row_classes
-        theme_classes(
-          classic: 'div-table-row rounded-t-xl grid text-small gap-4 bg-gray-800 text-gray-500 grid-cols-1'
-        )
+        'div-table-row grid grid-cols-1 gap-4 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400'
       end
 
       def header_cell_classes
-        'div-table-cell py-4 px-6 first:block hidden md:block'
+        'div-table-cell hidden px-6 py-4 first:block md:block'
       end
     end
   end
