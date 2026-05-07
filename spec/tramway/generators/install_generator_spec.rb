@@ -33,10 +33,6 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     File.join(destination_root, 'app/assets/tailwind/application.css')
   end
 
-  def tailwind_shadcn_path
-    File.join(destination_root, 'app/assets/tailwind/shadcn.css')
-  end
-
   def importmap_path
     File.join(destination_root, 'config/importmap.rb')
   end
@@ -47,10 +43,6 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
   def template_tailwind_config_path
     File.expand_path('../../../config/tailwind.config.js', __dir__)
-  end
-
-  def template_shadcn_stylesheet_path
-    File.expand_path('../../../app/assets/stylesheets/shadcn.css', __dir__)
   end
 
   def agents_path
@@ -139,13 +131,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       run_generator
 
       expect(File).to exist(tailwind_application_path)
-      expect(File.read(tailwind_application_path)).to eq(
-        "@import \"tailwindcss\";\n" \
-        "@import \"shadcn.css\";\n" \
-        "@tailwind base;\n" \
-        "@tailwind components;\n" \
-        "@tailwind utilities;\n"
-      )
+      expect(File.read(tailwind_application_path)).to eq("@import \"tailwindcss\";\n")
     end
 
     it 'appends tailwind import when missing from existing file' do
@@ -155,14 +141,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       run_generator
 
       content = File.read(tailwind_application_path)
-      expect(content).to eq(
-        "body { color: black; }\n" \
-        "@import \"tailwindcss\";\n" \
-        "@import \"shadcn.css\";\n" \
-        "@tailwind base;\n" \
-        "@tailwind components;\n" \
-        "@tailwind utilities;\n"
-      )
+      expect(content).to eq("body { color: black; }\n@import \"tailwindcss\";\n")
     end
 
     it 'does not duplicate the import line' do
@@ -173,24 +152,6 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       second_run = File.read(tailwind_application_path)
 
       expect(second_run).to eq(first_run)
-    end
-  end
-
-  describe 'tailwind shadcn stylesheet' do
-    it 'creates stylesheet from template when missing' do
-      run_generator
-
-      expect(File).to exist(tailwind_shadcn_path)
-      expect(File.read(tailwind_shadcn_path)).to eq(File.read(template_shadcn_stylesheet_path))
-    end
-
-    it 'does not overwrite an existing stylesheet' do
-      FileUtils.mkdir_p(File.dirname(tailwind_shadcn_path))
-      File.write(tailwind_shadcn_path, 'body { color: black; }')
-
-      run_generator
-
-      expect(File.read(tailwind_shadcn_path)).to eq('body { color: black; }')
     end
   end
 

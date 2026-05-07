@@ -43,19 +43,8 @@ module Tramway
         @tailwind_application_stylesheet_path ||= File.join(destination_root, 'app/assets/tailwind/application.css')
       end
 
-      def tailwind_shadcn_stylesheet_path
-        @tailwind_shadcn_stylesheet_path ||= File.join(destination_root, 'app/assets/tailwind/shadcn.css')
-      end
-
-      def gem_shadcn_stylesheet_path
-        @gem_shadcn_stylesheet_path ||= File.expand_path('../../../../app/assets/stylesheets/shadcn.css', __dir__)
-      end
-
       def tailwind_css_import_line
-        [
-          '@import "tailwindcss";',
-          '@import "./shadcn.css";',
-        ].join("\n")
+        '@import "tailwindcss";'
       end
 
       def importmap_path
@@ -271,13 +260,6 @@ module Tramway
           file.write("\n") unless content.empty? || content.end_with?("\n")
           file.write("#{tailwind_css_import_line}\n")
         end
-      end
-
-      def ensure_tailwind_shadcn_stylesheet
-        path = tailwind_shadcn_stylesheet_path
-        FileUtils.mkdir_p(File.dirname(path))
-
-        create_file(path, File.read(gem_shadcn_stylesheet_path)) unless File.exist?(path)
       end
 
       def ensure_importmap_pin

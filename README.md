@@ -101,9 +101,9 @@ end
 **Step 4**
 
 If you ran `bin/rails g tramway:install`, the install generator already copied the Tailwind safelist to
-`config/tailwind.config.js` and installed `app/assets/tailwind/shadcn.css`.
-Otherwise, copy these files from the gem:
-`config/tailwind.config.js` and `app/assets/stylesheets/shadcn.css`.
+`config/tailwind.config.js`.
+Otherwise, copy this file from the gem:
+`config/tailwind.config.js`.
 
 
 **Step 5**

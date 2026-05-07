@@ -10,21 +10,16 @@ module Tramway
         option :sent_at
 
         def position_classes
-          case position.to_sym
-          when :left
-            %w[items-start]
-          when :right
-            %w[items-end]
-          end.join(' ')
+          position.to_sym == :left ? 'items-start' : 'items-end'
         end
 
         def color_classes
           case position.to_sym
           when :left
-            %w[bg-gray-800 rounded-tl-md]
+            'rounded-tl-md bg-zinc-900 text-zinc-50'
           when :right
-            %w[bg-blue-600 rounded-tr-md]
-          end.join(' ')
+            'rounded-tr-md bg-zinc-800 text-zinc-50'
+          end
         end
       end
     end
