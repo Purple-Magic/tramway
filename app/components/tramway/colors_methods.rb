@@ -5,7 +5,7 @@ module Tramway
   module ColorsMethods
     TYPE_COLOR_MAP = {
       default: :zinc,
-      life: :gray,
+      life: :zinc,
       primary: :blue,
       hope: :blue,
       secondary: :zinc,
@@ -17,7 +17,6 @@ module Tramway
       rage: :red,
       love: :violet,
       compassion: :indigo,
-      compassio: :indigo,
       fear: :yellow,
       submit: :green
     }.freeze

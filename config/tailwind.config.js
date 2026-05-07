@@ -151,7 +151,7 @@ module.exports = {
     'disabled:opacity-50',
     'h-10',
 
-    'hover:bg-zinc-900',
+    'hover:bg-zinc-250',
     'bg-zinc-50',
     'text-zinc-950',
 

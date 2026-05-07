@@ -64,8 +64,8 @@ module Tramway
         %w[bg-gray-800 text-gray-500 shadow-inner]
       else
         case type
-        when :default
-          ['hover:bg-zinc-900', 'bg-zinc-50', 'text-zinc-950']
+        when :default, :life, :secondary
+          ['hover:bg-zinc-250', 'bg-zinc-50', 'text-zinc-950']
         else
           ["hover:bg-#{resolved_color}-900 bg-#{resolved_color}-900/30 text-#{resolved_color}-400"]
         end
