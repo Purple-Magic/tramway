@@ -16,13 +16,11 @@ describe Tramway::Chats::Messages::TableComponent, type: :component do
       ".#{class_selector(%w[
                            mt-3
                            overflow-hidden
-                           rounded-xl
+                           rounded-lg
                            border
-                           border-gray-200
-                           bg-white
+                           border-zinc-800
+                           bg-zinc-950
                            shadow-sm
-                           dark:border-gray-700
-                           dark:bg-gray-900
                          ])}"
     )
   end

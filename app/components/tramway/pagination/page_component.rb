@@ -8,7 +8,8 @@ module Tramway
 
       def current_page_classes
         theme_classes(
-          classic: 'px-3 py-2 font-medium rounded-xl text-gray-100 bg-gray-700 shadow-inner'
+          classic: 'inline-flex h-9 min-w-9 items-center justify-center rounded-md bg-zinc-50 px-3 py-2 ' \
+                   'text-sm font-medium text-zinc-950 shadow-sm'
         )
       end
     end

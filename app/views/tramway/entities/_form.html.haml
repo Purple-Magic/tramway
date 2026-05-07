@@ -3,8 +3,8 @@
 
 = tramway_form_for @record, local: true, url:, method: do |f|
   - if @record.errors.any?
-    .w-full.mb-4.p-4.border.border-red-600.bg-red-100.text-red-800.rounded-xl
-      %h2.font-bold.mb-2
+    %div{ class: 'mb-4 w-full rounded-lg border border-red-500/50 bg-zinc-950 px-4 py-3 text-sm text-red-400 shadow-sm' }
+      %h2.font-medium.leading-none.tracking-tight.mb-2
         = "#{pluralize(@record.errors.count, 'error')} prohibited this record from being saved:"
       %ul.list-disc.list-inside.pl-6
         - @record.errors.full_messages.each do |message|
@@ -17,7 +17,7 @@
       value: prepolulated_values&.dig(attribute),
       label: @model_class.human_attribute_name(attribute)
 
-  .flex.flex-row.space-x-2
+  .flex.flex-row.flex-wrap.gap-2
     = f.submit t('tramway.actions.save')
     = tramway_button text: t('tramway.actions.cancel'),
       path: public_send(@entity.index_helper_method),

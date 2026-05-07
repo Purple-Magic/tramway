@@ -15,7 +15,7 @@ module Tramway
 
         def item_classes
           theme_classes(
-            classic: "cursor-pointer hover:bg-gray-800 shadow-inner option #{SIZE_CLASSES[size]}"
+            classic: "cursor-pointer transition-colors hover:bg-zinc-800 option #{SIZE_CLASSES[size]}"
           )
         end
       end

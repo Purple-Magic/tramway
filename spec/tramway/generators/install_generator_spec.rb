@@ -165,7 +165,8 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       expect(File.read(importmap_path)).to eq(
         "pin \"application\", preload: true\n" \
         "pin \"@tramway/tramway-select\", to: \"tramway/tramway-select_controller.js\"\n" \
-        "pin \"@tramway/table-row-preview\", to: \"tramway/table_row_preview_controller.js\"\n"
+        "pin \"@tramway/table-row-preview\", to: \"tramway/table_row_preview_controller.js\"\n" \
+        "pin \"@tramway/checkbox\", to: \"tramway/checkbox_controller.js\"\n"
       )
     end
 
@@ -218,6 +219,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
           import { UserForm } from "./user_form_controller"
           import { TramwaySelect } from "@tramway/tramway-select"
           import { TableRowPreview } from "@tramway/table-row-preview"
+          import { Checkbox } from "@tramway/checkbox"
 
           const application = Application.start()
 
@@ -227,6 +229,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
           application.register('tramway-select', TramwaySelect)
           application.register('table-row-preview', TableRowPreview)
+          application.register('tramway-checkbox', Checkbox)
           export { application }
         JS
       )

@@ -17,7 +17,11 @@ module Tramway
     end
 
     initializer 'tramway.assets.precompile' do |app|
-      app.config.assets.precompile += %w[tramway/tramway-select_controller.js]
+      app.config.assets.precompile += %w[
+        tramway/checkbox_controller.js
+        tramway/table_row_preview_controller.js
+        tramway/tramway-select_controller.js
+      ]
     end
 
     private

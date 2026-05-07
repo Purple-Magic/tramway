@@ -12,20 +12,20 @@ module Tramway
 
     def container_classes
       theme_classes(
-        classic: 'fixed top-4 right-4 z-50 space-y-2 pointer-events-none'
+        classic: 'fixed top-4 right-4 z-50 w-full max-w-sm space-y-2 pointer-events-none'
       )
     end
 
     def flash_classes
       theme_classes(
-        classic: "flash opacity-100 px-4 py-2 rounded-xl shadow-md bg-#{resolved_color}-100 " \
-                 "text-#{resolved_color}-800"
+        classic: "flash relative w-full rounded-lg border bg-zinc-950 px-4 py-3 text-sm shadow-sm " \
+                 "#{shadcn_alert_variant_classes}"
       )
     end
 
     def title_classes
       theme_classes(
-        classic: 'text-xl font-semibold'
+        classic: 'font-medium leading-none tracking-tight'
       )
     end
   end

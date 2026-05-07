@@ -6,7 +6,7 @@ module Tramway
     class CellComponent < Tramway::BaseComponent
       def cell_classes
         theme_classes(
-          classic: 'div-table-cell md:block first:block hidden px-6 py-4 font-medium text-gray-100 text-base'
+          classic: 'div-table-cell md:block first:block hidden p-4 align-middle text-sm text-zinc-200'
         )
       end
     end

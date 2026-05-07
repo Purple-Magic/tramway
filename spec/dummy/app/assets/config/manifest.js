@@ -2,4 +2,5 @@
 //= link_directory ../stylesheets .css
 //= link_tree ../../javascript .js
 //= link tramway/tramway-select_controller.js
+//= link tramway/checkbox_controller.js
 //= link tailwind.css

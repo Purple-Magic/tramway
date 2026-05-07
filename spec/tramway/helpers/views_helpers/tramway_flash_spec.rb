@@ -22,7 +22,7 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
     context 'with classic theme' do
       around { |example| with_theme(:classic) { example.run } }
 
-      it_behaves_like 'flash theme classes', %w[bg-green-100 text-green-800]
+      it_behaves_like 'flash theme classes', %w[border-zinc-800 text-zinc-200]
     end
 
     it 'applies custom HTML options to the container' do

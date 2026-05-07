@@ -1,7 +1,11 @@
-.flex.items-center.gap-2.cursor-pointer{ class: default_container_classes }
-  - classes = "#{size_class(:checkbox_input)} #{checkbox_base_classes}"
-  = @input.call @attribute, **@options.merge(class: classes)
-  - if @label
-    %div
-      = component('tramway/form/label', for: @for, options: { class: label_classes }) do
+%div{ data: { controller: controller }, class: default_container_classes }
+  .flex.items-center.space-x-2
+    - input_data = (@options[:data] || {}).merge('tramway-checkbox-target' => 'input', action: 'change->tramway-checkbox#sync')
+    = @input.call @attribute, **@options.merge(class: checkbox_base_classes, data: input_data)
+    %button{ type: :button, role: :checkbox, aria: { checked: 'false' }, data: { state: :unchecked, action: 'click->tramway-checkbox#toggle', 'tramway-checkbox-target' => 'button' }, value: :on, class: button_classes, for: @for, id: button_id, disabled: @options[:disabled] }
+      %span{ class: indicator_classes, data: { 'tramway-checkbox-target' => 'indicator' } }
+        %svg{ xmlns: 'http://www.w3.org/2000/svg', width: 24, height: 24, viewBox: '0 0 24 24', fill: :none, stroke: :currentColor, 'stroke-width': 2, 'stroke-linecap': :round, 'stroke-linejoin': :round, class: icon_classes }
+          %polyline{ points: '20 6 9 17 4 12' }
+    - if @label
+      %label{ for: button_id, data: { action: 'click->tramway-checkbox#toggle' }, class: label_classes }
         = @label

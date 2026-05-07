@@ -12,8 +12,8 @@ module Tramway
 
         def base_classes
           theme_classes(
-            classic: 'bg-transparent appearance-none outline-none h-full w-full hidden text-gray-100 ' \
-                     'placeholder-gray-500'
+            classic: 'bg-transparent appearance-none outline-none h-full w-full hidden text-zinc-200 ' \
+                     'placeholder:text-zinc-500'
           )
         end
       end

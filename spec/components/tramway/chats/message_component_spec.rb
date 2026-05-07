@@ -21,16 +21,15 @@ describe Tramway::Chats::MessageComponent, type: :component do
     expect(page).to have_css(
       ".#{class_selector(%w[
                            max-w-lg
-                           rounded-2xl
-                           rounded-tl-md
-                           bg-gray-800
+                           rounded-lg
+                           border
+                           border-zinc-800
+                           bg-zinc-950
+                           text-zinc-200
                            px-4
                            py-3
                            text-sm
                            shadow-sm
-                           ring-1
-                           text-white
-                           ring-gray-700
                          ])}",
       text: 'Hello'
     )
@@ -53,16 +52,13 @@ describe Tramway::Chats::MessageComponent, type: :component do
     expect(page).to have_css(
       ".#{class_selector(%w[
                            max-w-lg
-                           rounded-2xl
-                           rounded-tr-md
-                           bg-blue-600
+                           rounded-lg
+                           bg-zinc-50
                            px-4
                            py-3
                            text-sm
-                           text-white
+                           text-zinc-950
                            shadow-sm
-                           ring-1
-                           ring-gray-700
                          ])}",
       text: 'Hi there'
     )

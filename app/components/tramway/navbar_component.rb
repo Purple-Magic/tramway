@@ -11,26 +11,26 @@ module Tramway
 
     def navbar_classes
       theme_classes(
-        classic: 'py-2 px-4 sm:px-8 flex justify-between items-center bg-gray-900 shadow-md'
+        classic: 'py-3 px-4 sm:px-8 flex justify-between items-center border-b border-zinc-800 bg-zinc-950'
       )
     end
 
     def title_classes
       theme_classes(
-        classic: 'text-xl font-semibold text-gray-100'
+        classic: 'text-xl font-semibold text-zinc-100'
       )
     end
 
     def mobile_button_classes
       theme_classes(
-        classic: 'text-gray-200 focus:outline-none'
+        classic: 'text-zinc-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300'
       )
     end
 
     def mobile_menu_classes
       theme_classes(
         classic: [
-          'hidden', 'inset-0', 'flex-col', 'bg-gray-900', 'shadow-inner', 'h-screen', 'fixed', 'z-50', 'w-screen',
+          'hidden', 'inset-0', 'flex-col', 'bg-zinc-950', 'shadow-lg', 'h-screen', 'fixed', 'z-50', 'w-screen',
           'transition-transform', 'transform', '-translate-x-full', 'duration-300', 'ease-in-out', 'pt-16'
         ].join(' ')
       )

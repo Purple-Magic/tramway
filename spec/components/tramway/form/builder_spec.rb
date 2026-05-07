@@ -4,25 +4,35 @@ require 'rails_helper'
 require 'support/view_helpers'
 
 CLASSIC_FORM_CLASSES = {
-  label: %w[block font-semibold text-white],
+  label: %w[mb-2 block text-sm font-medium leading-none text-zinc-300],
   text_input: %w[
-    w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
-    focus:ring-2 focus:ring-gray-600 placeholder-gray-500
+    w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm placeholder:text-zinc-500
+    focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300 disabled:cursor-not-allowed
+    disabled:opacity-50
   ],
   select_input: %w[
-    w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
-    focus:ring-2 focus:ring-gray-600 disabled:cursor-not-allowed disabled:bg-gray-800 disabled:text-gray-500
+    w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm focus-visible:outline-none
+    focus-visible:ring-1 focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50
   ],
   file_button: %w[
-    inline-block text-white font-semibold rounded-xl cursor-pointer mt-4 bg-blue-600 hover:bg-blue-800
-    shadow-md
+    inline-flex items-center justify-center rounded-md bg-zinc-50 text-sm font-medium text-zinc-950 shadow-sm
+    transition-colors hover:bg-zinc-200 cursor-pointer mt-4
   ],
   submit_button: %w[
-    font-semibold rounded-xl cursor-pointer
+    font-medium rounded-md cursor-pointer
   ],
   checkbox_input: %w[
-    rounded-full border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none focus:ring-2
-    focus:ring-gray-600
+    absolute size-px overflow-hidden whitespace-nowrap border-0 p-0 -m-px [clip-path:inset(50%)]
+  ],
+  checkbox_button: %w[
+    peer h-4 w-4 shrink-0 rounded-sm border border-zinc-800 bg-zinc-800/30 ring-offset-zinc-950
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2
+    disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-zinc-50
+    data-[state=checked]:bg-zinc-50 data-[state=checked]:text-zinc-950
+  ],
+  checkbox_label: %w[
+    text-sm font-medium leading-none text-zinc-300 peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+    cursor-pointer text-base
   ]
 }.freeze
 
@@ -34,7 +44,7 @@ describe Tramway::Form::Builder, type: :view do
   shared_examples 'form label and text input classes' do |theme_classes|
     it 'gets default value' do
       expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
-      expect(output).to have_selector "input.text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:text_input))}"
+      expect(output).to have_selector "input.h-9.text-sm.px-3.py-1.#{class_selector(theme_classes.fetch(:text_input))}"
     end
   end
 
@@ -42,7 +52,7 @@ describe Tramway::Form::Builder, type: :view do
     it 'renders input with tailwind classes' do
       expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
       expect(output).to have_selector(
-        "input[type=\"#{theme_classes.fetch(:type)}\"].text-base.px-3.py-2." \
+        "input[type=\"#{theme_classes.fetch(:type)}\"].h-9.text-sm.px-3.py-1." \
         "#{class_selector(theme_classes.fetch(:input))}"
       )
     end
@@ -50,13 +60,13 @@ describe Tramway::Form::Builder, type: :view do
 
   shared_examples 'file field classes' do |theme_classes|
     it 'renders file label classes' do
-      expect(output).to have_selector "label.inline-block.text-base.px-4.py-2.#{class_selector(theme_classes)}"
+      expect(output).to have_selector "label.inline-flex.h-9.text-sm.px-4.py-2.#{class_selector(theme_classes)}"
     end
   end
 
   shared_examples 'submit button classes' do |theme_classes|
     it 'renders submit button classes' do
-      expect(output).to have_selector "button.bg-green-700.#{class_selector(theme_classes)}"
+      expect(output).to have_selector "button.bg-zinc-50.#{class_selector(theme_classes)}"
     end
   end
 
@@ -66,7 +76,7 @@ describe Tramway::Form::Builder, type: :view do
     end
 
     it 'has the select' do
-      expect(output).to have_selector "select.text-base.#{class_selector(theme_classes.fetch(:select))}"
+      expect(output).to have_selector "select.h-9.text-sm.#{class_selector(theme_classes.fetch(:select))}"
       expect(output).to have_selector 'option[value="admin"]'
       expect(output).to have_selector 'option[value="user"]'
     end
@@ -76,7 +86,11 @@ describe Tramway::Form::Builder, type: :view do
     it 'renders checkbox with label and classes' do
       expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
       expect(output).to have_selector(
-        "input[type=\"checkbox\"].min-h-5.min-w-5.#{class_selector(theme_classes.fetch(:checkbox_input))}"
+        "input[type=\"checkbox\"].#{class_selector(theme_classes.fetch(:checkbox_input))}",
+        visible: :hidden
+      )
+      expect(output).to have_selector(
+        "button[type=\"button\"][role=\"checkbox\"].#{class_selector(theme_classes.fetch(:checkbox_button))}"
       )
     end
   end
@@ -106,7 +120,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.text_field :email }
 
       it 'applies large spacing' do
-        expect(output).to have_selector 'input.text-xl.px-4.py-3'
+        expect(output).to have_selector 'input.h-10.text-base.px-4.py-2'
       end
     end
 
@@ -114,7 +128,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.text_field :email, size: :large }
 
       it 'keeps the form size classes' do
-        expect(output).to have_selector 'input.text-base.px-3.py-2'
+        expect(output).to have_selector 'input.h-9.text-sm.px-3.py-1'
       end
 
       it 'does not render a size attribute' do
@@ -276,8 +290,9 @@ describe Tramway::Form::Builder, type: :view do
       around { |example| with_theme(:classic) { example.run } }
 
       it_behaves_like 'checkbox field classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
-                      checkbox_input: CLASSIC_FORM_CLASSES[:checkbox_input]
+                      label: CLASSIC_FORM_CLASSES[:checkbox_label],
+                      checkbox_input: CLASSIC_FORM_CLASSES[:checkbox_input],
+                      checkbox_button: CLASSIC_FORM_CLASSES[:checkbox_button]
     end
   end
 
@@ -305,7 +320,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.submit 'Create' }
 
       it 'renders larger button' do
-        expect(output).to have_selector 'button.text-xl.px-5.py-3'
+        expect(output).to have_selector 'button.h-10.text-base.px-8'
       end
     end
   end

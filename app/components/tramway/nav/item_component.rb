@@ -8,7 +8,9 @@ module Tramway
       def style
         @style ||= [
           theme_classes(
-            classic: 'px-4 py-2 rounded-xl whitespace-nowrap hover:bg-gray-800 hover:text-gray-300 text-white'
+            classic: 'inline-flex h-9 items-center justify-center rounded-md px-4 py-2 text-sm font-medium ' \
+                     'text-zinc-200 transition-colors hover:bg-zinc-800 focus-visible:outline-none ' \
+                     'focus-visible:ring-1 focus-visible:ring-zinc-300 whitespace-nowrap'
           )
         ].join(' ')
       end

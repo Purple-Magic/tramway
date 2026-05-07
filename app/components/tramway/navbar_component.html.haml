@@ -1,6 +1,6 @@
 %nav{ class: navbar_classes }
   .flex.md:justify-between.w-full.items-center.relative.min-h-8
-    .block.sm:hidden.border.border-white.px-2.rounded
+    .block.sm:hidden.rounded-md.border.border-zinc-800.px-2
       %button#mobile-menu-button{ class: mobile_button_classes }
         ☰
 
@@ -31,7 +31,7 @@
       - @right_items.each do |item|
         = item
 
-  %button.absolute.top-4.right-6.text-4xl.cursor-pointer.text-white#mobile-menu-close-button{ role: :button }
+  %button.absolute.top-4.right-6.text-4xl.cursor-pointer.text-zinc-200#mobile-menu-close-button{ role: :button }
     ⨯
 
 :javascript

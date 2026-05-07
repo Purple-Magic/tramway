@@ -21,9 +21,9 @@ module Tramway
         def color_classes
           case position.to_sym
           when :left
-            %w[bg-gray-800 rounded-tl-md]
+            %w[border border-zinc-800 bg-zinc-950 text-zinc-200]
           when :right
-            %w[bg-blue-600 rounded-tr-md]
+            %w[bg-zinc-50 text-zinc-950]
           end.join(' ')
         end
       end

@@ -11,8 +11,9 @@ module Tramway
       def pagination_classes(klass: nil)
         default_classes = theme_classes(
           classic: [
-            'cursor-pointer', 'px-3', 'py-2', 'font-medium', 'rounded-xl', 'text-gray-200', 'bg-gray-800',
-            'shadow-md', 'hover:bg-gray-700'
+            'inline-flex', 'h-9', 'min-w-9', 'cursor-pointer', 'items-center', 'justify-center', 'rounded-md',
+            'border', 'border-zinc-800', 'bg-zinc-950', 'px-3', 'py-2', 'text-sm', 'font-medium',
+            'text-zinc-200', 'shadow-sm', 'transition-colors', 'hover:bg-zinc-800'
           ]
         )
 

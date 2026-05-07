@@ -13,8 +13,9 @@ module Tramway
     def classes
       theme_classes(
         classic: [
-          'flex', 'px-3', 'py-1', 'text-sm', 'font-semibold', 'rounded-full', 'w-fit', 'h-fit',
-          "bg-#{resolved_color}-700", "text-#{resolved_color}-100", 'shadow-md'
+          'inline-flex', 'items-center', 'rounded-md', 'px-2.5', 'py-0.5', 'text-xs', 'font-semibold',
+          'transition-colors', 'focus:outline-none', 'focus:ring-2', 'focus:ring-zinc-950', 'focus:ring-offset-2',
+          'w-fit', 'h-fit', *shadcn_badge_variant_classes.split
         ]
       )
     end

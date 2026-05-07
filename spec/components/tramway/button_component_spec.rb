@@ -122,22 +122,29 @@ describe Tramway::ButtonComponent, type: :component do
 
     it_behaves_like 'button theme classes',
                     default: %w[
-                      btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                      shadow-md py-2 px-4 h-10 bg-gray-700 hover:bg-gray-800 text-white
+                      inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium
+                      transition-colors focus-visible:outline-none focus-visible:ring-1
+                      focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 h-9 rounded-md
+                      px-5 py-2 md:px-7 border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm hover:bg-zinc-800
+                      w-fit cursor-pointer
                     ],
                     non_get: %w[
-                      btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                      shadow-md text-sm py-1 px-2 rounded extra-class bg-red-700 hover:bg-red-800 text-white
-                      cursor-pointer
+                      inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium
+                      transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300
+                      disabled:pointer-events-none disabled:opacity-50 h-8 rounded-md px-3 md:px-4
+                      text-xs extra-class bg-red-600 text-white shadow-sm hover:bg-red-600/90 cursor-pointer
                     ],
                     link: %w[
-                      btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                      shadow-md py-2 px-4 h-10 bg-gray-700 hover:bg-gray-800 text-white px-1 h-fit w-fit
+                      inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium
+                      transition-colors focus-visible:outline-none focus-visible:ring-1
+                      focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 h-9 rounded-md
+                      px-5 py-2 md:px-7 border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm hover:bg-zinc-800 w-fit
+                      cursor-pointer
                     ],
                     semantic: %w[
-                      bg-violet-700 hover:bg-violet-800 text-white
+                      bg-zinc-50 text-zinc-950 shadow-sm hover:bg-zinc-200
                     ],
-                    disabled: %w[bg-gray-800 text-gray-500 shadow-inner]
+                    disabled: %w[pointer-events-none opacity-50]
   end
 
   context 'when rendering outside of a table cell' do

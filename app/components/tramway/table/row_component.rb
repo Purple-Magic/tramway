@@ -30,21 +30,21 @@ module Tramway
       def desktop_row_classes(cells_count)
         theme_classes(
           classic: [
-            'div-table-row', 'grid', 'gap-4', 'border-b', 'last:border-b-0', 'bg-gray-900',
-            'border-gray-700', "md:grid-cols-#{cells_count}", 'grid-cols-1'
+            'div-table-row', 'grid', 'gap-4', 'border-b', 'last:border-b-0', 'border-zinc-800',
+            'transition-colors', "md:grid-cols-#{cells_count}", 'grid-cols-1'
           ]
         ).join(' ')
       end
 
       def link_row_classes
         theme_classes(
-          classic: 'cursor-pointer hover:bg-gray-800'
+          classic: 'cursor-pointer hover:bg-zinc-800'
         )
       end
 
       def cell_classes
         theme_classes(
-          classic: 'div-table-cell px-6 py-4 font-medium text-gray-100 text-xs sm:text-base'
+          classic: 'div-table-cell p-4 align-middle text-xs text-zinc-200 sm:text-sm'
         )
       end
 

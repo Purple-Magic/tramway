@@ -9,7 +9,7 @@ module Tramway
 
       def form_label_classes
         theme_classes(
-          classic: 'block font-semibold text-white'
+          classic: 'mb-2 block text-sm font-medium leading-none text-zinc-300'
         )
       end
     end

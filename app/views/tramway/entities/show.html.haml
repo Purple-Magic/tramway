@@ -1,5 +1,5 @@
 = tramway_container do
-  .flex.justify-between.items-center
+  .flex.flex-wrap.items-center.justify-between.gap-3
     = tramway_title do
       = @record.title
 
@@ -15,12 +15,12 @@
         type: :rage,
         method: :delete
 
-  .flex.justify-end.mt-2
+  .mt-4.flex.justify-end
     - if @record.show_header_content.present?
       = @record.show_header_content
 
   - if @record.show_attributes.empty?
-    %p.text-center.mt-10.text-white
+    %p.mt-10.rounded-lg.border.border-zinc-800.bg-zinc-950.px-4.py-3.text-center.text-sm.text-zinc-400
       You should fill object-level method `show_attributes` inside your
       = @record.class.name
 
@@ -42,8 +42,8 @@
           = @record.public_send(attribute)
 
   - @associations.select { _1[:association_type] == :has_many }.each do |association|
-    .flex.flex-row.justify-between.mt-8.text-white
-      %h3.text-2xl.font-bold
+    .mt-8.flex.flex-row.flex-wrap.items-center.justify-between.gap-3.text-zinc-200
+      %h3.text-xl.font-semibold.tracking-tight
         = @model_class.human_attribute_name(association[:name])
 
       - if association[:records].any?
@@ -65,7 +65,7 @@
             = component 'tramway/comments/show_path', decorator_class: association[:decorator].name
           = tramway_row href: record.show_path do
             - if association[:decorator].index_attributes.empty?
-              .text-white
+              .rounded-lg.border.border-zinc-800.bg-zinc-950.px-4.py-3.text-sm.text-zinc-400
                 You should set `index_attributes` method in #{association[:decorator].name} to display the table of associated records.
             - association[:decorator].index_attributes.each do |column|
               = tramway_cell do

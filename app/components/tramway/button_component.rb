@@ -33,23 +33,28 @@ module Tramway
         raise ArgumentError, "Invalid size: #{size}. Valid sizes are :small, :medium, :large."
       end
 
+      return anchor_size_classes if @tag == :a
+
       {
-        small: 'text-sm py-1 px-2 rounded',
-        medium: 'py-2 px-4 h-10',
-        large: 'text-xl px-5 py-3 h-12'
+        small: 'h-8 rounded-md px-3 text-xs md:px-4',
+        medium: 'h-9 rounded-md px-4 py-2 md:px-6',
+        large: 'h-10 rounded-md px-8 text-base md:px-10'
       }[size]
     end
 
     def classes
       (default_classes +
         color_classes +
-        (@tag == :a ? %w[px-1 h-fit w-fit] : [cursor_class])).compact.join(' ')
+        (@tag == :a ? ['w-fit', cursor_class] : [cursor_class])).compact.join(' ')
     end
 
     def default_classes
       base_classes = theme_classes(
-        classic: %w[btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                    shadow-md]
+        classic: %w[
+          inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors
+          focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300 disabled:pointer-events-none
+          disabled:opacity-50
+        ]
       )
 
       base_classes + [size_classes.to_s, options[:class].to_s]
@@ -57,11 +62,9 @@ module Tramway
 
     def color_classes
       if disabled?
-        %w[bg-gray-800 text-gray-500 shadow-inner]
+        %w[pointer-events-none opacity-50]
       else
-        [
-          "bg-#{resolved_color}-700", "hover:bg-#{resolved_color}-800", 'text-white'
-        ]
+        shadcn_button_variant_classes.split
       end => classes_collection
 
       theme_classes classic: classes_collection
@@ -91,11 +94,15 @@ module Tramway
     end
 
     def cursor_class
-      if @tag != :a && !disabled?
-        'cursor-pointer'
-      else
-        'cursor-not-allowed'
-      end
+      disabled? ? 'cursor-not-allowed' : 'cursor-pointer'
+    end
+
+    def anchor_size_classes
+      {
+        small: 'h-8 rounded-md px-4 text-xs md:px-5',
+        medium: 'h-9 rounded-md px-5 py-2 md:px-7',
+        large: 'h-10 rounded-md px-9 text-base md:px-11'
+      }[size]
     end
 
     def tag_button?

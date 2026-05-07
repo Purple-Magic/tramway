@@ -63,21 +63,27 @@ module Tramway
         'pin "@tramway/table-row-preview", to: "tramway/table_row_preview_controller.js"'
       end
 
+      def importmap_checkbox_pin
+        'pin "@tramway/checkbox", to: "tramway/checkbox_controller.js"'
+      end
+
       def importmap_tramway_pins
-        [importmap_tramway_select_pin, importmap_table_row_preview_pin]
+        [importmap_tramway_select_pin, importmap_table_row_preview_pin, importmap_checkbox_pin]
       end
 
       def stimulus_controller_imports
         [
           'import { TramwaySelect } from "@tramway/tramway-select"',
-          'import { TableRowPreview } from "@tramway/table-row-preview"'
+          'import { TableRowPreview } from "@tramway/table-row-preview"',
+          'import { Checkbox } from "@tramway/checkbox"'
         ]
       end
 
       def stimulus_controller_registrations
         [
           "application.register('tramway-select', TramwaySelect)",
-          "application.register('table-row-preview', TableRowPreview)"
+          "application.register('table-row-preview', TableRowPreview)",
+          "application.register('tramway-checkbox', Checkbox)"
         ]
       end
 
@@ -102,12 +108,12 @@ module Tramway
       end
 
       def safelist_section(content)
-        match = content.match(/safelist\s*:\s*\[(.*?)\]\s*,?/m)
+        match = content.match(/safelist\s*:\s*\[(.*?)^\s*\]\s*,?/m)
         match&.[](1)
       end
 
       def insert_entries(content, entries)
-        match = content.match(/safelist\s*:\s*\[(.*?)\](\s*,?)/m)
+        match = content.match(/safelist\s*:\s*\[(.*?)^\s*\](\s*,?)/m)
         return content unless match
 
         closing_index = match.begin(0) + match[0].rindex(']')

@@ -8,7 +8,7 @@ module Tramway
 
     def title_classes
       theme_classes(
-        classic: "font-semibold text-2xl md:text-4xl text-gray-100 #{options[:class]}"
+        classic: "scroll-m-20 text-2xl font-semibold tracking-tight text-zinc-100 #{options[:class]}"
       )
     end
   end

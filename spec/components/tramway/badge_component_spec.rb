@@ -41,9 +41,11 @@ describe Tramway::BadgeComponent, type: :component do
 
     it_behaves_like 'badge theme classes',
                     default: %w[
-                      flex px-3 py-1 text-sm font-semibold rounded-full w-fit h-fit bg-gray-700 text-gray-100 shadow-md
+                      inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-semibold transition-colors
+                      focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:ring-offset-2 w-fit h-fit
+                      border border-transparent bg-zinc-50 text-zinc-950
                     ],
-                    type: %w[bg-green-700 text-green-100],
-                    custom: %w[bg-red-700 text-red-100]
+                    type: %w[border border-transparent bg-zinc-50 text-zinc-950],
+                    custom: %w[border border-transparent bg-red-600 text-white]
   end
 end
