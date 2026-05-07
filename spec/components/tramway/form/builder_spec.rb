@@ -31,7 +31,7 @@ CLASSIC_FORM_CLASSES = {
     data-[state=checked]:bg-zinc-50 data-[state=checked]:text-zinc-950
   ],
   checkbox_label: %w[
-    text-sm font-medium leading-none text-zinc-300 peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+    text-sm font-medium leading-normal text-zinc-300 peer-disabled:cursor-not-allowed peer-disabled:opacity-70
     cursor-pointer text-base
   ]
 }.freeze

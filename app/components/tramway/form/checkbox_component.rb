@@ -35,7 +35,7 @@ module Tramway
       end
 
       def label_classes
-        default_classes = 'text-sm font-medium leading-none text-zinc-300 peer-disabled:cursor-not-allowed ' \
+        default_classes = 'text-sm font-medium leading-normal text-zinc-300 peer-disabled:cursor-not-allowed ' \
                           'peer-disabled:opacity-70 cursor-pointer'
 
         case size
