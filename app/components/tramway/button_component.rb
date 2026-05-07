@@ -65,9 +65,9 @@ module Tramway
       else
         case type
         when :default
-          ['bg-black', 'hover:bg-gray-800', 'text-white']
-        when :success, :will
-          ['hover:bg-green-900 bg-green-900/30 text-green-400']
+          ['hover:bg-zinc-900', 'bg-zinc-50', 'text-zinc-950']
+        else
+          ["hover:bg-#{resolved_color}-900 bg-#{resolved_color}-900/30 text-#{resolved_color}-400"]
         end
       end => classes_collection
 

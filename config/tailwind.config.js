@@ -150,12 +150,46 @@ module.exports = {
     'disabled:pointer-events-none',
     'disabled:opacity-50',
     'h-10',
+
+    'hover:bg-zinc-900',
+    'bg-zinc-50',
+    'text-zinc-950',
+
     'hover:bg-green-900',
     'bg-green-900/30',
     'text-green-400',
+
     'hover:bg-red-900',
     'bg-red-900/30',
     'text-red-400',
+
+    'hover:bg-gray-900',
+    'bg-gray-900/30',
+    'text-gray-400',
+
+    'hover:bg-blue-900',
+    'bg-blue-900/30',
+    'text-blue-400',
+
+    'hover:bg-zinc-900',
+    'bg-zinc-900/30',
+    'text-zinc-400',
+
+    'hover:bg-orange-900',
+    'bg-orange-900/30',
+    'text-orange-400',
+
+    'hover:bg-violet-900',
+    'bg-violet-900/30',
+    'text-violet-400',
+
+    'hover:bg-indigo-900',
+    'bg-indigo-900/30',
+    'text-indigo-400',
+
+    'hover:bg-yellow-900',
+    'bg-yellow-900/30',
+    'text-yellow-400',
 
     // === Grid templates used for configurable layouts ===
     'grid',
@@ -260,68 +294,6 @@ module.exports = {
     'bg-green-600',
     'hover:bg-green-400',
     'text-green-800',
-
-    // === Button color presets ===
-    'bg-green-100',
-    'bg-green-200',
-    'bg-green-700',
-    'hover:bg-green-200',
-    'hover:bg-green-300',
-    'hover:bg-green-800',
-
-    'bg-red-100',
-    'bg-red-200',
-    'bg-red-700',
-    'hover:bg-red-200',
-    'hover:bg-red-300',
-    'hover:bg-red-800',
-
-    'bg-blue-100',
-    'bg-blue-200',
-    'bg-blue-700',
-    'hover:bg-blue-200',
-    'hover:bg-blue-300',
-    'hover:bg-blue-800',
-
-    'bg-orange-100',
-    'bg-orange-200',
-    'bg-orange-700',
-    'hover:bg-orange-200',
-    'hover:bg-orange-300',
-    'hover:bg-orange-800',
-
-    'bg-zinc-100',
-    'bg-zinc-200',
-    'bg-zinc-700',
-    'hover:bg-zinc-200',
-    'hover:bg-zinc-300',
-    'hover:bg-zinc-800',
-
-    'bg-violet-100',
-    'bg-violet-200',
-    'bg-violet-700',
-    'hover:bg-violet-200',
-    'hover:bg-violet-300',
-    'hover:bg-violet-800',
-
-    'bg-indigo-100',
-    'bg-indigo-200',
-    'bg-indigo-700',
-    'hover:bg-indigo-200',
-    'hover:bg-indigo-300',
-    'hover:bg-indigo-800',
-
-    'bg-yellow-100',
-    'bg-yellow-200',
-    'bg-yellow-700',
-    'hover:bg-yellow-200',
-    'hover:bg-yellow-300',
-    'hover:bg-yellow-800',
-
-    'bg-teal-100',
-    'bg-teal-900',
-    'bg-purple-300',
-    'text-purple-700',
 
     // === Button Disabled state ===
     'bg-gray-200',

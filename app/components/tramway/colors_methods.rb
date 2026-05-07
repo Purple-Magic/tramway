@@ -4,7 +4,7 @@ module Tramway
   # Color logic implementation
   module ColorsMethods
     TYPE_COLOR_MAP = {
-      default: :gray,
+      default: :zinc,
       life: :gray,
       primary: :blue,
       hope: :blue,
