@@ -4,7 +4,7 @@ module ThemeHelper
   def class_selector(classes)
     Array(classes)
       .flat_map { |klass| klass.to_s.split }
-      .map { |klass| klass.gsub(':', '\\:').gsub('/', '\\/') }
+      .map { |klass| klass.gsub(/[^a-zA-Z0-9_-]/) { |character| "\\#{character}" } }
       .join('.')
   end
 

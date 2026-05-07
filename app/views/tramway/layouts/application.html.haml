@@ -24,7 +24,7 @@
 
     - if flash.any?
       = tramway_flash text: flash[:notice].presence || flash[:alert],
-        type: flash[:notice].present? ? :will : :rage,
+        type: flash[:notice].present? ? :success : :danger,
         id: 'flash-container'
 
     .container.mx-auto.flex.w-full.justify-center.p-4

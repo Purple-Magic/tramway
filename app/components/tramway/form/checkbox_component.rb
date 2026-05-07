@@ -38,16 +38,11 @@ module Tramway
         default_classes = 'text-sm font-medium leading-normal text-zinc-300 peer-disabled:cursor-not-allowed ' \
                           'peer-disabled:opacity-70 cursor-pointer'
 
-        case size
-        when :small
-          default_classes += ' text-sm'
-        when :medium
-          default_classes += ' text-base'
-        when :large
-          default_classes += ' text-lg'
-        end
+        "#{default_classes} #{label_size_class}"
+      end
 
-        default_classes
+      def label_size_class
+        { small: 'text-sm', medium: 'text-base', large: 'text-lg' }.fetch(size, 'text-base')
       end
     end
   end

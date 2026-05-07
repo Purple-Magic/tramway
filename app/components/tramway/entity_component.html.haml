@@ -8,13 +8,13 @@
         - if @entity.page(:update).present?
           = tramway_button text: t('tramway.actions.edit'),
             path: Tramway::Engine.routes.url_helpers.public_send(entity.routes.edit, item.id),
-            type: :will,
+            type: :default,
             size: :small,
             tag: :form
 
         - if @entity.page(:destroy).present?
           = tramway_button text: t('tramway.actions.destroy'),
             path: Tramway::Engine.routes.url_helpers.public_send(entity.routes.destroy, item.id),
-            type: :rage,
+            type: :danger,
             method: :delete,
             size: :small

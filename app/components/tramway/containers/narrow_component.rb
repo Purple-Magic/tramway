@@ -11,7 +11,7 @@ module Tramway
         options_classes = options[:class] || ''
 
         theme_classes(
-          classic: 'container mx-auto flex w-full justify-center p-4 text-zinc-200 ' + options_classes
+          classic: "container mx-auto flex w-full justify-center p-4 text-zinc-200 #{options_classes}"
         )
       end
     end

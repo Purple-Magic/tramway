@@ -18,8 +18,10 @@ module Tramway
 
     def flash_classes
       theme_classes(
-        classic: "flash relative w-full rounded-lg border bg-zinc-950 px-4 py-3 text-sm shadow-sm " \
-                 "#{shadcn_alert_variant_classes}"
+        classic: [
+          'flash relative w-full rounded-lg border bg-zinc-950 px-4 py-3 text-sm shadow-sm',
+          shadcn_alert_variant_classes
+        ].join(' ')
       )
     end
 

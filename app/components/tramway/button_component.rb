@@ -36,9 +36,9 @@ module Tramway
       return anchor_size_classes if @tag == :a
 
       {
-        small: 'h-8 rounded-md px-3 text-xs md:px-4',
-        medium: 'h-9 rounded-md px-4 py-2 md:px-6',
-        large: 'h-10 rounded-md px-8 text-base md:px-10'
+        small: 'h-9 px-3 py-1.5',
+        medium: 'h-10 px-4 py-2',
+        large: 'h-11 px-8 py-2 text-base'
       }[size]
     end
 
@@ -51,9 +51,9 @@ module Tramway
     def default_classes
       base_classes = theme_classes(
         classic: %w[
-          inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors
-          focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300 disabled:pointer-events-none
-          disabled:opacity-50
+          inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
+          transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+          focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50
         ]
       )
 
@@ -99,9 +99,9 @@ module Tramway
 
     def anchor_size_classes
       {
-        small: 'h-8 rounded-md px-4 text-xs md:px-5',
-        medium: 'h-9 rounded-md px-5 py-2 md:px-7',
-        large: 'h-10 rounded-md px-9 text-base md:px-11'
+        small: 'h-9 px-3 py-1.5',
+        medium: 'h-10 px-4 py-2',
+        large: 'h-11 px-8 py-2 text-base'
       }[size]
     end
 

@@ -15,10 +15,10 @@
               - elsif cell.is_a?(Hash)
                 - if cell['status'] == 'pending'
                   = tramway_cell do
-                    = helpers.tramway_button text: t('admin.chats.messages.table.add'), path: cell.dig('button', 'path'), color: :green, method: :post
+                    = helpers.tramway_button text: t('admin.chats.messages.table.add'), path: cell.dig('button', 'path'), type: :default, method: :post
                 - elsif cell['status'] == 'added'
                   = tramway_cell do
-                    = helpers.tramway_button text: t('admin.chats.messages.table.remove'), path: cell.dig('button', 'path'), color: :red, method: :delete
+                    = helpers.tramway_button text: t('admin.chats.messages.table.remove'), path: cell.dig('button', 'path'), type: :danger, method: :delete
                 - else
                   = cell.inspect
               - elsif cell.is_a?(String) && cell.size > 50

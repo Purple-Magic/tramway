@@ -6,32 +6,33 @@ feature 'Form For Base Test', :js, type: :feature do
   shared_examples 'form for theme classes' do |theme_classes|
     scenario 'check text_field' do
       expect(page).to have_selector(
-        "input.text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:text_input))}"
+        "input.h-9.text-sm.px-3.py-1.#{class_selector(theme_classes.fetch(:text_input))}"
       )
     end
 
     scenario 'check file_field' do
       expect(page).to have_selector("input[type='file']", visible: false)
       expect(page).to have_selector(
-        "label.inline-block.text-base.px-4.py-2.#{class_selector(theme_classes.fetch(:file_button))}"
+        "label.inline-flex.h-9.text-sm.px-4.py-2.#{class_selector(theme_classes.fetch(:file_button))}"
       )
     end
 
     scenario 'check select' do
       expect(page).to have_selector(
-        "select.text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:select))}"
+        "select.h-9.text-sm.px-3.py-1.#{class_selector(theme_classes.fetch(:select))}"
       )
     end
 
     scenario 'check text_area' do
       expect(page).to have_selector(
-        "textarea.text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:text_input))}"
+        "textarea.h-9.text-sm.px-3.py-1.#{class_selector(theme_classes.fetch(:text_area))}"
       )
     end
 
     scenario 'check checkbox' do
       expect(page).to have_selector(
-        "input[type='checkbox'].min-h-5.min-w-5.#{class_selector(theme_classes.fetch(:checkbox_input))}"
+        "input[type='checkbox'].#{class_selector(theme_classes.fetch(:checkbox_input))}",
+        visible: :all
       )
     end
   end
@@ -43,21 +44,26 @@ feature 'Form For Base Test', :js, type: :feature do
 
     it_behaves_like 'form for theme classes',
                     text_input: %w[
-                      w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner
-                      focus:outline-none focus:ring-2 focus:ring-gray-600 placeholder-gray-500
+                      w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm
+                      placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1
+                      focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50
+                    ],
+                    text_area: %w[
+                      min-h-20 w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm
+                      placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1
+                      focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50
                     ],
                     file_button: %w[
-                      inline-block text-white font-semibold rounded-xl cursor-pointer mt-4 bg-blue-600
-                      hover:bg-blue-800 shadow-md
+                      items-center justify-center rounded-md bg-zinc-50 font-medium text-zinc-950 shadow-sm
+                      transition-colors hover:bg-zinc-200 cursor-pointer mt-4
                     ],
                     select: %w[
-                      w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner
-                      focus:outline-none focus:ring-2 focus:ring-gray-600 disabled:cursor-not-allowed
-                      disabled:bg-gray-800 disabled:text-gray-500
+                      w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm
+                      focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300
+                      disabled:cursor-not-allowed disabled:opacity-50
                     ],
                     checkbox_input: %w[
-                      rounded-full border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
-                      focus:ring-2 focus:ring-gray-600
+                      absolute size-px overflow-hidden whitespace-nowrap border-0 p-0 -m-px [clip-path:inset(50%)]
                     ]
   end
 end

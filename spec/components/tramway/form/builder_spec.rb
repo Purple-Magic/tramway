@@ -87,7 +87,7 @@ describe Tramway::Form::Builder, type: :view do
       expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
       expect(output).to have_selector(
         "input[type=\"checkbox\"].#{class_selector(theme_classes.fetch(:checkbox_input))}",
-        visible: :hidden
+        visible: :all
       )
       expect(output).to have_selector(
         "button[type=\"button\"][role=\"checkbox\"].#{class_selector(theme_classes.fetch(:checkbox_button))}"
@@ -320,7 +320,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.submit 'Create' }
 
       it 'renders larger button' do
-        expect(output).to have_selector 'button.h-10.text-base.px-8'
+        expect(output).to have_selector 'button.h-11.text-base.px-8'
       end
     end
   end

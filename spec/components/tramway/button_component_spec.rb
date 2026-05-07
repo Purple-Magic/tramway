@@ -23,7 +23,7 @@ describe Tramway::ButtonComponent, type: :component do
           path: '/projects/1',
           text: 'Delete',
           method: :delete,
-          color: :red,
+          type: :danger,
           size: :small,
           options: { class: 'extra-class', data: { turbo_confirm: 'Are you sure?' } }
         )
@@ -74,22 +74,48 @@ describe Tramway::ButtonComponent, type: :component do
       end
     end
 
-    context 'when a semantic type is provided' do
-      let(:component) { described_class.new(path: '/projects', text: 'Celebrate', type: :love) }
+    context 'when an outline type is provided' do
+      let(:component) { described_class.new(path: '/projects', text: 'Details', type: :outline) }
 
-      it 'renders button with mapped color' do
+      it 'renders button with variant classes' do
         render_inline(component)
 
         expect(page).to have_css(
-          "a.#{class_selector(theme_classes.fetch(:semantic))}[href='/projects']",
-          text: 'Celebrate'
+          "a.#{class_selector(theme_classes.fetch(:outline))}[href='/projects']",
+          text: 'Details'
+        )
+      end
+    end
+
+    context 'when a ghost type is provided' do
+      let(:component) { described_class.new(path: '/projects', text: 'Preview', type: :ghost) }
+
+      it 'renders button with variant classes' do
+        render_inline(component)
+
+        expect(page).to have_css(
+          "a.#{class_selector(theme_classes.fetch(:ghost))}[href='/projects']",
+          text: 'Preview'
+        )
+      end
+    end
+
+    context 'when a destructive alias type is provided' do
+      let(:component) { described_class.new(path: '/projects', text: 'Archive', type: :error) }
+
+      it 'renders button with destructive classes' do
+        render_inline(component)
+
+        expect(page).to have_css(
+          "a.#{class_selector(theme_classes.fetch(:destructive))}[href='/projects']",
+          text: 'Archive'
         )
       end
     end
 
     context 'when disabled: true is provided in options' do
       let(:component) do
-        described_class.new(path: '/projects', text: 'Celebrate', type: :love, options: { disabled: true })
+        described_class.new(path: '/projects', text: 'Celebrate', type: :default, options: { disabled: true })
       end
 
       it 'renders button with disabled styles' do
@@ -122,28 +148,26 @@ describe Tramway::ButtonComponent, type: :component do
 
     it_behaves_like 'button theme classes',
                     default: %w[
-                      inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium
-                      transition-colors focus-visible:outline-none focus-visible:ring-1
-                      focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 h-9 rounded-md
-                      px-5 py-2 md:px-7 border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm hover:bg-zinc-800
-                      w-fit cursor-pointer
+                      inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
+                      transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
+                      bg-zinc-50 text-zinc-950 hover:bg-zinc-200 w-fit cursor-pointer
                     ],
                     non_get: %w[
-                      inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium
-                      transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300
-                      disabled:pointer-events-none disabled:opacity-50 h-8 rounded-md px-3 md:px-4
-                      text-xs extra-class bg-red-600 text-white shadow-sm hover:bg-red-600/90 cursor-pointer
+                      inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
+                      transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-9 px-3 py-1.5
+                      extra-class bg-red-600 text-red-600 hover:bg-red-600/90 cursor-pointer
                     ],
                     link: %w[
-                      inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium
-                      transition-colors focus-visible:outline-none focus-visible:ring-1
-                      focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 h-9 rounded-md
-                      px-5 py-2 md:px-7 border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm hover:bg-zinc-800 w-fit
-                      cursor-pointer
+                      inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
+                      transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
+                      bg-zinc-50 text-zinc-950 hover:bg-zinc-200 w-fit cursor-pointer
                     ],
-                    semantic: %w[
-                      bg-zinc-50 text-zinc-950 shadow-sm hover:bg-zinc-200
-                    ],
+                    outline: %w[border border-input bg-background hover:bg-accent hover:text-accent],
+                    ghost: %w[hover:bg-accent hover:text-accent],
+                    destructive: %w[bg-red-600 text-red-600 hover:bg-red-600/90],
                     disabled: %w[pointer-events-none opacity-50]
   end
 
@@ -179,7 +203,7 @@ describe Tramway::ButtonComponent, type: :component do
       render_inline(
         described_class.new(
           path: '/projects/236685d2-9684-48af-8aff-21fd31a4f865/payments/1/edit',
-          type: :greed,
+          type: :alert,
           size: :small
         ) do
           'Edit'

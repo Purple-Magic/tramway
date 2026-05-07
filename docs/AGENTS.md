@@ -140,11 +140,12 @@ Use Tramway Navbar for navigation. Put there basic links: Login, Logout.
 Use Tramway Flash for user notifications.
 
 ```
-= tramway_flash text: flash[:notice], type: :hope
-= tramway_flash text: 'Double check your data', type: :greed, class: 'mt-2', data: { turbo: 'false' }
+= tramway_flash text: flash[:notice], type: :success
+= tramway_flash text: 'Double check your data', type: :warning, class: 'mt-2', data: { turbo: 'false' }
 ```
 
-`type:` argument supports lantern colors.
+`type:` argument supports semantic colors: `:default`, `:primary`, `:secondary`, `:success`, `:warning`, `:danger`, and
+`:submit`.
 
 ### Rule 5
 Use Tramway Table for tabular data display.
@@ -153,7 +154,7 @@ Use Tramway Table for tabular data display.
 default unless the request explicitly needs preview disabled.
 
 ### Rule 6
-Use Tramway Button for buttons. Always add a color of the button via `color:` or `type:` argument. `color:` argument support directs colors only: red, yellow, blue, etc. `type:` argument supports only lantern colors: will, hope, rage, etc.
+Use Tramway Button for buttons. Always add a button variant via the `type:` argument. `type:` supports only `:default`, `:secondary`, `:error`, `:danger`, `:alert`, `:destructive`, `:outline`, and `:ghost`.
 
 ### Rule 7
 Use `tramway_form_for` instead `form_with`, `form_for`
@@ -638,7 +639,7 @@ In case you want to use container on the page, use `tramway_container` helper in
 = tramway_main_container do
   - if flash.any?
     = tramway_flash text: flash[:notice].presence || flash[:alert],
-      type: flash[:notice].present? ? :will : :rage,
+      type: flash[:notice].present? ? :success : :danger,
       id: 'flash-container'
 ```
 

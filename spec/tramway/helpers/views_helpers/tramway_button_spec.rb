@@ -63,9 +63,9 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
             path: '/users/1',
             method: :delete,
             tag: nil,
-            color: :red,
+            color: nil,
             form_options: {},
-            type: :primary,
+            type: :destructive,
             size: :small,
             options: { data: { turbo_confirm: 'Are you sure?' } }
           }
@@ -76,9 +76,8 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
             path: '/users/1',
             text: 'Edit',
             method: :delete,
-            color: :red,
             form_options: {},
-            type: :primary,
+            type: :destructive,
             size: :small,
             data: { turbo_confirm: 'Are you sure?' }
           }

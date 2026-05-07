@@ -7,12 +7,12 @@
     - if @entity.page(:update).present?
       = tramway_button text: t('tramway.actions.edit'),
         path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.edit, @record.id),
-        type: :will
+        type: :default
 
     - if @entity.page(:destroy).present?
       = tramway_button text: t('tramway.actions.destroy'),
         path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.destroy, @record.id),
-        type: :rage,
+        type: :danger,
         method: :delete
 
   .mt-4.flex.justify-end
@@ -54,7 +54,7 @@
 
       = tramway_button text: t('tramway.actions.new'),
         path: association[:new_record_path],
-        type: :will
+        type: :default
 
     - if association[:records].any?
       = tramway_table class: 'mt-4' do 

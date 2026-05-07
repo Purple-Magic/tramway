@@ -427,7 +427,7 @@ end
 .mb-2
   = tramway_button path: Rails.application.routes.url_helpers.new_project_path,
     text: 'Create',
-    type: :hope
+    type: :default
 ```
 
 *app/components/projects/index_header_component.rb*
@@ -876,18 +876,18 @@ custom HTML options directly (e.g., `class:`, `data:`) and they will be merged i
 
 ```haml
 -# Haml example
-= tramway_flash text: flash[:notice], type: :hope
-= tramway_flash text: 'Double check your data', type: :greed, class: 'mt-2', data: { turbo: 'false' }
+= tramway_flash text: flash[:notice], type: :success
+= tramway_flash text: 'Double check your data', type: :warning, class: 'mt-2', data: { turbo: 'false' }
 ```
 
 ```erb
 <%# ERB example %>
-<%= tramway_flash text: flash[:alert], type: :rage %>
-<%= tramway_flash text: 'Saved!', type: :will, data: { controller: 'dismissible' } %>
+<%= tramway_flash text: flash[:alert], type: :danger %>
+<%= tramway_flash text: 'Saved!', type: :success, data: { controller: 'dismissible' } %>
 ```
 
-Use the `type` argument is compatible to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette) or provide a `color:` keyword to set
-the Tailwind color family explicitly.
+Use the `type` argument for semantic colors (`:default`, `:primary`, `:secondary`, `:success`, `:warning`, `:danger`, or
+`:submit`) or provide a `color:` keyword to set the Tailwind color family explicitly.
 
 ### Tramway Chat
 
@@ -1120,7 +1120,8 @@ Example 3: rendering button
     options: { data: { controller: 'submit-once' } } %>
   ```
 
-  The `type` option maps semantic intent to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette).
+  The `type` option maps button intent to one of the built-in variants: `:default`, `:secondary`, `:error`,
+  `:danger`, `:alert`, `:destructive`, `:outline`, or `:ghost`.
 
 * `tramway_badge` renders a Tailwind-styled badge with the provided `text`. Pass a semantic `type` (for example, `:success` or
   `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When you opt into a
@@ -1351,20 +1352,6 @@ Tramway.configure do |config|
 end
 ```
 
-## Lantern Color Palette
-
-  | Type | Color |
-  | ---- | ----- |
-  | `default`, `life` | Gray |
-  | `primary`, `hope` | Blue |
-  | `secondary` | Zinc |
-  | `success`, `will` | Green |
-  | `warning`, `greed` | Orange |
-  | `danger`, `rage` | Red |
-  | `love` | Violet |
-  | `compassion` | Indigo |
-  | `fear` | Yellow |
-
 ## Articles
 * [Tramway on Rails](https://kalashnikovisme.medium.com/tramway-on-rails-32158c35ed68)
 * [Tramway is the way to deal with little things for Rails developers](https://medium.com/@kalashnikovisme/tramway-is-the-way-to-deal-with-little-things-for-rails-developers-4f502172a18c)
@@ -1372,7 +1359,6 @@ end
 * [Behave as ActiveRecord. Why do we want objects to be AR lookalikes?](https://kalashnikovisme.medium.com/behave-as-activerecord-why-do-we-want-objects-to-be-ar-lookalikes-d494d692e1d3)
 * [Decorating associations in Rails with Tramway](https://kalashnikovisme.medium.com/decorating-associations-in-rails-with-tramway-b46a28392f9e)
 * [Easy-to-use Tailwind-styled multi-select built with Stimulus](https://medium.com/@kalashnikovisme/easy-to-use-tailwind-styled-multi-select-built-with-stimulus-b3daa9e307aa)
-* [Lantern Color Palette](https://kalashnikovisme.medium.com/lantern-buttons-in-rails-ff61688fd8e3?postPublishedType=repub)
 
 ## Contributing
 

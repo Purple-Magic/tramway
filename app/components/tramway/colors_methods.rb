@@ -5,33 +5,31 @@ module Tramway
   module ColorsMethods
     TYPE_COLOR_MAP = {
       default: :gray,
-      life: :gray,
       primary: :blue,
-      hope: :blue,
       secondary: :zinc,
       success: :green,
-      will: :green,
       warning: :orange,
-      greed: :orange,
       danger: :red,
-      rage: :red,
-      love: :violet,
-      compassion: :indigo,
-      compassio: :indigo,
-      fear: :yellow,
       submit: :green
     }.freeze
 
+    BUTTON_TYPE_MAP = {
+      default: :default,
+      secondary: :secondary,
+      error: :destructive,
+      danger: :destructive,
+      alert: :destructive,
+      destructive: :destructive,
+      outline: :outline,
+      ghost: :ghost
+    }.freeze
+
     SHADCN_BUTTON_VARIANT_CLASSES = {
-      gray: 'border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm hover:bg-zinc-800',
-      blue: 'bg-zinc-50 text-zinc-950 shadow-sm hover:bg-zinc-200',
-      green: 'bg-zinc-50 text-zinc-950 shadow-sm hover:bg-zinc-200',
-      red: 'bg-red-600 text-white shadow-sm hover:bg-red-600/90',
-      orange: 'border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm hover:bg-zinc-800',
-      zinc: 'border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm hover:bg-zinc-800',
-      violet: 'bg-zinc-50 text-zinc-950 shadow-sm hover:bg-zinc-200',
-      indigo: 'bg-zinc-50 text-zinc-950 shadow-sm hover:bg-zinc-200',
-      yellow: 'border border-zinc-800 bg-zinc-950 text-zinc-200 shadow-sm hover:bg-zinc-800'
+      default: 'bg-zinc-50 text-zinc-950 hover:bg-zinc-200',
+      secondary: 'bg-secondary text-zinc-100 hover:bg-secondary/80',
+      destructive: 'bg-red-600 text-red-500 hover:bg-red-600/90',
+      outline: 'border border-input bg-background hover:bg-accent hover:text-accent',
+      ghost: 'hover:bg-accent hover:text-accent'
     }.freeze
 
     SHADCN_BADGE_VARIANT_CLASSES = {
@@ -67,7 +65,7 @@ module Tramway
     end
 
     def shadcn_button_variant_classes
-      SHADCN_BUTTON_VARIANT_CLASSES.fetch(resolved_color.to_sym, SHADCN_BUTTON_VARIANT_CLASSES[:gray])
+      SHADCN_BUTTON_VARIANT_CLASSES.fetch(button_variant, SHADCN_BUTTON_VARIANT_CLASSES[:default])
     end
 
     def shadcn_badge_variant_classes
@@ -86,6 +84,16 @@ module Tramway
       value = value.to_sym if value.respond_to?(:to_sym)
 
       TYPE_COLOR_MAP.key?(value) ? value : :default
+    end
+
+    def button_variant
+      value = type
+      value = nil if value.respond_to?(:empty?) && value.empty?
+      value ||= :default
+      value = value.downcase if value.respond_to?(:downcase)
+      value = value.to_sym if value.respond_to?(:to_sym)
+
+      BUTTON_TYPE_MAP.fetch(value, BUTTON_TYPE_MAP[:default])
     end
   end
 end
