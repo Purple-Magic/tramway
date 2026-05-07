@@ -43,8 +43,19 @@ module Tramway
         @tailwind_application_stylesheet_path ||= File.join(destination_root, 'app/assets/tailwind/application.css')
       end
 
+      def tailwind_shadcn_stylesheet_path
+        @tailwind_shadcn_stylesheet_path ||= File.join(destination_root, 'app/assets/tailwind/shadcn.css')
+      end
+
+      def gem_shadcn_stylesheet_path
+        @gem_shadcn_stylesheet_path ||= File.expand_path('../../../../app/assets/stylesheets/shadcn.css', __dir__)
+      end
+
       def tailwind_css_import_line
-        '@import "tailwindcss";'
+        [
+          '@import "tailwindcss";',
+          '@import "./shadcn.css";',
+        ].join("\n")
       end
 
       def importmap_path
@@ -63,8 +74,22 @@ module Tramway
         'pin "@tramway/table-row-preview", to: "tramway/table_row_preview_controller.js"'
       end
 
+      def importmap_tailwind_requirements
+        [
+          'pin "@tailwindcss/forms", to: "tailwindcss/forms.js"',
+          'pin "@tailwindcss/typography", to: "tailwindcss/typography.js"',
+          'pin "@tailwindcss/aspect-ratio", to: "tailwindcss/aspect-ratio.js"',
+          'pin "@tailwindcss/container-queries", to: "tailwindcss/container-queries.js"',
+          'pin "tailwindcss-animate", to: "tailwindcss-animate.js"'
+        ].join("\n")
+      end
+
       def importmap_tramway_pins
-        [importmap_tramway_select_pin, importmap_table_row_preview_pin]
+        [
+          importmap_tailwind_requirements,
+          importmap_tramway_select_pin,
+          importmap_table_row_preview_pin
+        ]
       end
 
       def stimulus_controller_imports
@@ -246,6 +271,13 @@ module Tramway
           file.write("\n") unless content.empty? || content.end_with?("\n")
           file.write("#{tailwind_css_import_line}\n")
         end
+      end
+
+      def ensure_tailwind_shadcn_stylesheet
+        path = tailwind_shadcn_stylesheet_path
+        FileUtils.mkdir_p(File.dirname(path))
+
+        create_file(path, File.read(gem_shadcn_stylesheet_path)) unless File.exist?(path)
       end
 
       def ensure_importmap_pin

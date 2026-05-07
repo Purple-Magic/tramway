@@ -40,28 +40,35 @@ module Tramway
       }[size]
     end
 
+    def default_button_classes
+      "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2".split(' ')
+    end
+
     def classes
-      (default_classes +
+      (default_button_classes +
         color_classes +
         (@tag == :a ? %w[px-1 h-fit w-fit] : [cursor_class])).compact.join(' ')
     end
 
-    def default_classes
-      base_classes = theme_classes(
-        classic: %w[btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                    shadow-md]
-      )
+    # def default_classes
+    #   base_classes = theme_classes(
+    #     classic: %w[btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
+    #                 shadow-md]
+    #   )
 
-      base_classes + [size_classes.to_s, options[:class].to_s]
-    end
+    #   base_classes + [size_classes.to_s, options[:class].to_s]
+    # end
 
     def color_classes
       if disabled?
         %w[bg-gray-800 text-gray-500 shadow-inner]
       else
-        [
-          "bg-#{resolved_color}-700", "hover:bg-#{resolved_color}-800", 'text-white'
-        ]
+        case type
+        when :default
+          ['bg-black', 'hover:bg-gray-800', 'text-white']
+        when :success, :will
+          ['hover:bg-green-900 bg-green-900/30 text-green-400']
+        end
       end => classes_collection
 
       theme_classes classic: classes_collection

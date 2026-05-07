@@ -137,6 +137,26 @@ module.exports = {
     'text-xl',
     'font-bold',
 
+    // === Button base shell ===
+    'inline-flex',
+    'rounded-md',
+    'font-medium',
+    'ring-offset-background',
+    'transition-colors',
+    'focus-visible:outline-none',
+    'focus-visible:ring-2',
+    'focus-visible:ring-ring',
+    'focus-visible:ring-offset-2',
+    'disabled:pointer-events-none',
+    'disabled:opacity-50',
+    'h-10',
+    'hover:bg-green-900',
+    'bg-green-900/30',
+    'text-green-400',
+    'hover:bg-red-900',
+    'bg-red-900/30',
+    'text-red-400',
+
     // === Grid templates used for configurable layouts ===
     'grid',
     'grid-cols-1',
@@ -166,6 +186,8 @@ module.exports = {
     'align-center',
     'justify-center',
     'min-h-dvh',
+    'bg-zinc-950',
+    'text-zinc-50',
 
     // === Flexbox layout utilities ===
     'flex',
@@ -233,6 +255,11 @@ module.exports = {
     'shadow-inner',
     'shadow-lg',
     'h-12',
+
+    // === Shadcn UI button styles ===
+    'bg-green-600',
+    'hover:bg-green-400',
+    'text-green-800',
 
     // === Button color presets ===
     'bg-green-100',
@@ -410,5 +437,93 @@ module.exports = {
     'shadow',
     'text-black',
     'pointer-events-none'
+  ],
+  theme: {
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
+        },
+        attention: {
+          DEFAULT: "var(--yellow-50)",
+          foreground: "hsl(var(--attention-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
+        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
+    },
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+  },
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/aspect-ratio"),
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/container-queries"),
   ],
 }
