@@ -23,14 +23,12 @@ describe Tramway::Chats::MessageComponent, type: :component do
                            max-w-lg
                            rounded-2xl
                            rounded-tl-md
-                           bg-gray-800
+                           bg-zinc-900
                            px-4
                            py-3
                            text-sm
                            shadow-sm
-                           ring-1
-                           text-white
-                           ring-gray-700
+                           text-zinc-50
                          ])}",
       text: 'Hello'
     )
@@ -55,14 +53,12 @@ describe Tramway::Chats::MessageComponent, type: :component do
                            max-w-lg
                            rounded-2xl
                            rounded-tr-md
-                           bg-blue-600
+                           bg-zinc-800
                            px-4
                            py-3
                            text-sm
-                           text-white
+                           text-zinc-50
                            shadow-sm
-                           ring-1
-                           ring-gray-700
                          ])}",
       text: 'Hi there'
     )

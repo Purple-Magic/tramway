@@ -10,7 +10,7 @@ module Tramway
         options_classes = options[:class] || ''
 
         theme_classes(
-          classic: "bg-gray-900 text-gray-100 shadow-inner#{options_classes}"
+          classic: "bg-zinc-950 text-zinc-50 shadow-inner#{options_classes}"
         )
       end
     end

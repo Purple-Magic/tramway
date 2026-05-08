@@ -15,13 +15,13 @@ module Tramway
         }.freeze
 
         def selected_item_classes
-          classes = 'flex justify-center items-center font-medium py-1 px-2 rounded-xl ' \
-                    'text-white shadow-md hover:bg-gray-800 cursor-pointer ' \
+          classes = 'flex justify-center items-center font-medium py-1 px-2 rounded-md ' \
+                    'bg-zinc-900 text-zinc-50 shadow-sm hover:bg-zinc-800 cursor-pointer ' \
                     'space-x-1 selected-option ' + SIZE_CLASSES[size].to_s
 
-          classes += ' border border-gray-700' if multiple
+          classes += ' border border-zinc-800' if multiple
 
-          theme_classes classic: classes
+          classes
         end
       end
     end

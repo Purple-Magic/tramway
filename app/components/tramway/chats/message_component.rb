@@ -20,9 +20,9 @@ module Tramway
 
       def text_color
         if pending?
-          'text-gray-400 dark:text-gray-600'
+          'text-zinc-500'
         else
-          'text-black dark:text-white'
+          'text-zinc-50'
         end
       end
 

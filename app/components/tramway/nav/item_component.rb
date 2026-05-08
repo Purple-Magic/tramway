@@ -6,11 +6,8 @@ module Tramway
     #
     class ItemComponent < TailwindComponent
       def style
-        @style ||= [
-          theme_classes(
-            classic: 'px-4 py-2 rounded-xl whitespace-nowrap hover:bg-gray-800 hover:text-gray-300 text-white'
-          )
-        ].join(' ')
+        @style ||= 'inline-flex items-center rounded-md px-3 py-2 text-sm font-medium text-zinc-100 ' \
+                   'transition-colors hover:bg-zinc-800 hover:text-zinc-50'
       end
     end
   end

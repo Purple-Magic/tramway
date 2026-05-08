@@ -1,7 +1,7 @@
 - if cells.any?
   = row_tag class: desktop_row_classes(cells.count), **options do
     - cells.each do |(_, value)|
-      %div{ class: cell_classes }
+      %div.border-b.border-zinc-800{ class: cell_classes }
         = value
 
 - else

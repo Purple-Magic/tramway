@@ -112,7 +112,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       content = File.read(tailwind_config_path)
       expect(content.scan("'div-table'").count).to eq(1)
-      expect(content.scan("'div-table-row'").count).to eq(1)
+      expect(content.scan("'text-zinc-200'").count).to eq(1)
     end
 
     it 'is idempotent when config already contains safelist' do
@@ -164,6 +164,11 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       expect(File.read(importmap_path)).to eq(
         "pin \"application\", preload: true\n" \
+        "pin \"@tailwindcss/forms\", to: \"tailwindcss/forms.js\"\n" \
+        "pin \"@tailwindcss/typography\", to: \"tailwindcss/typography.js\"\n" \
+        "pin \"@tailwindcss/aspect-ratio\", to: \"tailwindcss/aspect-ratio.js\"\n" \
+        "pin \"@tailwindcss/container-queries\", to: \"tailwindcss/container-queries.js\"\n" \
+        "pin \"tailwindcss-animate\", to: \"tailwindcss-animate.js\"\n" \
         "pin \"@tramway/tramway-select\", to: \"tramway/tramway-select_controller.js\"\n" \
         "pin \"@tramway/table-row-preview\", to: \"tramway/table_row_preview_controller.js\"\n"
       )

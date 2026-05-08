@@ -11,10 +11,7 @@ module Tramway
         option :size_class
 
         def base_classes
-          theme_classes(
-            classic: 'bg-transparent appearance-none outline-none h-full w-full hidden text-gray-100 ' \
-                     'placeholder-gray-500'
-          )
+          'bg-transparent appearance-none outline-none h-full w-full hidden text-zinc-50 placeholder:text-zinc-500'
         end
       end
     end

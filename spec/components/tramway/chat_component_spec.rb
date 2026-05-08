@@ -65,10 +65,12 @@ describe Tramway::ChatComponent, type: :component do
                                     md:p-6
                                     space-y-2
                                     md:space-y-4
-                                    md:rounded-xl
-                                    rounded-t-xl
-                                    text-gray-100
-                                    bg-gray-800/60
+                                    rounded-xl
+                                    rounded-b-none
+                                    border
+                                    border-zinc-800
+                                    text-zinc-50
+                                    bg-zinc-950/80
                                   ])}"
     )
   end

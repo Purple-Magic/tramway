@@ -63,8 +63,22 @@ module Tramway
         'pin "@tramway/table-row-preview", to: "tramway/table_row_preview_controller.js"'
       end
 
+      def importmap_tailwind_requirements
+        [
+          'pin "@tailwindcss/forms", to: "tailwindcss/forms.js"',
+          'pin "@tailwindcss/typography", to: "tailwindcss/typography.js"',
+          'pin "@tailwindcss/aspect-ratio", to: "tailwindcss/aspect-ratio.js"',
+          'pin "@tailwindcss/container-queries", to: "tailwindcss/container-queries.js"',
+          'pin "tailwindcss-animate", to: "tailwindcss-animate.js"'
+        ].join("\n")
+      end
+
       def importmap_tramway_pins
-        [importmap_tramway_select_pin, importmap_table_row_preview_pin]
+        [
+          importmap_tailwind_requirements,
+          importmap_tramway_select_pin,
+          importmap_table_row_preview_pin
+        ]
       end
 
       def stimulus_controller_imports

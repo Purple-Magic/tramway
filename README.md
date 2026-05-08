@@ -100,8 +100,9 @@ end
 
 **Step 4**
 
-If you ran `bin/rails g tramway:install`, the Tailwind safelist was already appended to `config/tailwind.config.js`.
-Otherwise, copy this [file](https://github.com/Purple-Magic/tramway/blob/main/config/tailwind.config.js) to
+If you ran `bin/rails g tramway:install`, the install generator already copied the Tailwind safelist to
+`config/tailwind.config.js`.
+Otherwise, copy this file from the gem:
 `config/tailwind.config.js`.
 
 
@@ -1122,6 +1123,12 @@ Example 3: rendering button
 
   The `type` option maps semantic intent to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette).
 
+  Use `size:` to select one of the built-in button sizes: `:small`, `:medium`, or `:large`. The default is `:medium`.
+
+  ```erb
+  <%= tramway_button path: '/projects', text: 'Projects', size: :small %>
+  ```
+
 * `tramway_badge` renders a Tailwind-styled badge with the provided `text`. Pass a semantic `type` (for example, `:success` or
   `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When you opt into a
   custom color, ensure the corresponding background utilities are available in your Tailwind safelist.
@@ -1152,7 +1159,8 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 
 #### tramway_form_for
 
-Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default.
+Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default. Form inputs use hardcoded
+dark shadcn-style classes; Tramway does not render a separate light form theme.
 
 ```erb
 <%= tramway_form_for @user do |f| %>
@@ -1170,8 +1178,8 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
 
 will render [this](https://play.tailwindcss.com/xho3LfjKkK)
 
-Use `size:` to control the form sizing (`:small`, `:medium`, or `:large`). The default is `:medium`, and all fields rendered
-within the form will use the same size value.
+Use `size:` to control the input sizing (`:small`, `:medium`, or `:large`). The default is `:medium`, and supported inputs
+rendered within the form will use the same size value.
 
 ```erb
 <%= tramway_form_for @user, size: :large do |f| %>

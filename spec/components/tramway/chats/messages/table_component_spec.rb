@@ -18,11 +18,9 @@ describe Tramway::Chats::Messages::TableComponent, type: :component do
                            overflow-hidden
                            rounded-xl
                            border
-                           border-gray-200
-                           bg-white
+                           border-zinc-800
+                           bg-zinc-950
                            shadow-sm
-                           dark:border-gray-700
-                           dark:bg-gray-900
                          ])}"
     )
   end

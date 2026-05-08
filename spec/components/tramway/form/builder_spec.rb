@@ -4,25 +4,36 @@ require 'rails_helper'
 require 'support/view_helpers'
 
 CLASSIC_FORM_CLASSES = {
-  label: %w[block font-semibold text-white],
+  label: %w[
+    block text-sm font-medium leading-none mb-2 text-zinc-200 peer-disabled:cursor-not-allowed
+    peer-disabled:opacity-70
+  ],
   text_input: %w[
-    w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
-    focus:ring-2 focus:ring-gray-600 placeholder-gray-500
+    w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm transition-colors
+    placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
+    focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-50
   ],
   select_input: %w[
-    w-full rounded-xl border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none
-    focus:ring-2 focus:ring-gray-600 disabled:cursor-not-allowed disabled:bg-gray-800 disabled:text-gray-500
+    w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm transition-colors
+    appearance-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
+    focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-50
   ],
   file_button: %w[
-    inline-block text-white font-semibold rounded-xl cursor-pointer mt-4 bg-blue-600 hover:bg-blue-800
-    shadow-md
+    inline-flex items-center justify-center rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50
+    font-medium shadow-sm transition-colors hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2
+    focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950
+    disabled:pointer-events-none disabled:opacity-50 cursor-pointer mt-4
   ],
   submit_button: %w[
-    font-semibold rounded-xl cursor-pointer
+    inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+    disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 hover:bg-zinc-800 bg-zinc-950
+    text-zinc-50 border border-zinc-800 cursor-pointer
   ],
   checkbox_input: %w[
-    rounded-full border border-gray-700 bg-gray-900 text-gray-100 shadow-inner focus:outline-none focus:ring-2
-    focus:ring-gray-600
+    shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950
+    disabled:cursor-not-allowed disabled:opacity-50
   ]
 }.freeze
 
@@ -50,13 +61,13 @@ describe Tramway::Form::Builder, type: :view do
 
   shared_examples 'file field classes' do |theme_classes|
     it 'renders file label classes' do
-      expect(output).to have_selector "label.inline-block.text-base.px-4.py-2.#{class_selector(theme_classes)}"
+      expect(output).to have_selector "label.inline-flex.text-base.px-4.py-2.#{class_selector(theme_classes)}"
     end
   end
 
   shared_examples 'submit button classes' do |theme_classes|
     it 'renders submit button classes' do
-      expect(output).to have_selector "button.bg-green-700.#{class_selector(theme_classes)}"
+      expect(output).to have_selector "button.#{class_selector(theme_classes)}"
     end
   end
 
@@ -304,8 +315,8 @@ describe Tramway::Form::Builder, type: :view do
       let(:form_options) { { size: :large } }
       let(:output) { builder.submit 'Create' }
 
-      it 'renders larger button' do
-        expect(output).to have_selector 'button.text-xl.px-5.py-3'
+      it 'renders the configured button size' do
+        expect(output).to have_selector 'button.h-12.px-5.py-3.text-xl'
       end
     end
   end

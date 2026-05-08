@@ -5,9 +5,7 @@ module Tramway
     # Component for rendering a cell in a table
     class CellComponent < Tramway::BaseComponent
       def cell_classes
-        theme_classes(
-          classic: 'div-table-cell md:block first:block hidden px-6 py-4 font-medium text-gray-100 text-base'
-        )
+        'div-table-cell hidden px-6 py-4 text-base font-medium text-zinc-100 first:block md:block'
       end
     end
   end

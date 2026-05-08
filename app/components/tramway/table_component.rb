@@ -6,9 +6,7 @@ module Tramway
     option :options, optional: true, default: -> { {} }
 
     def table_classes
-      theme_classes(
-        classic: 'div-table text-left rtl:text-right text-gray-300'
-      )
+      'div-table w-full text-left rtl:text-right text-zinc-100'
     end
   end
 end
