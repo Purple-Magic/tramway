@@ -19,7 +19,6 @@ module Tramway
         'py-3',
         'shadow-sm',
         'backdrop-blur',
-        'supports-[backdrop-filter]:bg-zinc-950/80',
         'sm:px-6'
       ].join(' ')
     end
