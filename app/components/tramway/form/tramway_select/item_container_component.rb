@@ -14,9 +14,7 @@ module Tramway
         }.freeze
 
         def item_classes
-          theme_classes(
-            classic: "cursor-pointer hover:bg-gray-800 shadow-inner option #{SIZE_CLASSES[size]}"
-          )
+          "cursor-pointer rounded-sm text-zinc-50 hover:bg-zinc-900 option #{SIZE_CLASSES[size]}"
         end
       end
     end

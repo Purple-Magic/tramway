@@ -32,10 +32,10 @@ feature 'Table Base Spec', :js, type: :feature do
     before { visit users_path }
 
     it_behaves_like 'table theme classes',
-                    table: %w[div-table text-left rtl:text-right text-gray-300],
+                    table: %w[div-table text-left rtl:text-right text-zinc-100],
                     row: %w[
-                      div-table-row grid gap-4 border-b last:border-b-0 bg-gray-900 border-gray-700 grid-cols-1
+                      div-table-row grid gap-4 border-b last:border-b-0 bg-zinc-950 border-zinc-800 grid-cols-1
                     ],
-                    cell: %w[div-table-cell px-6 py-4 font-medium text-gray-100]
+                    cell: %w[div-table-cell px-6 py-4 font-medium text-zinc-100]
   end
 end

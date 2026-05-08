@@ -4,6 +4,12 @@ module Tramway
   # Default Tramway button
   #
   class ButtonComponent < BaseComponent
+    DEFAULT_BUTTON_CLASSES = %w[
+      inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+      disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
+    ].freeze
+
     option :text, optional: true, default: -> {}
     option :path, optional: true, default: -> { '#' }
     option :color, optional: true
@@ -41,7 +47,7 @@ module Tramway
     end
 
     def default_button_classes
-      "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2".split(' ')
+      DEFAULT_BUTTON_CLASSES
     end
 
     def classes
@@ -60,18 +66,20 @@ module Tramway
     # end
 
     def color_classes
-      if disabled?
-        %w[bg-gray-800 text-gray-500 shadow-inner]
-      else
-        case type
-        when :default, :life, :secondary
-          ['hover:bg-zinc-250', 'bg-zinc-50', 'text-zinc-950']
-        else
-          ["hover:bg-#{resolved_color}-900 bg-#{resolved_color}-900/30 text-#{resolved_color}-400"]
-        end
-      end => classes_collection
+      theme_classes classic: color_classes_collection
+    end
 
-      theme_classes classic: classes_collection
+    def color_classes_collection
+      return %w[bg-gray-800 text-gray-500 shadow-inner] if disabled?
+
+      case normalized_type
+      when :default, :life, :secondary
+        ['hover:bg-zinc-250', 'bg-zinc-50', 'text-zinc-950']
+      when :inverse
+        ['hover:bg-zinc-800', 'bg-zinc-950', 'text-zinc-50', 'border', 'border-zinc-800']
+      else
+        ["hover:bg-#{resolved_color}-900 bg-#{resolved_color}-900/30 text-#{resolved_color}-400"]
+      end
     end
 
     def disabled?

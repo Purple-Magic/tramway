@@ -6,6 +6,10 @@ module Tramway
     class RowComponent < Tramway::BaseComponent
       include ContentCells
 
+      DESKTOP_ROW_CLASSES = %w[
+        div-table-row grid grid-cols-1 gap-4 border-b border-zinc-800 bg-zinc-950 last:border-b-0
+      ].freeze
+
       option :cells, optional: true, default: -> { [] }
       option :href, optional: true
       option :preview, optional: true, default: -> { true }
@@ -28,17 +32,7 @@ module Tramway
       end
 
       def desktop_row_classes(cells_count)
-        [
-          'div-table-row',
-          'grid',
-          'grid-cols-1',
-          'gap-4',
-          'border-b',
-          'border-zinc-800',
-          'bg-zinc-950',
-          'last:border-b-0',
-          "md:grid-cols-#{cells_count}"
-        ].join(' ')
+        (DESKTOP_ROW_CLASSES + ["md:grid-cols-#{cells_count}"]).join(' ')
       end
 
       def link_row_classes

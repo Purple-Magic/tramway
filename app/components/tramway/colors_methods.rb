@@ -5,6 +5,7 @@ module Tramway
   module ColorsMethods
     TYPE_COLOR_MAP = {
       default: :zinc,
+      inverse: :zinc,
       life: :zinc,
       primary: :blue,
       hope: :blue,

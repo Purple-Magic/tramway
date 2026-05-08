@@ -1153,7 +1153,8 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 
 #### tramway_form_for
 
-Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default.
+Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default. Form inputs use hardcoded
+dark shadcn-style classes; Tramway does not render a separate light form theme.
 
 ```erb
 <%= tramway_form_for @user do |f| %>
@@ -1171,8 +1172,8 @@ Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by
 
 will render [this](https://play.tailwindcss.com/xho3LfjKkK)
 
-Use `size:` to control the form sizing (`:small`, `:medium`, or `:large`). The default is `:medium`, and all fields rendered
-within the form will use the same size value.
+Use `size:` to control the input sizing (`:small`, `:medium`, or `:large`). The default is `:medium`, and supported inputs
+rendered within the form will use the same size value.
 
 ```erb
 <%= tramway_form_for @user, size: :large do |f| %>

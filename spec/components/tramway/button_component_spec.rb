@@ -87,6 +87,19 @@ describe Tramway::ButtonComponent, type: :component do
       end
     end
 
+    context 'when inverse type is provided' do
+      let(:component) { described_class.new(path: '/projects', text: 'Invert', type: :inverse) }
+
+      it 'renders button with inverse default colors and matching border' do
+        render_inline(component)
+
+        expect(page).to have_css(
+          "a.#{class_selector(theme_classes.fetch(:inverse))}[href='/projects']",
+          text: 'Invert'
+        )
+      end
+    end
+
     context 'when disabled: true is provided in options' do
       let(:component) do
         described_class.new(path: '/projects', text: 'Celebrate', type: :love, options: { disabled: true })
@@ -122,20 +135,28 @@ describe Tramway::ButtonComponent, type: :component do
 
     it_behaves_like 'button theme classes',
                     default: %w[
-                      btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                      shadow-md py-2 px-4 h-10 bg-gray-700 hover:bg-gray-800 text-white
+                      inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
+                      transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
+                      hover:bg-zinc-250 bg-zinc-50 text-zinc-950
                     ],
                     non_get: %w[
-                      btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                      shadow-md text-sm py-1 px-2 rounded extra-class bg-red-700 hover:bg-red-800 text-white
-                      cursor-pointer
+                      inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
+                      transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
+                      hover:bg-zinc-250 bg-zinc-50 text-zinc-950 cursor-pointer
                     ],
                     link: %w[
-                      btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-                      shadow-md py-2 px-4 h-10 bg-gray-700 hover:bg-gray-800 text-white px-1 h-fit w-fit
+                      inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
+                      transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
+                      hover:bg-zinc-250 bg-zinc-50 text-zinc-950 px-1 h-fit w-fit
                     ],
                     semantic: %w[
-                      bg-violet-700 hover:bg-violet-800 text-white
+                      bg-violet-900/30 hover:bg-violet-900 text-violet-400
+                    ],
+                    inverse: %w[
+                      bg-zinc-950 hover:bg-zinc-800 text-zinc-50 border border-zinc-800
                     ],
                     disabled: %w[bg-gray-800 text-gray-500 shadow-inner]
   end

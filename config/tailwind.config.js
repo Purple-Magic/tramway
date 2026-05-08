@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme")
+
 module.exports = {
   safelist: [
     // === Navbar ===
@@ -33,13 +35,19 @@ module.exports = {
     'border-zinc-800',
     'text-zinc-50',
     'text-zinc-100',
+    'text-zinc-200',
     'text-zinc-400',
     'text-zinc-500',
+    'placeholder:text-zinc-500',
     'hover:bg-zinc-800',
     'hover:bg-zinc-900',
     'hover:text-zinc-50',
+    'focus-visible:ring-zinc-300',
     'focus-visible:ring-zinc-400',
     'focus-visible:ring-offset-zinc-950',
+    'ring-zinc-800',
+    'peer-disabled:cursor-not-allowed',
+    'peer-disabled:opacity-70',
     'supports-[backdrop-filter]:bg-zinc-950/80',
     'backdrop-blur',
     'shadow-lg',
@@ -48,6 +56,7 @@ module.exports = {
     'text-base',
     'text-sm',
     'rounded-md',
+    'rounded-sm',
     'border-b',
     'border-r',
     'border-t',
@@ -230,6 +239,10 @@ module.exports = {
     'hover:bg-zinc-250',
     'bg-zinc-50',
     'text-zinc-950',
+    'bg-zinc-950',
+    'text-zinc-50',
+    'border-zinc-800',
+    'hover:bg-zinc-800',
 
     'hover:bg-green-900',
     'bg-green-900/30',
@@ -541,7 +554,6 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
@@ -558,7 +570,6 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
-    },
     },
     container: {
       center: true,

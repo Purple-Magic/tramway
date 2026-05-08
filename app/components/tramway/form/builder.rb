@@ -103,7 +103,7 @@ module Tramway
           Tramway::ButtonComponent.new(
             text: action,
             size: form_size,
-            type: :will,
+            type: :inverse,
             options: sanitized_options.merge(name: :commit, type: :submit)
           ),
           &

@@ -14,11 +14,8 @@ module Tramway
         }.freeze
 
         def dropdown_classes
-          theme_classes(
-            classic: 'absolute border-b border-l border-r border-gray-700 w-full z-40 lef-0 rounded-b-xl' \
-                     'max-h-select overflow-y-auto bg-gray-900 shadow-md ring-1 ring-gray-700 text-white ' \
-                     "#{SIZE_CLASSES[size]}"
-          )
+          'absolute border border-zinc-800 w-full z-40 lef-0 rounded-md max-h-select overflow-y-auto ' \
+            "bg-zinc-950 text-zinc-50 shadow-md ring-1 ring-zinc-800 #{SIZE_CLASSES[size]}"
         end
       end
     end

@@ -112,7 +112,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       content = File.read(tailwind_config_path)
       expect(content.scan("'div-table'").count).to eq(1)
-      expect(content.scan("'div-table-row'").count).to eq(1)
+      expect(content.scan("'text-zinc-200'").count).to eq(1)
     end
 
     it 'is idempotent when config already contains safelist' do
