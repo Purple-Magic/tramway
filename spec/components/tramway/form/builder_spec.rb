@@ -31,9 +31,10 @@ CLASSIC_FORM_CLASSES = {
     text-zinc-50 border border-zinc-800 cursor-pointer
   ],
   checkbox_input: %w[
-    shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm focus-visible:outline-none
-    focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950
-    disabled:cursor-not-allowed disabled:opacity-50
+    peer h-4 w-4 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 ring-offset-zinc-950
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2
+    disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-zinc-50
+    data-[state=checked]:bg-zinc-50 data-[state=checked]:text-zinc-950
   ]
 }.freeze
 
@@ -84,11 +85,26 @@ describe Tramway::Form::Builder, type: :view do
   end
 
   shared_examples 'checkbox field classes' do |theme_classes|
-    it 'renders checkbox with label and classes' do
+    it 'renders checkbox with label and hidden input' do
       expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
-      expect(output).to have_selector(
-        "input[type=\"checkbox\"].min-h-5.min-w-5.#{class_selector(theme_classes.fetch(:checkbox_input))}"
-      )
+      expect(output).to have_selector 'input[type="checkbox"].hidden[data-ui--checkbox-target="input"]',
+                                      visible: false
+      expect(output).to have_selector 'label.leading-6[data-action="click->ui--checkbox#toggle"]'
+    end
+
+    it 'renders shadcn-style checkbox button' do
+      button = Capybara.string(output).find('button[role="checkbox"]')
+
+      expect(button[:type]).to eq 'button'
+      expect(button['aria-checked']).to eq 'false'
+      expect(button['data-state']).to eq 'unchecked'
+    end
+
+    it 'renders checkbox button styling and indicator' do
+      button = Capybara.string(output).find('button[role="checkbox"]')
+
+      expect(button[:class].split).to include(*theme_classes.fetch(:checkbox_input))
+      expect(output).to have_selector 'button span.hidden svg.h-4.w-4'
     end
   end
 

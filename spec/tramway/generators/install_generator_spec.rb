@@ -170,7 +170,8 @@ RSpec.describe Tramway::Generators::InstallGenerator do
         "pin \"@tailwindcss/container-queries\", to: \"tailwindcss/container-queries.js\"\n" \
         "pin \"tailwindcss-animate\", to: \"tailwindcss-animate.js\"\n" \
         "pin \"@tramway/tramway-select\", to: \"tramway/tramway-select_controller.js\"\n" \
-        "pin \"@tramway/table-row-preview\", to: \"tramway/table_row_preview_controller.js\"\n"
+        "pin \"@tramway/table-row-preview\", to: \"tramway/table_row_preview_controller.js\"\n" \
+        "pin \"@tramway/checkbox\", to: \"tramway/ui_checkbox_controller.js\"\n"
       )
     end
 
@@ -191,6 +192,17 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       second_run = File.read(importmap_path)
 
       expect(second_run).to eq(first_run)
+    end
+
+    it 'normalizes legacy checkbox pin instead of appending a duplicate' do
+      FileUtils.mkdir_p(File.dirname(importmap_path))
+      File.write(importmap_path, "pin \"@tramway/ui-checkbox\", to: \"tramway/ui_checkbox_controller.js\"\n")
+
+      run_generator
+
+      content = File.read(importmap_path)
+      expect(content.scan('@tramway/checkbox').count).to eq(1)
+      expect(content).not_to include('@tramway/ui-checkbox')
     end
   end
 
@@ -223,6 +235,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
           import { UserForm } from "./user_form_controller"
           import { TramwaySelect } from "@tramway/tramway-select"
           import { TableRowPreview } from "@tramway/table-row-preview"
+          import { UiCheckbox } from "@tramway/checkbox"
 
           const application = Application.start()
 
@@ -232,6 +245,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
           application.register('tramway-select', TramwaySelect)
           application.register('table-row-preview', TableRowPreview)
+          application.register('ui--checkbox', UiCheckbox)
           export { application }
         JS
       )
@@ -255,6 +269,26 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       second_run = File.read(controllers_index_path)
 
       expect(second_run).to eq(first_run)
+    end
+
+    it 'normalizes legacy checkbox import instead of duplicating UiCheckbox' do
+      FileUtils.mkdir_p(File.dirname(controllers_index_path))
+      File.write(controllers_index_path, <<~JS)
+        import { Application } from "@hotwired/stimulus"
+        import { UiCheckbox } from "@tramway/ui-checkbox"
+
+        const application = Application.start()
+
+        application.register('ui--checkbox', UiCheckbox)
+        export { application }
+      JS
+
+      run_generator
+
+      content = File.read(controllers_index_path)
+      expect(content.scan('UiCheckbox').count).to eq(2)
+      expect(content).to include('import { UiCheckbox } from "@tramway/checkbox"')
+      expect(content).not_to include('@tramway/ui-checkbox')
     end
   end
 

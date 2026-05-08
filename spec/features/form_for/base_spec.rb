@@ -31,8 +31,24 @@ feature 'Form For Base Test', :js, type: :feature do
 
     scenario 'check checkbox' do
       expect(page).to have_selector(
-        "input[type='checkbox'].min-h-5.min-w-5.#{class_selector(theme_classes.fetch(:checkbox_input))}"
+        "input[type='checkbox'].hidden[data-ui--checkbox-target='input']",
+        visible: false
       )
+      expect(page).to have_selector(
+        "button[type='button'][role='checkbox'][aria-checked='false'][data-state='unchecked']"
+      )
+      button = find("button[role='checkbox']")
+      expect(button[:class].split).to include(*theme_classes.fetch(:checkbox_input))
+    end
+
+    scenario 'toggle checkbox' do
+      find("button[role='checkbox']").click
+
+      expect(page).to have_selector(
+        "button[role='checkbox'][aria-checked='true'][data-state='checked'].bg-zinc-50.text-zinc-950"
+      )
+      expect(page).to have_selector("input[type='checkbox'][data-ui--checkbox-target='input']:checked", visible: false)
+      expect(page).to have_selector("button[role='checkbox'] span:not(.hidden) svg.h-4.w-4")
     end
   end
 
@@ -62,10 +78,12 @@ feature 'Form For Base Test', :js, type: :feature do
                       disabled:cursor-not-allowed disabled:opacity-50
                     ],
                     checkbox_input: %w[
-                      shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm
+                      peer h-4 w-4 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50
+                      ring-offset-zinc-950
                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
-                      focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed
-                      disabled:opacity-50
+                      focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
+                      data-[state=checked]:border-zinc-50 data-[state=checked]:bg-zinc-50
+                      data-[state=checked]:text-zinc-950
                     ]
   end
 end

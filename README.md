@@ -871,9 +871,10 @@ end
 
 ### Tramway Flash
 
-`tramway_flash` renders the Tailwind-styled flash component that Tramway uses in its layouts. Pass the flash text and type, and
-the helper will resolve the proper Tailwind color (for example `:success` -> green, `:warning` -> orange). You can also provide
-custom HTML options directly (e.g., `class:`, `data:`) and they will be merged into the flash container.
+`tramway_flash` renders the dark shadcn-style flash component that Tramway uses in its layouts. Pass the flash text and type,
+and the helper will resolve the proper dark semantic accent (for example `:success` -> green, `:warning` -> orange). Tramway
+does not render a separate light flash theme. You can also provide custom HTML options directly (e.g., `class:`, `data:`) and
+they will be merged into the flash container.
 
 ```haml
 -# Haml example
@@ -888,7 +889,7 @@ custom HTML options directly (e.g., `class:`, `data:`) and they will be merged i
 ```
 
 Use the `type` argument is compatible to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette) or provide a `color:` keyword to set
-the Tailwind color family explicitly.
+the semantic accent explicitly.
 
 ### Tramway Chat
 
@@ -1161,6 +1162,7 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 
 Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default. Form inputs use hardcoded
 dark shadcn-style classes; Tramway does not render a separate light form theme.
+Checkboxes render dark while unchecked and use the light primary checked state.
 
 ```erb
 <%= tramway_form_for @user do |f| %>
@@ -1306,6 +1308,7 @@ With `remote: true`, Tramway submits the form on each input `change` via inline 
 ### Tailwind-styled pagination for Kaminari
 
 Tramway uses [Tailwind](https://tailwindcss.com/) by default. It has tailwind-styled pagination for [kaminari](https://github.com/kaminari/kaminari).
+Pagination components use hardcoded dark shadcn-style classes and do not render a separate light theme.
 
 #### How to use
 

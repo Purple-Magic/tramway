@@ -11,24 +11,37 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
   end
 
   describe '#tramway_flash' do
-    shared_examples 'flash theme classes' do |theme_classes|
-      it 'renders flash message with text and resolved color class' do
-        fragment = view.tramway_flash text: 'Saved!', type: :success
+    it 'renders dark shadcn-style flash classes with resolved semantic accent' do
+      fragment = view.tramway_flash text: 'Saved!', type: :success
+      flash_classes = %w[
+        pointer-events-auto opacity-100 rounded-md border bg-zinc-950 px-4 py-3 text-sm text-zinc-50
+        shadow-lg border-green-800 text-green-400
+      ]
 
-        expect(fragment).to have_css(".flash.#{class_selector(theme_classes)}", text: 'Saved!')
-      end
+      expect(fragment).to have_css(
+        ".flash.#{class_selector(flash_classes)}",
+        text: 'Saved!'
+      )
     end
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
+    it 'renders dark default flash classes without depending on theme' do
+      with_theme(:unknown) do
+        fragment = view.tramway_flash text: 'Saved!', type: :default
 
-      it_behaves_like 'flash theme classes', %w[bg-green-100 text-green-800]
+        expect(fragment).to have_css('.flash.bg-zinc-950.border-zinc-800.text-zinc-50', text: 'Saved!')
+      end
     end
 
     it 'applies custom HTML options to the container' do
       fragment = view.tramway_flash(text: 'Beep!', type: :warning)
 
-      expect(fragment).to have_css('.fixed.top-4.right-4.z-50.space-y-2.pointer-events-none')
+      expect(fragment).to have_css('.fixed.top-4.right-4.z-50.flex.w-fit.max-w-sm.flex-col.gap-2.pointer-events-none')
+    end
+
+    it 'renders compact title typography' do
+      fragment = view.tramway_flash(text: 'Beep!', type: :warning)
+
+      expect(fragment).to have_css('.text-sm.font-medium.leading-6', text: 'Beep!')
     end
   end
 end

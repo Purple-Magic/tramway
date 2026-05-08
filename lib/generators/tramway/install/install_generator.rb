@@ -63,6 +63,10 @@ module Tramway
         'pin "@tramway/table-row-preview", to: "tramway/table_row_preview_controller.js"'
       end
 
+      def importmap_ui_checkbox_pin
+        'pin "@tramway/checkbox", to: "tramway/ui_checkbox_controller.js"'
+      end
+
       def importmap_tailwind_requirements
         [
           'pin "@tailwindcss/forms", to: "tailwindcss/forms.js"',
@@ -77,21 +81,24 @@ module Tramway
         [
           importmap_tailwind_requirements,
           importmap_tramway_select_pin,
-          importmap_table_row_preview_pin
+          importmap_table_row_preview_pin,
+          importmap_ui_checkbox_pin
         ]
       end
 
       def stimulus_controller_imports
         [
           'import { TramwaySelect } from "@tramway/tramway-select"',
-          'import { TableRowPreview } from "@tramway/table-row-preview"'
+          'import { TableRowPreview } from "@tramway/table-row-preview"',
+          'import { UiCheckbox } from "@tramway/checkbox"'
         ]
       end
 
       def stimulus_controller_registrations
         [
           "application.register('tramway-select', TramwaySelect)",
-          "application.register('table-row-preview', TableRowPreview)"
+          "application.register('table-row-preview', TableRowPreview)",
+          "application.register('ui--checkbox', UiCheckbox)"
         ]
       end
 
@@ -155,6 +162,7 @@ module Tramway
 
       # rubocop:disable Metrics/MethodLength
       def append_missing_imports(content)
+        content = normalize_checkbox_import(content)
         missing_imports = stimulus_controller_imports.reject { |line| content.include?(line) }
         return content if missing_imports.empty?
 
@@ -188,6 +196,23 @@ module Tramway
         updated << "\n" unless updated.empty? || updated.end_with?("\n")
         updated << insertion
         updated
+      end
+
+      def normalize_checkbox_import(content)
+        content.gsub(
+          'import { UiCheckbox } from "@tramway/ui-checkbox"',
+          'import { UiCheckbox } from "@tramway/checkbox"'
+        )
+      end
+
+      def normalize_checkbox_pin(content)
+        content.gsub(
+          'pin "@tramway/ui-checkbox", to: "tramway/ui_checkbox_controller.js"',
+          'pin "@tramway/checkbox", to: "tramway/ui_checkbox_controller.js"'
+        ).gsub(
+          "pin '@tramway/ui-checkbox', to: 'tramway/ui_checkbox_controller.js'",
+          "pin '@tramway/checkbox', to: 'tramway/ui_checkbox_controller.js'"
+        )
       end
 
       def with_agents_update_fallback
@@ -265,8 +290,9 @@ module Tramway
       def ensure_importmap_pin
         return unless File.exist?(importmap_path)
 
-        content = File.read(importmap_path)
+        content = normalize_checkbox_pin(File.read(importmap_path))
         missing_pins = importmap_tramway_pins.reject { |pin| content.include?(pin) }
+        File.write(importmap_path, content) if content != File.read(importmap_path)
         return if missing_pins.empty?
 
         File.open(importmap_path, 'a') do |file|
