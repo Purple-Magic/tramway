@@ -315,8 +315,8 @@ describe Tramway::Form::Builder, type: :view do
       let(:form_options) { { size: :large } }
       let(:output) { builder.submit 'Create' }
 
-      it 'renders the hardcoded shadcn button size' do
-        expect(output).to have_selector 'button.h-10.px-4.py-2'
+      it 'renders the configured button size' do
+        expect(output).to have_selector 'button.h-12.px-5.py-3.text-xl'
       end
     end
   end

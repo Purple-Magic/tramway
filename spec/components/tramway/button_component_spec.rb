@@ -34,7 +34,7 @@ describe Tramway::ButtonComponent, type: :component do
 
         expect(page).to have_css(
           "form[action='/projects/1'] button.#{class_selector(theme_classes.fetch(:non_get))}" \
-          "[data-turbo-confirm='Are you sure?']",
+          ".extra-class[data-turbo-confirm='Are you sure?']",
           text: 'Delete'
         )
       end
@@ -143,7 +143,7 @@ describe Tramway::ButtonComponent, type: :component do
                     non_get: %w[
                       inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
                       transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
-                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
+                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 py-1 px-2 rounded
                       hover:bg-zinc-250 bg-zinc-50 text-zinc-950 cursor-pointer
                     ],
                     link: %w[

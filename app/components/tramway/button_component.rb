@@ -5,9 +5,9 @@ module Tramway
   #
   class ButtonComponent < BaseComponent
     DEFAULT_BUTTON_CLASSES = %w[
-      inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors
+      inline-flex items-center justify-center rounded-md font-medium ring-offset-background transition-colors
       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-      disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
+      disabled:pointer-events-none disabled:opacity-50
     ].freeze
 
     option :text, optional: true, default: -> {}
@@ -35,15 +35,15 @@ module Tramway
     end
 
     def size_classes
-      unless size.in?(%i[small medium large])
+      unless normalized_size.in?(%i[small medium large])
         raise ArgumentError, "Invalid size: #{size}. Valid sizes are :small, :medium, :large."
       end
 
       {
         small: 'text-sm py-1 px-2 rounded',
-        medium: 'py-2 px-4 h-10',
+        medium: 'text-sm py-2 px-4 h-10',
         large: 'text-xl px-5 py-3 h-12'
-      }[size]
+      }[normalized_size]
     end
 
     def default_button_classes
@@ -52,18 +52,11 @@ module Tramway
 
     def classes
       (default_button_classes +
+        size_classes.split +
         color_classes +
-        (@tag == :a ? %w[px-1 h-fit w-fit] : [cursor_class])).compact.join(' ')
+        (@tag == :a ? %w[px-1 h-fit w-fit] : [cursor_class]) +
+        options[:class].to_s.split).compact.join(' ')
     end
-
-    # def default_classes
-    #   base_classes = theme_classes(
-    #     classic: %w[btn btn-primary flex flex-row font-semibold rounded-xl whitespace-nowrap items-center gap-1
-    #                 shadow-md]
-    #   )
-
-    #   base_classes + [size_classes.to_s, options[:class].to_s]
-    # end
 
     def color_classes
       theme_classes classic: color_classes_collection
@@ -111,6 +104,10 @@ module Tramway
       else
         'cursor-not-allowed'
       end
+    end
+
+    def normalized_size
+      size || :medium
     end
 
     def tag_button?

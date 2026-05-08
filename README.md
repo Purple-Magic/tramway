@@ -1123,6 +1123,12 @@ Example 3: rendering button
 
   The `type` option maps semantic intent to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette).
 
+  Use `size:` to select one of the built-in button sizes: `:small`, `:medium`, or `:large`. The default is `:medium`.
+
+  ```erb
+  <%= tramway_button path: '/projects', text: 'Projects', size: :small %>
+  ```
+
 * `tramway_badge` renders a Tailwind-styled badge with the provided `text`. Pass a semantic `type` (for example, `:success` or
   `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When you opt into a
   custom color, ensure the corresponding background utilities are available in your Tailwind safelist.
