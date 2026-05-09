@@ -1130,9 +1130,9 @@ Example 3: rendering button
   <%= tramway_button path: '/projects', text: 'Projects', size: :small %>
   ```
 
-* `tramway_badge` renders a Tailwind-styled badge with the provided `text`. Pass a semantic `type` (for example, `:success` or
-  `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When you opt into a
-  custom color, ensure the corresponding background utilities are available in your Tailwind safelist.
+* `tramway_badge` renders a dark shadcn-style Tailwind badge with the provided `text`. Pass a semantic `type` (for example,
+  `:success` or `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When
+  you opt into a custom color, ensure the corresponding accent utilities are available in your Tailwind safelist.
 
   ```erb
   <%= tramway_badge text: 'Active', type: :success %>

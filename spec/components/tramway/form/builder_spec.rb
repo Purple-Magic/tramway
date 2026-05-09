@@ -27,8 +27,8 @@ CLASSIC_FORM_CLASSES = {
   submit_button: %w[
     inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors
     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-    disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 hover:bg-zinc-800 bg-zinc-950
-    text-zinc-50 border border-zinc-800 cursor-pointer
+    disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 hover:bg-zinc-200 bg-zinc-50
+    text-zinc-950 cursor-pointer
   ],
   checkbox_input: %w[
     peer h-4 w-4 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 ring-offset-zinc-950

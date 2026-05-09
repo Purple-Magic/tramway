@@ -67,7 +67,7 @@ module Tramway
 
       case normalized_type
       when :default, :life, :secondary
-        ['hover:bg-zinc-250', 'bg-zinc-50', 'text-zinc-950']
+        ['hover:bg-zinc-200', 'bg-zinc-50', 'text-zinc-950']
       when :inverse
         ['hover:bg-zinc-800', 'bg-zinc-950', 'text-zinc-50', 'border', 'border-zinc-800']
       else

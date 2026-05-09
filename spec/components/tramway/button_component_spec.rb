@@ -138,19 +138,19 @@ describe Tramway::ButtonComponent, type: :component do
                       inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
                       transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
                       focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
-                      hover:bg-zinc-250 bg-zinc-50 text-zinc-950
+                      hover:bg-zinc-200 bg-zinc-50 text-zinc-950
                     ],
                     non_get: %w[
                       inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
                       transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
                       focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 py-1 px-2 rounded
-                      hover:bg-zinc-250 bg-zinc-50 text-zinc-950 cursor-pointer
+                      hover:bg-zinc-200 bg-zinc-50 text-zinc-950 cursor-pointer
                     ],
                     link: %w[
                       inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background
                       transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
                       focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
-                      hover:bg-zinc-250 bg-zinc-50 text-zinc-950 px-1 h-fit w-fit
+                      hover:bg-zinc-200 bg-zinc-50 text-zinc-950 px-1 h-fit w-fit
                     ],
                     semantic: %w[
                       bg-violet-900/30 hover:bg-violet-900 text-violet-400
