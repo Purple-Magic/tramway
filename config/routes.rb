@@ -34,7 +34,7 @@ Tramway::Engine.routes.draw do
       resources resource_name.pluralize.to_sym,
                 only: actions.map(&:to_sym),
                 controller: '/tramway/entities',
-                defaults: { entity: }
+                defaults: { entity: entity.params }
     end
 
     if segments.empty?

@@ -19,6 +19,10 @@ module Tramway
       # HumanName Struct contains human names forms for the entity
       HumanNameStruct = Struct.new(:single, :plural)
 
+      def internal_name
+        "#{"#{namespace}:" if namespace.present?}#{name}"
+      end
+
       def routes
         RouteStruct.new(*route_helper_methods)
       end
@@ -71,6 +75,10 @@ module Tramway
         name.classify.constantize
       rescue StandardError
         nil
+      end
+
+      def params
+        { name: internal_name }
       end
 
       private

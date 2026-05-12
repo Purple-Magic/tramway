@@ -76,11 +76,11 @@ module Tramway
     private
 
     def model_class
-      @model_class ||= params[:entity][:name].classify.constantize
+      @model_class ||= params[:entity][:name].split(':').last.classify.constantize
     end
 
     def entity
-      @entity ||= Tramway.config.entities.find { |e| e.name == params[:entity][:name] }
+      @entity ||= Tramway.config.entities.find { it.internal_name == params[:entity][:name] }
     end
 
     def index_scope
