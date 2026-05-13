@@ -72,6 +72,10 @@ module Tramway
                   color:
       end
 
+      def tramway_tooltip(text:, event: :hover, **options, &)
+        component 'tramway/tooltip', text:, event:, options:, &
+      end
+
       def tramway_title(text: nil, **options, &)
         component 'tramway/title', text:, options:, &
       end

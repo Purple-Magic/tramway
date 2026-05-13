@@ -17,6 +17,7 @@ Codex instruction that points agents to the Tramway skill for Tramway-native cod
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
   * [Tramway Flash](https://github.com/Purple-Magic/tramway#tramway-flash)
+  * [Tramway Tooltip](https://github.com/Purple-Magic/tramway#tramway-tooltip)
   * [Tramway Chat](https://github.com/Purple-Magic/tramway#tramway-chat)
   * [Tramway Table Component](https://github.com/Purple-Magic/tramway#tramway-table-component)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
@@ -890,6 +891,29 @@ they will be merged into the flash container.
 
 Use the `type` argument is compatible to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette) or provide a `color:` keyword to set
 the semantic accent explicitly.
+
+### Tramway Tooltip
+
+`tramway_tooltip` renders a compact dark tooltip around block content. Pass `text:` for the tooltip body and `event:` to
+choose when it appears. Supported events are `:hover` and `:onclick`; hover is the default.
+
+```haml
+= tramway_tooltip text: 'Shown on hover' do
+  %span Help
+
+= tramway_tooltip text: 'Shown after click', event: :onclick do
+  %button More info
+```
+
+```erb
+<%= tramway_tooltip text: 'Shown on hover' do %>
+  <span>Help</span>
+<% end %>
+
+<%= tramway_tooltip text: 'Shown after click', event: :onclick do %>
+  <button>More info</button>
+<% end %>
+```
 
 ### Tramway Chat
 

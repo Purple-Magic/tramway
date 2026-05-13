@@ -1,0 +1,11 @@
+- if normalized_event == :onclick
+  %details{ class: wrapper_classes, **options.except(:class) }
+    %summary.cursor-pointer.list-none
+      = content
+    %span{ class: tooltip_classes, role: 'tooltip' }
+      = text
+- else
+  %span{ class: wrapper_classes, **options.except(:class) }
+    = content
+    %span{ class: tooltip_classes, role: 'tooltip' }
+      = text
