@@ -1154,6 +1154,13 @@ Example 3: rendering button
   <%= tramway_button path: '/projects', text: 'Projects', size: :small %>
   ```
 
+  Use `tooltip:` to show Tramway's tooltip from the rendered button. The tooltip accepts the same `event:` values as
+  `tramway_tooltip`: `:hover` or `:onclick`.
+
+  ```erb
+  <%= tramway_button path: '/projects', text: 'Projects', tooltip: { text: 'Open projects', event: :hover } %>
+  ```
+
 * `tramway_badge` renders a dark shadcn-style Tailwind badge with the provided `text`. Pass a semantic `type` (for example,
   `:success` or `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When
   you opt into a custom color, ensure the corresponding accent utilities are available in your Tailwind safelist.

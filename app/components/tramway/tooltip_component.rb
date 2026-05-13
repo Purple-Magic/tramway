@@ -11,7 +11,39 @@ module Tramway
     option :options, optional: true, default: -> { {} }
 
     def wrapper_classes
-      (base_wrapper_classes + event_wrapper_classes + options[:class].to_s.split).compact.join(' ')
+      (base_wrapper_classes + options[:class].to_s.split).compact.join(' ')
+    end
+
+    def trigger_classes
+      {
+        hover: %w[peer inline-flex w-fit],
+        onclick: %w[inline-flex w-fit cursor-pointer]
+      }[normalized_event].join(' ')
+    end
+
+    def wrapper_data
+      return options[:data] || {} unless normalized_event == :onclick
+
+      (options[:data] || {}).merge(
+        controller: merged_controller,
+        action: merged_action
+      )
+    end
+
+    def wrapper_options
+      options.except(:class, :data).merge(data: wrapper_data)
+    end
+
+    def trigger_data
+      return {} unless normalized_event == :onclick
+
+      { action: 'click->tramway-tooltip#toggle' }
+    end
+
+    def tooltip_data
+      return {} unless normalized_event == :onclick
+
+      { 'tramway-tooltip-target': 'panel' }
     end
 
     def tooltip_classes
@@ -34,12 +66,6 @@ module Tramway
       %w[relative inline-flex w-fit]
     end
 
-    def event_wrapper_classes
-      return %w[group] if normalized_event == :hover
-
-      %w[cursor-pointer]
-    end
-
     def base_tooltip_classes
       %w[
         absolute bottom-full left-1/2 z-50 mb-2 w-max max-w-xs -translate-x-1/2 rounded-md border
@@ -49,11 +75,19 @@ module Tramway
 
     def event_tooltip_classes
       if normalized_event == :hover
-        return %w[pointer-events-none invisible opacity-0 transition-opacity group-hover:visible
-                  group-hover:opacity-100]
+        return %w[pointer-events-none invisible opacity-0 transition-opacity peer-hover:visible
+                  peer-hover:opacity-100]
       end
 
-      %w[open:block hidden]
+      %w[hidden]
+    end
+
+    def merged_controller
+      [options.dig(:data, :controller), 'tramway-tooltip'].compact_blank.join(' ')
+    end
+
+    def merged_action
+      [options.dig(:data, :action), 'click@window->tramway-tooltip#closeOnClickOutside'].compact_blank.join(' ')
     end
   end
 end

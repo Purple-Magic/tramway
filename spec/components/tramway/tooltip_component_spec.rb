@@ -8,25 +8,39 @@ describe Tramway::TooltipComponent, type: :component do
       'Help'
     end
 
-    expect(page).to have_css('span.relative.inline-flex.w-fit.group', text: 'Help')
+    expect(page).to have_css('div.relative.inline-flex.w-fit', text: 'Help')
+    expect(page).to have_css('div.peer.inline-flex.w-fit', text: 'Help')
     expect(page.find("span[role='tooltip']", text: 'More details', visible: :all)[:class].split).to include(
       *%w[
         absolute bottom-full left-1/2 z-50 mb-2 w-max max-w-xs -translate-x-1/2 rounded-md border
         border-zinc-800 bg-zinc-950 px-2.5 py-1.5 text-xs font-medium leading-5 text-zinc-50 shadow-lg
-        pointer-events-none invisible opacity-0 transition-opacity group-hover:visible group-hover:opacity-100
+        pointer-events-none invisible opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100
       ]
     )
   end
 
-  it 'renders onclick tooltip with details and summary' do
+  it 'renders onclick tooltip with a stimulus trigger' do
     render_inline(described_class.new(text: 'Open details', event: :onclick)) do
       'Toggle'
     end
 
-    expect(page).to have_css('details.relative.inline-flex.w-fit.cursor-pointer')
-    expect(page).to have_css('summary.cursor-pointer.list-none', text: 'Toggle')
     expect(page).to have_css(
-      "span[role='tooltip'].#{class_selector(%w[open:block hidden])}",
+      "div.relative.inline-flex.w-fit[data-controller='tramway-tooltip']" \
+      "[data-action='click@window->tramway-tooltip#closeOnClickOutside']"
+    )
+    expect(page).to have_css(
+      "div.inline-flex.w-fit.cursor-pointer[data-action='click->tramway-tooltip#toggle']",
+      text: 'Toggle'
+    )
+  end
+
+  it 'renders onclick tooltip panel as a stimulus target' do
+    render_inline(described_class.new(text: 'Open details', event: :onclick)) do
+      'Toggle'
+    end
+
+    expect(page).to have_css(
+      "span[role='tooltip'].hidden[data-tramway-tooltip-target='panel']",
       text: 'Open details',
       visible: :all
     )
@@ -37,7 +51,7 @@ describe Tramway::TooltipComponent, type: :component do
       'Help'
     end
 
-    expect(page).to have_css('span#help-tooltip.ml-4', text: 'Help')
+    expect(page).to have_css('div#help-tooltip.ml-4', text: 'Help')
   end
 
   it 'raises an error for unknown events' do

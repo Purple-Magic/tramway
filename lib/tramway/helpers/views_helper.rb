@@ -46,7 +46,7 @@ module Tramway
       def tramway_button(path: nil, text: nil, method: :get, form_options: {}, **options, &)
         component 'tramway/button', text:, path:, method:, form_options:, color: options.delete(:color),
                                     type: options.delete(:type), size: options.delete(:size),
-                                    tag: options.delete(:tag), options:, &
+                                    tag: options.delete(:tag), tooltip: options.delete(:tooltip), options:, &
       end
 
       def tramway_back_button

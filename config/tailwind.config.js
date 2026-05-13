@@ -364,6 +364,9 @@ module.exports = {
     'placeholder-gray-500',
 
     // === Button and badge helpers ===
+    'peer',
+    'peer-hover:visible',
+    'peer-hover:opacity-100',
     'group',
     'group-hover:visible',
     'group-hover:opacity-100',

@@ -3,4 +3,5 @@
 //= link_tree ../../javascript .js
 //= link tramway/tramway-select_controller.js
 //= link tramway/ui_checkbox_controller.js
+//= link tramway/tooltip_controller.js
 //= link tailwind.css

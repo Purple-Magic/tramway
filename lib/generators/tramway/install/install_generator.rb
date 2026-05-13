@@ -67,6 +67,10 @@ module Tramway
         'pin "@tramway/checkbox", to: "tramway/ui_checkbox_controller.js"'
       end
 
+      def importmap_tooltip_pin
+        'pin "@tramway/tooltip", to: "tramway/tooltip_controller.js"'
+      end
+
       def importmap_tailwind_requirements
         [
           'pin "@tailwindcss/forms", to: "tailwindcss/forms.js"',
@@ -82,7 +86,8 @@ module Tramway
           importmap_tailwind_requirements,
           importmap_tramway_select_pin,
           importmap_table_row_preview_pin,
-          importmap_ui_checkbox_pin
+          importmap_ui_checkbox_pin,
+          importmap_tooltip_pin
         ]
       end
 
@@ -90,7 +95,8 @@ module Tramway
         [
           'import { TramwaySelect } from "@tramway/tramway-select"',
           'import { TableRowPreview } from "@tramway/table-row-preview"',
-          'import { UiCheckbox } from "@tramway/checkbox"'
+          'import { UiCheckbox } from "@tramway/checkbox"',
+          'import { Tooltip } from "@tramway/tooltip"'
         ]
       end
 
@@ -98,7 +104,8 @@ module Tramway
         [
           "application.register('tramway-select', TramwaySelect)",
           "application.register('table-row-preview', TableRowPreview)",
-          "application.register('ui--checkbox', UiCheckbox)"
+          "application.register('ui--checkbox', UiCheckbox)",
+          "application.register('tramway-tooltip', Tooltip)"
         ]
       end
 

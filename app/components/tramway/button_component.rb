@@ -1,6 +1,33 @@
 # frozen_string_literal: true
 
 module Tramway
+  # Tooltip options handling for Tramway button
+  module ButtonComponentTooltip
+    def tooltip_options
+      {
+        text: tooltip_value(:text),
+        event: tooltip_value(:event)
+      }
+    end
+
+    private
+
+    def validate_tooltip!
+      return if tooltip.blank?
+      return if tooltip.is_a?(Hash) && tooltip_key?(:text) && tooltip_key?(:event)
+
+      raise ArgumentError, 'Tooltip must be a hash with :text and :event keys.'
+    end
+
+    def tooltip_key?(key)
+      tooltip.key?(key) || tooltip.key?(key.to_s)
+    end
+
+    def tooltip_value(key)
+      tooltip[key] || tooltip[key.to_s]
+    end
+  end
+
   # Default Tramway button
   #
   class ButtonComponent < BaseComponent
@@ -17,12 +44,15 @@ module Tramway
     option :size, default: -> { :medium }
     option :method, optional: true, default: -> { :get }
     option :tag, optional: true, default: -> {}
+    option :tooltip, optional: true, default: -> {}
     option :options, optional: true, default: -> { {} }
     option :form_options, optional: true, default: -> { {} }
 
     include Tramway::ColorsMethods
+    include Tramway::ButtonComponentTooltip
 
     def before_render
+      validate_tooltip!
       return if tag.present?
 
       @tag = if tag_button?

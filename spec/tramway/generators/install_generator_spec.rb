@@ -171,7 +171,8 @@ RSpec.describe Tramway::Generators::InstallGenerator do
         "pin \"tailwindcss-animate\", to: \"tailwindcss-animate.js\"\n" \
         "pin \"@tramway/tramway-select\", to: \"tramway/tramway-select_controller.js\"\n" \
         "pin \"@tramway/table-row-preview\", to: \"tramway/table_row_preview_controller.js\"\n" \
-        "pin \"@tramway/checkbox\", to: \"tramway/ui_checkbox_controller.js\"\n"
+        "pin \"@tramway/checkbox\", to: \"tramway/ui_checkbox_controller.js\"\n" \
+        "pin \"@tramway/tooltip\", to: \"tramway/tooltip_controller.js\"\n"
       )
     end
 
@@ -236,6 +237,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
           import { TramwaySelect } from "@tramway/tramway-select"
           import { TableRowPreview } from "@tramway/table-row-preview"
           import { UiCheckbox } from "@tramway/checkbox"
+          import { Tooltip } from "@tramway/tooltip"
 
           const application = Application.start()
 
@@ -246,6 +248,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
           application.register('tramway-select', TramwaySelect)
           application.register('table-row-preview', TableRowPreview)
           application.register('ui--checkbox', UiCheckbox)
+          application.register('tramway-tooltip', Tooltip)
           export { application }
         JS
       )
