@@ -68,7 +68,7 @@ module Tramway
 
     def base_tooltip_classes
       %w[
-        absolute bottom-full left-1/2 z-50 mb-2 w-max max-w-xs -translate-x-1/2 rounded-md border
+        absolute bottom-full left-1/2 z-50 mb-2 w-max min-w-40 max-w-sm -translate-x-1/2 rounded-md border
         border-zinc-800 bg-zinc-950 px-2.5 py-1.5 text-xs font-medium leading-5 text-zinc-50 shadow-lg
       ]
     end

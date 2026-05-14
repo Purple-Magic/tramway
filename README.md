@@ -894,7 +894,7 @@ the semantic accent explicitly.
 
 ### Tramway Tooltip
 
-`tramway_tooltip` renders a compact dark tooltip around block content. Pass `text:` for the tooltip body and `event:` to
+`tramway_tooltip` renders a dark tooltip around block content with a default minimum width of `min-w-40` and maximum width of `max-w-sm`. Pass `text:` for the tooltip body and `event:` to
 choose when it appears. Supported events are `:hover` and `:onclick`; hover is the default.
 
 ```haml
