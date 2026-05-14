@@ -3,10 +3,10 @@
     = component('tramway/form/label', for: @for, class: 'mb-0') do
       = @label
   %div{ role: :combobox, data: tramway_select_hash, id: "#{@for}_tramway_select", class: tramway_select_classes }
-    - classes = "#{size_class(:tramway_select_input)} #{select_base_classes}"
-    .flex.flex-end.justify-between{ data: dropdown_data, **dropdown_options }
-      .flex.flex-row.flex-nowrap.overflow-x-auto.space-x-1.w-full{ data: { "tramway-select-target" => "showSelectedArea" } }
-      .flex.flex-col.justify-center
+    - selected_items_classes = ['flex flex-row w-full', multiple ? 'flex-wrap gap-1 min-w-0' : 'flex-nowrap overflow-x-auto space-x-1'].join(' ')
+    .flex.flex-end.justify-between.gap-1{ data: dropdown_data, **dropdown_options }
+      %div{ class: selected_items_classes, data: { "tramway-select-target" => "showSelectedArea" } }
+      .flex.flex-col.justify-center.shrink-0
         .caret-down{ data: { "tramway-select-target" => "caretDown" } }
           = component 'tramway/form/tramway_select/caret', size:, direction: :down
         .caret-up.hidden{ data: { "tramway-select-target" => "caretUp" } }

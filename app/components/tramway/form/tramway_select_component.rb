@@ -73,10 +73,15 @@ module Tramway
       end
 
       def input_classes
-        "#{size_class(:tramway_select_input)} #{select_base_classes}"
+        "#{tramway_select_size_class} #{select_base_classes}"
       end
 
       private
+
+      def tramway_select_size_class
+        classes = size_class(:tramway_select_input)
+        multiple ? classes.gsub(/\bh-/, 'min-h-') : classes
+      end
 
       def action
         'click->tramway-select#toggleDropdown'
@@ -100,7 +105,7 @@ module Tramway
           options:,
           attribute:,
           input:,
-          size_class: size_class(:tramway_select_input)
+          size_class: tramway_select_size_class
         )
       end
 

@@ -318,6 +318,7 @@ module.exports = {
     'flex-wrap',
     'flex-row-reverse',
     'flex-auto',
+    'flex-none',
     'flex-initial',
     'justify-between',
     'justify-end',
@@ -333,6 +334,10 @@ module.exports = {
     'w-fit',
     'w-8',
     'min-w-96',
+    'min-w-0',
+    'min-h-10',
+    'min-h-12',
+    'min-h-15',
     'max-w-full',
 
     // === Spacing utilities ===

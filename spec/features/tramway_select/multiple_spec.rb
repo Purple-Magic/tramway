@@ -44,6 +44,18 @@ feature 'TramwaySelectComponent', :js, type: :feature do
     expect(find("input[name='user[role]']", visible: :all).value).to eq('user')
   end
 
+  scenario 'grows to fit many selected options' do
+    tramway_select 'Admin', 'User', 'Manager', 'Auditor', 'Operator', 'Editor', 'Reviewer', 'Support', from: 'user_role'
+
+    input = find("#user_role_tramway_select [data-tramway-select-target='dropdown']")
+    selected_area = find("#user_role_tramway_select [data-tramway-select-target='showSelectedArea']")
+
+    expect(input[:class]).to include('min-h-12')
+    expect(input[:class]).not_to include(' h-12')
+    expect(selected_area[:class]).to include('flex-wrap')
+    expect(selected_area[:class]).not_to include('overflow-x-auto')
+  end
+
   scenario 'runs onchange stimulus action' do
     collect_console_logs(page)
 
