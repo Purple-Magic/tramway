@@ -84,7 +84,7 @@ module Tramway
       (default_button_classes +
         size_classes.split +
         color_classes +
-        (@tag == :a ? %w[px-1 h-fit w-fit] : [cursor_class]) +
+        (@tag == :a ? [] : [cursor_class]) +
         options[:class].to_s.split).compact.join(' ')
     end
 
