@@ -18,9 +18,7 @@ module Tramway
 
     initializer 'tramway.assets.precompile' do |app|
       app.config.assets.precompile += %w[
-        tramway/tramway-select_controller.js
-        tramway/ui_checkbox_controller.js
-        tramway/tooltip_controller.js
+        tramway/tramway.js
       ]
     end
 

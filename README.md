@@ -1304,14 +1304,14 @@ Example for [importmap-rails](https://github.com/rails/importmap-rails) config
 
 *config/importmap.rb*
 ```ruby
-pin '@tramway/tramway-select', to: 'tramway/tramway-select_controller.js'
+pin '@tramway/tramway', to: 'tramway/tramway.js'
 ```
 
 *app/javascript/controllers/index.js*
 ```js
 import { application } from "controllers/application"
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-import { TramwaySelect } from "@tramway/tramway-select" // importing TramwaySelect controller class
+import { TramwaySelect } from "@tramway/tramway" // importing TramwaySelect controller class
 eagerLoadControllersFrom("controllers", application)
 
 application.register('tramway-select', TramwaySelect) // register TramwaySelect controller class as `tramway-select` stimulus controller

@@ -1,7 +1,5 @@
 //= link_tree ../images
 //= link_directory ../stylesheets .css
 //= link_tree ../../javascript .js
-//= link tramway/tramway-select_controller.js
-//= link tramway/ui_checkbox_controller.js
-//= link tramway/tooltip_controller.js
+//= link tramway/tramway.js
 //= link tailwind.css
