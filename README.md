@@ -17,6 +17,7 @@ Codex instruction that points agents to the Tramway skill for Tramway-native cod
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
   * [Tramway Flash](https://github.com/Purple-Magic/tramway#tramway-flash)
+  * [Tramway Tooltip](https://github.com/Purple-Magic/tramway#tramway-tooltip)
   * [Tramway Chat](https://github.com/Purple-Magic/tramway#tramway-chat)
   * [Tramway Table Component](https://github.com/Purple-Magic/tramway#tramway-table-component)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
@@ -891,6 +892,29 @@ they will be merged into the flash container.
 Use the `type` argument is compatible to [Lantern Color Palette](https://github.com/TrinityMonsters/tramway/blob/main/README.md#lantern-color-palette) or provide a `color:` keyword to set
 the semantic accent explicitly.
 
+### Tramway Tooltip
+
+`tramway_tooltip` renders a dark tooltip around block content with a default minimum width of `min-w-40` and maximum width of `max-w-sm`. Pass `text:` for the tooltip body and `event:` to
+choose when it appears. Supported events are `:hover` and `:onclick`; hover is the default.
+
+```haml
+= tramway_tooltip text: 'Shown on hover' do
+  %span Help
+
+= tramway_tooltip text: 'Shown after click', event: :onclick do
+  %button More info
+```
+
+```erb
+<%= tramway_tooltip text: 'Shown on hover' do %>
+  <span>Help</span>
+<% end %>
+
+<%= tramway_tooltip text: 'Shown after click', event: :onclick do %>
+  <button>More info</button>
+<% end %>
+```
+
 ### Tramway Chat
 
 `tramway_chat` renders the chat experience bundled with Tramway. Provide a chat ID, a list of message hashes, and the URL
@@ -1130,6 +1154,13 @@ Example 3: rendering button
   <%= tramway_button path: '/projects', text: 'Projects', size: :small %>
   ```
 
+  Use `tooltip:` to show Tramway's tooltip from the rendered button. The tooltip accepts the same `event:` values as
+  `tramway_tooltip`: `:hover` or `:onclick`.
+
+  ```erb
+  <%= tramway_button path: '/projects', text: 'Projects', tooltip: { text: 'Open projects', event: :hover } %>
+  ```
+
 * `tramway_badge` renders a dark shadcn-style Tailwind badge with the provided `text`. Pass a semantic `type` (for example,
   `:success` or `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When
   you opt into a custom color, ensure the corresponding accent utilities are available in your Tailwind safelist.
@@ -1273,14 +1304,14 @@ Example for [importmap-rails](https://github.com/rails/importmap-rails) config
 
 *config/importmap.rb*
 ```ruby
-pin '@tramway/tramway-select', to: 'tramway/tramway-select_controller.js'
+pin '@tramway/tramway', to: 'tramway/tramway.js'
 ```
 
 *app/javascript/controllers/index.js*
 ```js
 import { application } from "controllers/application"
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-import { TramwaySelect } from "@tramway/tramway-select" // importing TramwaySelect controller class
+import { TramwaySelect } from "@tramway/tramway" // importing TramwaySelect controller class
 eagerLoadControllersFrom("controllers", application)
 
 application.register('tramway-select', TramwaySelect) // register TramwaySelect controller class as `tramway-select` stimulus controller

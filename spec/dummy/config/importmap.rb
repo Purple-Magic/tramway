@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 pin 'application'
-pin '@tramway/tramway-select', to: 'tramway/tramway-select_controller.js'
-pin '@tramway/checkbox', to: 'tramway/ui_checkbox_controller.js'
+pin '@tramway/tramway', to: 'tramway/tramway.js'
 pin '@hotwired/stimulus', to: 'stimulus.min.js'
 pin '@hotwired/stimulus-loading', to: 'stimulus-loading.js'
 pin_all_from 'app/javascript/controllers', under: 'controllers'

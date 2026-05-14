@@ -1,0 +1,12 @@
+- if normalized_event == :onclick
+  %div{ class: wrapper_classes, **wrapper_options }
+    %div{ class: trigger_classes, data: trigger_data }
+      = content
+    %span{ class: tooltip_classes, role: 'tooltip', data: tooltip_data }
+      = text
+- else
+  %div{ class: wrapper_classes, **wrapper_options }
+    %div{ class: trigger_classes }
+      = content
+    %span{ class: tooltip_classes, role: 'tooltip', data: tooltip_data }
+      = text

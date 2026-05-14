@@ -55,16 +55,8 @@ module Tramway
         @controllers_index_path ||= File.join(destination_root, 'app/javascript/controllers/index.js')
       end
 
-      def importmap_tramway_select_pin
-        'pin "@tramway/tramway-select", to: "tramway/tramway-select_controller.js"'
-      end
-
-      def importmap_table_row_preview_pin
-        'pin "@tramway/table-row-preview", to: "tramway/table_row_preview_controller.js"'
-      end
-
-      def importmap_ui_checkbox_pin
-        'pin "@tramway/checkbox", to: "tramway/ui_checkbox_controller.js"'
+      def importmap_tramway_pin
+        'pin "@tramway/tramway", to: "tramway/tramway.js"'
       end
 
       def importmap_tailwind_requirements
@@ -80,17 +72,13 @@ module Tramway
       def importmap_tramway_pins
         [
           importmap_tailwind_requirements,
-          importmap_tramway_select_pin,
-          importmap_table_row_preview_pin,
-          importmap_ui_checkbox_pin
+          importmap_tramway_pin
         ]
       end
 
       def stimulus_controller_imports
         [
-          'import { TramwaySelect } from "@tramway/tramway-select"',
-          'import { TableRowPreview } from "@tramway/table-row-preview"',
-          'import { UiCheckbox } from "@tramway/checkbox"'
+          'import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
         ]
       end
 
@@ -98,7 +86,8 @@ module Tramway
         [
           "application.register('tramway-select', TramwaySelect)",
           "application.register('table-row-preview', TableRowPreview)",
-          "application.register('ui--checkbox', UiCheckbox)"
+          "application.register('ui--checkbox', UiCheckbox)",
+          "application.register('tramway-tooltip', Tooltip)"
         ]
       end
 
@@ -162,7 +151,7 @@ module Tramway
 
       # rubocop:disable Metrics/MethodLength
       def append_missing_imports(content)
-        content = normalize_checkbox_import(content)
+        content = remove_legacy_stimulus_imports(content)
         missing_imports = stimulus_controller_imports.reject { |line| content.include?(line) }
         return content if missing_imports.empty?
 
@@ -198,21 +187,44 @@ module Tramway
         updated
       end
 
-      def normalize_checkbox_import(content)
-        content.gsub(
+      def remove_legacy_stimulus_imports(content)
+        legacy_imports = [
+          'import { TramwaySelect } from "@tramway/tramway-select"',
+          'import { TableRowPreview } from "@tramway/table-row-preview"',
+          'import { UiCheckbox } from "@tramway/checkbox"',
           'import { UiCheckbox } from "@tramway/ui-checkbox"',
-          'import { UiCheckbox } from "@tramway/checkbox"'
-        )
+          'import { Tooltip } from "@tramway/tooltip"'
+        ]
+
+        content.each_line.reject { |line| legacy_imports.include?(line.strip) }.join
       end
 
-      def normalize_checkbox_pin(content)
-        content.gsub(
+      def remove_legacy_importmap_pins(content)
+        content.each_line.reject { |line| legacy_importmap_pins.include?(line.strip) }.join
+      end
+
+      def legacy_importmap_pins
+        double_quoted_legacy_importmap_pins + single_quoted_legacy_importmap_pins
+      end
+
+      def double_quoted_legacy_importmap_pins
+        [
+          'pin "@tramway/tramway-select", to: "tramway/tramway-select_controller.js"',
+          'pin "@tramway/table-row-preview", to: "tramway/table_row_preview_controller.js"',
+          'pin "@tramway/checkbox", to: "tramway/ui_checkbox_controller.js"',
           'pin "@tramway/ui-checkbox", to: "tramway/ui_checkbox_controller.js"',
-          'pin "@tramway/checkbox", to: "tramway/ui_checkbox_controller.js"'
-        ).gsub(
+          'pin "@tramway/tooltip", to: "tramway/tooltip_controller.js"'
+        ]
+      end
+
+      def single_quoted_legacy_importmap_pins
+        [
+          "pin '@tramway/tramway-select', to: 'tramway/tramway-select_controller.js'",
+          "pin '@tramway/table-row-preview', to: 'tramway/table_row_preview_controller.js'",
+          "pin '@tramway/checkbox', to: 'tramway/ui_checkbox_controller.js'",
           "pin '@tramway/ui-checkbox', to: 'tramway/ui_checkbox_controller.js'",
-          "pin '@tramway/checkbox', to: 'tramway/ui_checkbox_controller.js'"
-        )
+          "pin '@tramway/tooltip', to: 'tramway/tooltip_controller.js'"
+        ]
       end
 
       def with_agents_update_fallback
@@ -290,7 +302,7 @@ module Tramway
       def ensure_importmap_pin
         return unless File.exist?(importmap_path)
 
-        content = normalize_checkbox_pin(File.read(importmap_path))
+        content = remove_legacy_importmap_pins(File.read(importmap_path))
         missing_pins = importmap_tramway_pins.reject { |pin| content.include?(pin) }
         File.write(importmap_path, content) if content != File.read(importmap_path)
         return if missing_pins.empty?

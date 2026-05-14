@@ -128,6 +128,56 @@ describe Tramway::ButtonComponent, type: :component do
         )
       end
     end
+
+    context 'when tooltip is provided' do
+      let(:component) do
+        described_class.new(
+          path: '/projects',
+          text: 'View projects',
+          tooltip: { text: 'Open projects', event: :hover }
+        )
+      end
+
+      it 'wraps button with a hover tooltip' do
+        render_inline(component)
+
+        expect(page).to have_css('div.relative.inline-flex.w-fit')
+        expect(page).to have_css('div.peer.inline-flex.w-fit')
+        expect(page).to have_css(
+          "a.#{class_selector(theme_classes.fetch(:default))}[href='/projects']",
+          text: 'View projects'
+        )
+        expect(page).to have_css("span[role='tooltip']", text: 'Open projects', visible: :all)
+      end
+    end
+
+    context 'when onclick tooltip is provided' do
+      let(:component) do
+        described_class.new(
+          path: '/projects',
+          text: 'View projects',
+          tooltip: { text: 'Open projects', event: :onclick }
+        )
+      end
+
+      it 'wraps button with an onclick tooltip' do
+        render_inline(component)
+
+        expect(page).to have_css("div[data-controller='tramway-tooltip']")
+        expect(page).to have_css("div[data-action='click->tramway-tooltip#toggle']")
+        expect(page).to have_css("span[role='tooltip'].hidden[data-tramway-tooltip-target='panel']",
+                                 text: 'Open projects',
+                                 visible: :all)
+      end
+    end
+
+    context 'when tooltip is not a hash with text and event' do
+      it 'raises an error' do
+        expect do
+          render_inline(described_class.new(path: '/projects', text: 'View projects', tooltip: 'Open projects'))
+        end.to raise_error(ArgumentError, 'Tooltip must be a hash with :text and :event keys.')
+      end
+    end
   end
 
   context 'with classic theme' do

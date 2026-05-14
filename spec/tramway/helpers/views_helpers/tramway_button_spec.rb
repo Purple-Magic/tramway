@@ -21,6 +21,7 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
         type: nil,
         size: nil,
         tag: nil,
+        tooltip: nil,
         options: {}
       }
     end
@@ -67,6 +68,7 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
             form_options: {},
             type: :primary,
             size: :small,
+            tooltip: { text: 'Delete user', event: :hover },
             options: { data: { turbo_confirm: 'Are you sure?' } }
           }
         end
@@ -80,6 +82,7 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
             form_options: {},
             type: :primary,
             size: :small,
+            tooltip: { text: 'Delete user', event: :hover },
             data: { turbo_confirm: 'Are you sure?' }
           }
         end
