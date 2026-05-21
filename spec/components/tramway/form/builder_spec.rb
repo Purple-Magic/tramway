@@ -308,6 +308,17 @@ describe Tramway::Form::Builder, type: :view do
     end
   end
 
+  describe '#calendar' do
+    let(:output) { builder.calendar(month: 4, year: 2024, selected_dates: [Date.new(2024, 4, 15)]) }
+
+    it 'renders the calendar component' do
+      expect(output).to have_selector "[aria-label='Calendar'].border-zinc-800.bg-zinc-950"
+      expect(output).to have_select 'Month', selected: 'April'
+      expect(output).to have_select 'Year', selected: '2024'
+      expect(output).to have_selector '.rounded-md.bg-zinc-50.text-zinc-950', text: '15'
+    end
+  end
+
   describe '#submit' do
     let(:output) do
       builder.submit 'Create'

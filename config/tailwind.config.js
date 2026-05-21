@@ -576,7 +576,20 @@ module.exports = {
     'text-indigo-400',
     'text-yellow-400',
     'shadow-lg',
-    'pointer-events-none'
+    'pointer-events-none',
+
+    // === Calendar component ===
+    'flex-row',
+    'min-w-32',
+    'min-w-40',
+    'overflow-x-auto',
+    'overflow-hidden',
+    'align-middle',
+    'text-center',
+    'text-zinc-500',
+    'bg-zinc-50',
+    'grid-cols-7',
+    'md:grid-cols-7'
   ],
   theme: {
     extend: {

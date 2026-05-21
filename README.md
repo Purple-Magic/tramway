@@ -1203,6 +1203,7 @@ Checkboxes render dark while unchecked and use the light primary checked state.
   <%= f.select :role, [:admin, :user] %>
   <%= f.date_field :birth_date %>
   <%= f.datetime_field :confirmed_at %>
+  <%= f.calendar selected_dates: [Date.current] %>
   <%= f.tramway_select :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
   <%= f.file_field :file %>
   <%= f.submit 'Create User' %>
@@ -1242,8 +1243,31 @@ Available form helpers:
 * date_field
 * datetime_field
 * time_field
+* calendar
 * tramway_select ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
+
+Calendar example:
+
+```erb
+<%= tramway_form_for @user do |f| %>
+  <%= f.calendar(
+        month: 4,
+        year: 2024,
+        selected_dates: [Date.current],
+        action: {
+          path: projects_path,
+          method: :post,
+          params: { project: { name: 'Roadmap' } }
+        }
+      ) %>
+<% end %>
+```
+
+`f.calendar` renders month and year selectors that submit as GET parameters. It preserves existing query parameters
+except `month` and `year`. Pass `selected_dates:` to highlight dates. Pass `action:` to render each date as a submit
+button; when `action[:params]` contains `project`, the selected date is merged into that nested hash as `date`,
+otherwise it is submitted as a top-level `date` parameter.
 
 Autocomplete select example:
 

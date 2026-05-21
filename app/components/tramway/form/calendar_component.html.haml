@@ -1,0 +1,44 @@
+.space-y-3
+  .flex.items-center.justify-between
+    = tramway_form_for selection_form, url: form_action, method: :get, remote: true do |f|
+      - hidden_query_fields.each do |field|
+        = hidden_field_tag field[:name], field[:value]
+
+      .flex.flex-row.gap-2
+        .min-w-40
+          = f.select :month,
+            month_options,
+            selected: displayed_month,
+            label: 'Month',
+            name: 'month',
+            id: 'month'
+
+        .min-w-32
+          = f.select :year,
+            year_options,
+            selected: displayed_year,
+            label: 'Year',
+            name: 'year',
+            id: 'year'
+
+  .overflow-x-auto
+    = tramway_table aria: { label: 'Calendar' }, class: 'overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 text-sm shadow-sm' do
+      = tramway_header do
+        - day_names.each do |day_name|
+          = tramway_cell do
+            = day_name
+
+      - weeks.each do |week|
+        = tramway_row do
+          - week.each do |date|
+            = tramway_cell do
+              - if date_action?
+                = form_tag date_action_path, method: date_action_method, class: 'w-full' do
+                  - hidden_action_fields(date).each do |field|
+                    = hidden_field_tag field[:name], field[:value]
+                  = button_tag type: :submit, class: 'w-full cursor-pointer rounded-md hover:bg-zinc-900' do
+                    %div{ class: date_classes(date) }
+                      = date.day
+              - else
+                %div{ class: date_classes(date) }
+                  = date.day

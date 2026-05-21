@@ -88,6 +88,10 @@ module Tramway
         common_field(:checkbox, :check_box, attribute, **, &)
       end
 
+      def calendar(**options, &)
+        render(Tramway::Form::CalendarComponent.new(**sanitize_options(options)), &)
+      end
+
       def select(attribute, collection, **options, &)
         if options[:multiple] || options[:autocomplete]
           tramway_select(attribute, collection, **options, &)
