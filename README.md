@@ -1238,6 +1238,7 @@ Available form helpers:
 * password_field
 * file_field
 * check_box
+* checkbox (alias for check_box)
 * select
 * date_field
 * datetime_field

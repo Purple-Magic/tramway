@@ -88,6 +88,8 @@ module Tramway
         common_field(:checkbox, :check_box, attribute, **, &)
       end
 
+      alias checkbox check_box
+
       def select(attribute, collection, **options, &)
         if options[:multiple] || options[:autocomplete]
           tramway_select(attribute, collection, **options, &)

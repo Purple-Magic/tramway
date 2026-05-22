@@ -308,6 +308,18 @@ describe Tramway::Form::Builder, type: :view do
     end
   end
 
+  describe '#checkbox' do
+    let(:output) { builder.checkbox :permissions }
+
+    context 'with classic theme' do
+      around { |example| with_theme(:classic) { example.run } }
+
+      it_behaves_like 'checkbox field classes',
+                      label: CLASSIC_FORM_CLASSES[:label],
+                      checkbox_input: CLASSIC_FORM_CLASSES[:checkbox_input]
+    end
+  end
+
   describe '#submit' do
     let(:output) do
       builder.submit 'Create'
