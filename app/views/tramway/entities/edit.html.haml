@@ -1,5 +1,5 @@
 = tramway_container do
-  = tramway_title text: t('tramway.pages.edit.title', model_name: @record.object.model_name.human)
+  = tramway_title text: t('tramway.pages.edit.title', model_name: @form_title)
 
   .mt-4
     = render 'form'

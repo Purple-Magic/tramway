@@ -32,7 +32,7 @@ feature 'Entities Update Page', :js, type: :feature do
 
       click_button 'Edit'
 
-      expect(page).to have_content('Edit Post')
+      expect(page).to have_content('Edit Original Post')
       expect(page).to have_field('post[title]', with: 'Original Post')
       expect(page).to have_field('post[text]', with: 'Original text')
       expect(page).to have_field('post[user_id]', type: :hidden, with: User.first.id)

@@ -73,6 +73,12 @@ describe UserForm do
       end
     end
 
+    describe '#form_title' do
+      it 'falls back to model name when object has no title' do
+        expect(form_object.form_title).to eq('User')
+      end
+    end
+
     context 'with method delegation' do
       it 'delegates certain methods to the object' do
         methods_to_delegate = %i[id to_key errors attributes]
@@ -142,6 +148,14 @@ describe UserForm do
     form = described_class.new(create(:user))
 
     expect(form).to respond_to(:to_model)
+  end
+
+  describe '#form_title' do
+    it 'returns object title when present' do
+      form = Admin::PostForm.new(build(:post, title: 'Original Post'))
+
+      expect(form.form_title).to eq('Original Post')
+    end
   end
 end
 # rubocop:enable RSpec/SpecFilePathFormat

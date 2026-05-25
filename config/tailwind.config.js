@@ -12,6 +12,7 @@ module.exports = {
     'md:left-auto',
     'md:translate-x-0',
     'border-white',
+    '!border-zinc-800',
     'h-screen',
     'w-screen',
     'z-50',
@@ -27,6 +28,7 @@ module.exports = {
     'pt-16',
     'min-h-8',
     'bg-zinc-950',
+    '!bg-zinc-950',
     'bg-zinc-950/95',
     'bg-zinc-950/80',
     'bg-zinc-900',
@@ -34,6 +36,7 @@ module.exports = {
     'bg-zinc-900/80',
     'border-zinc-800',
     'text-zinc-50',
+    '!text-zinc-50',
     'text-zinc-100',
     'text-zinc-200',
     'text-zinc-400',
@@ -41,6 +44,7 @@ module.exports = {
     'placeholder:text-zinc-500',
     'hover:bg-zinc-800',
     'hover:bg-zinc-900',
+    'hover:!bg-zinc-900',
     'hover:text-zinc-50',
     'focus-visible:ring-zinc-300',
     'focus-visible:ring-zinc-400',
@@ -221,6 +225,9 @@ module.exports = {
     'hidden',
     'text-xl',
     'font-bold',
+    'prose',
+    'prose-invert',
+    'max-w-none',
 
     // === Button base shell ===
     'inline-flex',
@@ -338,6 +345,7 @@ module.exports = {
     'min-h-10',
     'min-h-12',
     'min-h-15',
+    'min-h-40',
     'max-w-full',
 
     // === Spacing utilities ===
@@ -411,6 +419,7 @@ module.exports = {
     'h-12',
     'border-transparent',
     'focus:ring-2',
+    'focus:ring-zinc-300',
     'focus:ring-zinc-400',
     'focus:ring-offset-2',
     'focus:ring-offset-zinc-950',

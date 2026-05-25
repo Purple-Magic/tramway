@@ -10,6 +10,31 @@ module Tramway
       include Tramway::Utils::Field
       include Tramway::ColorsMethods
 
+      RICH_TEXT_AREA_CLASSES = [
+        'trix-content',
+        'prose',
+        'prose-invert',
+        'max-w-none',
+        'w-full',
+        'min-h-40',
+        'rounded-md',
+        'border',
+        'border-zinc-800',
+        'bg-zinc-950',
+        '!bg-zinc-950',
+        'text-zinc-50',
+        '!text-zinc-50',
+        'shadow-sm',
+        'transition-colors',
+        'focus-visible:outline-none',
+        'focus-visible:ring-2',
+        'focus-visible:ring-zinc-300',
+        'focus-visible:ring-offset-2',
+        'focus-visible:ring-offset-zinc-950',
+        'disabled:cursor-not-allowed',
+        'disabled:opacity-50'
+      ].freeze
+
       def initialize(object_name, object, template, options)
         @horizontal = options[:horizontal] || false
         @remote = options[:remote_submit] || false
@@ -54,6 +79,16 @@ module Tramway
 
       def text_area(attribute, **, &)
         common_field(:text_area, :text_area, attribute, **, &)
+      end
+
+      def rich_text_area(attribute, **, &)
+        rich_textarea(attribute, **, &)
+      end
+
+      def rich_textarea(attribute, **options, &)
+        sanitized_options = sanitize_options(options)
+
+        super(attribute, rich_text_area_options(sanitized_options), &)
       end
 
       def password_field(attribute, **options, &)
@@ -215,6 +250,13 @@ module Tramway
             opts.delete(key.to_s)
           end
         end
+      end
+
+      def rich_text_area_options(options)
+        custom_class = options.delete(:class) || options.delete('class')
+        data = (options.delete(:data) || options.delete('data') || {}).merge(tramway_rich_text_area: true)
+
+        options.merge(class: [RICH_TEXT_AREA_CLASSES, custom_class].compact.join(' '), data:)
       end
 
       # REMOVE IT. WE MUST UNDERSTAND WHY INCLUDE_BLANK DOES NOT WORK
