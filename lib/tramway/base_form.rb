@@ -60,6 +60,12 @@ module Tramway
       __submit params
     end
 
+    def form_title
+      return object.title if object.respond_to?(:title) && object.title.present?
+
+      object.model_name.human
+    end
+
     def method_missing(method_name, *args)
       if method_name.to_s.end_with?('=') && args.one?
         object.public_send(method_name, args.first)

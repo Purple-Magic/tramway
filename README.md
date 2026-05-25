@@ -1203,6 +1203,7 @@ Checkboxes render dark while unchecked and use the light primary checked state.
   <%= f.select :role, [:admin, :user] %>
   <%= f.date_field :birth_date %>
   <%= f.datetime_field :confirmed_at %>
+  <%= f.rich_text_area :bio %>
   <%= f.tramway_select :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
   <%= f.file_field :file %>
   <%= f.submit 'Create User' %>
@@ -1243,6 +1244,7 @@ Available form helpers:
 * date_field
 * datetime_field
 * time_field
+* rich_text_area (Action Text/Trix editor with Tramway dark form classes)
 * tramway_select ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
 

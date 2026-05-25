@@ -38,6 +38,21 @@ CLASSIC_FORM_CLASSES = {
   ]
 }.freeze
 
+RICH_TEXT_AREA_CLASSES = %w[
+  trix-content prose prose-invert w-full min-h-40 rounded-md border border-zinc-800 bg-zinc-950 !bg-zinc-950
+  text-zinc-50 !text-zinc-50 focus-visible:ring-zinc-300 focus-visible:ring-offset-zinc-950
+].freeze
+
+module DefaultRichTextAreaFormBuilder
+  def rich_textarea(attribute, options = {}, &)
+    template.content_tag('trix-editor', '', options.merge(input: attribute), &)
+  end
+
+  alias rich_text_area rich_textarea
+end
+
+Tramway::Views::FormBuilder.prepend(DefaultRichTextAreaFormBuilder)
+
 describe Tramway::Form::Builder, type: :view do
   let(:resource) { build :user }
   let(:form_options) { {} }
@@ -272,6 +287,49 @@ describe Tramway::Form::Builder, type: :view do
       around { |example| with_theme(:classic) { example.run } }
 
       it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
+    end
+  end
+
+  describe '#rich_text_area' do
+    let(:output) { builder.rich_text_area :personal_info }
+    let(:editor) { Capybara.string(output).find('trix-editor') }
+
+    it 'calls the default rich text area helper' do
+      expect(output).to have_selector 'trix-editor[input="personal_info"]'
+    end
+
+    it 'renders rich text input classes matching Tramway form colors' do
+      expect(editor[:class].split).to include(*RICH_TEXT_AREA_CLASSES)
+    end
+
+    it 'marks Trix editors for Tramway toolbar styling' do
+      expect(output).to have_selector 'trix-editor[data-tramway-rich-text-area="true"]'
+    end
+
+    context 'with custom classes and unsupported Tramway sizing option' do
+      let(:output) { builder.rich_text_area :personal_info, class: 'custom-rich-text', size: :large }
+
+      it 'preserves custom classes' do
+        expect(output).to have_selector 'trix-editor.custom-rich-text'
+      end
+
+      it 'does not pass the Tramway sizing option to Action Text' do
+        expect(output).not_to have_selector 'trix-editor[size]'
+      end
+
+      it 'preserves custom data attributes' do
+        output = builder.rich_text_area :personal_info, data: { controller: 'mentions' }
+
+        expect(output).to have_selector 'trix-editor[data-controller="mentions"][data-tramway-rich-text-area="true"]'
+      end
+    end
+  end
+
+  describe '#tramway_field' do
+    let(:output) { builder.tramway_field(:rich_text_area, :personal_info) }
+
+    it 'renders rich text areas from field definitions' do
+      expect(output).to have_selector 'trix-editor[input="personal_info"]'
     end
   end
 
