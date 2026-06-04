@@ -8,7 +8,7 @@
   - cells = visible_cells_from(content)
 
   - if href.present?
-    = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' '), **default_attributes do
+    = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' '), **default_attributes, **options.except(:class) do
       = content
   - else
     - if preview
