@@ -18,5 +18,5 @@
 
           = cell.to_s.html_safe
 
-    = tag.div class: desktop_row_classes(cells.count), data: { action: "click->table-row-preview#toggle", controller: "table-row-preview" }, **default_attributes do
+    = tag.div class: [desktop_row_classes(cells.count), options[:class]].join(' '), data: { action: "click->table-row-preview#toggle", controller: "table-row-preview" }, **default_attributes, **options.except(:class) do
       = content
