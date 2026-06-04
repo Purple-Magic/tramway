@@ -1340,7 +1340,6 @@ With `remote: true`, Tramway submits the form on each input `change` via inline 
 ### Tailwind-styled pagination for Kaminari
 
 Tramway uses [Tailwind](https://tailwindcss.com/) by default. It has tailwind-styled pagination for [kaminari](https://github.com/kaminari/kaminari).
-Pagination components use hardcoded dark shadcn-style classes and do not render a separate light theme.
 
 #### How to use
 
