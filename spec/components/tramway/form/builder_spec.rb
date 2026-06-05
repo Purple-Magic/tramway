@@ -38,10 +38,7 @@ CLASSIC_FORM_CLASSES = {
   ]
 }.freeze
 
-RICH_TEXT_AREA_CLASSES = %w[
-  trix-content prose prose-invert w-full min-h-40 rounded-md border border-zinc-800 bg-zinc-950 !bg-zinc-950
-  text-zinc-50 !text-zinc-50 focus-visible:ring-zinc-300 focus-visible:ring-offset-zinc-950
-].freeze
+RICH_TEXT_AREA_CLASSES = Tramway::Form::RichTextAreaComponent::RICH_TEXT_AREA_CLASSES
 
 module DefaultRichTextAreaFormBuilder
   def rich_textarea(attribute, options = {}, &)
@@ -302,8 +299,12 @@ describe Tramway::Form::Builder, type: :view do
       expect(editor[:class].split).to include(*RICH_TEXT_AREA_CLASSES)
     end
 
-    it 'marks Trix editors for Tramway toolbar styling' do
-      expect(output).to have_selector 'trix-editor[data-tramway-rich-text-area="true"]'
+    it 'renders a label for the attribute' do
+      expect(output).to have_selector 'label', text: 'Personal info'
+    end
+
+    it 'renders label linked to the editor via for attribute' do
+      expect(output).to have_selector 'label[for="user_personal_info"]'
     end
 
     context 'with custom classes and unsupported Tramway sizing option' do
@@ -320,8 +321,24 @@ describe Tramway::Form::Builder, type: :view do
       it 'preserves custom data attributes' do
         output = builder.rich_text_area :personal_info, data: { controller: 'mentions' }
 
-        expect(output).to have_selector 'trix-editor[data-controller="mentions"][data-tramway-rich-text-area="true"]'
+        expect(output).to have_selector 'trix-editor[data-controller="mentions"]'
       end
+    end
+
+    context 'with label: false' do
+      let(:output) { builder.rich_text_area :personal_info, label: false }
+
+      it 'does not render a label' do
+        expect(output).not_to have_selector 'label'
+      end
+    end
+  end
+
+  describe '#rich_textarea' do
+    let(:output) { builder.rich_textarea :personal_info }
+
+    it 'is an alias for rich_text_area' do
+      expect(output).to have_selector 'trix-editor[input="personal_info"]'
     end
   end
 

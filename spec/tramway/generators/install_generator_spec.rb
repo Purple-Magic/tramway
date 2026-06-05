@@ -305,6 +305,105 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     # rubocop:enable RSpec/ExampleLength
   end
 
+  describe 'trix tags in application layout' do
+    def haml_layout_path
+      File.join(destination_root, 'app/views/layouts/application.html.haml')
+    end
+
+    def erb_layout_path
+      File.join(destination_root, 'app/views/layouts/application.html.erb')
+    end
+
+    def minimal_haml_layout
+      <<~HAML
+        %html
+          %head
+            = stylesheet_link_tag "application", "data-turbo-track": "reload"
+            = javascript_importmap_tags
+          %body
+            = yield
+      HAML
+    end
+
+    def minimal_erb_layout
+      <<~ERB
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>App</title>
+            <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+            <%= javascript_importmap_tags %>
+          </head>
+          <body>
+            <%= yield %>
+          </body>
+        </html>
+      ERB
+    end
+
+    context 'with a HAML layout' do
+      before do
+        FileUtils.mkdir_p(File.dirname(haml_layout_path))
+        File.write(haml_layout_path, minimal_haml_layout)
+      end
+
+      it 'inserts trix stylesheet and javascript tags before %body' do
+        run_generator
+
+        content = File.read(haml_layout_path)
+
+        expect(content).to include('= stylesheet_link_tag "trix", "data-turbo-track": "reload"')
+        expect(content).to include('= javascript_include_tag "trix", "data-turbo-track": "reload", defer: true')
+        expect(content.index('stylesheet_link_tag "trix"')).to be < content.index('%body')
+      end
+
+      it 'does not insert trix tags when already present' do
+        run_generator
+        first_run = File.read(haml_layout_path)
+
+        run_generator
+        second_run = File.read(haml_layout_path)
+
+        expect(second_run).to eq(first_run)
+        expect(second_run.scan('stylesheet_link_tag "trix"').count).to eq(1)
+      end
+    end
+
+    context 'with an ERB layout' do
+      before do
+        FileUtils.mkdir_p(File.dirname(erb_layout_path))
+        File.write(erb_layout_path, minimal_erb_layout)
+      end
+
+      it 'inserts trix stylesheet and javascript tags before </head>' do
+        run_generator
+
+        content = File.read(erb_layout_path)
+
+        expect(content).to include('stylesheet_link_tag "trix", "data-turbo-track": "reload"')
+        expect(content).to include('javascript_include_tag "trix", "data-turbo-track": "reload", defer: true')
+        expect(content.index('stylesheet_link_tag "trix"')).to be < content.index('</head>')
+      end
+
+      it 'does not insert trix tags when already present' do
+        run_generator
+        first_run = File.read(erb_layout_path)
+
+        run_generator
+        second_run = File.read(erb_layout_path)
+
+        expect(second_run).to eq(first_run)
+        expect(second_run.scan('stylesheet_link_tag "trix"').count).to eq(1)
+      end
+    end
+
+    context 'when no application layout exists' do
+      it 'does not raise an error' do
+        expect { run_generator }.not_to raise_error
+      end
+    end
+  end
+
   describe 'AGENTS instructions' do
     it 'creates AGENTS file with Codex tramway-skill instruction when missing' do
       run_generator
