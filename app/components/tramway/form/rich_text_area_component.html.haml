@@ -1,0 +1,14 @@
+%div{ class: default_container_classes }
+  :css
+    trix-toolbar .trix-button-group {
+      border-color: #52525b;
+    }
+
+    trix-toolbar .trix-button:not(.trix-active)::before {
+      filter: invert(1);
+    }
+
+  - if @label
+    = component('tramway/form/label', for: @for, class: 'mb-0') do
+      = @label
+  = @input.call @attribute, **rich_text_area_options

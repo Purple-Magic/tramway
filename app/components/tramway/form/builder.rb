@@ -56,6 +56,14 @@ module Tramway
         common_field(:text_area, :text_area, attribute, **, &)
       end
 
+      def rich_text_area(attribute, **, &)
+        rich_text_area_field(:rich_text_area, attribute, **, &)
+      end
+
+      def rich_textarea(attribute, **, &)
+        rich_text_area_field(:rich_textarea, attribute, **, &)
+      end
+
       def password_field(attribute, **options, &)
         sanitized_options = sanitize_options(options)
 
@@ -136,6 +144,15 @@ module Tramway
                  collection:,
                  multiple: options[:multiple],
                  autocomplete: options[:autocomplete],
+                 **default_options(attribute, sanitized_options)
+               ), &)
+      end
+
+      def rich_text_area_field(input_method, attribute, **options, &)
+        sanitized_options = sanitize_options(options)
+
+        render(Tramway::Form::RichTextAreaComponent.new(
+                 input: input(input_method),
                  **default_options(attribute, sanitized_options)
                ), &)
       end

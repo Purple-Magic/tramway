@@ -23,7 +23,7 @@ module Tramway
 
       def field_name(field_data)
         case field_data.to_sym
-        when :text_area, :select, :tramway_select, :check_box
+        when :text_area, :rich_text_area, :rich_textarea, :select, :tramway_select, :check_box
           field_data
         when :checkbox
           :check_box

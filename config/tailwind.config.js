@@ -27,6 +27,7 @@ module.exports = {
     'pt-16',
     'min-h-8',
     'bg-zinc-950',
+    '!bg-zinc-950',
     'bg-zinc-950/95',
     'bg-zinc-950/80',
     'bg-zinc-900',
@@ -34,6 +35,7 @@ module.exports = {
     'bg-zinc-900/80',
     'border-zinc-800',
     'text-zinc-50',
+    '!text-zinc-50',
     'text-zinc-100',
     'text-zinc-200',
     'text-zinc-400',
@@ -221,6 +223,9 @@ module.exports = {
     'hidden',
     'text-xl',
     'font-bold',
+    'prose',
+    'prose-invert',
+    'max-w-none',
 
     // === Button base shell ===
     'inline-flex',
@@ -338,6 +343,7 @@ module.exports = {
     'min-h-10',
     'min-h-12',
     'min-h-15',
+    'min-h-40',
     'max-w-full',
 
     // === Spacing utilities ===
@@ -380,7 +386,6 @@ module.exports = {
     'left-1/2',
     '-translate-x-1/2',
     'z-50',
-    'mb-2',
     'w-max',
     'min-w-40',
     'max-w-sm',

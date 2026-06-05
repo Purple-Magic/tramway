@@ -8,7 +8,7 @@
   - cells = visible_cells_from(content)
 
   - if href.present?
-    = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes].join(' '), **default_attributes do
+    = tag.a href:, class: [desktop_row_classes(cells.count), link_row_classes, options[:class]].join(' '), **default_attributes, **options.except(:class) do
       = content
   - else
     - if preview
@@ -18,5 +18,5 @@
 
           = cell.to_s.html_safe
 
-    = tag.div class: desktop_row_classes(cells.count), data: { action: "click->table-row-preview#toggle", controller: "table-row-preview" }, **default_attributes do
+    = tag.div class: [desktop_row_classes(cells.count), options[:class]].join(' '), data: { action: "click->table-row-preview#toggle", controller: "table-row-preview" }, **default_attributes, **options.except(:class) do
       = content

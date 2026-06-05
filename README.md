@@ -53,7 +53,8 @@ bin/rails g tramway:install
 ```
 
 The install generator adds the required gems (`haml-rails`, `kaminari`, `view_component`, `dry-initializer`, and `dry-monads`) to your
-application's Gemfile—if they are not present—and appends the Tailwind safelist configuration Tramway ships with.
+application's Gemfile—if they are not present—appends the Tailwind safelist configuration Tramway ships with, and injects the
+Trix stylesheet and JavaScript tags into your application layout (required for `rich_text_area`).
 
 ## Getting Started
 
@@ -1203,6 +1204,7 @@ Checkboxes render dark while unchecked and use the light primary checked state.
   <%= f.select :role, [:admin, :user] %>
   <%= f.date_field :birth_date %>
   <%= f.datetime_field :confirmed_at %>
+  <%= f.rich_text_area :bio %>
   <%= f.tramway_select :permissions, [['Create User', 'create_user'], ['Update user', 'update_user']] %>
   <%= f.file_field :file %>
   <%= f.submit 'Create User' %>
@@ -1243,6 +1245,7 @@ Available form helpers:
 * date_field
 * datetime_field
 * time_field
+* rich_text_area (Action Text/Trix editor with Tramway dark form classes)
 * tramway_select ([Stimulus-based](https://github.com/Purple-Magic/tramway#stimulus-based-inputs))
 * submit
 
@@ -1283,6 +1286,60 @@ same select field.
   <%= form.submit 'Log in' %>
 <% end %>
 ```
+
+#### Rich text area
+
+`rich_text_area` (and its alias `rich_textarea`) renders a [Trix](https://trix-editor.org/) rich text editor
+with Tramway's dark-theme Tailwind styling. Trix is bundled with Rails and does not require an additional gem.
+
+Before using `rich_text_area`, the Trix stylesheet and JavaScript must be present in your application layout.
+The `tramway:install` generator adds them automatically. To add them manually:
+
+```haml
+-# app/views/layouts/application.html.haml
+= stylesheet_link_tag "trix", "data-turbo-track": "reload"
+= javascript_include_tag "trix", "data-turbo-track": "reload", defer: true
+```
+
+```erb
+<%# app/views/layouts/application.html.erb %>
+<%= stylesheet_link_tag "trix", "data-turbo-track": "reload" %>
+<%= javascript_include_tag "trix", "data-turbo-track": "reload", defer: true %>
+```
+
+Basic usage:
+
+```erb
+<%= tramway_form_for @post do |f| %>
+  <%= f.rich_text_area :body %>
+<% end %>
+```
+
+Custom label and extra CSS class:
+
+```erb
+<%= tramway_form_for @post do |f| %>
+  <%= f.rich_text_area :body, label: 'Post body', class: 'min-h-60' %>
+<% end %>
+```
+
+Suppress the label:
+
+```erb
+<%= tramway_form_for @post do |f| %>
+  <%= f.rich_text_area :body, label: false %>
+<% end %>
+```
+
+Pass `data` attributes for Stimulus controllers:
+
+```erb
+<%= tramway_form_for @post do |f| %>
+  <%= f.rich_text_area :body, data: { controller: 'mentions' } %>
+<% end %>
+```
+
+`size:` is a Tramway-level option and is not forwarded to the `<trix-editor>` element.
 
 #### Stimulus-based inputs
 

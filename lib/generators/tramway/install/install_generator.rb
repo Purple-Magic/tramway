@@ -95,6 +95,28 @@ module Tramway
         @agents_file_path ||= File.join(destination_root, 'AGENTS.md')
       end
 
+      def application_layout_haml_path
+        @application_layout_haml_path ||= File.join(destination_root, 'app/views/layouts/application.html.haml')
+      end
+
+      def application_layout_erb_path
+        @application_layout_erb_path ||= File.join(destination_root, 'app/views/layouts/application.html.erb')
+      end
+
+      def trix_haml_tags
+        "    = stylesheet_link_tag \"trix\", \"data-turbo-track\": \"reload\"\n    " \
+          "= javascript_include_tag \"trix\", \"data-turbo-track\": \"reload\", defer: true\n"
+      end
+
+      def trix_erb_tags
+        "    <%= stylesheet_link_tag \"trix\", \"data-turbo-track\": \"reload\" %>\n    " \
+          "<%= javascript_include_tag \"trix\", \"data-turbo-track\": \"reload\", defer: true %>\n"
+      end
+
+      def trix_already_present?(content)
+        content.include?('stylesheet_link_tag "trix"') || content.include?("stylesheet_link_tag 'trix'")
+      end
+
       def codex_agents_instruction
         'If you are Codex, use the tramway-skill skill for Tramway/Rails work in this project. ' \
           'If tramway-skill is not installed, install it from https://github.com/Purple-Magic/tramway-skill/.'
@@ -322,6 +344,34 @@ module Tramway
         return if updated == content
 
         File.write(controllers_index_path, updated)
+      end
+
+      def ensure_trix_in_application_layout
+        if File.exist?(application_layout_haml_path)
+          ensure_trix_in_haml_layout
+        elsif File.exist?(application_layout_erb_path)
+          ensure_trix_in_erb_layout
+        end
+      end
+
+      private
+
+      def ensure_trix_in_haml_layout
+        content = File.read(application_layout_haml_path)
+        return if trix_already_present?(content)
+        return unless content.match?(/^\s+%body/)
+
+        updated = content.sub(/^(\s+%body)/, "#{trix_haml_tags}\\1")
+        File.write(application_layout_haml_path, updated)
+      end
+
+      def ensure_trix_in_erb_layout
+        content = File.read(application_layout_erb_path)
+        return if trix_already_present?(content)
+        return unless content.include?('</head>')
+
+        updated = content.sub('</head>', "#{trix_erb_tags}  </head>")
+        File.write(application_layout_erb_path, updated)
       end
     end
   end
