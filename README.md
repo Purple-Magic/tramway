@@ -921,6 +921,8 @@ choose when it appears. Supported events are `:hover` and `:onclick`; hover is t
 `tramway_chat` renders the chat experience bundled with Tramway. Provide a chat ID, a list of message hashes, and the URL
 that receives new messages. Each message must include an `:id` and a `:type` (either `:sent` or `:received`). Additional
 message fields like `text`, `data`, or `sent_at` are forwarded to `tramway/chats/message_component`.
+Message text preserves normal word wrapping and only breaks oversized words or links when needed to keep content inside the
+message bubble.
 
 Use `send_messages_enabled:` to control whether users can send new messages from the rendered form. It defaults to `true`.
 When set to `false`, the text field is disabled and the waiting placeholder is shown.
@@ -1215,6 +1217,7 @@ will render [this](https://play.tailwindcss.com/xho3LfjKkK)
 
 Use `size:` to control the input sizing (`:small`, `:medium`, or `:large`). The default is `:medium`, and supported inputs
 rendered within the form will use the same size value.
+Date and datetime fields open the browser's native picker when clicking anywhere in the input, not only the picker icon.
 
 ```erb
 <%= tramway_form_for @user, size: :large do |f| %>

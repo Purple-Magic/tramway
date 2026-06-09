@@ -229,6 +229,19 @@ describe Tramway::Form::Builder, type: :view do
         expect(output).to have_selector "input[value='#{value}']"
       end
     end
+
+    it 'opens the native calendar when clicking the input' do
+      expect(output).to have_selector "input[onclick*='showPicker']"
+    end
+
+    context 'with custom click handler' do
+      let(:output) { builder.date_field :remember_created_at, onclick: 'trackDateClick()' }
+
+      it 'preserves custom click behavior before opening the calendar' do
+        expect(output).to have_selector "input[onclick='trackDateClick(); " \
+                                        "try { this.showPicker && this.showPicker() } catch (error) {}']"
+      end
+    end
   end
 
   describe '#datetime_field' do
@@ -250,6 +263,10 @@ describe Tramway::Form::Builder, type: :view do
       it 'gets value from options' do
         expect(output).to have_selector "input[value='#{value}']"
       end
+    end
+
+    it 'opens the native calendar when clicking the input' do
+      expect(output).to have_selector "input[onclick*='showPicker']"
     end
   end
 

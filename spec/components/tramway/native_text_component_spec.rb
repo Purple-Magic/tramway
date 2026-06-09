@@ -3,10 +3,11 @@
 require 'rails_helper'
 
 describe Tramway::NativeTextComponent, type: :component do
-  it 'wraps long content within the available width' do
+  it 'wraps long content within the available width without breaking every word' do
     render_inline(described_class.new(text: 'averylongtokenwithoutspaces'))
 
-    expect(page).to have_css('div.max-w-full.min-w-0.break-all')
+    expect(page).to have_css('div.max-w-full.min-w-0.break-words')
+    expect(page).to have_no_css('div.break-all')
   end
 
   it 'renders markdown headers as tailwind styled heading tags' do

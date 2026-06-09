@@ -148,7 +148,7 @@ module.exports = {
     'text-blue-100/90',
     'text-red-200',
     'underline',
-    'break-all',
+    'break-words',
     'animate-spin',
     'placeholder:text-gray-400',
     'focus:outline-none',
