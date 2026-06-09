@@ -48,7 +48,8 @@ module Tramway
       @record = tramway_form model_class.new, namespace: entity.namespace
 
       if @record.submit params[model_class.model_name.param_key]
-        redirect_to public_send(entity.show_helper_method, @record.id), notice: t('tramway.notices.created')
+        redirect_to Tramway::Engine.routes.url_helpers.public_send(entity.show_helper_method, @record.id),
+                    notice: t('tramway.notices.created')
       else
         render :new
       end
@@ -58,7 +59,8 @@ module Tramway
       @record = tramway_form model_class.find(params[:id]), namespace: entity.namespace
 
       if @record.submit params[model_class.model_name.param_key]
-        redirect_to public_send(entity.show_helper_method, @record.id), notice: t('tramway.notices.updated')
+        redirect_to Tramway::Engine.routes.url_helpers.public_send(entity.show_helper_method, @record.id),
+                    notice: t('tramway.notices.updated')
       else
         render :edit
       end
@@ -70,7 +72,8 @@ module Tramway
 
       @record.destroy
 
-      redirect_to public_send(entity.index_helper_method), notice: t('tramway.notices.deleted')
+      redirect_to Tramway::Engine.routes.url_helpers.public_send(entity.index_helper_method),
+                  notice: t('tramway.notices.deleted')
     end
 
     private
