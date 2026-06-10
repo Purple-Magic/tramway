@@ -16,6 +16,7 @@
     = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
     = stylesheet_link_tag "trix", "data-turbo-track": "reload"
     = javascript_include_tag "trix", "data-turbo-track": "reload", defer: true
+    = javascript_importmap_tags
 
   %body.bg-zinc-950.text-zinc-50
     = tramway_navbar title: 'Tramway'
