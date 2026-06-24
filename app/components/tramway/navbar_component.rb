@@ -14,8 +14,8 @@ module Tramway
     ].freeze
 
     MOBILE_MENU_CLASSES = %w[
-      fixed inset-0 z-50 hidden h-screen w-screen flex-col border-r border-zinc-800 bg-zinc-950 px-4 py-6 shadow-lg
-      transition-transform transform -translate-x-full duration-300 ease-in-out pt-16
+      fixed inset-0 z-50 hidden h-screen w-screen flex flex-col border-r border-zinc-800 bg-zinc-950 px-4 py-6 shadow-lg
+      transition-transform transform -translate-x-full duration-300 ease-in-out pt-16 justify-between
     ].freeze
 
     def initialize(**options)

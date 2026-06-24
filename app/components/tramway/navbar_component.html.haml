@@ -21,18 +21,21 @@
         = item
 
 #mobile-menu{ class: mobile_menu_classes }
-  - if @left_items.present?
-    %ul.flex.flex-col.space-y-1.pt-4
-      - @left_items.each do |item|
-        = item
+  .flex.flex-1.flex-col
+    .flex-1
+      - if @left_items.present?
+        %ul.flex.flex-col.space-y-1.pt-4
+          - @left_items.each do |item|
+            = item
 
-  - if @right_items.present?
-    %ul.flex.flex-col.space-y-1.pt-4
-      - @right_items.each do |item|
-        = item
+      - if @right_items.present?
+        %ul.flex.flex-col.space-y-1.pt-4
+          - @right_items.each do |item|
+            = item
 
-  %button.absolute.top-4.right-4.inline-flex.items-center.justify-center.rounded-md.p-2.text-zinc-50.transition-colors.hover:bg-zinc-800.hover:text-zinc-50.focus:outline-none.focus-visible:ring-2.focus-visible:ring-zinc-400.focus-visible:ring-offset-2.focus-visible:ring-offset-zinc-950#mobile-menu-close-button{ role: :button }
-    ⨯
+    .pt-6
+  %button.w-full.inline-flex.items-center.justify-center.rounded-md.border.border-zinc-700.bg-zinc-900.px-4.py-3.text-sm.font-semibold.text-zinc-50.transition-colors.hover:bg-zinc-800.hover:text-zinc-50.focus:outline-none.focus-visible:ring-2.focus-visible:ring-zinc-400.focus-visible:ring-offset-2.focus-visible:ring-offset-zinc-950#mobile-menu-close-button{ role: :button }
+    Close
 
 :javascript
   (() => {
