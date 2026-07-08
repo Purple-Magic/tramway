@@ -12,7 +12,7 @@ Codex instruction that points agents to the Tramway skill for Tramway-native cod
 * [Installation](https://github.com/Purple-Magic/tramway#installation)
 * [Getting Started](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#getting-started)
 * [Usage](https://github.com/Purple-Magic/tramway#usage)
-  * [Tramway Entities](https://github.com/Purple-Magic/tramway#tramway-entities)
+  * [Tramway CRUD](https://github.com/Purple-Magic/tramway#tramway-crud)
   * [Tramway Decorators](https://github.com/Purple-Magic/tramway#tramway-decorators)
   * [Tramway Form](https://github.com/Purple-Magic/tramway#tramway-form)
   * [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar)
@@ -132,7 +132,7 @@ Open [http://localhost:3000/users](http://localhost:3000/users)
 ## Usage
 
 
-### Tramway Entities
+### Tramway CRUD
 
 Tramway is an entity-based framework. **Entity** is the class on whose objects actions be applied: _index, show, create, update, and destroy_. Tramway will support numerous classes as entities. For now, Entity could be only **ActiveRecord::Base** class.
 
@@ -145,7 +145,7 @@ Tramway.configure do |config|
 end
 ```
 
-By default, links to the Tramway Entities index page are rendered in [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar).
+By default, links to the Tramway CRUD index page are rendered in [Tramway Navbar](https://github.com/Purple-Magic/tramway#tramway-navbar).
 
 #### Define entities with options
 
@@ -819,10 +819,10 @@ title_link: Link on Tramway Navbar title. Default: '/'
 background:
   color: Css-color. Supports all named CSS colors and HEX colors
   intensity: Color intensity. Range: **100..950**. Used by Tailwind. Not supported in case of using HEX color in the background.color
-with_entities: Show Tramway Entities index page links to navbar. Default: true
+with_entities: Show Tramway CRUD index page links to navbar. Default: true
 ```
 
-**NOTE:** `tramway_navbar` method called without arguments and block of code will render only [Tramway Entities](https://github.com/Purple-Magic/tramway#tramway-entities) links on the left.
+**NOTE:** `tramway_navbar` method called without arguments and block of code will render only [Tramway CRUD](https://github.com/Purple-Magic/tramway#tramway-crud) links on the left.
 
 In case you want to hide entity links you can pass `with_entities: false`.
 
