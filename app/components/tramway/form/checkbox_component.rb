@@ -4,8 +4,25 @@ module Tramway
   module Form
     # Tailwind-styled checkbox field
     class CheckboxComponent < TailwindComponent
+      CHECKBOX_BUTTON_BASE_STYLES = {
+        display: 'inline-flex',
+        'align-items': 'center',
+        'justify-content': 'center',
+        padding: '0',
+        'line-height': '1',
+        'box-sizing': 'border-box',
+        border: '1px solid #fafafa',
+        'box-shadow': '0 0 0 1px #fafafa'
+      }.freeze
+
+      CHECKBOX_BUTTON_SIZES = {
+        small: '1rem',
+        medium: '1.25rem',
+        large: '1.5rem'
+      }.freeze
+
       def checkbox_button_classes
-        'peer h-4 w-4 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 ' \
+        "peer #{size_class(:checkbox_input)} shrink-0 rounded-sm border border-zinc-50 bg-zinc-900 text-zinc-50 " \
           'ring-offset-zinc-950 ' \
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 ' \
           'focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ' \
@@ -14,7 +31,11 @@ module Tramway
       end
 
       def checkbox_indicator_classes
-        'flex items-center justify-center text-current hidden'
+        "flex hidden #{size_class(:checkbox_indicator)} items-center justify-center text-current"
+      end
+
+      def checkbox_button_style
+        checkbox_button_style_attributes.map { |key, value| "#{key}: #{value}" }.join('; ')
       end
 
       def checked?
@@ -36,18 +57,43 @@ module Tramway
       end
 
       def label_classes
-        default_classes = 'cursor-pointer mb-0 leading-6'
+        default_classes = 'cursor-pointer mb-0'
 
         case size
         when :small
-          default_classes += ' text-sm'
+          default_classes += ' text-sm leading-5'
         when :medium
-          default_classes += ' text-base'
+          default_classes += ' text-base leading-6'
         when :large
-          default_classes += ' text-lg'
+          default_classes += ' text-lg leading-7'
         end
 
         default_classes
+      end
+
+      def label_style
+        {
+          'align-self': 'center',
+          'line-height': checkbox_button_size,
+          'margin-bottom': '0'
+        }.map { |key, value| "#{key}: #{value}" }.join('; ')
+      end
+
+      private
+
+      def checkbox_button_style_attributes
+        CHECKBOX_BUTTON_BASE_STYLES.merge(
+          width: checkbox_button_size,
+          height: checkbox_button_size,
+          'min-width': checkbox_button_size,
+          'min-height': checkbox_button_size,
+          'background-color': checked? ? '#fafafa' : '#18181b',
+          color: checked? ? '#09090b' : '#fafafa'
+        )
+      end
+
+      def checkbox_button_size
+        CHECKBOX_BUTTON_SIZES.fetch(size, CHECKBOX_BUTTON_SIZES.fetch(:medium))
       end
     end
   end

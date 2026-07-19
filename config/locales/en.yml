@@ -5,6 +5,8 @@ en:
         title: "Create %{model_name}"
       edit:
         title: "Edit %{model_name}"
+    table:
+      actions_header: "Actions"
     actions:
       new: "New"
       edit: "Edit"

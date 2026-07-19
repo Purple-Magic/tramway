@@ -23,10 +23,11 @@ module Tramway
         component 'tramway/table', options:, &
       end
 
-      def tramway_header(headers: nil, columns: nil, &)
+      def tramway_header(headers: nil, columns: nil, **options, &)
         component 'tramway/table/header',
                   headers:,
                   columns:,
+                  options:,
                   &
       end
 
@@ -39,8 +40,8 @@ module Tramway
                   &
       end
 
-      def tramway_cell(&)
-        component 'tramway/table/cell', &
+      def tramway_cell(**options, &)
+        component 'tramway/table/cell', options:, &
       end
 
       def tramway_button(path: nil, text: nil, method: :get, form_options: {}, **options, &)

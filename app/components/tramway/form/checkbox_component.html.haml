@@ -1,4 +1,4 @@
-.flex.items-center.space-x-2{ class: default_container_classes, data: { controller: 'ui--checkbox' } }
+.flex.items-center.gap-2{ class: default_container_classes, data: { controller: 'ui--checkbox' } }
   - checkbox_checked = checked?
   = @input.call @attribute, **hidden_checkbox_options
   %button{ type: 'button',
@@ -9,6 +9,7 @@
     'data-ui--checkbox-target' => 'button',
     value: 'on',
     class: checkbox_button_classes,
+    style: checkbox_button_style,
     for: @for,
     id: @for }
     %span{ class: checkbox_indicator_classes, style: 'pointer-events: none', data: { 'ui--checkbox-target' => 'indicator' } }
@@ -21,9 +22,8 @@
         'stroke-width' => '2',
         'stroke-linecap' => 'round',
         'stroke-linejoin' => 'round',
-        class: 'h-4 w-4' }
+        class: size_class(:checkbox_indicator) }
         %polyline{ points: '20 6 9 17 4 12' }
   - if @label
-    %div
-      = component('tramway/form/label', for: @for, options: { class: label_classes, data: { action: 'click->ui--checkbox#toggle' } }) do
-        = @label
+    = component('tramway/form/label', for: @for, options: { class: label_classes, style: label_style, data: { action: 'click->ui--checkbox#toggle' } }) do
+      = @label

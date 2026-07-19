@@ -8,6 +8,7 @@ module Tramway
 
       option :headers, optional: true, default: -> { [] }
       option :columns, optional: true, default: -> { 3 }
+      option :options, optional: true, default: -> { {} }
 
       def columns_count(content = nil, parsed_cells: nil)
         return headers.size if headers.present?

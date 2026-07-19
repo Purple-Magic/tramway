@@ -68,7 +68,9 @@ module Tramway
           (model_class || entity.model_class).human_attribute_name(attribute)
         end
 
-        headers += ['Actions'] if entity&.page(:update).present? || entity&.page(:destroy).present?
+        if entity&.page(:update).present? || entity&.page(:destroy).present?
+          headers += [I18n.t('tramway.table.actions_header')]
+        end
 
         headers
       end

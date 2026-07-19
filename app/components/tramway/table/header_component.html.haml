@@ -1,5 +1,5 @@
 - parsed_cells = headers.any? ? nil : visible_cells_from(content)
-%div{ class: "#{header_row_classes} md:grid-cols-#{columns_count(parsed_cells: parsed_cells)}", aria: { label: "Table Header" }, role: "row" }
+%div{ class: [options[:class], "#{header_row_classes} md:grid-cols-#{columns_count(parsed_cells: parsed_cells)}"].compact.join(' '), aria: { label: "Table Header" }, role: "row", **options.except(:class) }
   - if headers.any?
     - headers.each do |header|
       .div-table-cell.border-b.border-zinc-800{ class: header_cell_classes }

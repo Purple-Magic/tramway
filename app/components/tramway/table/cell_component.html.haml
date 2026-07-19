@@ -1,2 +1,2 @@
-%div{ class: cell_classes }
+%div{ class: [options[:class], cell_classes].compact.join(' '), **options.except(:class) }
   = content

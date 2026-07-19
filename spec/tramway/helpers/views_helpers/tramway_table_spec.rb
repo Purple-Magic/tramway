@@ -26,4 +26,22 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
       expect(captured).to eq(name: 'tramway/table', kwargs: { options: { class: 'table' } }, block: block)
     end
   end
+
+  describe '#tramway_header' do
+    let(:header_block) { proc {} }
+
+    it 'delegates to tramway header component with options' do
+      expect(view).to receive(:component).with(
+        'tramway/table/header',
+        headers: %w[Name Email],
+        columns: nil,
+        options: { class: 'header' }
+      ) do |&received_block|
+        expect(received_block).to be header_block
+        :header_output
+      end
+
+      expect(view.tramway_header(headers: %w[Name Email], class: 'header', &header_block)).to eq :header_output
+    end
+  end
 end

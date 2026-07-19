@@ -13,13 +13,13 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
   describe '#tramway_cell' do
     let(:cell_block) { proc {} }
 
-    it 'delegates to tramway cell component' do
-      expect(view).to receive(:component).with('tramway/table/cell') do |&received_block|
+    it 'delegates to tramway cell component with options' do
+      expect(view).to receive(:component).with('tramway/table/cell', options: { class: 'cell' }) do |&received_block|
         expect(received_block).to be cell_block
         :cell_output
       end
 
-      expect(view.tramway_cell(&cell_block)).to eq :cell_output
+      expect(view.tramway_cell(class: 'cell', &cell_block)).to eq :cell_output
     end
   end
 end

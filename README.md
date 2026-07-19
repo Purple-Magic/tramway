@@ -548,6 +548,24 @@ UserDecorator.decorate user # => nil
 
 Read [behave_as_ar](https://github.com/Purple-Magic/tramway#behave_as_ar) section
 
+#### Actions column on index tables
+
+When an entity has `update` or `destroy` pages configured, Tramway automatically
+appends an `Actions` column to the end of the entity's index table headers,
+holding the edit/destroy controls for each row.
+
+This label is looked up through `I18n` (`tramway.table.actions_header`), so you
+can rename it to your own language by overriding the key in your app's locale
+file:
+
+*config/locales/en.yml*
+```yaml
+en:
+  tramway:
+    table:
+      actions_header: "Actions"
+```
+
 ### Tramway Form
 
 Tramway provides **convenient** form objects for Rails applications. List properties you want to change and the rules in Form classes. No controllers overloading.
@@ -1073,6 +1091,22 @@ details panel. Pass `preview: false` when you want a row without the preview pan
 <% end %>
 ```
 
+`tramway_cell` also forwards any HTML options to the underlying cell wrapper. Use this when you need per-cell classes,
+data attributes, ids, or other attributes:
+
+```erb
+<%= tramway_cell class: 'whitespace-nowrap', data: { turbo: false } do %>
+  <%= user.name %>
+<% end %>
+```
+
+`tramway_header` forwards HTML options to the header wrapper as well. That makes it easy to add ids, classes, or data
+attributes to the header row:
+
+```erb
+<%= tramway_header headers: ['Name', 'Email'], class: 'sticky top-0', data: { controller: 'table-header' } %>
+```
+
 When you render a header you can either pass the `headers:` array, as in the examples above, or render custom header content in
 the block. `tramway_header` uses the length of the `headers` array to build the grid if the array is present.
 If you omit the array and provide custom content, pass the `columns:` argument so the component knows how many grid columns to
@@ -1196,7 +1230,8 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 
 Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default. Form inputs use hardcoded
 dark shadcn-style classes; Tramway does not render a separate light form theme.
-Checkboxes render dark while unchecked and use the light primary checked state.
+Checkboxes render with a visible, fixed-size dark unchecked surface and use the light primary checked state.
+Checkbox controls, checkmarks, and vertically centered label line heights scale together with the form-level `size:` option.
 
 ```erb
 <%= tramway_form_for @user do |f| %>

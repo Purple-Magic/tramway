@@ -31,7 +31,7 @@ CLASSIC_FORM_CLASSES = {
     text-green-400 cursor-pointer
   ],
   checkbox_input: %w[
-    peer h-4 w-4 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 ring-offset-zinc-950
+    peer h-5 w-5 shrink-0 rounded-sm border border-zinc-50 bg-zinc-900 text-zinc-50 ring-offset-zinc-950
     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2
     disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-zinc-50
     data-[state=checked]:bg-zinc-50 data-[state=checked]:text-zinc-950
@@ -101,7 +101,17 @@ describe Tramway::Form::Builder, type: :view do
       expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
       expect(output).to have_selector 'input[type="checkbox"].hidden[data-ui--checkbox-target="input"]',
                                       visible: false
-      expect(output).to have_selector 'label.leading-6[data-action="click->ui--checkbox#toggle"]'
+      expect(output).to have_selector '.flex.items-center.gap-2 > button + label.mb-0.leading-6',
+                                      text: 'Permissions'
+      expect(output).to have_selector 'label[data-action="click->ui--checkbox#toggle"]'
+    end
+
+    it 'renders checkbox label alignment style' do
+      label = Capybara.string(output).find('button + label')
+
+      expect(label[:style]).to include('align-self: center')
+      expect(label[:style]).to include('line-height: 1.25rem')
+      expect(label[:style]).to include('margin-bottom: 0')
     end
 
     it 'renders shadcn-style checkbox button' do
@@ -112,11 +122,20 @@ describe Tramway::Form::Builder, type: :view do
       expect(button['data-state']).to eq 'unchecked'
     end
 
+    it 'renders checkbox button fixed inline sizing' do
+      button = Capybara.string(output).find('button[role="checkbox"]')
+
+      expect(button[:style]).to include('width: 1.25rem')
+      expect(button[:style]).to include('height: 1.25rem')
+      expect(button[:style]).to include('background-color: #18181b')
+      expect(button[:style]).to include('box-shadow: 0 0 0 1px #fafafa')
+    end
+
     it 'renders checkbox button styling and indicator' do
       button = Capybara.string(output).find('button[role="checkbox"]')
 
       expect(button[:class].split).to include(*theme_classes.fetch(:checkbox_input))
-      expect(output).to have_selector 'button span.hidden svg.h-4.w-4'
+      expect(output).to have_selector 'button span.flex.hidden.h-4.w-4 svg.h-4.w-4'
     end
   end
 
@@ -397,6 +416,26 @@ describe Tramway::Form::Builder, type: :view do
       it_behaves_like 'checkbox field classes',
                       label: CLASSIC_FORM_CLASSES[:label],
                       checkbox_input: CLASSIC_FORM_CLASSES[:checkbox_input]
+    end
+
+    context 'with small size' do
+      let(:form_options) { { size: :small } }
+
+      it 'aligns a compact checkbox and label' do
+        expect(output).to have_selector 'button.h-4.w-4 span.h-3.w-3 svg.h-3.w-3'
+        expect(Capybara.string(output).find('button[role="checkbox"]')[:style]).to include('width: 1rem')
+        expect(output).to have_selector 'button + label.text-sm.leading-5[style*="line-height: 1rem"]'
+      end
+    end
+
+    context 'with large size' do
+      let(:form_options) { { size: :large } }
+
+      it 'aligns a large checkbox and label' do
+        expect(output).to have_selector 'button.h-6.w-6 span.h-5.w-5 svg.h-5.w-5'
+        expect(Capybara.string(output).find('button[role="checkbox"]')[:style]).to include('width: 1.5rem')
+        expect(output).to have_selector 'button + label.text-lg.leading-7[style*="line-height: 1.5rem"]'
+      end
     end
   end
 
