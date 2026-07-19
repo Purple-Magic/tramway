@@ -72,7 +72,7 @@ class TailwindComponent < Tramway::BaseComponent
   end
 
   def checkbox_base_classes
-    'shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm ' \
+    'shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm transition-colors ' \
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 ' \
       'focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed ' \
       'disabled:opacity-50'

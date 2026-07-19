@@ -389,12 +389,12 @@ class UiCheckbox extends Controller {
     this.buttonTarget.setAttribute("aria-checked", checked.toString())
     this.buttonTarget.dataset.state = state
     this.syncBoxStyle(checked)
-    this.buttonTarget.classList.add("border-zinc-50")
+    this.buttonTarget.classList.toggle("border-zinc-50", checked)
+    this.buttonTarget.classList.toggle("border-zinc-800", !checked)
     this.buttonTarget.classList.toggle("bg-zinc-50", checked)
     this.buttonTarget.classList.toggle("text-zinc-950", checked)
-    this.buttonTarget.classList.toggle("bg-zinc-900", !checked)
+    this.buttonTarget.classList.toggle("bg-zinc-950", !checked)
     this.buttonTarget.classList.toggle("text-zinc-50", !checked)
-    this.buttonTarget.classList.remove("border-zinc-800", "bg-zinc-950")
     this.indicatorTarget.classList.toggle("hidden", !checked)
     this.buttonTarget.toggleAttribute("disabled", this.inputTarget.disabled)
   }
@@ -412,10 +412,8 @@ class UiCheckbox extends Controller {
     this.buttonTarget.style.padding = "0"
     this.buttonTarget.style.lineHeight = "1"
     this.buttonTarget.style.boxSizing = "border-box"
-    this.buttonTarget.style.border = "1px solid #fafafa"
-    this.buttonTarget.style.backgroundColor = checked ? "#fafafa" : "#18181b"
+    this.buttonTarget.style.backgroundColor = checked ? "#fafafa" : "#09090b"
     this.buttonTarget.style.color = checked ? "#09090b" : "#fafafa"
-    this.buttonTarget.style.boxShadow = "0 0 0 1px #fafafa"
   }
 
   checkboxSize() {

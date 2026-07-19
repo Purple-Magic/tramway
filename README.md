@@ -1230,7 +1230,7 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 
 Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default. Form inputs use hardcoded
 dark shadcn-style classes; Tramway does not render a separate light form theme.
-Checkboxes render with a visible, fixed-size dark unchecked surface and use the light primary checked state.
+Checkboxes render with the same dark border and focus highlight treatment as other inputs, then use the light primary checked state.
 Checkbox controls, checkmarks, and vertically centered label line heights scale together with the form-level `size:` option.
 
 ```erb

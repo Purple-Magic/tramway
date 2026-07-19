@@ -31,9 +31,9 @@ CLASSIC_FORM_CLASSES = {
     text-green-400 cursor-pointer
   ],
   checkbox_input: %w[
-    peer h-5 w-5 shrink-0 rounded-sm border border-zinc-50 bg-zinc-900 text-zinc-50 ring-offset-zinc-950
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2
-    disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-zinc-50
+    peer h-5 w-5 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm
+    transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
+    focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-zinc-50
     data-[state=checked]:bg-zinc-50 data-[state=checked]:text-zinc-950
   ]
 }.freeze
@@ -127,8 +127,7 @@ describe Tramway::Form::Builder, type: :view do
 
       expect(button[:style]).to include('width: 1.25rem')
       expect(button[:style]).to include('height: 1.25rem')
-      expect(button[:style]).to include('background-color: #18181b')
-      expect(button[:style]).to include('box-shadow: 0 0 0 1px #fafafa')
+      expect(button[:style]).to include('background-color: #09090b')
     end
 
     it 'renders checkbox button styling and indicator' do

@@ -39,7 +39,6 @@ feature 'Form For Base Test', :js, type: :feature do
       )
       button = find("button[role='checkbox']")
       expect(button[:class].split).to include(*theme_classes.fetch(:checkbox_input))
-      expect(button[:class].split).not_to include('border-zinc-800', 'bg-zinc-950')
     end
 
     scenario 'keeps unchecked checkbox visible' do
@@ -47,7 +46,7 @@ feature 'Form For Base Test', :js, type: :feature do
 
       expect(button[:style]).to include('width: 1.25rem')
       expect(button[:style]).to include('height: 1.25rem')
-      expect(button[:style]).to include('background-color: rgb(24, 24, 27)')
+      expect(button[:style]).to include('background-color: rgb(9, 9, 11)')
     end
 
     scenario 'toggle checkbox' do
@@ -87,8 +86,8 @@ feature 'Form For Base Test', :js, type: :feature do
                       disabled:cursor-not-allowed disabled:opacity-50
                     ],
                     checkbox_input: %w[
-                      peer h-5 w-5 shrink-0 rounded-sm border border-zinc-50 bg-zinc-900 text-zinc-50
-                      ring-offset-zinc-950
+                      peer h-5 w-5 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50
+                      shadow-sm transition-colors
                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
                       focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
                       data-[state=checked]:border-zinc-50 data-[state=checked]:bg-zinc-50

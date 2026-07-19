@@ -10,9 +10,7 @@ module Tramway
         'justify-content': 'center',
         padding: '0',
         'line-height': '1',
-        'box-sizing': 'border-box',
-        border: '1px solid #fafafa',
-        'box-shadow': '0 0 0 1px #fafafa'
+        'box-sizing': 'border-box'
       }.freeze
 
       CHECKBOX_BUTTON_SIZES = {
@@ -22,10 +20,7 @@ module Tramway
       }.freeze
 
       def checkbox_button_classes
-        "peer #{size_class(:checkbox_input)} shrink-0 rounded-sm border border-zinc-50 bg-zinc-900 text-zinc-50 " \
-          'ring-offset-zinc-950 ' \
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 ' \
-          'focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ' \
+        "peer #{size_class(:checkbox_input)} #{checkbox_base_classes} " \
           'data-[state=checked]:border-zinc-50 data-[state=checked]:bg-zinc-50 ' \
           'data-[state=checked]:text-zinc-950'
       end
@@ -87,7 +82,7 @@ module Tramway
           height: checkbox_button_size,
           'min-width': checkbox_button_size,
           'min-height': checkbox_button_size,
-          'background-color': checked? ? '#fafafa' : '#18181b',
+          'background-color': checked? ? '#fafafa' : '#09090b',
           color: checked? ? '#09090b' : '#fafafa'
         )
       end
