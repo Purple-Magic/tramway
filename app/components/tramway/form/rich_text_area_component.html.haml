@@ -12,3 +12,5 @@
     = component('tramway/form/label', for: @for, class: 'mb-0') do
       = @label
   = @input.call @attribute, **rich_text_area_options
+  - if @hint.present?
+    %p{ class: form_hint_classes }= @hint

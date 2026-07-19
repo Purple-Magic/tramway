@@ -198,6 +198,18 @@ describe Tramway::Form::Builder, type: :view do
         expect(output).to have_selector "input[value='#{email}']"
       end
     end
+
+    context 'with hint' do
+      let(:output) { builder.text_field :email, hint: 'Use your work email address.' }
+
+      it 'renders hint text below the input' do
+        expect(output).to have_selector 'input + p.mt-1.text-sm.text-zinc-400', text: 'Use your work email address.'
+      end
+
+      it 'does not forward hint as an input attribute' do
+        expect(output).not_to have_selector 'input[hint]'
+      end
+    end
   end
 
   describe '#email_field' do
@@ -367,6 +379,19 @@ describe Tramway::Form::Builder, type: :view do
         expect(output).not_to have_selector 'label'
       end
     end
+
+    context 'with hint' do
+      let(:output) { builder.rich_text_area :personal_info, hint: 'Formatting is supported.' }
+
+      it 'renders hint text below the editor' do
+        expect(output).to have_selector 'trix-editor + p.mt-1.text-sm.text-zinc-400',
+                                        text: 'Formatting is supported.'
+      end
+
+      it 'does not forward hint as an editor attribute' do
+        expect(output).not_to have_selector 'trix-editor[hint]'
+      end
+    end
   end
 
   describe '#rich_textarea' do
@@ -434,6 +459,19 @@ describe Tramway::Form::Builder, type: :view do
         expect(output).to have_selector 'button.h-6.w-6 span.h-5.w-5 svg.h-5.w-5'
         expect(Capybara.string(output).find('button[role="checkbox"]')[:style]).to include('width: 1.5rem')
         expect(output).to have_selector 'button + label.text-lg.leading-7[style*="line-height: 1.5rem"]'
+      end
+    end
+
+    context 'with hint' do
+      let(:output) { builder.check_box :permissions, hint: 'Allow access to admin actions.' }
+
+      it 'renders hint text below the checkbox row' do
+        expect(output).to have_selector '.flex.items-center.gap-2 + p.mt-1.text-sm.text-zinc-400',
+                                        text: 'Allow access to admin actions.'
+      end
+
+      it 'does not forward hint as an input attribute' do
+        expect(output).not_to have_selector 'input[hint]', visible: false
       end
     end
   end
@@ -517,6 +555,18 @@ describe Tramway::Form::Builder, type: :view do
 
       it 'gets value from object' do
         expect(output).to have_selector 'option[value="admin"][selected]'
+      end
+    end
+
+    context 'with hint' do
+      let(:output) { builder.select :role, %i[admin user], hint: 'Choose the account role.' }
+
+      it 'renders hint text below the select' do
+        expect(output).to have_selector 'select + p.mt-1.text-sm.text-zinc-400', text: 'Choose the account role.'
+      end
+
+      it 'does not forward hint as a select attribute' do
+        expect(output).not_to have_selector 'select[hint]'
       end
     end
   end

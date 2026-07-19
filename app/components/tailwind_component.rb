@@ -10,6 +10,7 @@ class TailwindComponent < Tramway::BaseComponent
   option :options
   option :label
   option :for
+  option :hint, optional: true, default: -> {}
   option :size, default: -> { :medium }
 
   SIZE_CLASSES = {
@@ -81,6 +82,10 @@ class TailwindComponent < Tramway::BaseComponent
   def form_label_classes
     'block text-sm font-medium leading-none mb-2 text-zinc-200 peer-disabled:cursor-not-allowed ' \
       'peer-disabled:opacity-70'
+  end
+
+  def form_hint_classes
+    'mt-1 text-sm text-zinc-400'
   end
 
   def default_container_classes

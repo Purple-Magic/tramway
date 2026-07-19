@@ -210,9 +210,14 @@ module Tramway
           attribute:,
           label: label_build(attribute, options),
           for: options[:id].presence || for_id(attribute),
+          hint: hint_option(options),
           options: options,
           size: form_size
         }
+      end
+
+      def hint_option(options)
+        options.delete(:hint) || options.delete('hint')
       end
 
       def label_build(attribute, options)

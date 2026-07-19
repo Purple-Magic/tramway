@@ -1253,10 +1253,12 @@ will render [this](https://play.tailwindcss.com/xho3LfjKkK)
 Use `size:` to control the input sizing (`:small`, `:medium`, or `:large`). The default is `:medium`, and supported inputs
 rendered within the form will use the same size value.
 Date and datetime fields open the browser's native picker when clicking anywhere in the input, not only the picker icon.
+Use `hint:` on any field to render muted helper text below the input. The hint option is handled by Tramway and is not
+forwarded as an HTML attribute.
 
 ```erb
 <%= tramway_form_for @user, size: :large do |f| %>
-  <%= f.text_field :text %>
+  <%= f.text_field :text, hint: 'This name is visible to teammates.' %>
   <%= f.submit 'Create User' %>
 <% end %>
 ```

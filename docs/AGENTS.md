@@ -712,11 +712,14 @@ end
 
 ```ruby
 = tramway_form_for @user do |f|
-  = f.email_field :email
+  = f.email_field :email, hint: 'Use the address where you receive account notifications.'
   = f.password_field :password
   = f.select :role, [["Admin", "admin"], ["Manager", "manager"]], include_blank: "Select role"
   = f.submit 'Save'
 ```
+
+Use `hint:` on fields when short helper text should appear below the input. Tramway renders the hint separately and does
+not forward it to the input as an HTML attribute.
 
 Autocomplete select example:
 

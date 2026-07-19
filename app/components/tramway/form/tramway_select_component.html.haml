@@ -11,3 +11,5 @@
           = component 'tramway/form/tramway_select/caret', size:, direction: :down
         .caret-up.hidden{ data: { "tramway-select-target" => "caretUp" } }
           = component 'tramway/form/tramway_select/caret', size:, direction: :up
+  - if @hint.present?
+    %p{ class: form_hint_classes }= @hint

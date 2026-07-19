@@ -5,3 +5,5 @@
     %label{ for: @for, class: classes }
       = @label
   = @input
+  - if @hint.present?
+    %p{ class: form_hint_classes }= @hint
