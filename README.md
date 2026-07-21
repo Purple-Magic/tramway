@@ -535,6 +535,27 @@ class UserDecorator < Tramway::BaseDecorator
 end
 ```
 
+#### Show associations
+
+Entity show pages can render associated records by returning association names from
+the decorator's `show_associations` method. Each name must be an actual
+Active Record association on the decorated model; Tramway raises a clear error
+when the association is missing.
+
+```ruby
+class PostDecorator < Tramway::BaseDecorator
+  association :comments
+
+  def show_associations
+    %i[comments]
+  end
+end
+```
+
+Tramway renders a `New` button for a shown association only when a
+`new_record_path` is provided for that association. Associations without a create
+route still render their records, but no creation button is displayed.
+
 #### Decorate nil
 
 Tramway Decorator does not decorate nil objects

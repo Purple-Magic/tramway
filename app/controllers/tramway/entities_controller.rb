@@ -93,7 +93,7 @@ module Tramway
     def set_associations
       @associations = @record.show_associations.map do |(association, options)|
         options ||= {}
-        association_type = @record.object.class.reflect_on_association(association).macro
+        association_type = reflection_for_show_association(association).macro
 
         {
           name: association,
@@ -101,6 +101,14 @@ module Tramway
           **send("#{association_type}_associations", association, options)
         }
       end.compact
+    end
+
+    def reflection_for_show_association(association)
+      reflection = @record.object.class.reflect_on_association(association)
+
+      return reflection if reflection.present?
+
+      raise "You must define #{association} association in the #{model_class}"
     end
 
     # rubocop:disable Naming/PredicatePrefix

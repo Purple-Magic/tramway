@@ -105,5 +105,10 @@ feature 'Entities Show Page', :js, type: :feature do
       paginations = all('nav.pagination')
       expect(paginations.size).to eq(2)
     end
+
+    scenario 'does not render a new button for associations without a new route' do
+      expect(page).to have_content('Comments')
+      expect(page).not_to have_link('New')
+    end
   end
 end

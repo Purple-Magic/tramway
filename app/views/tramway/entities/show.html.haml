@@ -52,9 +52,10 @@
             custom_path_method: @entity.index_helper_method,
             custom_path_arguments: [@record.id]
 
-      = tramway_button text: t('tramway.actions.new'),
-        path: association[:new_record_path],
-        type: :will
+      - if association[:new_record_path].present?
+        = tramway_button text: t('tramway.actions.new'),
+          path: association[:new_record_path],
+          type: :will
 
     - if association[:records].any?
       = tramway_table class: 'mt-4' do 
