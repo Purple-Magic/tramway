@@ -4,6 +4,7 @@
 class Post < ApplicationRecord
   belongs_to :user
   has_many :comments
+  has_many :responses, class_name: 'Comment'
   has_many :likes
 
   scope :search, ->(query) { where('title LIKE ?', "%#{sanitize_sql_like(query)}%") }

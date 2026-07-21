@@ -3,6 +3,7 @@
 require 'tramway/decorators/name_builder'
 require 'tramway/decorators/association'
 require 'tramway/decorators/collection_decorator'
+require 'tramway/decorators/show_associations'
 require 'tramway/helpers/decorate_helper'
 require 'tramway/helpers/component_helper'
 require 'tramway/helpers/views_helper'
@@ -14,6 +15,7 @@ module Tramway
   #
   class BaseDecorator
     include Tramway::Decorators::CollectionDecorators
+    include Tramway::Decorators::ShowAssociations
     include Tramway::Utils::Render
     include Tramway::DuckTyping::ActiveRecordCompatibility
     include Tramway::Helpers::DecorateHelper
