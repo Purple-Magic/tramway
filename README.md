@@ -1380,6 +1380,9 @@ Autocomplete select example:
 `autocomplete: true` renders an autocomplete-enabled select. It cannot be used together with `multiselect: true` in the
 same select field.
 
+When you use `multiselect: true`, make sure any preselected values still exist in the collection you render. Unknown
+values are ignored by the widget so the select can still boot safely.
+
 **Examples**
 
 1. Sign In Form for `devise` authentication

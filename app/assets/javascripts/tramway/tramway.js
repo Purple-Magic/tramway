@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+/* global console */
 
 class TramwaySelect extends Controller {
   static targets = ["dropdown", "showSelectedArea", "hiddenInput", "caretDown", "caretUp"]
@@ -32,11 +33,21 @@ class TramwaySelect extends Controller {
     });
 
     const initialValues = this.element.dataset.value === undefined ? [] : JSON.parse(this.element.dataset.value);
+    const selectedValues = new Set(initialValues.map(value => value.toString()));
+    const missingValues = initialValues
+      .map(value => value.toString())
+      .filter(value => !this.items.some(item => item.value.toString() === value));
 
-    initialValues.map((value) => {
-      const itemIndex = this.items.findIndex(x => x.value.toString() === value.toString());
-      this.items[itemIndex].selected = true;
-    })
+    if (missingValues.length > 0) {
+      console.warn(
+        `Tramway select ignored ${missingValues.length} stale selected value${missingValues.length === 1 ? '' : 's'} ` +
+        `that are not present in the collection: ${missingValues.join(', ')}.`
+      );
+    }
+
+    this.items.forEach(item => {
+      item.selected = selectedValues.has(item.value.toString());
+    });
 
     this.selectedItems = this.items.filter(item => item.selected);
 
@@ -136,6 +147,10 @@ class TramwaySelect extends Controller {
   toggleItem({ currentTarget }) {
     const itemIndex = this.items.findIndex(x => x.value === currentTarget.dataset.value);
     const itemSelectedIndex = this.selectedItems.findIndex(x => x.value === currentTarget.dataset.value);
+
+    if (itemIndex === -1) {
+      return;
+    }
 
     if (!this.multiple()) {
       this.selectedItems = [];

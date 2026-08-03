@@ -65,4 +65,12 @@ feature 'TramwaySelectComponent', :js, type: :feature do
 
     expect(logs.any? { |log| log.include?('Form updated') }).to be(true)
   end
+
+  scenario 'ignores selected values that are not present in the collection' do
+    visit new_user_path(stale_role: 1)
+
+    expect(page).to have_selector('.selected-option', text: 'Admin')
+    expect(page).not_to have_selector('.selected-option', text: 'missing-role')
+    expect(find("input[name='user[role]']", visible: :all).value).to eq('admin')
+  end
 end

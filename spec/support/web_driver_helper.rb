@@ -8,6 +8,7 @@ module WebDriverHelper
       window.collectedLogs = [];
       window.collectedLogEntries = [];
       const originalConsoleError = console.error;
+      const originalConsoleWarn = console.warn;
       const formatValue = (value) => {
         if (value === undefined) {
           return 'undefined';
@@ -55,6 +56,10 @@ module WebDriverHelper
       console.error = function(...args) {
         storeLog('error', args);
         originalConsoleError.apply(console, args);
+      };
+      console.warn = function(...args) {
+        storeLog('warn', args);
+        originalConsoleWarn.apply(console, args);
       };
     JS
   end

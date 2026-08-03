@@ -8,7 +8,8 @@
   = f.text_area :personal_info, label: 'Personal info'
   = f.check_box :permissions, label: 'Permissions'
   - roles = [['Admin', 'admin'], ['User', 'user'], ['Manager', 'manager'], ['Auditor', 'auditor'], ['Operator', 'operator'], ['Editor', 'editor'], ['Reviewer', 'reviewer'], ['Support', 'support']]
-  = f.select :role, roles, label: false, data: { controller: 'user-form', action: 'change->user-form#updateForm' }, multiple: true
+  - selected_roles = params[:stale_role].present? ? ['admin', 'missing-role'] : nil
+  = f.select :role, roles, label: false, data: { controller: 'user-form', action: 'change->user-form#updateForm' }, multiple: true, selected: selected_roles
   = f.select :team, [['Team 1', 'team1'], ['Team 2', 'team2']], autocomplete: true
 
   = f.submit 'Create user'
