@@ -3,12 +3,15 @@
 module Tramway
   # Navbar object provides left and right elements
   class Navbar
-    attr_reader :items, :context
+    attr_reader :items, :context, :direction
 
-    def initialize(context, with_entities:)
+    DIRECTIONS = %i[horizontal vertical].freeze
+
+    def initialize(context, with_entities:, direction: :vertical)
       @context = context
       @items = { left: [], right: [] }
       @filling = nil
+      @direction = normalize_direction(direction)
 
       return unless with_entities
 
@@ -71,6 +74,11 @@ module Tramway
 
     def reset_filling
       @filling = nil
+    end
+
+    def normalize_direction(direction)
+      normalized_direction = direction.to_s.presence&.to_sym
+      DIRECTIONS.include?(normalized_direction) ? normalized_direction : :vertical
     end
 
     def render_ignoring_block(text_or_url, url, method: nil, **options)

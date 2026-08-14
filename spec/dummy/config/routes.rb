@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get '/navbar-test', to: 'navbar_test#show'
+
   resources :users
   resources :clients
   resources :articles, only: :show

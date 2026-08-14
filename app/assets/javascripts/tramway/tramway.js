@@ -455,4 +455,54 @@ class Tooltip extends Controller {
   }
 }
 
-export { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip }
+class TramwayNavbar extends Controller {
+  connect() {
+    this.syncCollapsedState()
+  }
+
+  toggle(event) {
+    event.preventDefault()
+    this.setCollapsed(!this.isCollapsed())
+  }
+
+  syncCollapsedState() {
+    this.setCollapsed(this.isCollapsed())
+  }
+
+  isCollapsed() {
+    return document.body.dataset.tramwayNavbarCollapsed === "true"
+  }
+
+  setCollapsed(collapsed) {
+    const value = collapsed ? "true" : "false"
+    const button = this.element.querySelector("[data-tramway-navbar-collapse-button]")
+    const container = this.element.querySelector("[data-tramway-navbar-collapse-container]")
+    const sidebar = container ? container.parentElement : null
+
+    this.element.dataset.tramwayNavbarCollapsed = value
+    document.body.dataset.tramwayNavbarCollapsed = value
+
+    if (button) {
+      button.setAttribute("aria-expanded", (!collapsed).toString())
+    }
+
+    if (sidebar) {
+      sidebar.style.position = "relative"
+      sidebar.style.height = "100%"
+      sidebar.style.width = "100%"
+      sidebar.style.paddingBottom = "0"
+    }
+
+    if (container) {
+      container.style.position = "absolute"
+      container.style.display = "inline-flex"
+      container.style.width = "fit-content"
+      container.style.bottom = "0"
+      container.style.left = collapsed ? "50%" : "auto"
+      container.style.right = collapsed ? "auto" : "0"
+      container.style.transform = collapsed ? "translateX(-50%)" : "none"
+    }
+  }
+}
+
+export { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip, TramwayNavbar }

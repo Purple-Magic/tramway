@@ -78,12 +78,13 @@ module Tramway
 
       def stimulus_controller_imports
         [
-          'import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
+          'import { TramwayNavbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
         ]
       end
 
       def stimulus_controller_registrations
         [
+          "application.register('tramway-navbar', TramwayNavbar)",
           "application.register('tramway-select', TramwaySelect)",
           "application.register('table-row-preview', TableRowPreview)",
           "application.register('ui--checkbox', UiCheckbox)",
@@ -210,15 +211,25 @@ module Tramway
       end
 
       def remove_legacy_stimulus_imports(content)
-        legacy_imports = [
+        content.each_line.reject { |line| legacy_stimulus_import_line?(line) }.join
+      end
+
+      def legacy_stimulus_import_line?(line)
+        stripped = line.strip
+        legacy_stimulus_imports.include?(stripped) ||
+          stripped.match?(%r{\Aimport \{.*\} from ["']@tramway/tramway["']\z})
+      end
+
+      def legacy_stimulus_imports
+        [
+          'import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"',
+          'import { TramwayNavbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"',
           'import { TramwaySelect } from "@tramway/tramway-select"',
           'import { TableRowPreview } from "@tramway/table-row-preview"',
           'import { UiCheckbox } from "@tramway/checkbox"',
           'import { UiCheckbox } from "@tramway/ui-checkbox"',
           'import { Tooltip } from "@tramway/tooltip"'
         ]
-
-        content.each_line.reject { |line| legacy_imports.include?(line.strip) }.join
       end
 
       def remove_legacy_importmap_pins(content)

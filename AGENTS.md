@@ -2,3 +2,4 @@
 2. Change README.md file for every task when it is needed. It should contain a description of changed or added functionality, and instructions on how to use it if needed.
 3. Run `bundle exec appraisal rails-8.1 bundle exec rspec` to check that all tests are passing. If there are any failing tests, fix them and run the command again until all tests are passing. Do not run tests without appraisal.
 4. Everytime you use tailwind classes, make sure there are present inside the config/tailwind.config.js file.
+5. If a Tramway change requires host application wiring or generated files to change, update the `tramway:install` generator and its specs so new and existing host apps stay in sync.

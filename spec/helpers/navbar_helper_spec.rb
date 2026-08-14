@@ -29,12 +29,12 @@ shared_examples 'Helpers Navbar' do
     end
 
     it 'renders navbar with left and right items' do
-      expect(fragment).to have_css(left_items_css)
-        .and have_css(right_items_css)
+      expect(fragment).to have_css(left_items_css, visible: :all)
+        .and have_css(right_items_css, visible: :all)
 
       items.each do |(name, path)|
-        expect(fragment).to have_css "#{left_items_css} a[href='#{path}']", text: name
-        expect(fragment).to have_css "#{right_items_css} a[href='#{path}']", text: name
+        expect(fragment).to have_css "#{left_items_css} a[href='#{path}']", visible: :all, text: name
+        expect(fragment).to have_css "#{right_items_css} a[href='#{path}']", visible: :all, text: name
       end
     end
   end
@@ -50,13 +50,13 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
 
   describe '#tramway_navbar' do
     context 'with success' do
-      let(:left_items_css) { 'nav ul.flex-row.items-center.space-x-4.ml-4.hidden.md\\:flex' }
-      let(:right_items_css) { 'nav ul.items-center.space-x-4.hidden.md\\:flex' }
+      let(:left_items_css) { 'nav[class*="md:left-0"]' }
+      let(:right_items_css) { 'nav[class*="md:left-0"]' }
 
       it 'renders navbar' do
         fragment = view.tramway_navbar
 
-        expect(fragment).to have_css 'nav'
+        expect(fragment).to have_css 'nav', visible: :all
       end
 
       context 'with title checks' do
@@ -64,13 +64,13 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
           fragment = view.tramway_navbar(title:)
 
           expect(fragment).to have_content title
-          expect(fragment).to have_css "a[href='/']"
+          expect(fragment).to have_css "a[href='/']", visible: :all
         end
 
         it 'renders navbar with specific title link' do
           fragment = view.tramway_navbar(title:, title_link: '/home')
 
-          expect(fragment).to have_css "a[href='/home']"
+          expect(fragment).to have_css "a[href='/home']", visible: :all
         end
 
         it 'does not renders title in case user did not provide it' do
@@ -90,11 +90,22 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
         let(:path) { Rails.application.routes.url_helpers.users_path }
         let(:fragment) { view.tramway_navbar }
 
-        it 'does not render navbar with users link on the left' do
-          expect(fragment).not_to have_css "#{left_items_css} a[href='#{path}']", text: 'Users'
+        it 'renders the vertical navbar shell with the entity preset' do
+          expect(fragment).to have_css 'nav[class*="md:left-0"][class*="md:flex-col"][class*="md:w-64"]', visible: :all
+          expect(fragment).to have_css '#desktop-navbar-collapse-button', visible: :all
+          expect(fragment).to have_css '#desktop-navbar [data-tramway-navbar-content]', visible: :all
         end
 
         it_behaves_like 'Helpers Navbar'
+      end
+
+      context 'with horizontal direction' do
+        let(:fragment) { view.tramway_navbar(direction: :horizontal) }
+
+        it 'renders the horizontal desktop navbar classes' do
+          expect(fragment).to have_css 'nav .md\\:justify-between', visible: :all
+          expect(fragment).not_to have_css 'nav[class*="md:left-0"]', visible: :all
+        end
       end
     end
 

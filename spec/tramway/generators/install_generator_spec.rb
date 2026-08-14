@@ -226,6 +226,26 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       JS
     end
 
+    let(:index_with_existing_tramway_import) do
+      <<~JS
+        import { Application } from "@hotwired/stimulus"
+        import { UserForm } from "./user_form_controller"
+        import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+
+        const application = Application.start()
+
+        application.debug = false
+        window.Stimulus   = application
+        application.register('user-form', UserForm)
+        application.register('tramway-select', TramwaySelect)
+        application.register('table-row-preview', TableRowPreview)
+        application.register('ui--checkbox', UiCheckbox)
+        application.register('tramway-tooltip', Tooltip)
+
+        export { application }
+      JS
+    end
+
     # rubocop:disable RSpec/ExampleLength
     it 'appends the tramway controller import and registrations when index exists' do
       FileUtils.mkdir_p(File.dirname(controllers_index_path))
@@ -237,7 +257,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
         <<~JS
           import { Application } from "@hotwired/stimulus"
           import { UserForm } from "./user_form_controller"
-          import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+          import { TramwayNavbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
 
           const application = Application.start()
 
@@ -245,6 +265,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
           window.Stimulus   = application
           application.register('user-form', UserForm)
 
+          application.register('tramway-navbar', TramwayNavbar)
           application.register('tramway-select', TramwaySelect)
           application.register('table-row-preview', TableRowPreview)
           application.register('ui--checkbox', UiCheckbox)
@@ -274,6 +295,23 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       expect(second_run).to eq(first_run)
     end
 
+    it 'replaces an existing tramway import with the canonical import' do
+      FileUtils.mkdir_p(File.dirname(controllers_index_path))
+      File.write(controllers_index_path, index_with_existing_tramway_import)
+
+      run_generator
+
+      content = File.read(controllers_index_path)
+      canonical_import = 'import { TramwayNavbar, TramwaySelect, TableRowPreview, ' \
+                         'UiCheckbox, Tooltip } from "@tramway/tramway"'
+      legacy_import = 'import { TramwaySelect, TableRowPreview, UiCheckbox, ' \
+                      'Tooltip } from "@tramway/tramway"'
+
+      expect(content.scan(canonical_import).count).to eq(1)
+      expect(content.scan(legacy_import).count).to eq(0)
+      expect(content.scan("application.register('tramway-navbar', TramwayNavbar)").count).to eq(1)
+    end
+
     # rubocop:disable RSpec/ExampleLength
     it 'replaces legacy tramway imports with the single tramway import' do
       FileUtils.mkdir_p(File.dirname(controllers_index_path))
@@ -298,7 +336,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       content = File.read(controllers_index_path)
       expect(content.scan('UiCheckbox').count).to eq(2)
       expect(content).to include(
-        'import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
+        'import { TramwayNavbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
       )
       expect(content).not_to match(%r{@tramway/(?:tramway-select|table-row-preview|ui-checkbox|tooltip)})
     end

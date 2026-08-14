@@ -7,7 +7,7 @@ module Tramway
     # Provides navbar helpers for ActionView
     module NavbarHelper
       def tramway_navbar(with_entities: true, **options)
-        initialize_navbar(with_entities:)
+        initialize_navbar(with_entities:, direction: options[:direction])
 
         yield @navbar if block_given?
 
@@ -18,8 +18,8 @@ module Tramway
 
       private
 
-      def initialize_navbar(with_entities:)
-        @navbar = Tramway::Navbar.new self, with_entities:
+      def initialize_navbar(with_entities:, direction:)
+        @navbar = Tramway::Navbar.new self, with_entities:, direction:
       end
 
       def assign_navbar_items(options)

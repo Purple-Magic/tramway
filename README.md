@@ -107,6 +107,9 @@ If you ran `bin/rails g tramway:install`, the install generator already copied t
 Otherwise, copy this file from the gem:
 `config/tailwind.config.js`.
 
+When Tramway changes require host application wiring, rerun `bin/rails g tramway:install` after updating the gem so the
+generated controller registrations, importmap pins, and layout hooks stay in sync.
+
 
 **Step 5**
 
@@ -918,7 +921,10 @@ background:
   color: Css-color. Supports all named CSS colors and HEX colors
   intensity: Color intensity. Range: **100..950**. Used by Tailwind. Not supported in case of using HEX color in the background.color
 with_entities: Show Tramway CRUD index page links to navbar. Default: true
+direction: Navbar direction. Use `horizontal` for the current desktop top bar or `vertical` for a desktop left sidebar. Default: vertical. Vertical mode also adds a desktop-only left content offset so the sidebar does not overlap the page.
 ```
+
+Vertical is the default, and the desktop sidebar includes a collapse button that shrinks it into a compact rail without changing the mobile menu.
 
 **NOTE:** `tramway_navbar` method called without arguments and block of code will render only [Tramway CRUD](https://github.com/Purple-Magic/tramway#tramway-crud) links on the left.
 
@@ -1492,11 +1498,14 @@ pin '@tramway/tramway', to: 'tramway/tramway.js'
 ```js
 import { application } from "controllers/application"
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
-import { TramwaySelect } from "@tramway/tramway" // importing TramwaySelect controller class
+import { TramwayNavbar, TramwaySelect } from "@tramway/tramway" // importing Tramway controllers
 eagerLoadControllersFrom("controllers", application)
 
+application.register('tramway-navbar', TramwayNavbar) // register the desktop navbar collapse controller
 application.register('tramway-select', TramwaySelect) // register TramwaySelect controller class as `tramway-select` stimulus controller
 ```
+
+On desktop, the navbar collapse control sits in the bottom-right corner when expanded and moves to the bottom-center when collapsed.
 
 In case you need to use Stimulus `change` action with Tramway Select
 
