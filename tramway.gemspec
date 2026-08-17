@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'anyway_config'
   spec.add_dependency 'dry-initializer'
   spec.add_dependency 'dry-struct'
+  spec.add_dependency 'font-awesome-rails'
   spec.add_dependency 'haml-rails'
   spec.add_dependency 'kaminari'
   spec.add_dependency 'rails', '>= 7', '< 9'

@@ -2,6 +2,7 @@
 
 require 'rails/generators'
 require 'fileutils'
+require_relative 'layout_helpers'
 
 module Tramway
   module Generators
@@ -78,12 +79,13 @@ module Tramway
 
       def stimulus_controller_imports
         [
-          'import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
+          'import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
         ]
       end
 
       def stimulus_controller_registrations
         [
+          "application.register('tramway-navbar', Navbar)",
           "application.register('tramway-select', TramwaySelect)",
           "application.register('table-row-preview', TableRowPreview)",
           "application.register('ui--checkbox', UiCheckbox)",
@@ -93,28 +95,6 @@ module Tramway
 
       def agents_file_path
         @agents_file_path ||= File.join(destination_root, 'AGENTS.md')
-      end
-
-      def application_layout_haml_path
-        @application_layout_haml_path ||= File.join(destination_root, 'app/views/layouts/application.html.haml')
-      end
-
-      def application_layout_erb_path
-        @application_layout_erb_path ||= File.join(destination_root, 'app/views/layouts/application.html.erb')
-      end
-
-      def trix_haml_tags
-        "    = stylesheet_link_tag \"trix\", \"data-turbo-track\": \"reload\"\n    " \
-          "= javascript_include_tag \"trix\", \"data-turbo-track\": \"reload\", defer: true\n"
-      end
-
-      def trix_erb_tags
-        "    <%= stylesheet_link_tag \"trix\", \"data-turbo-track\": \"reload\" %>\n    " \
-          "<%= javascript_include_tag \"trix\", \"data-turbo-track\": \"reload\", defer: true %>\n"
-      end
-
-      def trix_already_present?(content)
-        content.include?('stylesheet_link_tag "trix"') || content.include?("stylesheet_link_tag 'trix'")
       end
 
       def codex_agents_instruction
@@ -171,30 +151,39 @@ module Tramway
         content.end_with?("\n") ? "\n" : "\n\n"
       end
 
-      # rubocop:disable Metrics/MethodLength
       def append_missing_imports(content)
         content = remove_legacy_stimulus_imports(content)
+        content = normalize_tramway_stimulus_imports(content)
         missing_imports = stimulus_controller_imports.reject { |line| content.include?(line) }
         return content if missing_imports.empty?
 
         import_lines = content.each_line.with_index.filter_map do |line, index|
           index if line.lstrip.start_with?('import ')
         end
-        insertion = "#{missing_imports.join("\n")}\n"
+        insert_missing_imports(content, missing_imports.join("\n"), import_lines)
+      end
+
+      def insert_missing_imports(content, imports, import_lines)
+        insertion = "#{imports}\n"
         updated = content.dup
 
-        if import_lines.any?
-          insertion_index = updated.lines[0..import_lines.max].join.length
-          updated.insert(insertion_index, insertion)
-        else
-          updated.prepend(insertion)
-        end
+        return updated.prepend(insertion) unless import_lines.any?
 
+        insertion_index = updated.lines[0..import_lines.max].join.length
+        updated.insert(insertion_index, insertion)
         updated
       end
-      # rubocop:enable Metrics/MethodLength
+
+      def normalize_tramway_stimulus_imports(content)
+        tramway_import_lines = content.each_line.select { |line| tramway_stimulus_import_line?(line) }
+        return content unless tramway_import_lines.any?
+        return content if normalized_tramway_import_lines?(tramway_import_lines)
+
+        content.each_line.reject { |line| tramway_stimulus_import_line?(line) }.join
+      end
 
       def append_missing_registrations(content)
+        content = normalize_tramway_stimulus_registrations(content)
         missing_registrations = stimulus_controller_registrations.reject { |line| content.include?(line) }
         return content if missing_registrations.empty?
 
@@ -219,6 +208,36 @@ module Tramway
         ]
 
         content.each_line.reject { |line| legacy_imports.include?(line.strip) }.join
+      end
+
+      def tramway_stimulus_import_line?(line)
+        line.strip.match?(%r{^import \{.*\} from ["']@tramway/tramway["']$})
+      end
+
+      def normalize_tramway_stimulus_registrations(content)
+        tramway_registration_lines = content.each_line.select { |line| tramway_stimulus_registration_line?(line) }
+        return content if tramway_registration_lines.sort == stimulus_controller_registrations.sort
+        return content unless tramway_registration_lines.any?
+
+        content.each_line.reject { |line| tramway_stimulus_registration_line?(line) }.join
+      end
+
+      def tramway_stimulus_registration_line?(line)
+        tramway_registration_prefixes.any? { |prefix| line.strip.start_with?(prefix) }
+      end
+
+      def normalized_tramway_import_lines?(tramway_import_lines)
+        tramway_import_lines.one? && tramway_import_lines.first.strip == stimulus_controller_imports.first
+      end
+
+      def tramway_registration_prefixes
+        [
+          "application.register('tramway-navbar'",
+          "application.register('tramway-select'",
+          "application.register('table-row-preview'",
+          "application.register('ui--checkbox'",
+          "application.register('tramway-tooltip'"
+        ]
       end
 
       def remove_legacy_importmap_pins(content)
@@ -257,10 +276,10 @@ module Tramway
     end
     # rubocop:enable Metrics/ModuleLength
 
-    # Running `rails generate tramway:install` will invoke this generator
-    #
+    # Installs Tramway dependencies and app wiring for a host Rails app.
     class InstallGenerator < Rails::Generators::Base
       include InstallGeneratorHelpers
+      include InstallGeneratorLayoutHelpers
 
       desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
 
@@ -348,30 +367,16 @@ module Tramway
 
       def ensure_trix_in_application_layout
         if File.exist?(application_layout_haml_path)
+          ensure_font_awesome_in_haml_layout
           ensure_trix_in_haml_layout
         elsif File.exist?(application_layout_erb_path)
+          ensure_font_awesome_in_erb_layout
           ensure_trix_in_erb_layout
         end
       end
 
-      private
-
-      def ensure_trix_in_haml_layout
-        content = File.read(application_layout_haml_path)
-        return if trix_already_present?(content)
-        return unless content.match?(/^\s+%body/)
-
-        updated = content.sub(/^(\s+%body)/, "#{trix_haml_tags}\\1")
-        File.write(application_layout_haml_path, updated)
-      end
-
-      def ensure_trix_in_erb_layout
-        content = File.read(application_layout_erb_path)
-        return if trix_already_present?(content)
-        return unless content.include?('</head>')
-
-        updated = content.sub('</head>', "#{trix_erb_tags}  </head>")
-        File.write(application_layout_erb_path, updated)
+      def ensure_navbar_sidebar_offset_in_application_layout
+        ensure_navbar_sidebar_offset
       end
     end
   end

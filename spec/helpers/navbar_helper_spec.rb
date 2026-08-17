@@ -46,13 +46,22 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
     view.extend described_class
   end
 
+  around do |example|
+    original_entities = Tramway.config.entities.map(&:to_h)
+    original_application_controller = Tramway.config.application_controller
+
+    example.run
+  ensure
+    Tramway.config.entities = original_entities
+    Tramway.config.application_controller = original_application_controller
+  end
+
   let(:title) { Faker::Company.name }
+  let(:left_items_css) { 'nav #desktop-navbar-content ul.tramway-navbar-desktop-vertical-list:first-of-type' }
+  let(:right_items_css) { 'nav #desktop-navbar-content ul.tramway-navbar-desktop-vertical-list:last-of-type' }
 
   describe '#tramway_navbar' do
     context 'with success' do
-      let(:left_items_css) { 'nav ul.flex-row.items-center.space-x-4.ml-4.hidden.md\\:flex' }
-      let(:right_items_css) { 'nav ul.items-center.space-x-4.hidden.md\\:flex' }
-
       it 'renders navbar' do
         fragment = view.tramway_navbar
 
@@ -95,6 +104,84 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
         end
 
         it_behaves_like 'Helpers Navbar'
+      end
+    end
+
+    context 'with vertical direction and items' do
+      let(:fragment) do
+        view.tramway_navbar do |nav|
+          nav.left do
+            items.each do |(name, path)|
+              nav.item name, path
+            end
+          end
+
+          nav.right do
+            items.each do |(name, path)|
+              nav.item name, path
+            end
+          end
+        end
+      end
+
+      let(:items) do
+        {
+          'Users' => '/users',
+          'Podcasts' => '/podcasts'
+        }
+      end
+
+      def desktop_navbar_css
+        [
+          '#desktop-navbar.md\\:fixed.md\\:left-0.md\\:top-0.md\\:z-40.md\\:w-72',
+          '[data-expanded="true"]'
+        ].join
+      end
+
+      it 'renders the expanded desktop menu structure' do
+        expect(fragment).to have_css desktop_navbar_css
+        expect(fragment).to have_css '#desktop-navbar-header'
+        expect(fragment).to have_css '#desktop-navbar-content'
+        expect(fragment).to have_css '#desktop-navbar-toggle-button[aria-label="Collapse sidebar"]'
+      end
+
+      it 'renders the expanded desktop menu items' do
+        expect(fragment).to have_css(left_items_css)
+        expect(fragment).to have_css(right_items_css)
+      end
+    end
+
+    context 'with horizontal direction and items' do
+      let(:fragment) do
+        view.tramway_navbar(direction: :horizontal) do |nav|
+          nav.left do
+            items.each do |(name, path)|
+              nav.item name, path
+            end
+          end
+
+          nav.right do
+            items.each do |(name, path)|
+              nav.item name, path
+            end
+          end
+        end
+      end
+
+      let(:items) do
+        {
+          'Users' => '/users',
+          'Podcasts' => '/podcasts'
+        }
+      end
+
+      let(:left_items_css) { 'nav ul.flex-row.items-center.space-x-4.ml-4.hidden.md\\:flex' }
+      let(:right_items_css) { 'nav ul.items-center.space-x-4.hidden.md\\:flex' }
+
+      it 'renders the current horizontal desktop layout' do
+        expect(fragment).to have_css left_items_css
+        expect(fragment).to have_css right_items_css
+        expect(fragment).not_to have_css '#desktop-navbar-toggle-button'
       end
     end
 

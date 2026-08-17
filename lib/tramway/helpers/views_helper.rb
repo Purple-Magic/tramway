@@ -63,6 +63,7 @@ module Tramway
       end
 
       def tramway_main_container(**options, &)
+        options[:id] ||= 'tramway-main-container'
         component 'tramway/containers/main', options:, &
       end
 

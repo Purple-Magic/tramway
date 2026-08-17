@@ -7,10 +7,8 @@ module Tramway
       option :options, optional: true, default: proc { {} }
 
       def container_classes
-        options_classes = options[:class] || ''
-
         theme_classes(
-          classic: "bg-zinc-950 text-zinc-50 shadow-inner#{options_classes}"
+          classic: ['bg-zinc-950 text-zinc-50 shadow-inner', options[:class]].compact.join(' ')
         )
       end
     end

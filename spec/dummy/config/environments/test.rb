@@ -61,6 +61,9 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
+  # Allow Capybara and other test servers to reach the dummy app.
+  config.hosts.clear
+
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 end

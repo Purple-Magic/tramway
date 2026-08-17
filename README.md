@@ -920,9 +920,21 @@ background:
 with_entities: Show Tramway CRUD index page links to navbar. Default: true
 ```
 
+When you use the default vertical navbar layout, it renders as a fixed left sidebar on desktop. The icon-only
+sidebar toggle collapses the whole sidebar and keeps the main content offset in sync, so the page shifts between
+`md:pl-72` and `md:pl-24` as the sidebar changes width.
+
+Tramway now ships with Font Awesome loaded through the engine, and the vertical navbar collapse control uses
+`fa-chevron-left` when expanded and `fa-chevron-right` when collapsed.
+Tramway ships a plain `font-awesome.css` asset for Propshaft compatibility and adds Font Awesome's font
+directory to the host app asset load path, so `stylesheet_link_tag "font-awesome"` resolves without extra
+app-side asset configuration.
+
 **NOTE:** `tramway_navbar` method called without arguments and block of code will render only [Tramway CRUD](https://github.com/Purple-Magic/tramway#tramway-crud) links on the left.
 
 In case you want to hide entity links you can pass `with_entities: false`.
+
+The default `:vertical` navbar now renders as a fixed left sidebar on desktop screens. If your page content uses a full-width layout, wrap it with `tramway_main_container class: 'md:pl-72'` so the sidebar has room.
 
 ```erb
 <% if current_user.present? %>

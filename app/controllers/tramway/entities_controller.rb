@@ -28,7 +28,7 @@ module Tramway
 
     def show
       @record = tramway_decorate(
-        model_class.find(params[:id]),
+        model_class.find(params.expect(:id)),
         namespace: entity.namespace
       ).with(view_context:)
 
@@ -40,14 +40,14 @@ module Tramway
     end
 
     def edit
-      @record = tramway_form model_class.find(params[:id]), namespace: entity.namespace
+      @record = tramway_form model_class.find(params.expect(:id)), namespace: entity.namespace
     end
 
     # rubocop:disable Metrics/AbcSize
     def create
       @record = tramway_form model_class.new, namespace: entity.namespace
 
-      if @record.submit params[model_class.model_name.param_key]
+      if @record.submit params.require(model_class.model_name.param_key).permit!
         redirect_to Tramway::Engine.routes.url_helpers.public_send(entity.show_helper_method, @record.id),
                     notice: t('tramway.notices.created')
       else
@@ -56,9 +56,9 @@ module Tramway
     end
 
     def update
-      @record = tramway_form model_class.find(params[:id]), namespace: entity.namespace
+      @record = tramway_form model_class.find(params.expect(:id)), namespace: entity.namespace
 
-      if @record.submit params[model_class.model_name.param_key]
+      if @record.submit params.require(model_class.model_name.param_key).permit!
         redirect_to Tramway::Engine.routes.url_helpers.public_send(entity.show_helper_method, @record.id),
                     notice: t('tramway.notices.updated')
       else
@@ -68,7 +68,7 @@ module Tramway
     # rubocop:enable Metrics/AbcSize
 
     def destroy
-      @record = model_class.find(params[:id])
+      @record = model_class.find(params.expect(:id))
 
       @record.destroy
 

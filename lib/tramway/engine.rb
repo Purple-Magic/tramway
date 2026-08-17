@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'font-awesome-rails'
+
 module Tramway
   # Rails plugin is the Engine
   #
@@ -17,8 +19,14 @@ module Tramway
     end
 
     initializer 'tramway.assets.precompile' do |app|
+      font_awesome_font_paths.each do |path|
+        path_string = path.to_s
+        app.config.assets.paths << path_string unless app.config.assets.paths.include?(path_string)
+      end
+
       app.config.assets.precompile += %w[
         tramway/tramway.js
+        font-awesome.css
       ]
     end
 
@@ -86,6 +94,10 @@ module Tramway
 
         loaded_class.include Tramway::Searchable
       end
+    end
+
+    def font_awesome_font_paths
+      [FontAwesome::Rails::Engine.root.join('app/assets/fonts')]
     end
 
     def configure_pagination

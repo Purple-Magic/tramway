@@ -226,34 +226,35 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       JS
     end
 
-    # rubocop:disable RSpec/ExampleLength
+    def expected_index_content
+      <<~JS
+        import { Application } from "@hotwired/stimulus"
+        import { UserForm } from "./user_form_controller"
+        import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+
+        const application = Application.start()
+
+        application.debug = false
+        window.Stimulus   = application
+        application.register('user-form', UserForm)
+
+        application.register('tramway-navbar', Navbar)
+        application.register('tramway-select', TramwaySelect)
+        application.register('table-row-preview', TableRowPreview)
+        application.register('ui--checkbox', UiCheckbox)
+        application.register('tramway-tooltip', Tooltip)
+        export { application }
+      JS
+    end
+
     it 'appends the tramway controller import and registrations when index exists' do
       FileUtils.mkdir_p(File.dirname(controllers_index_path))
       File.write(controllers_index_path, base_index_content)
 
       run_generator
 
-      expect(File.read(controllers_index_path)).to eq(
-        <<~JS
-          import { Application } from "@hotwired/stimulus"
-          import { UserForm } from "./user_form_controller"
-          import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
-
-          const application = Application.start()
-
-          application.debug = false
-          window.Stimulus   = application
-          application.register('user-form', UserForm)
-
-          application.register('tramway-select', TramwaySelect)
-          application.register('table-row-preview', TableRowPreview)
-          application.register('ui--checkbox', UiCheckbox)
-          application.register('tramway-tooltip', Tooltip)
-          export { application }
-        JS
-      )
+      expect(File.read(controllers_index_path)).to eq(expected_index_content)
     end
-    # rubocop:enable RSpec/ExampleLength
 
     it 'does not create controllers index when missing' do
       run_generator
@@ -274,35 +275,102 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       expect(second_run).to eq(first_run)
     end
 
-    # rubocop:disable RSpec/ExampleLength
-    it 'replaces legacy tramway imports with the single tramway import' do
-      FileUtils.mkdir_p(File.dirname(controllers_index_path))
-      File.write(controllers_index_path, <<~JS)
+    def legacy_index_content
+      <<~JS
         import { Application } from "@hotwired/stimulus"
-        import { TramwaySelect } from "@tramway/tramway-select"
-        import { TableRowPreview } from "@tramway/table-row-preview"
-        import { UiCheckbox } from "@tramway/ui-checkbox"
-        import { Tooltip } from "@tramway/tooltip"
+        import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
 
         const application = Application.start()
 
+        application.register('tramway-navbar', Navbar)
         application.register('tramway-select', TramwaySelect)
         application.register('table-row-preview', TableRowPreview)
         application.register('ui--checkbox', UiCheckbox)
         application.register('tramway-tooltip', Tooltip)
         export { application }
       JS
+    end
+
+    def old_shared_import_index_content
+      <<~JS
+        import { Application } from "@hotwired/stimulus"
+        import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+
+        const application = Application.start()
+
+        application.debug = false
+        window.Stimulus   = application
+        application.register('tramway-select', TramwaySelect)
+        application.register('table-row-preview', TableRowPreview)
+        application.register('ui--checkbox', UiCheckbox)
+        application.register('tramway-tooltip', Tooltip)
+        export { application }
+      JS
+    end
+
+    def old_tramway_navbar_index_content
+      <<~JS
+        import { Application } from "@hotwired/stimulus"
+        import { TramwayNavbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+
+        const application = Application.start()
+
+        application.debug = false
+        window.Stimulus   = application
+        application.register('tramway-select', TramwaySelect)
+        application.register('table-row-preview', TableRowPreview)
+        application.register('ui--checkbox', UiCheckbox)
+        application.register('tramway-tooltip', Tooltip)
+        application.register('tramway-navbar', TramwayNavbar)
+        export { application }
+      JS
+    end
+
+    it 'replaces legacy tramway imports with the single tramway import' do
+      FileUtils.mkdir_p(File.dirname(controllers_index_path))
+      File.write(controllers_index_path, legacy_index_content)
 
       run_generator
 
       content = File.read(controllers_index_path)
       expect(content.scan('UiCheckbox').count).to eq(2)
-      expect(content).to include(
-        'import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
-      )
+      expect(content).to eq(legacy_index_content)
       expect(content).not_to match(%r{@tramway/(?:tramway-select|table-row-preview|ui-checkbox|tooltip)})
     end
-    # rubocop:enable RSpec/ExampleLength
+
+    it 'upgrades the old shared tramway import without duplicating controllers' do
+      FileUtils.mkdir_p(File.dirname(controllers_index_path))
+      File.write(controllers_index_path, old_shared_import_index_content)
+
+      run_generator
+
+      content = File.read(controllers_index_path)
+
+      expect(content).to include(
+        'import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
+      )
+      expect(content.scan('TramwaySelect').count).to eq(2)
+      expect(content.scan('import {').count).to eq(2)
+      expect(content).not_to include(
+        'import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
+      )
+    end
+
+    it 'upgrades the old tramway navbar import without duplicating controllers' do
+      FileUtils.mkdir_p(File.dirname(controllers_index_path))
+      File.write(controllers_index_path, old_tramway_navbar_index_content)
+
+      run_generator
+
+      content = File.read(controllers_index_path)
+
+      expect(content).to include(
+        'import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
+      )
+      expect(content.scan('TramwayNavbar').count).to eq(0)
+      expect(content.scan('TramwaySelect').count).to eq(2)
+      expect(content.scan('application.register(\'tramway-navbar\'').count).to eq(1)
+    end
   end
 
   describe 'trix tags in application layout' do
@@ -319,6 +387,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
         %html
           %head
             = stylesheet_link_tag "application", "data-turbo-track": "reload"
+            = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
             = javascript_importmap_tags
           %body
             = yield
@@ -332,6 +401,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
           <head>
             <title>App</title>
             <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+            <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
             <%= javascript_importmap_tags %>
           </head>
           <body>
@@ -354,6 +424,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
         expect(content).to include('= stylesheet_link_tag "trix", "data-turbo-track": "reload"')
         expect(content).to include('= javascript_include_tag "trix", "data-turbo-track": "reload", defer: true')
+        expect(content).to include('= stylesheet_link_tag "font-awesome", "data-turbo-track": "reload"')
         expect(content.index('stylesheet_link_tag "trix"')).to be < content.index('%body')
       end
 
@@ -382,6 +453,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
         expect(content).to include('stylesheet_link_tag "trix", "data-turbo-track": "reload"')
         expect(content).to include('javascript_include_tag "trix", "data-turbo-track": "reload", defer: true')
+        expect(content).to include('stylesheet_link_tag "font-awesome", "data-turbo-track": "reload"')
         expect(content.index('stylesheet_link_tag "trix"')).to be < content.index('</head>')
       end
 
@@ -394,6 +466,32 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
         expect(second_run).to eq(first_run)
         expect(second_run.scan('stylesheet_link_tag "trix"').count).to eq(1)
+      end
+    end
+
+    context 'with an existing HAML layout that uses the old right sidebar offset' do
+      before do
+        FileUtils.mkdir_p(File.dirname(haml_layout_path))
+        File.write(
+          haml_layout_path,
+          <<~HAML
+            %html
+              %body
+                = tramway_main_container class: 'md:pr-72' do
+                  = yield
+          HAML
+        )
+      end
+
+      it 'rewrites the offset to the left sidebar spacing used by the navbar controller' do
+        run_generator
+
+        content = File.read(haml_layout_path)
+
+        expect(content).to include(
+          "= tramway_main_container class: 'md:pl-72 transition-all duration-300 ease-in-out' do"
+        )
+        expect(content).not_to include('md:pr-72')
       end
     end
 

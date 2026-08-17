@@ -6,11 +6,12 @@ module Tramway
   module Helpers
     # Provides navbar helpers for ActionView
     module NavbarHelper
-      def tramway_navbar(with_entities: true, **options)
+      def tramway_navbar(with_entities: true, direction: :vertical, **options)
         initialize_navbar(with_entities:)
 
         yield @navbar if block_given?
 
+        options[:direction] = direction if options[:direction].nil?
         assign_navbar_items(options)
 
         render_navbar_component(options)

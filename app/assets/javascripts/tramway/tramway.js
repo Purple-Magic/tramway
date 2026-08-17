@@ -455,4 +455,177 @@ class Tooltip extends Controller {
   }
 }
 
-export { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip }
+class Navbar extends Controller {
+  connect() {
+    this.root = document.documentElement
+    this.desktopBreakpoint = 768
+    this.menuHiddenClass = 'hidden'
+    this.menuOffscreenClass = '-translate-x-full'
+    this.rootLockClass = 'overflow-hidden'
+    this.desktopNavbarExpandedWidthClass = 'md:w-72'
+    this.desktopNavbarCollapsedWidthClass = 'md:w-24'
+    this.desktopMainExpandedPaddingClass = 'md:pl-72'
+    this.desktopMainCollapsedPaddingClass = 'md:pl-24'
+    this.hiddenInteractionClasses = ['opacity-0', 'pointer-events-none']
+
+    this.desktopNavbar = this.element
+    this.desktopHeader = document.getElementById('desktop-navbar-header')
+    this.desktopMenu = document.getElementById('desktop-navbar-content')
+    this.desktopMainContainer = document.getElementById('tramway-main-container')
+    this.desktopToggleButton = document.getElementById('desktop-navbar-toggle-button')
+    this.desktopToggleIcon = document.getElementById('desktop-navbar-toggle-icon')
+    this.desktopToggleWrapper = document.getElementById('desktop-navbar-toggle-wrapper')
+    this.mobileButton = document.getElementById('mobile-menu-button')
+    this.mobileCloseButton = document.getElementById('mobile-menu-close-button')
+    this.mobileMenu = document.getElementById('mobile-menu')
+
+    this.handleMobileToggle = this.toggleMobileMenu.bind(this)
+    this.handleMobileClose = this.closeMobileMenu.bind(this)
+    this.handleBeforeCache = this.handleBeforeCache.bind(this)
+    this.handleResize = this.handleResize.bind(this)
+    this.handleDesktopToggle = this.toggleDesktopExpanded.bind(this)
+
+    this.bindMobileControls()
+    this.bindDesktopControls()
+    document.addEventListener('turbo:before-cache', this.handleBeforeCache)
+    window.addEventListener('resize', this.handleResize)
+
+    if (this.isDesktopViewport()) {
+      this.syncDesktopExpandedState()
+    }
+  }
+
+  disconnect() {
+    document.removeEventListener('turbo:before-cache', this.handleBeforeCache)
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  bindMobileControls() {
+    if (this.mobileButton) {
+      this.mobileButton.addEventListener('click', this.handleMobileToggle)
+    }
+
+    if (this.mobileCloseButton) {
+      this.mobileCloseButton.addEventListener('click', this.handleMobileClose)
+    }
+
+    if (this.mobileMenu) {
+      this.mobileMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => this.closeMobileMenu())
+      })
+    }
+  }
+
+  bindDesktopControls() {
+    if (this.isVertical() && this.desktopToggleButton) {
+      this.desktopToggleButton.addEventListener('click', this.handleDesktopToggle)
+    }
+  }
+
+  handleBeforeCache() {
+    this.closeMobileMenu({ hideImmediately: true })
+  }
+
+  handleResize() {
+    if (window.innerWidth >= 640) {
+      this.closeMobileMenu({ hideImmediately: true })
+    }
+
+    if (this.isDesktopViewport()) {
+      this.syncDesktopExpandedState()
+    }
+  }
+
+  toggleMobileMenu() {
+    if (!this.mobileMenu) return
+
+    if (this.mobileMenu.classList.contains(this.menuHiddenClass)) {
+      this.openMobileMenu()
+      return
+    }
+
+    this.closeMobileMenu()
+  }
+
+  openMobileMenu() {
+    if (!this.mobileMenu) return
+
+    this.mobileMenu.classList.remove(this.menuHiddenClass)
+    requestAnimationFrame(() => {
+      this.mobileMenu.classList.remove(this.menuOffscreenClass)
+      this.root.classList.add(this.rootLockClass)
+    })
+  }
+
+  closeMobileMenu({ hideImmediately = false } = {}) {
+    if (!this.mobileMenu) {
+      this.root.classList.remove(this.rootLockClass)
+      return
+    }
+
+    this.mobileMenu.classList.add(this.menuOffscreenClass)
+    this.root.classList.remove(this.rootLockClass)
+
+    if (hideImmediately) {
+      this.mobileMenu.classList.add(this.menuHiddenClass)
+      return
+    }
+
+    this.mobileMenu.addEventListener(
+      'transitionend',
+      () => this.mobileMenu.classList.add(this.menuHiddenClass),
+      { once: true }
+    )
+  }
+
+  toggleDesktopExpanded() {
+    this.setDesktopExpanded(this.desktopNavbar.dataset.expanded === 'false')
+  }
+
+  syncDesktopExpandedState() {
+    this.setDesktopExpanded(this.desktopNavbar.dataset.expanded !== 'false')
+  }
+
+  setDesktopExpanded(expanded) {
+    if (!this.isVertical() || !this.desktopNavbar || !this.desktopHeader || !this.desktopMenu || !this.desktopMainContainer || !this.desktopToggleButton || !this.desktopToggleWrapper) {
+      return
+    }
+
+    this.desktopNavbar.classList.toggle(this.desktopNavbarExpandedWidthClass, expanded)
+    this.desktopNavbar.classList.toggle(this.desktopNavbarCollapsedWidthClass, !expanded)
+    this.desktopNavbar.dataset.expanded = expanded ? 'true' : 'false'
+
+    this.desktopMainContainer.classList.toggle(this.desktopMainExpandedPaddingClass, expanded)
+    this.desktopMainContainer.classList.toggle(this.desktopMainCollapsedPaddingClass, !expanded)
+
+    this.hiddenInteractionClasses.forEach((className) => {
+      this.desktopHeader.classList.toggle(className, !expanded)
+      this.desktopMenu.classList.toggle(className, !expanded)
+    })
+
+    this.desktopHeader.toggleAttribute('inert', !expanded)
+    this.desktopMenu.toggleAttribute('inert', !expanded)
+    this.desktopHeader.setAttribute('aria-hidden', expanded ? 'false' : 'true')
+    this.desktopMenu.setAttribute('aria-hidden', expanded ? 'false' : 'true')
+
+    this.desktopToggleWrapper.classList.toggle('justify-end', expanded)
+    this.desktopToggleWrapper.classList.toggle('justify-center', !expanded)
+    if (this.desktopToggleIcon) {
+      this.desktopToggleIcon.className = expanded ? 'fa fa-chevron-left' : 'fa fa-chevron-right'
+    }
+
+    this.desktopToggleButton.setAttribute('aria-label', expanded ? 'Collapse sidebar' : 'Expand sidebar')
+
+    this.desktopToggleButton.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+  }
+
+  isVertical() {
+    return this.element.dataset.direction === 'vertical'
+  }
+
+  isDesktopViewport() {
+    return this.isVertical() && window.innerWidth >= this.desktopBreakpoint
+  }
+}
+
+export { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip, Navbar }

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ENV['RAILS_ENV'] ||= 'test'
+
 require File.expand_path('dummy/config/environment', __dir__)
 
 require 'spec_helper'
@@ -18,6 +20,9 @@ require 'support/theme_helper'
 require 'support/tramway_select_helpers'
 require 'support/turbo_stream_from_helper'
 require 'fileutils'
+
+FactoryBot.definition_file_paths = [File.expand_path('factories', __dir__)]
+FactoryBot.find_definitions
 
 RSpec.configure do |config|
   config.before(:suite) do
