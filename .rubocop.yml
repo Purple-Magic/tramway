@@ -49,6 +49,11 @@ Rails/HasManyOrHasOneDependent:
 Style/ItBlockParameter:
   Enabled: false
 
+Style/Documentation:
+  Exclude:
+    - lib/generators/tramway/install/font_awesome_helpers.rb
+    - spec/**/*
+
 RSpec/AnyInstance:
   Enabled: false
 

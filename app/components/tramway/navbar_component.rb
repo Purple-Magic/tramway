@@ -3,6 +3,10 @@
 module Tramway
   # Navbar component
   class NavbarComponent < TailwindComponent
+    NAVBAR_BASE_CLASSES = %w[
+      bg-zinc-950 text-zinc-50
+    ].freeze
+
     HORIZONTAL_NAVBAR_CLASSES = %w[
       flex items-center justify-between border-zinc-800 px-4 py-3 shadow-sm backdrop-blur sm:px-6
     ].freeze
@@ -36,7 +40,9 @@ module Tramway
     end
 
     def navbar_classes
-      classes = vertical? ? VERTICAL_NAVBAR_CLASSES + VERTICAL_DESKTOP_NAVBAR_CLASSES : HORIZONTAL_NAVBAR_CLASSES
+      classes = NAVBAR_BASE_CLASSES.dup
+      classes.concat(HORIZONTAL_NAVBAR_CLASSES) if horizontal?
+      classes.concat(VERTICAL_NAVBAR_CLASSES + VERTICAL_DESKTOP_NAVBAR_CLASSES) if vertical?
 
       classes.join(' ')
     end
@@ -51,6 +57,10 @@ module Tramway
 
     def mobile_menu_classes
       MOBILE_MENU_CLASSES.join(' ')
+    end
+
+    def mobile_horizontal_container_classes
+      "#{HORIZONTAL_NAVBAR_CLASSES.join(' ')} md:hidden"
     end
 
     def horizontal?

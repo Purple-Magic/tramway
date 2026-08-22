@@ -929,6 +929,10 @@ Tramway now ships with Font Awesome loaded through the engine, and the vertical 
 Tramway ships a plain `font-awesome.css` asset for Propshaft compatibility and adds Font Awesome's font
 directory to the host app asset load path, so `stylesheet_link_tag "font-awesome"` resolves without extra
 app-side asset configuration.
+On mobile, `tramway_navbar` always renders the same top navbar regardless of `direction:`. Desktop `:horizontal`
+renders the classic top navbar, and desktop `:vertical` renders the collapsible sidebar.
+When `tramway_navbar` renders before `tramway_main_container`, the main container helper keeps the vertical
+sidebar offset in sync automatically and removes it for horizontal pages.
 
 **NOTE:** `tramway_navbar` method called without arguments and block of code will render only [Tramway CRUD](https://github.com/Purple-Magic/tramway#tramway-crud) links on the left.
 
@@ -1610,7 +1614,7 @@ end
 
 ## Contributing
 
-Install [lefthook](https://github.com/evilmartians/lefthook)
+`lefthook` is pinned in [.tool-versions](/home/kalashnikovisme/projects/tramway/.tool-versions) so `mise` can resolve the shim used by `make install`.
 
 ```
 make install

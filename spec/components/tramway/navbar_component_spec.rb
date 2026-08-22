@@ -25,6 +25,7 @@ describe Tramway::NavbarComponent, type: :component do
       render_inline(described_class.new(title: 'Purple Magic', left_items: ["<a href='/test'>Test</a>".html_safe]))
 
       desktop_navbar_css = [
+        '#desktop-navbar.flex.flex-col.border-zinc-800.px-4.py-3.shadow-sm.backdrop-blur.sm\\:px-6',
         '#desktop-navbar.md\\:fixed.md\\:left-0.md\\:top-0.md\\:z-40.md\\:w-72',
         '[data-expanded="true"]'
       ].join
@@ -34,6 +35,12 @@ describe Tramway::NavbarComponent, type: :component do
       expect(page).to have_css '#desktop-navbar-content'
       expect(page).to have_css '#desktop-navbar-toggle-button[aria-label="Collapse sidebar"]'
       expect(page).to have_css '.tramway-navbar-desktop-vertical'
+    end
+
+    it 'renders the mobile toggle on vertical navigation too' do
+      render_inline(described_class.new(title: 'Purple Magic', left_items: ["<a href='/test'>Test</a>".html_safe]))
+
+      expect(page).to have_css '#mobile-menu-button'
     end
 
     it 'adds extra top spacing before the vertical items list' do
@@ -48,7 +55,32 @@ describe Tramway::NavbarComponent, type: :component do
       expect(page).to have_css '#desktop-navbar-toggle-icon.fa.fa-chevron-left'
     end
 
-    it 'renders the current desktop layout when horizontal is requested' do
+    it 'renders the horizontal desktop root contract' do
+      render_inline(
+        described_class.new(
+          title: 'Purple Magic',
+          direction: :horizontal,
+          left_items: ["<a href='/test'>Test</a>".html_safe]
+        )
+      )
+
+      expect(page).to have_css '#desktop-navbar[data-direction="horizontal"]'
+    end
+
+    it 'renders separate left and right desktop groups when horizontal is requested' do
+      render_inline(
+        described_class.new(
+          title: 'Purple Magic',
+          direction: :horizontal,
+          left_items: ["<a href='/test'>Test</a>".html_safe]
+        )
+      )
+
+      expect(page).to have_css '#desktop-navbar > .flex > ul.hidden.md\\:flex.items-center.space-x-4:first-of-type'
+      expect(page).to have_css '#desktop-navbar > .flex > ul.hidden.md\\:flex.items-center.space-x-4:last-of-type'
+    end
+
+    it 'keeps the mobile menu button available in horizontal mode' do
       render_inline(
         described_class.new(
           title: 'Purple Magic',
@@ -59,7 +91,7 @@ describe Tramway::NavbarComponent, type: :component do
 
       expect(page).not_to have_css '#desktop-navbar-content'
       expect(page).not_to have_css '#desktop-navbar-toggle-button'
-      expect(page).to have_css 'nav ul.flex-row.items-center.space-x-4.ml-4.hidden.md\\:flex'
+      expect(page).to have_css '#mobile-menu-button'
     end
   end
 

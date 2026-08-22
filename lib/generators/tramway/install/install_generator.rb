@@ -2,6 +2,7 @@
 
 require 'rails/generators'
 require 'fileutils'
+require_relative 'font_awesome_helpers'
 require_relative 'layout_helpers'
 
 module Tramway
@@ -279,6 +280,7 @@ module Tramway
     # Installs Tramway dependencies and app wiring for a host Rails app.
     class InstallGenerator < Rails::Generators::Base
       include InstallGeneratorHelpers
+      include InstallGeneratorFontAwesomeHelpers
       include InstallGeneratorLayoutHelpers
 
       desc 'Installs Tramway dependencies and Tailwind safelist configuration.'

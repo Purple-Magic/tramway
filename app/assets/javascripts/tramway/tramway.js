@@ -551,7 +551,7 @@ class Navbar extends Controller {
     if (!this.mobileMenu) return
 
     this.mobileMenu.classList.remove(this.menuHiddenClass)
-    requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
       this.mobileMenu.classList.remove(this.menuOffscreenClass)
       this.root.classList.add(this.rootLockClass)
     })

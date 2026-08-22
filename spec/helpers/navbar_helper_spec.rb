@@ -175,12 +175,13 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
         }
       end
 
-      let(:left_items_css) { 'nav ul.flex-row.items-center.space-x-4.ml-4.hidden.md\\:flex' }
-      let(:right_items_css) { 'nav ul.items-center.space-x-4.hidden.md\\:flex' }
+      let(:left_items_css) { 'nav > .flex > ul.hidden.md\\:flex.items-center.space-x-4:first-of-type' }
+      let(:right_items_css) { 'nav > .flex > ul.hidden.md\\:flex.items-center.space-x-4:last-of-type' }
 
       it 'renders the current horizontal desktop layout' do
         expect(fragment).to have_css left_items_css
         expect(fragment).to have_css right_items_css
+        expect(fragment).to have_css '#mobile-menu-button'
         expect(fragment).not_to have_css '#desktop-navbar-toggle-button'
       end
     end

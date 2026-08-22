@@ -64,6 +64,7 @@ module Tramway
 
       def tramway_main_container(**options, &)
         options[:id] ||= 'tramway-main-container'
+        options[:class] = tramway_main_container_classes(options[:class])
         component 'tramway/containers/main', options:, &
       end
 
@@ -102,6 +103,17 @@ module Tramway
 
       def normalize_form_size(size)
         FORM_SIZES.include?(size) ? size : :medium
+      end
+
+      def tramway_main_container_classes(value)
+        classes = Array(value).flat_map { _1.to_s.split }
+
+        return classes.join(' ') if @tramway_navbar_direction.nil?
+
+        classes = classes.reject { _1.start_with?('md:pl-') || _1.start_with?('md:pr-') }
+        classes << 'md:pl-72' if @tramway_navbar_direction == :vertical
+
+        classes.join(' ')
       end
     end
   end

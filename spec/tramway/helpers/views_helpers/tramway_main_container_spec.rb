@@ -26,5 +26,26 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
 
       expect(fragment).to have_css('#custom-main-container')
     end
+
+    it 'removes sidebar offset classes when the navbar is horizontal' do
+      view.tramway_navbar(direction: :horizontal, with_entities: false)
+
+      fragment = view.tramway_main_container(class: 'md:pl-72 transition-all duration-300 ease-in-out') do
+        'Content'
+      end
+
+      expect(fragment).not_to have_css('#tramway-main-container.md\\:pl-72')
+      expect(fragment).to have_css('#tramway-main-container.transition-all.duration-300.ease-in-out')
+    end
+
+    it 'keeps the left sidebar offset when the navbar is vertical' do
+      view.tramway_navbar(direction: :vertical, with_entities: false)
+
+      fragment = view.tramway_main_container(class: 'transition-all duration-300 ease-in-out') do
+        'Content'
+      end
+
+      expect(fragment).to have_css('#tramway-main-container.md\\:pl-72.transition-all.duration-300.ease-in-out')
+    end
   end
 end

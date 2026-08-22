@@ -2,6 +2,7 @@
 
 module Tramway
   module Generators
+    # Layout helpers for Tramway generator template updates.
     module InstallGeneratorLayoutHelpers
       private
 
@@ -32,20 +33,6 @@ module Tramway
           content.include?("stylesheet_link_tag 'font-awesome'")
       end
 
-      def ensure_trix_in_application_layout
-        if File.exist?(application_layout_haml_path)
-          ensure_font_awesome_in_haml_layout
-          ensure_trix_in_haml_layout
-        elsif File.exist?(application_layout_erb_path)
-          ensure_font_awesome_in_erb_layout
-          ensure_trix_in_erb_layout
-        end
-      end
-
-      def ensure_navbar_sidebar_offset_in_application_layout
-        ensure_navbar_sidebar_offset
-      end
-
       def navbar_sidebar_offset_class
         'md:pl-72 transition-all duration-300 ease-in-out'
       end
@@ -65,30 +52,6 @@ module Tramway
         return unless content.include?('</head>')
 
         updated = content.sub('</head>', "#{trix_erb_tags}  </head>")
-        File.write(application_layout_erb_path, updated)
-      end
-
-      def ensure_font_awesome_in_haml_layout
-        content = File.read(application_layout_haml_path)
-        return if font_awesome_already_present?(content)
-        return unless content.match?(/^\s+= stylesheet_link_tag "tailwind", "data-turbo-track": "reload"/)
-
-        updated = content.sub(
-          /^(\s+= stylesheet_link_tag "tailwind", "data-turbo-track": "reload"\n)/,
-          "\\1    = stylesheet_link_tag \"font-awesome\", \"data-turbo-track\": \"reload\"\n"
-        )
-        File.write(application_layout_haml_path, updated)
-      end
-
-      def ensure_font_awesome_in_erb_layout
-        content = File.read(application_layout_erb_path)
-        return if font_awesome_already_present?(content)
-        return unless content.include?('</head>')
-
-        updated = content.sub(
-          /(\s+<%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>\n)/,
-          "\\1    <%= stylesheet_link_tag \"font-awesome\", \"data-turbo-track\": \"reload\" %>\n"
-        )
         File.write(application_layout_erb_path, updated)
       end
 
