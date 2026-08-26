@@ -1,0 +1,11 @@
+%div{ class: grid_classes, role: :grid, aria: { label: 'Dashboard grid', rowcount: rows, colcount: columns }, style: grid_shell_style, **options.except(:class) }
+  .pointer-events-none.absolute.inset-0.rounded-xl{ aria: { hidden: 'true' } }
+    .grid{ style: grid_net_style }
+      - grid_cells.each do |row|
+        - row.each do |row_index, column_index|
+          = content_tag :div, nil,
+                        class: grid_cell_classes(row_index, column_index),
+                        style: grid_cell_style
+
+  .relative.z-10.grid.gap-1{ role: :presentation, style: grid_net_style }
+    = content

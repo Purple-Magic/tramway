@@ -1,5 +1,8 @@
 const defaultTheme = require("tailwindcss/defaultTheme")
 
+const buildUtilities = (prefix, start, end) =>
+  Array.from({ length: end - start + 1 }, (_, index) => `${prefix}${start + index}`)
+
 module.exports = {
   safelist: [
     // === Navbar ===
@@ -90,11 +93,22 @@ module.exports = {
     'border-r',
     'border-t',
     'border',
+    'border-dotted',
+    'border-zinc-700/50',
+    'border-zinc-100/60',
+    'box-border',
     'gap-4',
     'gap-1',
     'gap-2',
     'grid-cols-1',
     'grid',
+    'overflow-auto',
+    'inset-x-0',
+    'inset-y-0',
+    ...buildUtilities('md:grid-cols-', 1, 12),
+    ...buildUtilities('md:grid-rows-', 1, 12),
+    ...buildUtilities('md:col-span-', 1, 12),
+    ...buildUtilities('md:row-span-', 1, 12),
     'px-4',
     'px-3',
     'py-3',
@@ -105,6 +119,7 @@ module.exports = {
     'inset-0',
     'top-4',
     'right-4',
+    'z-10',
     'flex-col',
     'items-center',
     'justify-between',

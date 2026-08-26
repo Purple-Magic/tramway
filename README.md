@@ -20,6 +20,7 @@ Codex instruction that points agents to the Tramway skill for Tramway-native cod
   * [Tramway Tooltip](https://github.com/Purple-Magic/tramway#tramway-tooltip)
   * [Tramway Chat](https://github.com/Purple-Magic/tramway#tramway-chat)
   * [Tramway Table Component](https://github.com/Purple-Magic/tramway#tramway-table-component)
+  * [Tramway Grid](https://github.com/Purple-Magic/tramway#tramway-grid)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
     * [Stimulus-based inputs](https://github.com/Purple-Magic/tramway#stimulus-based-inputs)
   * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#tailwind-styled-pagination-for-kaminari)
@@ -1185,6 +1186,32 @@ details panel. Pass `preview: false` when you want a row without the preview pan
     <%= user.email %>
   <% end %>
 <% end %>
+```
+
+### Tramway Grid
+
+Use `tramway_grid` when you want dashboard-style layouts with cards that span multiple rows and columns while keeping the
+existing Tramway dark zinc styling. The grid accepts `rows:` and `columns:`, and it also accepts `outline: true` when you
+want to show borders around each internal grid cell. Cards use `size: [rows, columns]`, with responsive spans on desktop
+and stacked cards on smaller screens. Each grid cell is rendered as a real `20em x 20em` box, and the grid always builds
+the exact `rows x columns` matrix even when the slot is empty. Cards participate in the same grid, so `size: [1, 1]`
+occupies exactly one cell.
+
+```haml
+= tramway_grid rows: 8, columns: 8, outline: true do
+  = tramway_card size: [1, 2] do
+    .text-sm.font-medium.text-zinc-400 Revenue
+    .mt-2.text-3xl.font-semibold.text-zinc-50 $128,240
+
+  = tramway_card size: [2, 3] do
+    .text-sm.font-medium.text-zinc-400 Activity
+    .mt-4.space-y-2
+      .flex.items-center.justify-between
+        %span.text-zinc-300 Orders
+        %span.text-zinc-50 48
+      .flex.items-center.justify-between
+        %span.text-zinc-300 Refunds
+        %span.text-zinc-50 3
 ```
 
 `tramway_cell` also forwards any HTML options to the underlying cell wrapper. Use this when you need per-cell classes,

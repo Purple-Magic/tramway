@@ -23,6 +23,14 @@ module Tramway
         component 'tramway/table', options:, &
       end
 
+      def tramway_grid(rows:, columns:, outline: false, **options, &)
+        component 'tramway/grid', rows:, columns:, outline:, options:, &
+      end
+
+      def tramway_card(size: [1, 1], **options, &)
+        component 'tramway/grid/card', size:, options:, &
+      end
+
       def tramway_header(headers: nil, columns: nil, **options, &)
         component 'tramway/table/header',
                   headers:,
