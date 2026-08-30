@@ -1151,17 +1151,23 @@ implementations.
 <% end %>
 ```
 
-`tramway_table` accepts the same optional `options` hash as `Tramway::TableComponent`. The hash is forwarded as HTML
-attributes, so you can pass things like `id`, `data` attributes, or additional classes. If you do not supply your own width
-utility (e.g. a class that starts with `w-`), the component automatically appends `w-full` to keep the table responsive. This
-allows you to extend the default styling without losing the sensible defaults provided by the component.
+`tramway_table` accepts an optional `size:` argument plus the same `options` hash as `Tramway::TableComponent`. Supported
+sizes are `:small`, `:medium`, and `:large`. The default is `:medium`, and it renders exactly like the current table
+implementation. The `options` hash is forwarded as HTML attributes, so you can pass things like `id`, `data` attributes, or
+additional classes. The table itself carries the default dark background (`bg-zinc-950`), so you can override it directly
+with a utility like `class: '!bg-red-500'`. If you do not supply your own width utility (e.g. a class that starts with `w-`),
+the component automatically appends `w-full` to keep the table responsive.
 
-Use the optional `href:` argument on `tramway_row` to turn an entire row into a link. Linked rows gain pointer and hover styles
-(`cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700`) to indicate interactivity.
+`tramway_row`, `tramway_header`, and `tramway_cell` automatically follow the active table size, so a single `size:` on
+`tramway_table` controls the whole table.
+
+Use the optional `href:` argument on `tramway_row` to turn an entire row into a link. Linked rows keep their transparent
+background and gain pointer and hover styles (`cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700`) to indicate
+interactivity.
 
 ```erb
-<%= tramway_table class: 'max-w-3xl border border-gray-200', data: { controller: 'table' } do %>
-  <%= tramway_header', headers: ['Name', 'Email'] %>
+<%= tramway_table size: :large, class: 'max-w-3xl border border-gray-200', data: { controller: 'table' } do %>
+  <%= tramway_header headers: ['Name', 'Email'] %>
 
   <%= tramway_row href: user_path(user) do %>
     <%= tramway_cell do %>
@@ -1192,10 +1198,10 @@ details panel. Pass `preview: false` when you want a row without the preview pan
 
 Use `tramway_grid` when you want dashboard-style layouts with cards that span multiple rows and columns while keeping the
 existing Tramway dark zinc styling. The grid accepts `rows:` and `columns:`, and it also accepts `outline: true` when you
-want to show borders around each internal grid cell. Cards use `size: [rows, columns]`, with responsive spans on desktop
-and stacked cards on smaller screens. Each grid cell is rendered as a real `20em x 20em` box, and the grid always builds
-the exact `rows x columns` matrix even when the slot is empty. Cards participate in the same grid, so `size: [1, 1]`
-occupies exactly one cell.
+want to show separators between cells. Those separators are drawn in the gap between grid cells, so they stay centered
+when cards have content. Cards use `size: [rows, columns]`, with responsive spans on desktop and stacked cards on smaller
+screens. Each grid cell is rendered as a real `20em x 20em` box, and the grid always builds the exact `rows x columns`
+matrix even when the slot is empty. Cards participate in the same grid, so `size: [1, 1]` occupies exactly one cell.
 
 ```haml
 = tramway_grid rows: 8, columns: 8, outline: true do

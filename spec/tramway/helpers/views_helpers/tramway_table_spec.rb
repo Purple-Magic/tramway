@@ -4,6 +4,37 @@ require 'rails_helper'
 require 'tramway/helpers/views_helper'
 require 'support/view_helpers'
 
+SMALL_HEADER_ROW_CLASSES =
+  'div-table-row grid grid-cols-1 gap-2 rounded-t-xl border-b border-zinc-800 ' \
+  'bg-zinc-900 text-zinc-400'
+SMALL_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 hidden px-4 py-2 first:block md:block'
+SMALL_CELL_CLASSES = 'div-table-cell hidden bg-transparent px-4 py-2 text-sm font-medium ' \
+                     'text-zinc-100 first:block md:block'
+MEDIUM_HEADER_ROW_CLASSES =
+  'div-table-row grid grid-cols-1 gap-4 rounded-t-xl border-b border-zinc-800 ' \
+  'bg-zinc-900 text-zinc-400'
+MEDIUM_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 hidden px-6 py-4 first:block md:block'
+MEDIUM_CELL_CLASSES = 'div-table-cell hidden bg-transparent px-6 py-4 text-base font-medium ' \
+                      'text-zinc-100 first:block md:block'
+
+RENDER_TABLE_FRAGMENT = lambda do |view, size: :medium|
+  view.tramway_table(size:) do
+    view.safe_join(
+      [
+        view.tramway_header(headers: %w[Name Email]),
+        view.tramway_row(preview: false) do
+          view.safe_join(
+            [
+              view.tramway_cell { 'Alice' },
+              view.tramway_cell { 'alice@example.com' }
+            ]
+          )
+        end
+      ]
+    )
+  end
+end
+
 RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
   before do
     described_class.include ViewHelpers
@@ -11,7 +42,26 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
   end
 
   describe '#tramway_table' do
-    it 'delegates to tramway table component with provided options and block' do
+    it 'delegates to tramway table component with provided options, size, and block' do
+      block = proc {}
+      captured = {}
+
+      allow(view).to receive(:component) do |name, **kwargs, &received_block|
+        captured = { name:, kwargs:, block: received_block }
+        :component_output
+      end
+
+      result = view.tramway_table(size: :large, class: 'table', &block)
+
+      expect(result).to eq :component_output
+      expect(captured).to eq(
+        name: 'tramway/table',
+        kwargs: { size: :large, options: { class: 'table' } },
+        block: block
+      )
+    end
+
+    it 'defaults to medium size' do
       block = proc {}
       captured = {}
 
@@ -23,7 +73,27 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
       result = view.tramway_table(class: 'table', &block)
 
       expect(result).to eq :component_output
-      expect(captured).to eq(name: 'tramway/table', kwargs: { options: { class: 'table' } }, block: block)
+      expect(captured).to eq(
+        name: 'tramway/table',
+        kwargs: { size: :medium, options: { class: 'table' } },
+        block: block
+      )
+    end
+
+    it 'propagates the current size to nested row and cell helpers' do
+      fragment = RENDER_TABLE_FRAGMENT.call(view, size: :small)
+
+      expect(fragment).to include(SMALL_HEADER_ROW_CLASSES)
+      expect(fragment).to include(SMALL_HEADER_CELL_CLASSES)
+      expect(fragment).to include(SMALL_CELL_CLASSES)
+    end
+
+    it 'renders the current medium table classes unchanged' do
+      fragment = RENDER_TABLE_FRAGMENT.call(view)
+
+      expect(fragment).to include(MEDIUM_HEADER_ROW_CLASSES)
+      expect(fragment).to include(MEDIUM_HEADER_CELL_CLASSES)
+      expect(fragment).to include(MEDIUM_CELL_CLASSES)
     end
   end
 

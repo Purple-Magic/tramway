@@ -6,9 +6,20 @@ module Tramway
     class RowComponent < Tramway::BaseComponent
       include ContentCells
 
-      DESKTOP_ROW_CLASSES = %w[
-        div-table-row grid grid-cols-1 gap-4 border-b border-zinc-800 bg-zinc-950 last:border-b-0
-      ].freeze
+      SIZE_CLASSES = {
+        small: {
+          row: 'div-table-row grid grid-cols-1 gap-2 border-b border-zinc-800 bg-transparent last:border-b-0',
+          cell: 'div-table-cell bg-transparent px-4 py-2 text-sm font-medium text-zinc-100 sm:text-sm'
+        },
+        medium: {
+          row: 'div-table-row grid grid-cols-1 gap-4 border-b border-zinc-800 bg-transparent last:border-b-0',
+          cell: 'div-table-cell bg-transparent px-6 py-4 text-xs font-medium text-zinc-100 sm:text-base'
+        },
+        large: {
+          row: 'div-table-row grid grid-cols-1 gap-6 border-b border-zinc-800 bg-transparent last:border-b-0',
+          cell: 'div-table-cell bg-transparent px-6 py-6 text-lg font-medium text-zinc-100'
+        }
+      }.freeze
 
       option :cells, optional: true, default: -> { [] }
       option :href, optional: true
@@ -32,7 +43,7 @@ module Tramway
       end
 
       def desktop_row_classes(cells_count)
-        (DESKTOP_ROW_CLASSES + ["md:grid-cols-#{cells_count}"]).join(' ')
+        "#{size_classes.fetch(:row)} md:grid-cols-#{cells_count}"
       end
 
       def link_row_classes
@@ -40,25 +51,31 @@ module Tramway
       end
 
       def cell_classes
-        'div-table-cell px-6 py-4 text-xs font-medium text-zinc-100 sm:text-base'
+        size_classes.fetch(:cell)
       end
 
       def around_render
         ensure_view_context_accessor
-        previous_flag = view_context.tramway_inside_cell
-        view_context.tramway_inside_cell = href.present?
+        context = tramway_table_context
+        previous_flag = context.tramway_inside_cell
+        context.tramway_inside_cell = href.present?
 
         yield
       ensure
-        view_context.tramway_inside_cell = previous_flag
+        context.tramway_inside_cell = previous_flag if context.respond_to?(:tramway_inside_cell=)
       end
 
       private
 
       def ensure_view_context_accessor
-        return if view_context.respond_to?(:tramway_inside_cell=)
+        context = tramway_table_context
+        return if context.respond_to?(:tramway_inside_cell=)
 
-        view_context.singleton_class.attr_accessor :tramway_inside_cell
+        context.singleton_class.attr_accessor :tramway_inside_cell
+      end
+
+      def size_classes
+        SIZE_CLASSES.fetch(tramway_table_size) { SIZE_CLASSES[:medium] }
       end
     end
   end

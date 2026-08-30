@@ -1,5 +1,12 @@
 %div{ class: grid_classes, role: :grid, aria: { label: 'Dashboard grid', rowcount: rows, colcount: columns }, style: grid_shell_style, **options.except(:class) }
   .pointer-events-none.absolute.inset-0.rounded-xl{ aria: { hidden: 'true' } }
+    - if outline
+      - horizontal_separators.each do |row_index|
+        = content_tag :div, nil, class: grid_separator_classes(:horizontal), style: grid_separator_style(:horizontal, row_index)
+
+      - vertical_separators.each do |column_index|
+        = content_tag :div, nil, class: grid_separator_classes(:vertical), style: grid_separator_style(:vertical, column_index)
+
     .grid{ style: grid_net_style }
       - grid_cells.each do |row|
         - row.each do |row_index, column_index|

@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require 'tramway/helpers/table_helper'
+
 module Tramway
   module Helpers
     # Provides view-oriented helpers for ActionView
     module ViewsHelper
       include Tramway::Helpers::ComponentHelper
+      include Tramway::Helpers::TableHelper
 
       FORM_SIZES = %i[small medium large].freeze
 
@@ -19,8 +22,8 @@ module Tramway
         ), &)
       end
 
-      def tramway_table(**options, &)
-        component 'tramway/table', options:, &
+      def tramway_table(size: :medium, **options, &)
+        component 'tramway/table', size: normalize_table_size(size), options:, &
       end
 
       def tramway_grid(rows:, columns:, outline: false, **options, &)

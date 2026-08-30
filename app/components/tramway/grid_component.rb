@@ -4,6 +4,7 @@ module Tramway
   # Dashboard-style grid container
   class GridComponent < Tramway::BaseComponent
     CELL_SIZE = '20em'
+    CELL_GAP = '0.25rem'
 
     option :rows
     option :columns
@@ -22,13 +23,15 @@ module Tramway
     def grid_shell_style
       return if rows.to_i <= 0 || columns.to_i <= 0
 
-      "min-width: calc(#{columns.to_i} * #{CELL_SIZE}); min-height: calc(#{rows.to_i} * #{CELL_SIZE});"
+      "min-width: calc(#{columns.to_i} * #{CELL_SIZE} + #{[columns.to_i - 1, 0].max} * #{CELL_GAP}); " \
+        "min-height: calc(#{rows.to_i} * #{CELL_SIZE} + #{[rows.to_i - 1, 0].max} * #{CELL_GAP});"
     end
 
     def grid_net_style
       return if rows.to_i <= 0 || columns.to_i <= 0
 
-      "grid-template-columns: repeat(#{columns.to_i}, #{CELL_SIZE}); grid-template-rows: repeat(#{rows.to_i}, #{CELL_SIZE});"
+      "grid-template-columns: repeat(#{columns.to_i}, #{CELL_SIZE}); " \
+        "grid-template-rows: repeat(#{rows.to_i}, #{CELL_SIZE});"
     end
 
     def grid_cells
@@ -40,11 +43,34 @@ module Tramway
     end
 
     def grid_cell_classes(_row_index, _column_index)
-      ['box-border', ('border border-zinc-800' if outline)].compact.join(' ')
+      'box-border'
     end
 
     def grid_cell_style
       "width: #{CELL_SIZE}; height: #{CELL_SIZE};"
+    end
+
+    def grid_separator_classes(axis)
+      base = axis == :horizontal ? 'absolute left-0 right-0 h-px' : 'absolute top-0 bottom-0 w-px'
+      "#{base} bg-zinc-800"
+    end
+
+    def grid_separator_style(axis, index)
+      position = "calc((#{CELL_SIZE} + #{CELL_GAP}) * #{index + 1} - #{CELL_GAP} / 2)"
+
+      if axis == :horizontal
+        "top: #{position};"
+      else
+        "left: #{position};"
+      end
+    end
+
+    def horizontal_separators
+      Array.new([rows.to_i - 1, 0].max) { |index| index }
+    end
+
+    def vertical_separators
+      Array.new([columns.to_i - 1, 0].max) { |index| index }
     end
   end
 end

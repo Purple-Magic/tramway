@@ -6,6 +6,21 @@ module Tramway
     class HeaderComponent < Tramway::BaseComponent
       include ContentCells
 
+      SIZE_CLASSES = {
+        small: {
+          row: 'div-table-row grid grid-cols-1 gap-2 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400',
+          cell: 'div-table-cell hidden px-4 py-2 first:block md:block'
+        },
+        medium: {
+          row: 'div-table-row grid grid-cols-1 gap-4 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400',
+          cell: 'div-table-cell hidden px-6 py-4 first:block md:block'
+        },
+        large: {
+          row: 'div-table-row grid grid-cols-1 gap-6 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400',
+          cell: 'div-table-cell hidden px-6 py-6 first:block md:block'
+        }
+      }.freeze
+
       option :headers, optional: true, default: -> { [] }
       option :columns, optional: true, default: -> { 3 }
       option :options, optional: true, default: -> { {} }
@@ -19,11 +34,17 @@ module Tramway
       end
 
       def header_row_classes
-        'div-table-row grid grid-cols-1 gap-4 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400'
+        size_classes.fetch(:row)
       end
 
       def header_cell_classes
-        'div-table-cell hidden px-6 py-4 first:block md:block'
+        size_classes.fetch(:cell)
+      end
+
+      private
+
+      def size_classes
+        SIZE_CLASSES.fetch(tramway_table_size) { SIZE_CLASSES[:medium] }
       end
     end
   end
