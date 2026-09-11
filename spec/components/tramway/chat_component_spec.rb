@@ -71,6 +71,7 @@ describe Tramway::ChatComponent, type: :component do
                                     border-zinc-800
                                     text-zinc-50
                                     bg-zinc-950/80
+                                    tramway-scrollbar
                                   ])}"
     )
   end

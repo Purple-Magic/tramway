@@ -8,7 +8,7 @@ module Tramway
 
       def tramway_table_size
         context = tramway_table_context
-        return :medium unless context&.respond_to?(:tramway_table_size)
+        return :medium unless context.respond_to?(:tramway_table_size)
 
         TABLE_SIZES.include?(context.tramway_table_size) ? context.tramway_table_size : :medium
       end
@@ -19,7 +19,8 @@ module Tramway
 
       def tramway_table_context
         return __vc_original_view_context if respond_to?(:__vc_original_view_context)
-        return view_context if respond_to?(:view_context)
+
+        view_context if respond_to?(:view_context)
       end
     end
   end

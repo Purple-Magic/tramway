@@ -2,11 +2,14 @@
 
 require 'rails_helper'
 
-describe Tramway::Table::CellComponent, type: :component do
-  CELL_MEDIUM_SELECTOR = '.div-table-cell.hidden.bg-transparent.px-6.py-4.text-base.font-medium.text-zinc-100.first\\:block.md\\:block'
-  CELL_SMALL_SELECTOR = '.div-table-cell.hidden.bg-transparent.px-4.py-2.text-sm.font-medium.text-zinc-100.first\\:block.md\\:block'
-  CELL_LARGE_SELECTOR = '.div-table-cell.hidden.bg-transparent.px-6.py-6.text-lg.font-medium.text-zinc-100.first\\:block.md\\:block'
+CELL_MEDIUM_SELECTOR = '.div-table-cell.hidden.bg-transparent.px-6.py-4.' \
+                       'text-base.font-medium.text-zinc-100.first\\:block.md\\:block'
+CELL_SMALL_SELECTOR = '.div-table-cell.hidden.bg-transparent.px-4.py-2.' \
+                      'text-sm.font-medium.text-zinc-100.first\\:block.md\\:block'
+CELL_LARGE_SELECTOR = '.div-table-cell.hidden.bg-transparent.px-6.py-6.' \
+                      'text-lg.font-medium.text-zinc-100.first\\:block.md\\:block'
 
+describe Tramway::Table::CellComponent, type: :component do
   it 'keeps the current medium cell classes' do
     component = described_class.new
     allow(component).to receive(:tramway_table_size).and_return(:medium)

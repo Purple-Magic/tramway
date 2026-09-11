@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .tramway-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(82, 82, 91, 0.9) rgba(9, 9, 11, 0.92);
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar-track {
+    background: rgba(9, 9, 11, 0.92);
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: rgba(82, 82, 91, 0.9);
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(113, 113, 122, 0.95);
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}

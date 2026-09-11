@@ -10,6 +10,39 @@ module Tramway
     # nodoc
     # rubocop:disable Metrics/ModuleLength
     module InstallGeneratorHelpers
+      TAILWIND_SCROLLBAR_UTILITY = <<~CSS.chomp
+        @layer utilities {
+          .tramway-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(82, 82, 91, 0.9) rgba(9, 9, 11, 0.92);
+          }
+
+          .tramway-scrollbar::-webkit-scrollbar {
+            width: 0.5rem;
+          }
+
+          .tramway-scrollbar::-webkit-scrollbar-track {
+            background: rgba(9, 9, 11, 0.92);
+          }
+
+          .tramway-scrollbar::-webkit-scrollbar-thumb {
+            border-radius: 9999px;
+            background: rgba(82, 82, 91, 0.9);
+          }
+
+          .tramway-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(113, 113, 122, 0.95);
+          }
+
+          .tramway-scrollbar::-webkit-scrollbar-corner {
+            background: transparent;
+          }
+        }
+      CSS
+
+      TAILWIND_APPLICATION_STYLESHEET_CONTENT =
+        "@import \"tailwindcss\";\n\n#{TAILWIND_SCROLLBAR_UTILITY}\n".freeze
+
       private
 
       def gem_dependencies
@@ -331,15 +364,14 @@ module Tramway
         path = tailwind_application_stylesheet_path
         FileUtils.mkdir_p(File.dirname(path))
 
-        return create_file(path, "#{tailwind_css_import_line}\n") unless File.exist?(path)
+        return create_file(path, TAILWIND_APPLICATION_STYLESHEET_CONTENT) unless File.exist?(path)
 
         content = File.read(path)
-        return if content.include?(tailwind_css_import_line)
+        return if content.include?(tailwind_css_import_line) && content.include?(TAILWIND_SCROLLBAR_UTILITY)
 
-        File.open(path, 'a') do |file|
-          file.write("\n") unless content.empty? || content.end_with?("\n")
-          file.write("#{tailwind_css_import_line}\n")
-        end
+        updated = content.include?(tailwind_css_import_line) ? content : "#{content}\n#{tailwind_css_import_line}\n"
+        updated = "#{updated}\n#{TAILWIND_SCROLLBAR_UTILITY}\n" unless updated.include?(TAILWIND_SCROLLBAR_UTILITY)
+        File.write(path, updated)
       end
 
       def ensure_importmap_pin
