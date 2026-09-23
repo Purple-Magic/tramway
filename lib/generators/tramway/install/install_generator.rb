@@ -148,15 +148,16 @@ module Tramway
       end
 
       def safelist_section(content)
-        match = content.match(/safelist\s*:\s*\[(.*?)\]\s*,?/m)
-        match&.[](1)
+        open_index, close_index = safelist_bracket_range(content)
+        return nil unless open_index
+
+        content[(open_index + 1)...close_index]
       end
 
       def insert_entries(content, entries)
-        match = content.match(/safelist\s*:\s*\[(.*?)\](\s*,?)/m)
-        return content unless match
+        _open_index, closing_index = safelist_bracket_range(content)
+        return content unless closing_index
 
-        closing_index = match.begin(0) + match[0].rindex(']')
         indentation = closing_indentation(content, closing_index)
         formatted_entries = entries.map { |entry| "#{indentation}'#{entry}',\n" }.join
 
@@ -166,6 +167,33 @@ module Tramway
         insertion << formatted_entries
 
         content.dup.insert(closing_index, insertion)
+      end
+
+      # Finds the `[`/`]` pair that delimits the `safelist` array, ignoring brackets that
+      # appear inside quoted entries (e.g. `'md:transition-[width]'`) since a naive regex
+      # would otherwise stop at the first `]`, wherever it occurs.
+      def safelist_bracket_range(content)
+        start_index = content =~ /safelist\s*:\s*\[/
+        return [nil, nil] unless start_index
+
+        open_index = content.index('[', start_index)
+        close_index = matching_bracket_index(content, open_index)
+
+        [open_index, close_index]
+      end
+
+      def matching_bracket_index(content, open_index)
+        depth = 0
+
+        content[open_index..].to_enum(:scan, /'[^']*'|"[^"]*"|[\[\]]/).each do
+          token = Regexp.last_match[0]
+          next unless ['[', ']'].include?(token)
+
+          depth += token == '[' ? 1 : -1
+          return open_index + Regexp.last_match.end(0) - 1 if depth.zero?
+        end
+
+        nil
       end
 
       def closing_indentation(content, index)

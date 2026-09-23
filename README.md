@@ -925,8 +925,19 @@ When you use the default vertical navbar layout, it renders as a fixed left side
 sidebar toggle collapses the whole sidebar and keeps the main content offset in sync, so the page shifts between
 `md:pl-72` and `md:pl-24` as the sidebar changes width.
 
-Tramway now ships with Font Awesome loaded through the engine, and the vertical navbar collapse control uses
-`fa-chevron-left` when expanded and `fa-chevron-right` when collapsed.
+The collapse/expand motion is tuned per element rather than a blanket `transition-all`: the sidebar width and the
+main content's `padding-left` each transition only that one property (`transition-[width]` /
+`transition-[padding-left]`) over 300ms on the `ease-in-out-strong` curve (`cubic-bezier(0.77, 0, 0.175, 1)`,
+registered in `config/tailwind.config.js`), since both are on-screen movement. The header and nav-item list fade
+with `transition-opacity` on the `ease-out-strong` curve (`cubic-bezier(0.23, 1, 0.32, 1)`), matching that they're
+entering/exiting rather than moving. The toggle chevron no longer swaps between `fa-chevron-left` and
+`fa-chevron-right` — it stays a single `fa-chevron-left` icon that rotates 180° (`transition-transform duration-200
+ease-in-out-strong`) to indicate state instead of snapping instantly. All of the above respect
+`prefers-reduced-motion` via `motion-reduce:duration-0` on the movement/rotation transitions; the opacity fade is
+left intact since it aids comprehension without moving anything.
+
+Tramway now ships with Font Awesome loaded through the engine, and the vertical navbar collapse control uses a
+single `fa-chevron-left` icon for both states (rotated when collapsed).
 Tramway ships a plain `font-awesome.css` asset for Propshaft compatibility and adds Font Awesome's font
 directory to the host app asset load path, so `stylesheet_link_tag "font-awesome"` resolves without extra
 app-side asset configuration.

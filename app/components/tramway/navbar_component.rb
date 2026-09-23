@@ -17,8 +17,8 @@ module Tramway
 
     VERTICAL_DESKTOP_NAVBAR_CLASSES = %w[
       md:fixed md:left-0 md:top-0 md:z-40 md:h-dvh md:w-72 md:flex-col md:border-r md:border-zinc-800
-      md:bg-zinc-950 md:px-4 md:py-3 md:shadow-sm md:backdrop-blur md:overflow-hidden md:transition-all
-      md:duration-300 md:ease-in-out
+      md:bg-zinc-950 md:px-4 md:py-3 md:shadow-sm md:backdrop-blur md:overflow-hidden md:transition-[width]
+      md:duration-300 md:ease-in-out-strong md:motion-reduce:duration-0
     ].freeze
 
     MOBILE_BUTTON_CLASSES = %w[
@@ -82,14 +82,14 @@ module Tramway
     def desktop_vertical_header_classes
       [
         'tramway-navbar-desktop-vertical-header flex w-full items-center justify-between overflow-hidden',
-        'transition-opacity duration-300 ease-in-out'
+        'transition-opacity duration-300 ease-out-strong'
       ].join(' ')
     end
 
     def desktop_vertical_content_classes
       [
         'tramway-navbar-desktop-vertical-content flex w-full flex-1 flex-col gap-3 overflow-y-auto overflow-hidden',
-        'transition-opacity duration-300 ease-in-out'
+        'transition-opacity duration-300 ease-out-strong'
       ].join(' ')
     end
 
@@ -116,7 +116,10 @@ module Tramway
     end
 
     def desktop_vertical_toggle_icon_classes(expanded:)
-      expanded ? 'fa fa-chevron-left' : 'fa fa-chevron-right'
+      classes = %w[fa fa-chevron-left transition-transform duration-200 ease-in-out-strong motion-reduce:duration-0]
+      classes << 'rotate-180' unless expanded
+
+      classes.join(' ')
     end
   end
 end

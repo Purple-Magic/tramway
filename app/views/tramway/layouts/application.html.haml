@@ -22,7 +22,7 @@
   %body.bg-zinc-950.text-zinc-50
     = tramway_navbar title: 'Tramway'
 
-    = tramway_main_container id: 'tramway-main-container', class: 'md:pl-72 transition-all duration-300 ease-in-out' do
+    = tramway_main_container id: 'tramway-main-container', class: 'md:pl-72 transition-[padding-left] duration-300 ease-in-out-strong motion-reduce:duration-0' do
       - if flash.any?
         = tramway_flash text: flash[:notice].presence || flash[:alert],
           type: flash[:notice].present? ? :will : :rage,

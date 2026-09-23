@@ -611,7 +611,7 @@ class Navbar extends Controller {
     this.desktopToggleWrapper.classList.toggle('justify-end', expanded)
     this.desktopToggleWrapper.classList.toggle('justify-center', !expanded)
     if (this.desktopToggleIcon) {
-      this.desktopToggleIcon.className = expanded ? 'fa fa-chevron-left' : 'fa fa-chevron-right'
+      this.desktopToggleIcon.classList.toggle('rotate-180', !expanded)
     }
 
     this.desktopToggleButton.setAttribute('aria-label', expanded ? 'Collapse sidebar' : 'Expand sidebar')

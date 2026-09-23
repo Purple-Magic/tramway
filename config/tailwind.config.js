@@ -53,6 +53,15 @@ module.exports = {
     'md:pl-24',
     'transition-all',
     'ease-in-out',
+    'md:transition-[width]',
+    'transition-[padding-left]',
+    'ease-in-out-strong',
+    'md:ease-in-out-strong',
+    'ease-out-strong',
+    'md:motion-reduce:duration-0',
+    'motion-reduce:duration-0',
+    'duration-200',
+    'rotate-180',
     'pt-16',
     'min-h-8',
     'bg-zinc-950',
@@ -694,6 +703,10 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+      },
+      transitionTimingFunction: {
+        "out-strong": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "in-out-strong": "cubic-bezier(0.77, 0, 0.175, 1)",
       },
       keyframes: {
         "accordion-down": {
