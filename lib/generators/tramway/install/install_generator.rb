@@ -8,7 +8,7 @@ require_relative 'layout_helpers'
 module Tramway
   module Generators
     # nodoc
-    # rubocop:disable Metrics/ModuleLength
+    # rubocop:disable-next Metrics/ModuleLength
     module InstallGeneratorHelpers
       TAILWIND_SCROLLBAR_UTILITY = <<~CSS.chomp
         @layer utilities {
@@ -336,7 +336,6 @@ module Tramway
         say_status(:warning, "Skipping AGENTS.md update: #{e.message}")
       end
     end
-    # rubocop:enable Metrics/ModuleLength
 
     # Installs Tramway dependencies and app wiring for a host Rails app.
     class InstallGenerator < Rails::Generators::Base

@@ -99,7 +99,7 @@ module Tramway
     end
 
     # rubocop:disable Metrics/MethodLength
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable-next Metrics/AbcSize
     def linkified(content)
       fragments = []
       current_index = 0
@@ -130,7 +130,6 @@ module Tramway
 
       helpers.safe_join(fragments)
     end
-    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/MethodLength
 
     def strip_trailing_punctuation(url)

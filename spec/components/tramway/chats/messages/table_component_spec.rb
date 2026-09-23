@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Tramway::Chats::Messages::TableComponent, type: :component do
-  # rubocop:disable RSpec/ExampleLength
+  # rubocop:disable-next RSpec/ExampleLength
   it 'wraps the table in a styled container' do
     data = [
       %w[Name Value],
@@ -24,5 +24,4 @@ describe Tramway::Chats::Messages::TableComponent, type: :component do
                          ])}"
     )
   end
-  # rubocop:enable RSpec/ExampleLength
 end

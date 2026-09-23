@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 # NOTE: UserForm is a dummy class, so there is no reason to store these tests following name conventions
-# rubocop:disable RSpec/SpecFilePathFormat
+# rubocop:disable-next RSpec/SpecFilePathFormat
 describe UserForm do
   context 'with persisted object' do
     subject(:form_object) { described_class.new(object) }
@@ -144,4 +144,3 @@ describe UserForm do
     expect(form).to respond_to(:to_model)
   end
 end
-# rubocop:enable RSpec/SpecFilePathFormat

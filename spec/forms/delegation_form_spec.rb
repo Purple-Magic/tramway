@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 # NOTE: Tramway::BaseForm is responsible for Tramway Form basic logic, so spec/forms is the best place for it
-# rubocop:disable RSpec/SpecFilePathFormat
+# rubocop:disable-next RSpec/SpecFilePathFormat
 describe Tramway::BaseForm do
   let(:user) { create(:user) }
   let(:form) { described_class.new(user) }
@@ -46,4 +46,3 @@ describe Tramway::BaseForm do
     end
   end
 end
-# rubocop:enable RSpec/SpecFilePathFormat

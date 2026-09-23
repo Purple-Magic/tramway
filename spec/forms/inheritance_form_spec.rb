@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 # NOTE: AdminForm is a dummy class, so there is no reason to store these tests following name conventions
-# rubocop:disable RSpec/SpecFilePathFormat
+# rubocop:disable-next RSpec/SpecFilePathFormat
 describe AdminForm do
   context 'when properties' do
     subject(:form_object) { described_class.new(user) }
@@ -53,4 +53,3 @@ describe AdminForm do
     end
   end
 end
-# rubocop:enable RSpec/SpecFilePathFormat

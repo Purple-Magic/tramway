@@ -16,11 +16,10 @@ module Tramway
         def __initialize_validations(_subclass); end
       end
 
-      # rubocop:disable Naming/PredicateMethod
+      # rubocop:disable-next Naming/PredicateMethod
       def __apply_validations(_params)
         valid?
       end
-      # rubocop:enable Naming/PredicateMethod
     end
   end
 end

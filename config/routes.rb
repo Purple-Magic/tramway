@@ -2,7 +2,7 @@
 
 require 'tramway/helpers/routes_helper'
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 Tramway::Engine.routes.draw do
   Tramway.config.entities.each do |entity|
     if entity.namespace.present?
@@ -55,7 +55,6 @@ Tramway::Engine.routes.draw do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength
 
 Tramway::Engine.routes.routes.map(&:name).compact.each do |route_name|
   %w[path url].each do |suffix|

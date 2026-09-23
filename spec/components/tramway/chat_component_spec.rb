@@ -38,7 +38,7 @@ describe Tramway::ChatComponent, type: :component do
     end
   end
 
-  # rubocop:disable RSpec/ExampleLength
+  # rubocop:disable-next RSpec/ExampleLength
   it 'renders common chat container styles' do
     rendered_component
 
@@ -75,7 +75,6 @@ describe Tramway::ChatComponent, type: :component do
                                   ])}"
     )
   end
-  # rubocop:enable RSpec/ExampleLength
 
   context 'when messages are provided' do
     let(:messages) do

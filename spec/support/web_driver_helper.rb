@@ -2,7 +2,7 @@
 
 # Provide a helper method to collect console logs in a test
 module WebDriverHelper
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable-next Metrics/MethodLength
   def collect_console_logs(page)
     page.execute_script <<~JS
       window.collectedLogs = [];
@@ -63,7 +63,6 @@ module WebDriverHelper
       };
     JS
   end
-  # rubocop:enable Metrics/MethodLength
 end
 
 RSpec.configure do |config|

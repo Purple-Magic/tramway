@@ -5,7 +5,7 @@ require 'tramway/utils/field'
 module Tramway
   module Form
     # Provides Tailwind-styled forms
-    # rubocop:disable Metrics/ClassLength
+    # rubocop:disable-next Metrics/ClassLength
     class Builder < Tramway::Views::FormBuilder
       include Tramway::Utils::Field
       include Tramway::ColorsMethods
@@ -250,6 +250,5 @@ module Tramway
         end
       end
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end
