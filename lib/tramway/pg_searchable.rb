@@ -36,12 +36,27 @@ module Tramway
     def ensure_pg_search_scope!(model_class)
       return if model_class.respond_to?(:tramway_pg_search)
 
+      define_pg_search_scope!(model_class)
+    rescue LoadError, NameError => e
+      raise missing_pg_search_gem_error(model_class, e)
+    end
+
+    def define_pg_search_scope!(model_class)
       require 'pg_search'
 
       model_class.include(PgSearch::Model)
       model_class.pg_search_scope :tramway_pg_search,
                                   against: model_class.searchable_column_names,
                                   using: { tsearch: { prefix: true } }
+    end
+
+    def missing_pg_search_gem_error(model_class, original_error)
+      Tramway::Errors::MissingGemError.new(
+        feature: 'the default entities#index search',
+        model_class:,
+        gem_name: 'pg_search',
+        original_error:
+      )
     end
   end
 end

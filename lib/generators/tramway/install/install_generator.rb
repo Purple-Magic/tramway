@@ -51,7 +51,8 @@ module Tramway
           { name: 'kaminari', declaration: 'gem "kaminari"' },
           { name: 'view_component', declaration: 'gem "view_component"' },
           { name: 'dry-initializer', declaration: "gem 'dry-initializer'" },
-          { name: 'dry-monads', declaration: "gem 'dry-monads'" }
+          { name: 'dry-monads', declaration: "gem 'dry-monads'" },
+          { name: 'pg_search', declaration: "gem 'pg_search'" }
         ]
       end
 

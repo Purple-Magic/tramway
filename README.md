@@ -229,6 +229,38 @@ long-term use and may be slow or not scalable.
 the fallback raises `Tramway::Errors::UnsupportedDatabaseAdapterError` with an explanation and a suggestion to define your
 own `Model.search(query)` scope instead.
 
+`bin/rails g tramway:install` adds `gem "pg_search"` to your Gemfile automatically (like Tramway's other dependencies), so
+run it (and `bundle install`) if you see the fallback raise `Tramway::Errors::MissingGemError`. That error also fires if
+`pg_search` can't otherwise be loaded, and explains how to fix it or define your own `Model.search(query)` scope.
+
+**includes**
+
+If a decorator's `index_attributes` reads an association (e.g. `object.comments.map(&:text)`), each row triggers its own
+query unless the association is eager-loaded. Set `includes` on the `:index` page entry to preload it, using the same
+shape Rails' `.includes` accepts (a symbol, array, or nested hash):
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      namespace: :admin,
+      pages: [
+        {
+          action: :index,
+          includes: [:user, :comments]
+        }
+      ]
+    }
+  ]
+end
+```
+
+In this example, Tramway calls `Campaign.includes(:user, :comments)` before applying `scope`/`search`, so accessing
+`campaign.user` or `campaign.comments` in the decorator's `index_attributes` does not issue an extra query per row.
+Omitting `includes` produces identical behavior to before this option existed.
+
 **show page**
 
 To render a show page for an entity, declare a `:show` action inside the `pages` array in

@@ -23,5 +23,23 @@ module Tramway
         MESSAGE
       end
     end
+
+    # Raised when a Tramway feature depends on a gem that could not be loaded or used, so the
+    # developer (or an AI agent) gets a precise, actionable fix instead of a raw NoMethodError
+    # or LoadError deep inside the missing gem's call chain.
+    class MissingGemError < StandardError
+      def initialize(feature:, model_class:, gem_name:, original_error:)
+        super(<<~MESSAGE)
+          Tramway #{feature} for #{model_class} could not use the `#{gem_name}` gem \
+          (#{original_error.class}: #{original_error.message}).
+
+          To fix this:
+            - add `gem "#{gem_name}"` to your Gemfile, run `bundle install`, and restart your \
+          server (or re-run `bin/rails g tramway:install`, which adds it automatically), or
+            - define a custom `#{model_class}.search(query)` scope that does not depend on \
+          `#{gem_name}`; Tramway will use it instead of the built-in fallback.
+        MESSAGE
+      end
+    end
   end
 end
