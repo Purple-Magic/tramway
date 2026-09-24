@@ -19,6 +19,7 @@ module Tramway
         model_class.order(id: :desc)
       end => entities
 
+      entities = preload(entities)
       entities = search(entities)
       entities = entities.page(params[:page])
       @entities = entities
@@ -88,6 +89,12 @@ module Tramway
 
     def index_scope
       entity.page(:index).scope
+    end
+
+    def preload(entities)
+      includes = entity.page(:index).includes
+
+      includes.present? ? entities.includes(includes) : entities
     end
 
     def set_associations

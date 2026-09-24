@@ -9,6 +9,7 @@ module Tramway
         attribute :action, Types::Coercible::String
         attribute? :scope, Types::Coercible::String
         attribute? :search, Types::Bool
+        attribute? :includes, Types::Array.default([].freeze)
       end
     end
   end

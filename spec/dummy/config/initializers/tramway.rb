@@ -9,7 +9,8 @@ Tramway.configure do |config|
         {
           action: :index,
           scope: :published,
-          search: true
+          search: true,
+          includes: [:user]
         },
         {
           action: :show
