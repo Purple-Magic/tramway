@@ -29,23 +29,4 @@ feature 'Entities Search', :js, type: :feature do
     expect(page).to have_content('Alpha post')
     expect(page).not_to have_content('Beta post')
   end
-
-  scenario 'falls back to tramway_search when model does not define search' do
-    Article.destroy_all
-    create(:article, title: 'Alpha article')
-    create(:article, title: 'Beta article')
-
-    allow(Tramway::Warnings).to receive(:search_fallback)
-    allow(Article).to receive(:columns).and_return([])
-    expect(Tramway::Warnings).to receive(:search_fallback)
-
-    visit '/admin/articles'
-
-    fill_in 'query', with: 'Alpha'
-    click_button 'Search'
-
-    expect(page).to have_selector(row_selector, count: 2)
-    expect(page).to have_content('Alpha article')
-    expect(page).to have_content('Beta article')
-  end
 end

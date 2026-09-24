@@ -102,7 +102,8 @@ RSpec.describe Tramway::Generators::InstallGenerator do
         'gem "kaminari"',
         'gem "view_component"',
         "gem 'dry-initializer'",
-        "gem 'dry-monads'"
+        "gem 'dry-monads'",
+        "gem 'pg_search'"
       ].each do |dependency|
         expect(content.scan(dependency).count).to eq(1)
       end

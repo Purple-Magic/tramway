@@ -219,8 +219,47 @@ Tramway.configure do |config|
 end
 ```
 
-When search is enabled, Tramway uses `Model.search(query)` if defined. If not, it falls back to `Model.tramway_search(query)` and logs a warning.
-The fallback is generic and not tailored to your data structure, so it is not intended for long-term use and may be slow or not scalable.
+When search is enabled, a text input and a search icon button appear at the top of the index page. Tramway uses
+`Model.search(query)` if you define it (e.g. a `pg_search_scope` or any custom scope named `search`). If not, it falls back
+to `Model.tramway_search(query)`, which searches across all string/text columns of the model using the [`pg_search`](https://github.com/Casecommons/pg_search)
+gem, and logs a warning. The fallback is generic and not tailored to your data structure, so it is not intended for
+long-term use and may be slow or not scalable.
+
+`pg_search` requires PostgreSQL's full-text search functions. If your application's database is not PostgreSQL, calling
+the fallback raises `Tramway::Errors::UnsupportedDatabaseAdapterError` with an explanation and a suggestion to define your
+own `Model.search(query)` scope instead.
+
+`bin/rails g tramway:install` adds `gem "pg_search"` to your Gemfile automatically (like Tramway's other dependencies), so
+run it (and `bundle install`) if you see the fallback raise `Tramway::Errors::MissingGemError`. That error also fires if
+`pg_search` can't otherwise be loaded, and explains how to fix it or define your own `Model.search(query)` scope.
+
+**includes**
+
+If a decorator's `index_attributes` reads an association (e.g. `object.comments.map(&:text)`), each row triggers its own
+query unless the association is eager-loaded. Set `includes` on the `:index` page entry to preload it, using the same
+shape Rails' `.includes` accepts (a symbol, array, or nested hash):
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      namespace: :admin,
+      pages: [
+        {
+          action: :index,
+          includes: [:user, :comments]
+        }
+      ]
+    }
+  ]
+end
+```
+
+In this example, Tramway calls `Campaign.includes(:user, :comments)` before applying `scope`/`search`, so accessing
+`campaign.user` or `campaign.comments` in the decorator's `index_attributes` does not issue an extra query per row.
+Omitting `includes` produces identical behavior to before this option existed.
 
 **show page**
 

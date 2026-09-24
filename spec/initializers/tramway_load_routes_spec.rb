@@ -11,7 +11,8 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
         {
           action: 'index',
           scope: :published,
-          search: true
+          search: true,
+          includes: [:user]
         },
         {
           action: 'show'
