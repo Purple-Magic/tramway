@@ -22,7 +22,9 @@
     - if @entity.page(:index).search
       = form_with url: public_send(custom_path_method), method: :get, local: true, builder: Tramway::Form::Builder, horizontal: true do |f|
         = f.text_field :query, label: false, value: params[:query], placeholder: t('tramway.actions.search')
-        = f.submit t('tramway.actions.search')
+        = f.submit nil, 'aria-label' => t('tramway.actions.search') do
+          %i.fa.fa-search{ 'aria-hidden' => 'true' }
+          = t('tramway.actions.search')
 
     = paginate @entities, custom_path_method:
 

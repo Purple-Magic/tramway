@@ -219,8 +219,15 @@ Tramway.configure do |config|
 end
 ```
 
-When search is enabled, Tramway uses `Model.search(query)` if defined. If not, it falls back to `Model.tramway_search(query)` and logs a warning.
-The fallback is generic and not tailored to your data structure, so it is not intended for long-term use and may be slow or not scalable.
+When search is enabled, a text input and a search icon button appear at the top of the index page. Tramway uses
+`Model.search(query)` if you define it (e.g. a `pg_search_scope` or any custom scope named `search`). If not, it falls back
+to `Model.tramway_search(query)`, which searches across all string/text columns of the model using the [`pg_search`](https://github.com/Casecommons/pg_search)
+gem, and logs a warning. The fallback is generic and not tailored to your data structure, so it is not intended for
+long-term use and may be slow or not scalable.
+
+`pg_search` requires PostgreSQL's full-text search functions. If your application's database is not PostgreSQL, calling
+the fallback raises `Tramway::Errors::UnsupportedDatabaseAdapterError` with an explanation and a suggestion to define your
+own `Model.search(query)` scope instead.
 
 **show page**
 
