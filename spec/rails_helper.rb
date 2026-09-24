@@ -52,6 +52,7 @@ Capybara.register_driver :headless_chrome do |app|
 end
 
 Capybara.javascript_driver = :headless_chrome
+Capybara.enable_aria_label = true
 
 Capybara.register_driver :headless_chrome_mobile do |app|
   mobile_options = Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu no-sandbox
