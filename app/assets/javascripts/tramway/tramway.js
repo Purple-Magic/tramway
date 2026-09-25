@@ -491,9 +491,7 @@ class Navbar extends Controller {
     document.addEventListener('turbo:before-cache', this.handleBeforeCache)
     window.addEventListener('resize', this.handleResize)
 
-    if (this.isDesktopViewport()) {
-      this.syncDesktopExpandedState()
-    }
+    this.syncDesktopExpandedState()
   }
 
   readStoredExpanded() {
