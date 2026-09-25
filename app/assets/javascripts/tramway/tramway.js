@@ -467,6 +467,7 @@ class Navbar extends Controller {
     this.desktopMainExpandedPaddingClass = 'md:pl-72'
     this.desktopMainCollapsedPaddingClass = 'md:pl-24'
     this.hiddenInteractionClasses = ['opacity-0', 'pointer-events-none']
+    this.expandedStorageKey = 'tramway-navbar-expanded'
 
     this.desktopNavbar = this.element
     this.desktopHeader = document.getElementById('desktop-navbar-header')
@@ -492,6 +493,22 @@ class Navbar extends Controller {
 
     if (this.isDesktopViewport()) {
       this.syncDesktopExpandedState()
+    }
+  }
+
+  readStoredExpanded() {
+    try {
+      return window.localStorage.getItem(this.expandedStorageKey)
+    } catch {
+      return null
+    }
+  }
+
+  writeStoredExpanded(expanded) {
+    try {
+      window.localStorage.setItem(this.expandedStorageKey, expanded ? 'true' : 'false')
+    } catch {
+      /* localStorage unavailable (e.g. private mode) — state simply won't persist */
     }
   }
 
@@ -579,16 +596,23 @@ class Navbar extends Controller {
   }
 
   toggleDesktopExpanded() {
-    this.setDesktopExpanded(this.desktopNavbar.dataset.expanded === 'false')
+    this.setDesktopExpanded(this.desktopNavbar.dataset.expanded === 'false', { persist: true })
   }
 
   syncDesktopExpandedState() {
-    this.setDesktopExpanded(this.desktopNavbar.dataset.expanded !== 'false')
+    const storedExpanded = this.readStoredExpanded()
+    const expanded = storedExpanded === null ? this.desktopNavbar.dataset.expanded !== 'false' : storedExpanded !== 'false'
+
+    this.setDesktopExpanded(expanded)
   }
 
-  setDesktopExpanded(expanded) {
+  setDesktopExpanded(expanded, { persist = false } = {}) {
     if (!this.isVertical() || !this.desktopNavbar || !this.desktopHeader || !this.desktopMenu || !this.desktopMainContainer || !this.desktopToggleButton || !this.desktopToggleWrapper) {
       return
+    }
+
+    if (persist) {
+      this.writeStoredExpanded(expanded)
     }
 
     this.desktopNavbar.classList.toggle(this.desktopNavbarExpandedWidthClass, expanded)
