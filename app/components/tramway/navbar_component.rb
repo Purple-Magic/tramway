@@ -99,7 +99,7 @@ module Tramway
 
     def desktop_vertical_toggle_wrapper_classes(expanded: true)
       base = 'mt-auto flex w-full'
-      expanded ? "#{base} justify-end" : "#{base} justify-center"
+      expanded ? "#{base} justify-start" : "#{base} justify-end"
     end
 
     def desktop_vertical_toggle_button_classes

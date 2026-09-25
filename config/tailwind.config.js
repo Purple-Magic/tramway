@@ -386,6 +386,7 @@ module.exports = {
     'flex-initial',
     'justify-between',
     'justify-end',
+    'justify-start',
     'space-x-1',
     'items-center',
 
