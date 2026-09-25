@@ -6,3 +6,4 @@
 
 @.agents/create-instruction.md
 @.agents/infra-dependent-features.md
+@.agents/releases.md
