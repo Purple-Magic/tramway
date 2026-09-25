@@ -985,6 +985,23 @@ renders the classic top navbar, and desktop `:vertical` renders the collapsible 
 When `tramway_navbar` renders before `tramway_main_container`, the main container helper keeps the vertical
 sidebar offset in sync automatically and removes it for horizontal pages.
 
+The collapsed/expanded state of the vertical sidebar persists across page navigations. The Stimulus controller
+saves the state to the browser's `localStorage` (key `tramway-navbar-expanded`) whenever the toggle button is
+used, and reads it back on every page load, so collapsing the sidebar on one page keeps it collapsed everywhere
+else until it's expanded again. This is per-browser state: it isn't synced across devices or persisted server-side,
+and if `localStorage` is unavailable (e.g. private browsing with storage blocked), the sidebar simply falls back
+to always starting expanded.
+
+Since the server always renders the sidebar expanded (it has no way to know the browser's stored preference) and
+the Stimulus controller only applies the collapsed classes once it connects, `tramway_navbar` also renders a small
+blocking inline `<script>` alongside its markup. It reads `localStorage` synchronously, before the browser paints,
+and — if the sidebar was left collapsed — sets a `data-tramway-navbar-expanded="false"` attribute on `<html>`. A
+matching `@media (min-width: 768px)` CSS block (rendered alongside the navbar) keys off that attribute to apply the
+collapsed width, main-container padding, and faded header/menu immediately, before any JavaScript module has had a
+chance to load and run. This is what prevents the sidebar from flashing expanded and then snapping to collapsed on
+page load. The Stimulus controller keeps that `<html>` attribute in sync afterwards (on load and on every toggle),
+so this pre-paint styling and the controller's own classes never fight each other.
+
 **NOTE:** `tramway_navbar` method called without arguments and block of code will render only [Tramway CRUD](https://github.com/Purple-Magic/tramway#tramway-crud) links on the left.
 
 In case you want to hide entity links you can pass `with_entities: false`.

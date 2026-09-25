@@ -102,6 +102,17 @@
         Close
 
   - if vertical?
+    :javascript
+      (function () {
+        try {
+          if (window.localStorage.getItem('tramway-navbar-expanded') === 'false') {
+            document.documentElement.setAttribute('data-tramway-navbar-expanded', 'false');
+          } else {
+            document.documentElement.removeAttribute('data-tramway-navbar-expanded');
+          }
+        } catch (e) {}
+      })();
+
     :css
       .tramway-navbar-desktop-vertical .tramway-navbar-item {
         width: 100%;
@@ -120,4 +131,28 @@
       .tramway-navbar-desktop-vertical .tramway-navbar-item > form > button {
         width: 100%;
         justify-content: flex-start;
+      }
+
+      @media (min-width: 768px) {
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar {
+          width: 6rem;
+        }
+
+        html[data-tramway-navbar-expanded="false"] #tramway-main-container {
+          padding-left: 6rem;
+        }
+
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-header,
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-content {
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-toggle-wrapper {
+          justify-content: center;
+        }
+
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-toggle-icon {
+          transform: rotate(180deg);
+        }
       }
