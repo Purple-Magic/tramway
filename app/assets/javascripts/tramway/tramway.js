@@ -615,6 +615,12 @@ class Navbar extends Controller {
       this.writeStoredExpanded(expanded)
     }
 
+    if (expanded) {
+      document.documentElement.removeAttribute('data-tramway-navbar-expanded')
+    } else {
+      document.documentElement.setAttribute('data-tramway-navbar-expanded', 'false')
+    }
+
     this.desktopNavbar.classList.toggle(this.desktopNavbarExpandedWidthClass, expanded)
     this.desktopNavbar.classList.toggle(this.desktopNavbarCollapsedWidthClass, !expanded)
     this.desktopNavbar.dataset.expanded = expanded ? 'true' : 'false'
