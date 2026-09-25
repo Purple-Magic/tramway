@@ -636,8 +636,8 @@ class Navbar extends Controller {
     this.desktopHeader.setAttribute('aria-hidden', expanded ? 'false' : 'true')
     this.desktopMenu.setAttribute('aria-hidden', expanded ? 'false' : 'true')
 
-    this.desktopToggleWrapper.classList.toggle('justify-start', expanded)
-    this.desktopToggleWrapper.classList.toggle('justify-end', !expanded)
+    this.desktopToggleWrapper.classList.toggle('justify-end', expanded)
+    this.desktopToggleWrapper.classList.toggle('justify-center', !expanded)
     if (this.desktopToggleIcon) {
       this.desktopToggleIcon.classList.toggle('rotate-180', !expanded)
     }
