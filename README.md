@@ -982,6 +982,11 @@ directory to the host app asset load path, so `stylesheet_link_tag "font-awesome
 app-side asset configuration.
 On mobile, `tramway_navbar` always renders the same top navbar regardless of `direction:`. Desktop `:horizontal`
 renders the classic top navbar, and desktop `:vertical` renders the collapsible sidebar.
+
+The navbar is pinned in place with `position: sticky; top: 0; left: 0` at every breakpoint (the vertical desktop
+sidebar upgrades that to `md:fixed`), so it stays put both when the page scrolls vertically and when a page with
+wide content (for example a wide table) scrolls horizontally — the navbar never drifts along with that horizontal
+scroll.
 When `tramway_navbar` renders before `tramway_main_container`, the main container helper keeps the vertical
 sidebar offset in sync automatically and removes it for horizontal pages.
 

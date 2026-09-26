@@ -21,6 +21,8 @@ module.exports = {
     'w-72',
     'z-50',
     'inset-0',
+    'sticky',
+    'left-0',
     'top-0',
     'top-4',
     'right-6',
