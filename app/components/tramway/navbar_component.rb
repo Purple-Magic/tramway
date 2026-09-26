@@ -7,6 +7,10 @@ module Tramway
       bg-zinc-950 text-zinc-50
     ].freeze
 
+    NAVBAR_FIXED_CLASSES = %w[
+      fixed top-0 left-0 z-40 w-screen
+    ].freeze
+
     HORIZONTAL_NAVBAR_CLASSES = %w[
       flex items-center justify-between border-zinc-800 px-4 py-3 shadow-sm backdrop-blur sm:px-6
     ].freeze
@@ -40,7 +44,7 @@ module Tramway
     end
 
     def navbar_classes
-      classes = NAVBAR_BASE_CLASSES.dup
+      classes = NAVBAR_BASE_CLASSES.dup + NAVBAR_FIXED_CLASSES
       classes.concat(HORIZONTAL_NAVBAR_CLASSES) if horizontal?
       classes.concat(VERTICAL_NAVBAR_CLASSES + VERTICAL_DESKTOP_NAVBAR_CLASSES) if vertical?
 

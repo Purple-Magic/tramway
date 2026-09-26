@@ -982,8 +982,20 @@ directory to the host app asset load path, so `stylesheet_link_tag "font-awesome
 app-side asset configuration.
 On mobile, `tramway_navbar` always renders the same top navbar regardless of `direction:`. Desktop `:horizontal`
 renders the classic top navbar, and desktop `:vertical` renders the collapsible sidebar.
-When `tramway_navbar` renders before `tramway_main_container`, the main container helper keeps the vertical
-sidebar offset in sync automatically and removes it for horizontal pages.
+
+The navbar is `position: fixed` (`top-0 left-0 w-screen`, upgraded to a `md:fixed` left sidebar of `md:w-72` for
+the vertical desktop layout) at every breakpoint, so it stays put both when the page scrolls vertically and when a
+page with wide content (for example a wide table) scrolls horizontally — the navbar never drifts along with that
+scroll, including on mobile where `position: sticky` is unreliable across browsers for horizontal offsets. It uses
+`w-screen` (`100vw`) rather than `w-full` (`100%`) so its width always tracks the actual viewport instead of
+whatever containing block a `100%` width would otherwise resolve against — the same overflowing wide content that
+makes the page scroll horizontally in the first place.
+Because the navbar is taken out of the page flow, `tramway_main_container` always reserves `pt-16` at the top to
+match the fixed navbar's height on mobile (and on desktop for the `:horizontal` direction, where the top bar stays
+fixed at every breakpoint). When `tramway_navbar` renders before `tramway_main_container`, the main container
+helper keeps this in sync with `direction:`: for `:vertical` it clears that top padding at `md:` (`md:pt-0`) and
+adds the `md:pl-72` left sidebar offset instead; for `:horizontal` it keeps the top padding and adds no left
+offset.
 
 The collapsed/expanded state of the vertical sidebar persists across page navigations. The Stimulus controller
 saves the state to the browser's `localStorage` (key `tramway-navbar-expanded`) whenever the toggle button is
@@ -1247,19 +1259,12 @@ interactivity.
 <% end %>
 ```
 
-`tramway_row` also accepts `preview:`. By default preview is enabled (`true`) for non-linked rows and renders the mobile slide-up
-details panel. Pass `preview: false` when you want a row without the preview panel.
+Cell content that does not fit its column is truncated with an ellipsis. This is a pure CSS behavior (`truncate` +
+`min-w-0` on each cell) — no JavaScript is involved, and no configuration is needed to enable it.
 
-```erb
-<%= tramway_row preview: false do %>
-  <%= tramway_cell do %>
-    <%= user.name %>
-  <% end %>
-  <%= tramway_cell do %>
-    <%= user.email %>
-  <% end %>
-<% end %>
-```
+On narrow screens all columns always render, and the table scrolls horizontally within itself (the page never
+stretches past the viewport width) so every column stays reachable. See
+[docs/users/tramway_table.md](docs/users/tramway_table.md) for the full details of the mobile scroll behavior.
 
 ### Tramway Grid
 
@@ -1397,6 +1402,14 @@ Example 3: rendering button
 * `tramway_badge` renders a dark shadcn-style Tailwind badge with the provided `text`. Pass a semantic `type` (for example,
   `:success` or `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When
   you opt into a custom color, ensure the corresponding accent utilities are available in your Tailwind safelist.
+
+* `tramway_container` (backed by `Tramway::Containers::NarrowComponent`, used for example by the entities index page)
+  now sizes itself with `w-max min-w-full` instead of `w-full` on both its outer box and inner flex wrapper. A plain
+  block box with `w-full` never grows past 100% of its parent even when a child (e.g. a wide table forcing horizontal
+  scroll) overflows it, so the container's background stops at the viewport edge while the overflowing content keeps
+  going. `w-max` sizes the box to its content's intrinsic (max-content) width, and `min-w-full` keeps a 100% floor so
+  normal, non-overflowing pages still span the full width — together the container always covers the whole page, even
+  when something inside it stretches wider than the viewport.
 
   ```erb
   <%= tramway_badge text: 'Active', type: :success %>
@@ -1645,6 +1658,18 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. It has tailwind-st
 ```
 
 Pagination buttons looks like [this](https://play.tailwindcss.com/mqgDS5l9oY)
+
+On small screens (below Tailwind's `sm` breakpoint), the "First" and "Last" buttons are hidden and
+only the current page number stays visible next to the Prev/Next arrows, so the control doesn't
+overflow a phone-width viewport. Pair it with Kaminari's own
+[`page_entries_info`](https://github.com/kaminari/kaminari#i18n) helper to show a compact entry
+count on mobile instead of the full set of page links:
+
+```haml
+= paginate @users
+%p.sm:hidden
+  = page_entries_info @users
+```
 
 ### `behave_as_ar`
 

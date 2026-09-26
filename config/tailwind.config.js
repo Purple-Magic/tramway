@@ -21,6 +21,8 @@ module.exports = {
     'w-72',
     'z-50',
     'inset-0',
+    'sticky',
+    'left-0',
     'top-0',
     'top-4',
     'right-6',
@@ -51,6 +53,7 @@ module.exports = {
     'md:overflow-hidden',
     'md:pl-72',
     'md:pl-24',
+    'md:pt-0',
     'transition-all',
     'ease-in-out',
     'md:transition-[width]',
@@ -246,8 +249,9 @@ module.exports = {
     'div-table-cell',
     'sm:text-base',
     'last:border-b-0',
-    'md:block',
-    'first:block',
+    'overflow-x-auto',
+    'truncate',
+    'min-w-0',
     'rounded-t-xl',
     'border-zinc-800',
     'bg-zinc-950',
@@ -257,23 +261,16 @@ module.exports = {
     'hover:bg-zinc-900',
     'border-b',
     'border-r',
-    'grid-cols-1',
+    'gap-2',
     'gap-4',
+    'gap-6',
+    'px-4',
     'px-6',
+    'py-2',
     'py-4',
+    'py-6',
     'font-medium',
     'w-full',
-
-    // === Table row preview panel ===
-    'bottom-0',
-    'left-0',
-    'right-0',
-    'h-1/2',
-    'bg-gray-100',
-    'animate-roll-up',
-    'hover:text-gray-700',
-    'pt-4',
-    'md:hidden',
 
     // === Title Component ===
     'md:text-4xl',
@@ -373,6 +370,7 @@ module.exports = {
     'align-center',
     'justify-center',
     'min-h-dvh',
+    'min-w-full',
     'bg-zinc-950',
     'text-zinc-50',
 
@@ -392,6 +390,7 @@ module.exports = {
     // === Responsive visibility helpers ===
     'sm:hidden',
     'sm:flex',
+    'max-sm:hidden',
 
     // === Sizing utilities ===
     'w-full',

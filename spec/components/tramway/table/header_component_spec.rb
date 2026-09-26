@@ -2,18 +2,18 @@
 
 require 'rails_helper'
 
-MEDIUM_HEADER_ROW_SELECTOR =
-  '.div-table-row.grid.grid-cols-1.gap-4.rounded-t-xl.border-b.border-zinc-800.' \
-  'bg-zinc-900.text-zinc-400.md\\:grid-cols-2'
-MEDIUM_HEADER_CELL_SELECTOR = '.div-table-cell.hidden.px-6.py-4.first\\:block.md\\:block'
-SMALL_HEADER_ROW_SELECTOR =
-  '.div-table-row.grid.grid-cols-1.gap-2.rounded-t-xl.border-b.border-zinc-800.' \
-  'bg-zinc-900.text-zinc-400.md\\:grid-cols-2'
-SMALL_HEADER_CELL_SELECTOR = '.div-table-cell.hidden.px-4.py-2.first\\:block.md\\:block'
-LARGE_HEADER_ROW_SELECTOR =
-  '.div-table-row.grid.grid-cols-1.gap-6.rounded-t-xl.border-b.border-zinc-800.' \
-  'bg-zinc-900.text-zinc-400.md\\:grid-cols-2'
-LARGE_HEADER_CELL_SELECTOR = '.div-table-cell.hidden.px-6.py-6.first\\:block.md\\:block'
+MEDIUM_HEADER_ROW_CLASSES = %w[
+  div-table-row grid gap-4 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400
+].freeze
+MEDIUM_HEADER_CELL_CLASSES = %w[div-table-cell border-b border-zinc-800 truncate min-w-0 px-6 py-4].freeze
+SMALL_HEADER_ROW_CLASSES = %w[
+  div-table-row grid gap-2 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400
+].freeze
+SMALL_HEADER_CELL_CLASSES = %w[div-table-cell border-b border-zinc-800 truncate min-w-0 px-4 py-2].freeze
+LARGE_HEADER_ROW_CLASSES = %w[
+  div-table-row grid gap-6 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400
+].freeze
+LARGE_HEADER_CELL_CLASSES = %w[div-table-cell border-b border-zinc-800 truncate min-w-0 px-6 py-6].freeze
 
 describe Tramway::Table::HeaderComponent, type: :component do
   it 'uses headers argument to set grid columns' do
@@ -21,8 +21,11 @@ describe Tramway::Table::HeaderComponent, type: :component do
       '<div class="div-table-cell">Ignored</div>'.html_safe
     end
 
-    expect(page).to have_css('.div-table-row.md\:grid-cols-2', text: 'Name')
-    expect(page).to have_css('.div-table-row.md\:grid-cols-2', text: 'Email')
+    expect(page.find('.div-table-row')[:style]).to eq(
+      'grid-template-columns: repeat(2, minmax(10rem, 1fr)); min-width: 21.0rem'
+    )
+    expect(page).to have_css('.div-table-row', text: 'Name')
+    expect(page).to have_css('.div-table-row', text: 'Email')
     expect(page).not_to have_text('Ignored')
   end
 
@@ -34,7 +37,9 @@ describe Tramway::Table::HeaderComponent, type: :component do
       HTML
     end
 
-    expect(page).to have_css('.div-table-row.md\:grid-cols-2')
+    expect(page.find('.div-table-row')[:style]).to eq(
+      'grid-template-columns: repeat(2, minmax(10rem, 1fr)); min-width: 21.0rem'
+    )
     expect(page).to have_css('.div-table-cell.hidden', text: 'Email')
   end
 
@@ -44,8 +49,8 @@ describe Tramway::Table::HeaderComponent, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_css(MEDIUM_HEADER_ROW_SELECTOR)
-    expect(page).to have_css(MEDIUM_HEADER_CELL_SELECTOR, text: 'Name')
+    expect(page).to have_css('.div-table-row', class: MEDIUM_HEADER_ROW_CLASSES)
+    expect(page).to have_css('.div-table-cell', class: MEDIUM_HEADER_CELL_CLASSES, text: 'Name')
   end
 
   it 'renders the small size variant' do
@@ -54,8 +59,8 @@ describe Tramway::Table::HeaderComponent, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_css(SMALL_HEADER_ROW_SELECTOR)
-    expect(page).to have_css(SMALL_HEADER_CELL_SELECTOR, text: 'Name')
+    expect(page).to have_css('.div-table-row', class: SMALL_HEADER_ROW_CLASSES)
+    expect(page).to have_css('.div-table-cell', class: SMALL_HEADER_CELL_CLASSES, text: 'Name')
   end
 
   it 'renders the large size variant' do
@@ -64,7 +69,7 @@ describe Tramway::Table::HeaderComponent, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_css(LARGE_HEADER_ROW_SELECTOR)
-    expect(page).to have_css(LARGE_HEADER_CELL_SELECTOR, text: 'Name')
+    expect(page).to have_css('.div-table-row', class: LARGE_HEADER_ROW_CLASSES)
+    expect(page).to have_css('.div-table-cell', class: LARGE_HEADER_CELL_CLASSES, text: 'Name')
   end
 end
