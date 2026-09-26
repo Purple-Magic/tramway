@@ -457,13 +457,10 @@ class Navbar extends Controller {
 
     this.hiddenInteractionClasses.forEach((className) => {
       this.desktopHeader.classList.toggle(className, !expanded)
-      this.desktopMenu.classList.toggle(className, !expanded)
     })
 
     this.desktopHeader.toggleAttribute('inert', !expanded)
-    this.desktopMenu.toggleAttribute('inert', !expanded)
     this.desktopHeader.setAttribute('aria-hidden', expanded ? 'false' : 'true')
-    this.desktopMenu.setAttribute('aria-hidden', expanded ? 'false' : 'true')
 
     this.desktopToggleWrapper.classList.toggle('justify-end', expanded)
     this.desktopToggleWrapper.classList.toggle('justify-center', !expanded)
