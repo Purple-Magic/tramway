@@ -26,13 +26,17 @@ feature 'Order Index Page on Mobile', type: %i[feature admin] do
     end
   end
 
-  it 'displays next/last buttons with adjusted pagination' do
+  it 'displays a next button and hides first/last buttons for a smaller viewport' do
     expect(page).to have_link('🠖', href: users_path(page: 2))
-    expect(page).to have_link('⭲', href: users_path(page: 5))
+    expect(page).not_to have_link('⭲', href: users_path(page: 5))
+    expect(page).not_to have_link('⭰')
+  end
+
+  it 'displays the entry count instead of the desktop first/last buttons' do
+    expect(page).to have_text('125')
   end
 
   it_behaves_like 'Click on Page', '2'
   it_behaves_like 'Click on Page', '3'
   it_behaves_like 'Click on Page', '2', '🠖'
-  it_behaves_like 'Click on Page', '5', '⭲'
 end

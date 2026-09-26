@@ -37,5 +37,7 @@
       - @entities.each do |item|
         = component 'tramway/entity', entity: @entity, item: item
 
-      .flex.mt-4
+      .flex.flex-col.items-center.mt-4.gap-2
         = paginate @entities, custom_path_method:
+        %p.sm:hidden.text-xs.text-zinc-500
+          = page_entries_info @entities

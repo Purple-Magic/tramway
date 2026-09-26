@@ -386,6 +386,7 @@ module.exports = {
     // === Responsive visibility helpers ===
     'sm:hidden',
     'sm:flex',
+    'max-sm:hidden',
 
     // === Sizing utilities ===
     'w-full',

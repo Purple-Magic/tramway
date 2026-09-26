@@ -1644,6 +1644,18 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. It has tailwind-st
 
 Pagination buttons looks like [this](https://play.tailwindcss.com/mqgDS5l9oY)
 
+On small screens (below Tailwind's `sm` breakpoint), the "First" and "Last" buttons are hidden and
+only the current page number stays visible next to the Prev/Next arrows, so the control doesn't
+overflow a phone-width viewport. Pair it with Kaminari's own
+[`page_entries_info`](https://github.com/kaminari/kaminari#i18n) helper to show a compact entry
+count on mobile instead of the full set of page links:
+
+```haml
+= paginate @users
+%p.sm:hidden
+  = page_entries_info @users
+```
+
 ### `behave_as_ar`
 
 **Tramway Decorator** and **Tramway Form** support `behave_as_ar` method. It allows to use `update` and `destroy` methods with decorated and form objects.

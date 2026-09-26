@@ -5,5 +5,7 @@
   = component 'tramway/table/header', headers: [:email].map { |header| User.human_attribute_name header }
   = render @users
 
-.flex.flex-end.border-t.border-gray-200.px-4.pt-4.w-full
+.flex.flex-col.items-center.border-t.border-gray-200.px-4.pt-4.w-full.gap-2
   = paginate @users
+  %p.sm:hidden.text-xs.text-zinc-500
+    = page_entries_info @users
