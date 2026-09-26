@@ -6,5 +6,6 @@
 6. Commit every time you change something (after `lefthook run pre-commit` and the test suite pass). Create a new commit per logical change instead of batching unrelated changes together.
 
 @.agents/create-instruction.md
+@.agents/documentation.md
 @.agents/infra-dependent-features.md
 @.agents/releases.md
