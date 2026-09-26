@@ -8,7 +8,7 @@ module Tramway
     ].freeze
 
     NAVBAR_FIXED_CLASSES = %w[
-      fixed top-0 left-0 z-40 w-full
+      fixed top-0 left-0 z-40 w-screen
     ].freeze
 
     HORIZONTAL_NAVBAR_CLASSES = %w[

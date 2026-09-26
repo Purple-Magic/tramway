@@ -983,10 +983,13 @@ app-side asset configuration.
 On mobile, `tramway_navbar` always renders the same top navbar regardless of `direction:`. Desktop `:horizontal`
 renders the classic top navbar, and desktop `:vertical` renders the collapsible sidebar.
 
-The navbar is `position: fixed` (`top-0 left-0 w-full`, upgraded to a `md:fixed` left sidebar for the vertical
-desktop layout) at every breakpoint, so it stays put both when the page scrolls vertically and when a page with
-wide content (for example a wide table) scrolls horizontally — the navbar never drifts along with that scroll,
-including on mobile where `position: sticky` is unreliable across browsers for horizontal offsets.
+The navbar is `position: fixed` (`top-0 left-0 w-screen`, upgraded to a `md:fixed` left sidebar of `md:w-72` for
+the vertical desktop layout) at every breakpoint, so it stays put both when the page scrolls vertically and when a
+page with wide content (for example a wide table) scrolls horizontally — the navbar never drifts along with that
+scroll, including on mobile where `position: sticky` is unreliable across browsers for horizontal offsets. It uses
+`w-screen` (`100vw`) rather than `w-full` (`100%`) so its width always tracks the actual viewport instead of
+whatever containing block a `100%` width would otherwise resolve against — the same overflowing wide content that
+makes the page scroll horizontally in the first place.
 Because the navbar is taken out of the page flow, `tramway_main_container` always reserves `pt-16` at the top to
 match the fixed navbar's height on mobile (and on desktop for the `:horizontal` direction, where the top bar stays
 fixed at every breakpoint). When `tramway_navbar` renders before `tramway_main_container`, the main container
