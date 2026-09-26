@@ -1251,11 +1251,13 @@ Cell content that does not fit its column is truncated with an ellipsis. This is
 `min-w-0` on each cell) — no JavaScript is involved, and no configuration is needed to enable it.
 
 On narrow screens the table no longer hides columns. All columns always render, and the table wraps in a horizontal
-scroll container (`overflow-x-auto`) so you can swipe/scroll left-to-right to see columns that don't fit the viewport.
-This is also CSS-only: each column has a minimum width (based on the table's `size:`), so the grid naturally overflows
-its container on small screens instead of shrinking or hiding cells. The previous mobile "tap row to preview" slide-up
-panel (and the `preview:` option on `tramway_row`) has been removed, since it is no longer needed once every column is
-reachable via horizontal scroll.
+scroll container (`overflow-x-scroll`, with a persistent, always-visible scrollbar) so you can swipe/scroll left-to-right
+to see columns that don't fit the viewport. This is also CSS-only: each column has a minimum width (based on the table's
+`size:`), so the grid naturally overflows its container on small screens instead of shrinking or hiding cells. Each row
+and the header grow to that same overflowed width (instead of clipping at the container edge), so the header background
+and borders stay aligned with the columns as you scroll. The previous mobile "tap row to preview" slide-up panel (and
+the `preview:` option on `tramway_row`) has been removed, since it is no longer needed once every column is reachable
+via horizontal scroll.
 
 ### Tramway Grid
 
