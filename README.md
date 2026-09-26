@@ -1277,6 +1277,10 @@ The table's own scroll container is capped to the width of the page (`w-full max
 table itself — the page no longer stretches past the viewport width on mobile when a table's columns are wider than
 the screen.
 
+On the entities index page, the pagination controls and the "page X of Y" hint (`page_entries_info`) render outside
+of `tramway_table`, below the scroll container, so they stay put and visible regardless of how far the table is
+scrolled horizontally.
+
 ### Tramway Grid
 
 Use `tramway_grid` when you want dashboard-style layouts with cards that span multiple rows and columns while keeping the
