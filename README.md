@@ -1247,19 +1247,15 @@ interactivity.
 <% end %>
 ```
 
-`tramway_row` also accepts `preview:`. By default preview is enabled (`true`) for non-linked rows and renders the mobile slide-up
-details panel. Pass `preview: false` when you want a row without the preview panel.
+Cell content that does not fit its column is truncated with an ellipsis. This is a pure CSS behavior (`truncate` +
+`min-w-0` on each cell) — no JavaScript is involved, and no configuration is needed to enable it.
 
-```erb
-<%= tramway_row preview: false do %>
-  <%= tramway_cell do %>
-    <%= user.name %>
-  <% end %>
-  <%= tramway_cell do %>
-    <%= user.email %>
-  <% end %>
-<% end %>
-```
+On narrow screens the table no longer hides columns. All columns always render, and the table wraps in a horizontal
+scroll container (`overflow-x-auto`) so you can swipe/scroll left-to-right to see columns that don't fit the viewport.
+This is also CSS-only: each column has a minimum width (based on the table's `size:`), so the grid naturally overflows
+its container on small screens instead of shrinking or hiding cells. The previous mobile "tap row to preview" slide-up
+panel (and the `preview:` option on `tramway_row`) has been removed, since it is no longer needed once every column is
+reachable via horizontal scroll.
 
 ### Tramway Grid
 
