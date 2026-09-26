@@ -6,6 +6,9 @@ const buildUtilities = (prefix, start, end) =>
 module.exports = {
   safelist: [
     // === Navbar ===
+    'w-5',
+    'shrink-0',
+    'text-center',
     'ml-4',
     'text-white',
     'md:flex',

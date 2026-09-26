@@ -11,7 +11,8 @@ module Tramway
         def initialize(**options)
           @href = options[:href]
           @method = options[:method]
-          @options = options.except(:href, :method)
+          @icon = options[:icon]
+          @options = options.except(:href, :method, :icon)
         end
       end
     end

@@ -35,13 +35,13 @@ module Tramway
       reset_filling
     end
 
-    def item(text_or_url, url = nil, **, &)
+    def item(text_or_url, url = nil, icon: nil, **, &)
       raise 'You cannot provide an argument and a code block at the same time' if provided_url_and_block?(url, &)
 
       if url.present?
-        render_ignoring_block(text_or_url, url, **)
+        render_ignoring_block(text_or_url, url, icon:, **)
       else
-        render_using_block(text_or_url, **, &)
+        render_using_block(text_or_url, icon:, **, &)
       end => rendered_item
 
       @items[@filling] << rendered_item
@@ -73,8 +73,9 @@ module Tramway
       @filling = nil
     end
 
-    def render_ignoring_block(text_or_url, url, method: nil, **options)
-      options.merge!(href: url)
+    def render_ignoring_block(text_or_url, url, method: nil, icon: nil, **options)
+      options.merge!(href: url, icon:)
+      apply_icon_accessibility_attributes(options, label: text_or_url, icon:)
 
       if method.present? && method.to_sym != :get
         context.render(Tramway::Nav::Item::ButtonComponent.new(method:, **options)) { text_or_url }
@@ -83,14 +84,21 @@ module Tramway
       end
     end
 
-    def render_using_block(text_or_url, method: nil, **options, &)
-      options.merge!(href: text_or_url)
+    def render_using_block(text_or_url, method: nil, icon: nil, **options, &)
+      options.merge!(href: text_or_url, icon:)
 
       if method.present? && method.to_sym != :get
         context.render(Tramway::Nav::Item::ButtonComponent.new(method:, **options), &)
       else
         context.render(Tramway::Nav::Item::LinkComponent.new(method:, **options), &)
       end
+    end
+
+    def apply_icon_accessibility_attributes(options, label:, icon:)
+      return if icon.blank?
+
+      options[:title] = label if options[:title].blank?
+      options[:'aria-label'] = label if options[:'aria-label'].blank?
     end
   end
 end

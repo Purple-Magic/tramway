@@ -151,6 +151,21 @@ describe Tramway::Helpers::NavbarHelper, type: :view do
       end
     end
 
+    context 'with an item icon' do
+      let(:fragment) do
+        view.tramway_navbar do |nav|
+          nav.left do
+            nav.item 'Users', '/users', icon: 'fa fa-users'
+          end
+        end
+      end
+
+      it 'renders the icon and accessible label for the item' do
+        expect(fragment).to have_css "a[href='/users'] i.fa.fa-users[aria-hidden]"
+        expect(fragment).to have_css "a[href='/users'][aria-label='Users'][title='Users']"
+      end
+    end
+
     context 'with horizontal direction and items' do
       let(:fragment) do
         view.tramway_navbar(direction: :horizontal) do |nav|

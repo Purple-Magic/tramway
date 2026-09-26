@@ -15,4 +15,17 @@ describe Tramway::Nav::Item::LinkComponent, type: :component do
 
     expect(page).to have_css "a[data-turbo-method='delete'][data-turbo-confirm='Yes?']"
   end
+
+  it 'renders link with an icon' do
+    render_inline(described_class.new(href: '/test_page', icon: 'fa fa-users')) { 'Sign In' }
+
+    expect(page).to have_css 'a i.fa.fa-users[aria-hidden]'
+    expect(page).to have_css 'a span.tramway-navbar-item-label', text: 'Sign In'
+  end
+
+  it 'does not render an icon when it is not provided' do
+    render_inline(described_class.new(href: '/test_page')) { 'Sign In' }
+
+    expect(page).not_to have_css 'a i'
+  end
 end

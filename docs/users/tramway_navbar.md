@@ -12,7 +12,9 @@ collapsible left sidebar (`direction: :vertical`, the default).
 ```
 
 See the [main README's Tramway Navbar section](https://github.com/Purple-Magic/tramway#tramway-navbar) for the full
-list of options (`title`, `title_link`, `direction`, `background`, `with_entities`).
+list of options (`title`, `title_link`, `direction`, `background`, `with_entities`), and its
+[Icons on navbar items](https://github.com/Purple-Magic/tramway#icons-on-navbar-items) section for the `icon:`
+option.
 
 ## Collapsed/expanded state persists across pages
 

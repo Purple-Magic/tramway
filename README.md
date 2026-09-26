@@ -947,6 +947,22 @@ end
 
 will render [this](https://play.tailwindcss.com/UZPTCudFw5)
 
+#### Icons on navbar items
+
+`nav.item` accepts an optional `icon:` option with a Font Awesome class string, rendered before the item's label:
+
+```ruby
+nav.left do
+  nav.item 'Users', '/users', icon: 'fa fa-users'
+  nav.item 'Podcasts', '/podcasts', icon: 'fa fa-podcast'
+end
+```
+
+Icons are optional — items without one just render as plain text links. When the vertical sidebar is collapsed on
+desktop, items rendered with an `icon:` stay visible and clickable as icon-only links (their text label is hidden
+but still available to screen readers via the item's `aria-label`); items without an icon have nothing to show once
+collapsed.
+
 #### tramway_navbar
 
 This helper provides several options. Here is YAML view of `tramway_navbar` options structure

@@ -10,7 +10,10 @@ module Tramway
       class LinkComponent < Tramway::Nav::ItemComponent
         def initialize(**options)
           @href = options[:href]
-          @options = Rules::TurboHtmlAttributesRules.prepare_turbo_html_attributes(options:)
+          @icon = options[:icon]
+          @options = Rules::TurboHtmlAttributesRules.prepare_turbo_html_attributes(
+            options: options.except(:href, :icon)
+          )
         end
       end
     end

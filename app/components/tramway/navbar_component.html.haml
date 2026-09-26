@@ -142,10 +142,25 @@
           padding-left: 6rem;
         }
 
-        html[data-tramway-navbar-expanded="false"] #desktop-navbar-header,
-        html[data-tramway-navbar-expanded="false"] #desktop-navbar-content {
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-header {
           opacity: 0;
           pointer-events: none;
+        }
+
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-content {
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-content .tramway-navbar-item-label {
+          display: none;
+        }
+
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-content .tramway-navbar-item > a,
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-content .tramway-navbar-item > form > button {
+          justify-content: center;
+          padding-left: 0;
+          padding-right: 0;
         }
 
         html[data-tramway-navbar-expanded="false"] #desktop-navbar-toggle-wrapper {
