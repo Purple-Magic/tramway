@@ -46,7 +46,6 @@ module Tramway
         component 'tramway/table/row',
                   cells: options.delete(:cells),
                   href: options.delete(:href),
-                  preview: options.delete(:preview),
                   options:,
                   &
       end

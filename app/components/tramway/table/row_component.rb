@@ -5,25 +5,27 @@ module Tramway
     # Component for rendering a row in a table
     class RowComponent < Tramway::BaseComponent
       include ContentCells
+      include GridColumns
 
       SIZE_CLASSES = {
         small: {
-          row: 'div-table-row grid grid-cols-1 gap-2 border-b border-zinc-800 bg-transparent last:border-b-0',
-          cell: 'div-table-cell bg-transparent px-4 py-2 text-sm font-medium text-zinc-100 sm:text-sm'
+          row: 'div-table-row grid gap-2 border-b border-zinc-800 bg-transparent last:border-b-0',
+          cell: 'div-table-cell truncate min-w-0 bg-transparent px-4 py-2 text-sm font-medium ' \
+                'text-zinc-100 sm:text-sm'
         },
         medium: {
-          row: 'div-table-row grid grid-cols-1 gap-4 border-b border-zinc-800 bg-transparent last:border-b-0',
-          cell: 'div-table-cell bg-transparent px-6 py-4 text-xs font-medium text-zinc-100 sm:text-base'
+          row: 'div-table-row grid gap-4 border-b border-zinc-800 bg-transparent last:border-b-0',
+          cell: 'div-table-cell truncate min-w-0 bg-transparent px-6 py-4 text-xs ' \
+                'font-medium text-zinc-100 sm:text-base'
         },
         large: {
-          row: 'div-table-row grid grid-cols-1 gap-6 border-b border-zinc-800 bg-transparent last:border-b-0',
-          cell: 'div-table-cell bg-transparent px-6 py-6 text-lg font-medium text-zinc-100'
+          row: 'div-table-row grid gap-6 border-b border-zinc-800 bg-transparent last:border-b-0',
+          cell: 'div-table-cell truncate min-w-0 bg-transparent px-6 py-6 text-lg font-medium text-zinc-100'
         }
       }.freeze
 
       option :cells, optional: true, default: -> { [] }
       option :href, optional: true
-      option :preview, optional: true, default: -> { true }
       option :options, optional: true, default: -> { {} }
 
       def default_attributes
@@ -42,8 +44,8 @@ module Tramway
         end
       end
 
-      def desktop_row_classes(cells_count)
-        "#{size_classes.fetch(:row)} md:grid-cols-#{cells_count}"
+      def row_grid_classes(cells_count)
+        "#{size_classes.fetch(:row)} #{grid_template_class(cells_count)}"
       end
 
       def link_row_classes

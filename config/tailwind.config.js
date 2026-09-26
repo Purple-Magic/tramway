@@ -3,6 +3,16 @@ const defaultTheme = require("tailwindcss/defaultTheme")
 const buildUtilities = (prefix, start, end) =>
   Array.from({ length: end - start + 1 }, (_, index) => `${prefix}${start + index}`)
 
+const TABLE_MIN_COLUMN_WIDTHS = ['8rem', '10rem', '12rem']
+
+const buildTableGridTemplates = (start, end) =>
+  TABLE_MIN_COLUMN_WIDTHS.flatMap((minWidth) =>
+    Array.from(
+      { length: end - start + 1 },
+      (_, index) => `grid-cols-[repeat(${start + index},minmax(${minWidth},1fr))]`
+    )
+  )
+
 module.exports = {
   safelist: [
     // === Navbar ===
@@ -246,8 +256,9 @@ module.exports = {
     'div-table-cell',
     'sm:text-base',
     'last:border-b-0',
-    'md:block',
-    'first:block',
+    'overflow-x-auto',
+    'truncate',
+    'min-w-0',
     'rounded-t-xl',
     'border-zinc-800',
     'bg-zinc-950',
@@ -257,23 +268,17 @@ module.exports = {
     'hover:bg-zinc-900',
     'border-b',
     'border-r',
-    'grid-cols-1',
+    'gap-2',
     'gap-4',
+    'gap-6',
+    'px-4',
     'px-6',
+    'py-2',
     'py-4',
+    'py-6',
     'font-medium',
     'w-full',
-
-    // === Table row preview panel ===
-    'bottom-0',
-    'left-0',
-    'right-0',
-    'h-1/2',
-    'bg-gray-100',
-    'animate-roll-up',
-    'hover:text-gray-700',
-    'pt-4',
-    'md:hidden',
+    ...buildTableGridTemplates(1, 12),
 
     // === Title Component ===
     'md:text-4xl',
