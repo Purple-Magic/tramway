@@ -117,7 +117,7 @@ module Tramway
 
     def desktop_vertical_toggle_icon_classes(expanded:)
       classes = %w[fa fa-chevron-left transition-transform duration-200 ease-in-out-strong motion-reduce:duration-0]
-      classes << 'rotate-180' if expanded
+      classes << 'rotate-180' unless expanded
 
       classes.join(' ')
     end
