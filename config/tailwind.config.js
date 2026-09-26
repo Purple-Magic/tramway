@@ -367,6 +367,7 @@ module.exports = {
     'align-center',
     'justify-center',
     'min-h-dvh',
+    'min-w-full',
     'bg-zinc-950',
     'text-zinc-50',
 

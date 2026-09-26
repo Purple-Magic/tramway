@@ -1396,6 +1396,12 @@ Example 3: rendering button
   `:success` or `:danger`) to use the built-in color mappings, or supply a custom Tailwind color family with `color:`. When
   you opt into a custom color, ensure the corresponding accent utilities are available in your Tailwind safelist.
 
+* `Tramway::Containers::MainComponent` (the `<main>` wrapper rendered by Tramway layouts) uses `min-w-full` instead of
+  `w-full` so its background keeps covering the full width of the page even when a child (for example, a wide table
+  forcing horizontal scroll) stretches the page beyond the viewport. `w-full` pins the element to exactly 100% width and
+  does not grow past that when content overflows, leaving unstyled space next to the overflowing content; `min-w-full`
+  sets a 100% floor while still letting the box grow to fit wider children.
+
   ```erb
   <%= tramway_badge text: 'Active', type: :success %>
   ```
