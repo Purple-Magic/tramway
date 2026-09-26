@@ -4,18 +4,18 @@ require 'rails_helper'
 require 'tramway/helpers/views_helper'
 require 'support/view_helpers'
 
-SMALL_HEADER_ROW_CLASSES =
-  'div-table-row grid gap-2 rounded-t-xl border-b border-zinc-800 ' \
-  'bg-zinc-900 text-zinc-400 grid-cols-[repeat(2,minmax(8rem,1fr))]'
-SMALL_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 truncate min-w-0 px-4 py-2'
-SMALL_CELL_CLASSES = 'div-table-cell truncate min-w-0 bg-transparent px-4 py-2 text-sm font-medium ' \
-                     'text-zinc-100'
-MEDIUM_HEADER_ROW_CLASSES =
-  'div-table-row grid gap-4 rounded-t-xl border-b border-zinc-800 ' \
-  'bg-zinc-900 text-zinc-400 grid-cols-[repeat(2,minmax(10rem,1fr))]'
-MEDIUM_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 truncate min-w-0 px-6 py-4'
-MEDIUM_CELL_CLASSES = 'div-table-cell truncate min-w-0 bg-transparent px-6 py-4 text-base font-medium ' \
-                      'text-zinc-100'
+TABLE_HELPER_SMALL_HEADER_ROW_CLASSES =
+  'div-table-row grid gap-2 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400'
+TABLE_HELPER_SMALL_HEADER_ROW_STYLE = 'grid-template-columns: repeat(2, minmax(8rem, 1fr))'
+TABLE_HELPER_SMALL_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 truncate min-w-0 px-4 py-2'
+TABLE_HELPER_SMALL_CELL_CLASSES = 'div-table-cell truncate min-w-0 bg-transparent px-4 py-2 text-sm font-medium ' \
+                                  'text-zinc-100'
+TABLE_HELPER_MEDIUM_HEADER_ROW_CLASSES =
+  'div-table-row grid gap-4 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400'
+TABLE_HELPER_MEDIUM_HEADER_ROW_STYLE = 'grid-template-columns: repeat(2, minmax(10rem, 1fr))'
+TABLE_HELPER_MEDIUM_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 truncate min-w-0 px-6 py-4'
+TABLE_HELPER_MEDIUM_CELL_CLASSES = 'div-table-cell truncate min-w-0 bg-transparent px-6 py-4 text-base font-medium ' \
+                                   'text-zinc-100'
 
 RENDER_TABLE_FRAGMENT = lambda do |view, size: :medium|
   view.tramway_table(size:) do
@@ -83,17 +83,19 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
     it 'propagates the current size to nested row and cell helpers' do
       fragment = RENDER_TABLE_FRAGMENT.call(view, size: :small)
 
-      expect(fragment).to include(SMALL_HEADER_ROW_CLASSES)
-      expect(fragment).to include(SMALL_HEADER_CELL_CLASSES)
-      expect(fragment).to include(SMALL_CELL_CLASSES)
+      expect(fragment).to include(TABLE_HELPER_SMALL_HEADER_ROW_CLASSES)
+      expect(fragment).to include(TABLE_HELPER_SMALL_HEADER_ROW_STYLE)
+      expect(fragment).to include(TABLE_HELPER_SMALL_HEADER_CELL_CLASSES)
+      expect(fragment).to include(TABLE_HELPER_SMALL_CELL_CLASSES)
     end
 
     it 'renders the current medium table classes unchanged' do
       fragment = RENDER_TABLE_FRAGMENT.call(view)
 
-      expect(fragment).to include(MEDIUM_HEADER_ROW_CLASSES)
-      expect(fragment).to include(MEDIUM_HEADER_CELL_CLASSES)
-      expect(fragment).to include(MEDIUM_CELL_CLASSES)
+      expect(fragment).to include(TABLE_HELPER_MEDIUM_HEADER_ROW_CLASSES)
+      expect(fragment).to include(TABLE_HELPER_MEDIUM_HEADER_ROW_STYLE)
+      expect(fragment).to include(TABLE_HELPER_MEDIUM_HEADER_CELL_CLASSES)
+      expect(fragment).to include(TABLE_HELPER_MEDIUM_CELL_CLASSES)
     end
   end
 

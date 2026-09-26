@@ -3,16 +3,6 @@ const defaultTheme = require("tailwindcss/defaultTheme")
 const buildUtilities = (prefix, start, end) =>
   Array.from({ length: end - start + 1 }, (_, index) => `${prefix}${start + index}`)
 
-const TABLE_MIN_COLUMN_WIDTHS = ['8rem', '10rem', '12rem']
-
-const buildTableGridTemplates = (start, end) =>
-  TABLE_MIN_COLUMN_WIDTHS.flatMap((minWidth) =>
-    Array.from(
-      { length: end - start + 1 },
-      (_, index) => `grid-cols-[repeat(${start + index},minmax(${minWidth},1fr))]`
-    )
-  )
-
 module.exports = {
   safelist: [
     // === Navbar ===
@@ -278,7 +268,6 @@ module.exports = {
     'py-6',
     'font-medium',
     'w-full',
-    ...buildTableGridTemplates(1, 12),
 
     // === Title Component ===
     'md:text-4xl',

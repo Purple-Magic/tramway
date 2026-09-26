@@ -15,10 +15,13 @@ module Tramway
 
       private
 
-      def grid_template_class(columns_count)
+      # Column widths are set via an inline style (not a Tailwind class) because the class name
+      # would be built dynamically from the columns count, and Tailwind's build only generates
+      # utilities for class names it can find literally in the source.
+      def grid_template_style(columns_count)
         min_width = MIN_COLUMN_WIDTHS.fetch(tramway_table_size) { MIN_COLUMN_WIDTHS[:medium] }
 
-        "grid-cols-[repeat(#{columns_count},minmax(#{min_width},1fr))]"
+        "grid-template-columns: repeat(#{columns_count}, minmax(#{min_width}, 1fr))"
       end
     end
   end

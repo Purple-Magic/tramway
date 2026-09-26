@@ -34,8 +34,8 @@ module Tramway
         columns
       end
 
-      def header_row_classes(columns_count)
-        "#{size_classes.fetch(:row)} #{grid_template_class(columns_count)}"
+      def header_row_classes
+        size_classes.fetch(:row)
       end
 
       def header_cell_classes

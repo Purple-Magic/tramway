@@ -3,22 +3,19 @@
 require 'rails_helper'
 
 ROW_MEDIUM_ROW_CLASSES = %w[
-  div-table-row grid gap-4 border-b border-zinc-800 bg-transparent
-  last:border-b-0 grid-cols-[repeat(2,minmax(10rem,1fr))]
+  div-table-row grid gap-4 border-b border-zinc-800 bg-transparent last:border-b-0
 ].freeze
 ROW_MEDIUM_CELL_CLASSES = %w[
   div-table-cell truncate min-w-0 bg-transparent px-6 py-4 text-xs font-medium text-zinc-100 sm:text-base
 ].freeze
 ROW_SMALL_ROW_CLASSES = %w[
-  div-table-row grid gap-2 border-b border-zinc-800 bg-transparent
-  last:border-b-0 grid-cols-[repeat(2,minmax(8rem,1fr))]
+  div-table-row grid gap-2 border-b border-zinc-800 bg-transparent last:border-b-0
 ].freeze
 ROW_SMALL_CELL_CLASSES = %w[
   div-table-cell truncate min-w-0 bg-transparent px-4 py-2 text-sm font-medium text-zinc-100 sm:text-sm
 ].freeze
 ROW_LARGE_ROW_CLASSES = %w[
-  div-table-row grid gap-6 border-b border-zinc-800 bg-transparent
-  last:border-b-0 grid-cols-[repeat(2,minmax(12rem,1fr))]
+  div-table-row grid gap-6 border-b border-zinc-800 bg-transparent last:border-b-0
 ].freeze
 ROW_LARGE_CELL_CLASSES = %w[
   div-table-cell truncate min-w-0 bg-transparent px-6 py-6 text-lg font-medium text-zinc-100
@@ -57,6 +54,7 @@ describe Tramway::Table::RowComponent, type: :component do
 
     expect(page).to have_css('.div-table-row', class: ROW_MEDIUM_ROW_CLASSES)
     expect(page).to have_css('.div-table-cell', class: ROW_MEDIUM_CELL_CLASSES, text: 'Alice')
+    expect(page.find('.div-table-row')[:style]).to eq 'grid-template-columns: repeat(2, minmax(10rem, 1fr))'
   end
 
   it 'renders the small size variant' do
@@ -67,6 +65,7 @@ describe Tramway::Table::RowComponent, type: :component do
 
     expect(page).to have_css('.div-table-row', class: ROW_SMALL_ROW_CLASSES)
     expect(page).to have_css('.div-table-cell', class: ROW_SMALL_CELL_CLASSES, text: 'Alice')
+    expect(page.find('.div-table-row')[:style]).to eq 'grid-template-columns: repeat(2, minmax(8rem, 1fr))'
   end
 
   it 'renders the large size variant' do
@@ -77,5 +76,6 @@ describe Tramway::Table::RowComponent, type: :component do
 
     expect(page).to have_css('.div-table-row', class: ROW_LARGE_ROW_CLASSES)
     expect(page).to have_css('.div-table-cell', class: ROW_LARGE_CELL_CLASSES, text: 'Alice')
+    expect(page.find('.div-table-row')[:style]).to eq 'grid-template-columns: repeat(2, minmax(12rem, 1fr))'
   end
 end

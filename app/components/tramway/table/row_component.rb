@@ -44,8 +44,8 @@ module Tramway
         end
       end
 
-      def row_grid_classes(cells_count)
-        "#{size_classes.fetch(:row)} #{grid_template_class(cells_count)}"
+      def row_grid_classes
+        size_classes.fetch(:row)
       end
 
       def link_row_classes
