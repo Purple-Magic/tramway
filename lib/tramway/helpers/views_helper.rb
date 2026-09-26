@@ -120,8 +120,9 @@ module Tramway
 
         return classes.join(' ') if @tramway_navbar_direction.nil?
 
-        classes = classes.reject { _1.start_with?('md:pl-') || _1.start_with?('md:pr-') }
-        classes << 'md:pl-72' if @tramway_navbar_direction == :vertical
+        classes = classes.reject { _1.start_with?('md:pl-') || _1.start_with?('md:pr-') || _1 == 'pt-16' }
+        classes << 'pt-16'
+        classes << 'md:pl-72' << 'md:pt-0' if @tramway_navbar_direction == :vertical
 
         classes.join(' ')
       end

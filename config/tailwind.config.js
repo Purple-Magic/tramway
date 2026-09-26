@@ -53,6 +53,7 @@ module.exports = {
     'md:overflow-hidden',
     'md:pl-72',
     'md:pl-24',
+    'md:pt-0',
     'transition-all',
     'ease-in-out',
     'md:transition-[width]',

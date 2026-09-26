@@ -7,8 +7,8 @@ module Tramway
       bg-zinc-950 text-zinc-50
     ].freeze
 
-    NAVBAR_STICKY_CLASSES = %w[
-      sticky top-0 left-0 z-40
+    NAVBAR_FIXED_CLASSES = %w[
+      fixed top-0 left-0 z-40 w-full
     ].freeze
 
     HORIZONTAL_NAVBAR_CLASSES = %w[
@@ -44,7 +44,7 @@ module Tramway
     end
 
     def navbar_classes
-      classes = NAVBAR_BASE_CLASSES.dup + NAVBAR_STICKY_CLASSES
+      classes = NAVBAR_BASE_CLASSES.dup + NAVBAR_FIXED_CLASSES
       classes.concat(HORIZONTAL_NAVBAR_CLASSES) if horizontal?
       classes.concat(VERTICAL_NAVBAR_CLASSES + VERTICAL_DESKTOP_NAVBAR_CLASSES) if vertical?
 

@@ -983,12 +983,16 @@ app-side asset configuration.
 On mobile, `tramway_navbar` always renders the same top navbar regardless of `direction:`. Desktop `:horizontal`
 renders the classic top navbar, and desktop `:vertical` renders the collapsible sidebar.
 
-The navbar is pinned in place with `position: sticky; top: 0; left: 0` at every breakpoint (the vertical desktop
-sidebar upgrades that to `md:fixed`), so it stays put both when the page scrolls vertically and when a page with
-wide content (for example a wide table) scrolls horizontally — the navbar never drifts along with that horizontal
-scroll.
-When `tramway_navbar` renders before `tramway_main_container`, the main container helper keeps the vertical
-sidebar offset in sync automatically and removes it for horizontal pages.
+The navbar is `position: fixed` (`top-0 left-0 w-full`, upgraded to a `md:fixed` left sidebar for the vertical
+desktop layout) at every breakpoint, so it stays put both when the page scrolls vertically and when a page with
+wide content (for example a wide table) scrolls horizontally — the navbar never drifts along with that scroll,
+including on mobile where `position: sticky` is unreliable across browsers for horizontal offsets.
+Because the navbar is taken out of the page flow, `tramway_main_container` always reserves `pt-16` at the top to
+match the fixed navbar's height on mobile (and on desktop for the `:horizontal` direction, where the top bar stays
+fixed at every breakpoint). When `tramway_navbar` renders before `tramway_main_container`, the main container
+helper keeps this in sync with `direction:`: for `:vertical` it clears that top padding at `md:` (`md:pt-0`) and
+adds the `md:pl-72` left sidebar offset instead; for `:horizontal` it keeps the top padding and adds no left
+offset.
 
 The collapsed/expanded state of the vertical sidebar persists across page navigations. The Stimulus controller
 saves the state to the browser's `localStorage` (key `tramway-navbar-expanded`) whenever the toggle button is
