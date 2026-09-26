@@ -5,24 +5,24 @@ require 'tramway/helpers/views_helper'
 require 'support/view_helpers'
 
 SMALL_HEADER_ROW_CLASSES =
-  'div-table-row grid grid-cols-1 gap-2 rounded-t-xl border-b border-zinc-800 ' \
-  'bg-zinc-900 text-zinc-400'
-SMALL_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 hidden px-4 py-2 first:block md:block'
-SMALL_CELL_CLASSES = 'div-table-cell hidden bg-transparent px-4 py-2 text-sm font-medium ' \
-                     'text-zinc-100 first:block md:block'
+  'div-table-row grid gap-2 rounded-t-xl border-b border-zinc-800 ' \
+  'bg-zinc-900 text-zinc-400 grid-cols-[repeat(2,minmax(8rem,1fr))]'
+SMALL_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 truncate min-w-0 px-4 py-2'
+SMALL_CELL_CLASSES = 'div-table-cell truncate min-w-0 bg-transparent px-4 py-2 text-sm font-medium ' \
+                     'text-zinc-100'
 MEDIUM_HEADER_ROW_CLASSES =
-  'div-table-row grid grid-cols-1 gap-4 rounded-t-xl border-b border-zinc-800 ' \
-  'bg-zinc-900 text-zinc-400'
-MEDIUM_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 hidden px-6 py-4 first:block md:block'
-MEDIUM_CELL_CLASSES = 'div-table-cell hidden bg-transparent px-6 py-4 text-base font-medium ' \
-                      'text-zinc-100 first:block md:block'
+  'div-table-row grid gap-4 rounded-t-xl border-b border-zinc-800 ' \
+  'bg-zinc-900 text-zinc-400 grid-cols-[repeat(2,minmax(10rem,1fr))]'
+MEDIUM_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 truncate min-w-0 px-6 py-4'
+MEDIUM_CELL_CLASSES = 'div-table-cell truncate min-w-0 bg-transparent px-6 py-4 text-base font-medium ' \
+                      'text-zinc-100'
 
 RENDER_TABLE_FRAGMENT = lambda do |view, size: :medium|
   view.tramway_table(size:) do
     view.safe_join(
       [
         view.tramway_header(headers: %w[Name Email]),
-        view.tramway_row(preview: false) do
+        view.tramway_row do
           view.safe_join(
             [
               view.tramway_cell { 'Alice' },

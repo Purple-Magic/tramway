@@ -2,21 +2,27 @@
 
 require 'rails_helper'
 
-ROW_MEDIUM_ROW_SELECTOR =
-  '.div-table-row.grid.grid-cols-1.gap-4.border-b.' \
-  'border-zinc-800.bg-transparent.last\\:border-b-0.' \
-  'md\\:grid-cols-2'
-ROW_MEDIUM_CELL_SELECTOR = '.div-table-cell.bg-transparent.px-6.py-4.text-xs.font-medium.text-zinc-100.sm\\:text-base'
-ROW_SMALL_ROW_SELECTOR =
-  '.div-table-row.grid.grid-cols-1.gap-2.border-b.' \
-  'border-zinc-800.bg-transparent.last\\:border-b-0.' \
-  'md\\:grid-cols-2'
-ROW_SMALL_CELL_SELECTOR = '.div-table-cell.bg-transparent.px-4.py-2.text-sm.font-medium.text-zinc-100.sm\\:text-sm'
-ROW_LARGE_ROW_SELECTOR =
-  '.div-table-row.grid.grid-cols-1.gap-6.border-b.' \
-  'border-zinc-800.bg-transparent.last\\:border-b-0.' \
-  'md\\:grid-cols-2'
-ROW_LARGE_CELL_SELECTOR = '.div-table-cell.bg-transparent.px-6.py-6.text-lg.font-medium.text-zinc-100'
+ROW_MEDIUM_ROW_CLASSES = %w[
+  div-table-row grid gap-4 border-b border-zinc-800 bg-transparent
+  last:border-b-0 grid-cols-[repeat(2,minmax(10rem,1fr))]
+].freeze
+ROW_MEDIUM_CELL_CLASSES = %w[
+  div-table-cell truncate min-w-0 bg-transparent px-6 py-4 text-xs font-medium text-zinc-100 sm:text-base
+].freeze
+ROW_SMALL_ROW_CLASSES = %w[
+  div-table-row grid gap-2 border-b border-zinc-800 bg-transparent
+  last:border-b-0 grid-cols-[repeat(2,minmax(8rem,1fr))]
+].freeze
+ROW_SMALL_CELL_CLASSES = %w[
+  div-table-cell truncate min-w-0 bg-transparent px-4 py-2 text-sm font-medium text-zinc-100 sm:text-sm
+].freeze
+ROW_LARGE_ROW_CLASSES = %w[
+  div-table-row grid gap-6 border-b border-zinc-800 bg-transparent
+  last:border-b-0 grid-cols-[repeat(2,minmax(12rem,1fr))]
+].freeze
+ROW_LARGE_CELL_CLASSES = %w[
+  div-table-cell truncate min-w-0 bg-transparent px-6 py-6 text-lg font-medium text-zinc-100
+].freeze
 
 describe Tramway::Table::RowComponent, type: :component do
   let(:row_content) do
@@ -26,8 +32,8 @@ describe Tramway::Table::RowComponent, type: :component do
     HTML
   end
 
-  it 'does not render preview panel when preview is false' do
-    render_inline(described_class.new(preview: false)) { row_content }
+  it 'renders every cell from content without a preview drawer' do
+    render_inline(described_class.new) { row_content }
 
     expect(page).to have_css('.div-table-row', text: 'Name')
     expect(page).to have_css('.div-table-row', text: 'Email')
@@ -49,8 +55,8 @@ describe Tramway::Table::RowComponent, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_css(ROW_MEDIUM_ROW_SELECTOR)
-    expect(page).to have_css(ROW_MEDIUM_CELL_SELECTOR, text: 'Alice')
+    expect(page).to have_css('.div-table-row', class: ROW_MEDIUM_ROW_CLASSES)
+    expect(page).to have_css('.div-table-cell', class: ROW_MEDIUM_CELL_CLASSES, text: 'Alice')
   end
 
   it 'renders the small size variant' do
@@ -59,8 +65,8 @@ describe Tramway::Table::RowComponent, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_css(ROW_SMALL_ROW_SELECTOR)
-    expect(page).to have_css(ROW_SMALL_CELL_SELECTOR, text: 'Alice')
+    expect(page).to have_css('.div-table-row', class: ROW_SMALL_ROW_CLASSES)
+    expect(page).to have_css('.div-table-cell', class: ROW_SMALL_CELL_CLASSES, text: 'Alice')
   end
 
   it 'renders the large size variant' do
@@ -69,7 +75,7 @@ describe Tramway::Table::RowComponent, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_css(ROW_LARGE_ROW_SELECTOR)
-    expect(page).to have_css(ROW_LARGE_CELL_SELECTOR, text: 'Alice')
+    expect(page).to have_css('.div-table-row', class: ROW_LARGE_ROW_CLASSES)
+    expect(page).to have_css('.div-table-cell', class: ROW_LARGE_CELL_CLASSES, text: 'Alice')
   end
 end

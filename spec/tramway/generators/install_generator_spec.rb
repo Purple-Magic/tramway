@@ -263,7 +263,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       <<~JS
         import { Application } from "@hotwired/stimulus"
         import { UserForm } from "./user_form_controller"
-        import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+        import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"
 
         const application = Application.start()
 
@@ -273,7 +273,6 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
         application.register('tramway-navbar', Navbar)
         application.register('tramway-select', TramwaySelect)
-        application.register('table-row-preview', TableRowPreview)
         application.register('ui--checkbox', UiCheckbox)
         application.register('tramway-tooltip', Tooltip)
         export { application }
@@ -311,13 +310,12 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     def legacy_index_content
       <<~JS
         import { Application } from "@hotwired/stimulus"
-        import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+        import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"
 
         const application = Application.start()
 
         application.register('tramway-navbar', Navbar)
         application.register('tramway-select', TramwaySelect)
-        application.register('table-row-preview', TableRowPreview)
         application.register('ui--checkbox', UiCheckbox)
         application.register('tramway-tooltip', Tooltip)
         export { application }
@@ -327,14 +325,13 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     def old_shared_import_index_content
       <<~JS
         import { Application } from "@hotwired/stimulus"
-        import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+        import { TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"
 
         const application = Application.start()
 
         application.debug = false
         window.Stimulus   = application
         application.register('tramway-select', TramwaySelect)
-        application.register('table-row-preview', TableRowPreview)
         application.register('ui--checkbox', UiCheckbox)
         application.register('tramway-tooltip', Tooltip)
         export { application }
@@ -344,17 +341,34 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     def old_tramway_navbar_index_content
       <<~JS
         import { Application } from "@hotwired/stimulus"
-        import { TramwayNavbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+        import { TramwayNavbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"
 
         const application = Application.start()
 
         application.debug = false
         window.Stimulus   = application
         application.register('tramway-select', TramwaySelect)
-        application.register('table-row-preview', TableRowPreview)
         application.register('ui--checkbox', UiCheckbox)
         application.register('tramway-tooltip', Tooltip)
         application.register('tramway-navbar', TramwayNavbar)
+        export { application }
+      JS
+    end
+
+    def stale_table_row_preview_index_content
+      <<~JS
+        import { Application } from "@hotwired/stimulus"
+        import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"
+
+        const application = Application.start()
+
+        application.debug = false
+        window.Stimulus   = application
+        application.register('tramway-navbar', Navbar)
+        application.register('tramway-select', TramwaySelect)
+        application.register('table-row-preview', TableRowPreview)
+        application.register('ui--checkbox', UiCheckbox)
+        application.register('tramway-tooltip', Tooltip)
         export { application }
       JS
     end
@@ -380,12 +394,12 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       content = File.read(controllers_index_path)
 
       expect(content).to include(
-        'import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
+        'import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"'
       )
       expect(content.scan('TramwaySelect').count).to eq(2)
       expect(content.scan('import {').count).to eq(2)
       expect(content).not_to include(
-        'import { TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
+        'import { TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"'
       )
     end
 
@@ -398,11 +412,25 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       content = File.read(controllers_index_path)
 
       expect(content).to include(
-        'import { Navbar, TramwaySelect, TableRowPreview, UiCheckbox, Tooltip } from "@tramway/tramway"'
+        'import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"'
       )
       expect(content.scan('TramwayNavbar').count).to eq(0)
       expect(content.scan('TramwaySelect').count).to eq(2)
       expect(content.scan('application.register(\'tramway-navbar\'').count).to eq(1)
+    end
+
+    it 'removes the stale table-row-preview controller left over from older installs' do
+      FileUtils.mkdir_p(File.dirname(controllers_index_path))
+      File.write(controllers_index_path, stale_table_row_preview_index_content)
+
+      run_generator
+
+      content = File.read(controllers_index_path)
+
+      expect(content).to include(
+        'import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"'
+      )
+      expect(content).not_to match(/TableRowPreview|table-row-preview/)
     end
   end
 
