@@ -6,13 +6,15 @@ require 'support/view_helpers'
 
 TABLE_HELPER_SMALL_HEADER_ROW_CLASSES =
   'div-table-row grid gap-2 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400'
-TABLE_HELPER_SMALL_HEADER_ROW_STYLE = 'grid-template-columns: repeat(2, minmax(8rem, 1fr))'
+TABLE_HELPER_SMALL_HEADER_ROW_STYLE =
+  'grid-template-columns: repeat(2, minmax(8rem, 1fr)); min-width: 16.5rem'
 TABLE_HELPER_SMALL_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 truncate min-w-0 px-4 py-2'
 TABLE_HELPER_SMALL_CELL_CLASSES = 'div-table-cell truncate min-w-0 bg-transparent px-4 py-2 text-sm font-medium ' \
                                   'text-zinc-100'
 TABLE_HELPER_MEDIUM_HEADER_ROW_CLASSES =
   'div-table-row grid gap-4 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400'
-TABLE_HELPER_MEDIUM_HEADER_ROW_STYLE = 'grid-template-columns: repeat(2, minmax(10rem, 1fr))'
+TABLE_HELPER_MEDIUM_HEADER_ROW_STYLE =
+  'grid-template-columns: repeat(2, minmax(10rem, 1fr)); min-width: 21.0rem'
 TABLE_HELPER_MEDIUM_HEADER_CELL_CLASSES = 'div-table-cell border-b border-zinc-800 truncate min-w-0 px-6 py-4'
 TABLE_HELPER_MEDIUM_CELL_CLASSES = 'div-table-cell truncate min-w-0 bg-transparent px-6 py-4 text-base font-medium ' \
                                    'text-zinc-100'

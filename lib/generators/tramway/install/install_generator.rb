@@ -19,6 +19,7 @@ module Tramway
 
           .tramway-scrollbar::-webkit-scrollbar {
             width: 0.5rem;
+            height: 0.5rem;
           }
 
           .tramway-scrollbar::-webkit-scrollbar-track {

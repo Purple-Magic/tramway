@@ -21,7 +21,9 @@ describe Tramway::Table::HeaderComponent, type: :component do
       '<div class="div-table-cell">Ignored</div>'.html_safe
     end
 
-    expect(page.find('.div-table-row')[:style]).to eq 'grid-template-columns: repeat(2, minmax(10rem, 1fr))'
+    expect(page.find('.div-table-row')[:style]).to eq(
+      'grid-template-columns: repeat(2, minmax(10rem, 1fr)); min-width: 21.0rem'
+    )
     expect(page).to have_css('.div-table-row', text: 'Name')
     expect(page).to have_css('.div-table-row', text: 'Email')
     expect(page).not_to have_text('Ignored')
@@ -35,7 +37,9 @@ describe Tramway::Table::HeaderComponent, type: :component do
       HTML
     end
 
-    expect(page.find('.div-table-row')[:style]).to eq 'grid-template-columns: repeat(2, minmax(10rem, 1fr))'
+    expect(page.find('.div-table-row')[:style]).to eq(
+      'grid-template-columns: repeat(2, minmax(10rem, 1fr)); min-width: 21.0rem'
+    )
     expect(page).to have_css('.div-table-cell.hidden', text: 'Email')
   end
 

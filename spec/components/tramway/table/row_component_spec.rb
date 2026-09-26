@@ -54,7 +54,9 @@ describe Tramway::Table::RowComponent, type: :component do
 
     expect(page).to have_css('.div-table-row', class: ROW_MEDIUM_ROW_CLASSES)
     expect(page).to have_css('.div-table-cell', class: ROW_MEDIUM_CELL_CLASSES, text: 'Alice')
-    expect(page.find('.div-table-row')[:style]).to eq 'grid-template-columns: repeat(2, minmax(10rem, 1fr))'
+    expect(page.find('.div-table-row')[:style]).to eq(
+      'grid-template-columns: repeat(2, minmax(10rem, 1fr)); min-width: 21.0rem'
+    )
   end
 
   it 'renders the small size variant' do
@@ -65,7 +67,9 @@ describe Tramway::Table::RowComponent, type: :component do
 
     expect(page).to have_css('.div-table-row', class: ROW_SMALL_ROW_CLASSES)
     expect(page).to have_css('.div-table-cell', class: ROW_SMALL_CELL_CLASSES, text: 'Alice')
-    expect(page.find('.div-table-row')[:style]).to eq 'grid-template-columns: repeat(2, minmax(8rem, 1fr))'
+    expect(page.find('.div-table-row')[:style]).to eq(
+      'grid-template-columns: repeat(2, minmax(8rem, 1fr)); min-width: 16.5rem'
+    )
   end
 
   it 'renders the large size variant' do
@@ -76,6 +80,8 @@ describe Tramway::Table::RowComponent, type: :component do
 
     expect(page).to have_css('.div-table-row', class: ROW_LARGE_ROW_CLASSES)
     expect(page).to have_css('.div-table-cell', class: ROW_LARGE_CELL_CLASSES, text: 'Alice')
-    expect(page.find('.div-table-row')[:style]).to eq 'grid-template-columns: repeat(2, minmax(12rem, 1fr))'
+    expect(page.find('.div-table-row')[:style]).to eq(
+      'grid-template-columns: repeat(2, minmax(12rem, 1fr)); min-width: 25.5rem'
+    )
   end
 end

@@ -9,7 +9,7 @@ module Tramway
     option :options, optional: true, default: -> { {} }
 
     def table_classes
-      'div-table w-full overflow-x-auto bg-zinc-950 text-left rtl:text-right text-zinc-100'
+      'div-table w-full overflow-x-scroll tramway-scrollbar bg-zinc-950 text-left rtl:text-right text-zinc-100'
     end
 
     def around_render

@@ -8,7 +8,7 @@ describe Tramway::TableComponent, type: :component do
       'Table content'
     end
 
-    expect(page).to have_css('.div-table.bg-zinc-950.w-full', text: 'Table content')
+    expect(page).to have_css('.div-table.bg-zinc-950.w-full.overflow-x-scroll.tramway-scrollbar', text: 'Table content')
   end
 
   it 'merges custom table classes with the base background' do
