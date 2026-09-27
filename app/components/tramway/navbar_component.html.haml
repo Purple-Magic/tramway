@@ -114,21 +114,16 @@
       })();
 
     :css
-      .tramway-navbar-desktop-vertical .tramway-navbar-item {
+      .tramway-navbar-desktop-vertical li.whitespace-nowrap {
         width: 100%;
       }
 
-      .tramway-navbar-desktop-vertical .tramway-navbar-item > a,
-      .tramway-navbar-desktop-vertical .tramway-navbar-item > form {
-        width: 100%;
-      }
-
-      .tramway-navbar-desktop-vertical .tramway-navbar-item > form {
+      .tramway-navbar-desktop-vertical li.whitespace-nowrap > form {
         display: block;
+        width: 100%;
       }
 
-      .tramway-navbar-desktop-vertical .tramway-navbar-item > a,
-      .tramway-navbar-desktop-vertical .tramway-navbar-item > form > button {
+      .tramway-navbar-desktop-vertical .tramway-navbar-item {
         width: 100%;
         justify-content: flex-start;
       }
@@ -156,8 +151,7 @@
           display: none;
         }
 
-        html[data-tramway-navbar-expanded="false"] #desktop-navbar-content .tramway-navbar-item > a,
-        html[data-tramway-navbar-expanded="false"] #desktop-navbar-content .tramway-navbar-item > form > button {
+        html[data-tramway-navbar-expanded="false"] #desktop-navbar-content .tramway-navbar-item {
           justify-content: center;
           padding-left: 0;
           padding-right: 0;
