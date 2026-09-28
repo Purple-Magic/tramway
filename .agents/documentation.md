@@ -23,6 +23,12 @@ Move that content into a focused file under `docs/users/<topic>.md` (see `docs/u
 `docs/users/tramway_grid.md` for the existing pattern). Keep `README.md`'s section on that topic short, and add a
 one-line link to the `docs/users/<topic>.md` file for readers who want the deeper mechanics.
 
+### What "docs" means
+
+When the user asks to put something "in docs" (or equivalent, without naming a specific file), that means the
+`docs/` folder (e.g. `docs/users/<topic>.md`), never `README.md`. `README.md` must contain only the content a
+developer needs to use the library, per the scope above.
+
 ### How to apply this when doing other tasks
 
 1. When a task changes or adds user-facing functionality, update `README.md` with only the user-relevant part
