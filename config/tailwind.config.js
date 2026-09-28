@@ -419,6 +419,7 @@ module.exports = {
     'mb-4',
     'mb-2',
     'mt-8',
+    'mt-4',
     'mt-2',
 
     // === Pagination styles ===
