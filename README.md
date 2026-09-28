@@ -438,6 +438,9 @@ You can inject custom content above an entity's index table by defining an
 `index_header_content` lambda on its decorator. The lambda receives the
 collection of decorated records and can render any component you need.
 
+The rendered content is placed directly under the page title, alongside the
+"Create" button (when present), not above the table itself.
+
 *config/initializers/tramway.rb*
 ```ruby
 Tramway.configure do |config|
