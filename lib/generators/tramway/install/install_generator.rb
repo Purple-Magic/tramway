@@ -115,7 +115,7 @@ module Tramway
 
       def stimulus_controller_imports
         [
-          'import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"'
+          'import { Navbar, TramwaySelect, UiCheckbox, Tooltip, Collapsible } from "@tramway/tramway"'
         ]
       end
 
@@ -124,7 +124,8 @@ module Tramway
           "application.register('tramway-navbar', Navbar)",
           "application.register('tramway-select', TramwaySelect)",
           "application.register('ui--checkbox', UiCheckbox)",
-          "application.register('tramway-tooltip', Tooltip)"
+          "application.register('tramway-tooltip', Tooltip)",
+          "application.register('tramway--collapsible', Collapsible)"
         ]
       end
 
@@ -299,7 +300,8 @@ module Tramway
           "application.register('tramway-select'",
           "application.register('table-row-preview'",
           "application.register('ui--checkbox'",
-          "application.register('tramway-tooltip'"
+          "application.register('tramway-tooltip'",
+          "application.register('tramway--collapsible'"
         ]
       end
 

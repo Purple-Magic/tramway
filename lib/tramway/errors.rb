@@ -41,5 +41,25 @@ module Tramway
         MESSAGE
       end
     end
+
+    # Raised when `params[:filter]` on an entities#index page does not match any of the
+    # filters declared for that page in the Tramway config, so the developer (or the user
+    # following a crafted link) gets a clear explanation instead of a raw NoMethodError from
+    # calling an arbitrary, possibly non-existent scope.
+    class InvalidFilterError < StandardError
+      def initialize(filter:, available_filters:, model_class:)
+        super(<<~MESSAGE)
+          Tramway received an unknown filter "#{filter}" for #{model_class} on the \
+          entities#index page.
+
+          Available filters: #{available_filters.join(', ')}.
+
+          To fix this:
+            - pass one of the available filters above in `params[:filter]`, or
+            - add `:#{filter}` to this entity's `filters:` list for the `:index` page in your \
+          Tramway config if it should be selectable.
+        MESSAGE
+      end
+    end
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'tramway/warnings'
+require 'tramway/errors'
 
 module Tramway
   # Main controller for entities pages
@@ -13,18 +14,15 @@ module Tramway
     include Rails.application.routes.url_helpers
 
     def index
-      if index_scope.present?
-        model_class.public_send(index_scope)
-      else
-        model_class.order(id: :desc)
-      end => entities
-
+      entities = base_entities
+      entities = apply_filter(entities)
       entities = preload(entities)
       entities = search(entities)
       entities = entities.page(params[:page])
       @entities = entities
 
       @namespace = entity.namespace
+      @filter_counts = filter_counts if filters.present?
     end
 
     def show
@@ -89,6 +87,37 @@ module Tramway
 
     def index_scope
       entity.page(:index).scope
+    end
+
+    def base_entities
+      if index_scope.present?
+        model_class.public_send(index_scope)
+      else
+        model_class.order(id: :desc)
+      end
+    end
+
+    def filters
+      entity.page(:index).filters
+    end
+
+    def apply_filter(entities)
+      return entities if params[:filter].blank? || filters.blank?
+
+      filter = params[:filter].to_s
+
+      unless filters.map(&:to_s).include?(filter)
+        raise Tramway::Errors::InvalidFilterError.new(filter:, available_filters: filters, model_class:)
+      end
+
+      entities.public_send(filter)
+    end
+
+    def filter_counts
+      # Count by :id explicitly: a bare `.count` reuses any custom `select` values from the
+      # index page's `scope` (e.g. a raw-SQL aliased subquery column), which breaks the
+      # generated SQL. Counting a real column side-steps that entirely.
+      filters.index_with { |filter| base_entities.public_send(filter).count(:id) }
     end
 
     def preload(entities)

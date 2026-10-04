@@ -482,4 +482,86 @@ class Navbar extends Controller {
   }
 }
 
-export { TramwaySelect, UiCheckbox, Tooltip, Navbar }
+class Collapsible extends Controller {
+  static targets = ["panel", "icon", "toggle"]
+
+  connect() {
+    this.expanded = true
+
+    const stored = this.readStored()
+    const expanded = stored === null ? true : stored === 'true'
+
+    this.setExpanded(expanded, { animate: false })
+  }
+
+  toggle(event) {
+    event.preventDefault()
+
+    this.setExpanded(!this.expanded, { persist: true })
+  }
+
+  setExpanded(expanded, { persist = false, animate = true } = {}) {
+    this.expanded = expanded
+
+    if (animate) {
+      this.animateTo(expanded)
+    } else {
+      this.panelTarget.style.height = expanded ? 'auto' : '0px'
+      this.panelTarget.style.opacity = expanded ? '1' : '0'
+    }
+
+    const expandedCarrier = this.hasToggleTarget ? this.toggleTarget : this.element
+    expandedCarrier.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+
+    if (this.hasIconTarget) {
+      this.iconTarget.classList.toggle('rotate-180', !expanded)
+    }
+
+    if (persist) {
+      this.writeStored(expanded)
+    }
+  }
+
+  // Animates between the panel's current rendered height and its target height, rather than
+  // to/from `auto` directly (which cannot be transitioned). `height` is one of the few
+  // properties animate.md tolerates outside transform/opacity, since an accordion has no
+  // transform equivalent.
+  animateTo(expanded) {
+    const panel = this.panelTarget
+    const targetHeight = expanded ? panel.scrollHeight : 0
+
+    panel.style.height = `${panel.getBoundingClientRect().height}px`
+    panel.getBoundingClientRect() // force reflow so the browser registers the start value
+
+    requestAnimationFrame(() => {
+      panel.style.height = `${targetHeight}px`
+      panel.style.opacity = expanded ? '1' : '0'
+    })
+
+    panel.addEventListener('transitionend', () => {
+      if (this.expanded) panel.style.height = 'auto'
+    }, { once: true })
+  }
+
+  readStored() {
+    try {
+      return window.localStorage.getItem(this.storageKey)
+    } catch {
+      return null
+    }
+  }
+
+  writeStored(expanded) {
+    try {
+      window.localStorage.setItem(this.storageKey, expanded ? 'true' : 'false')
+    } catch {
+      /* localStorage unavailable (e.g. private mode) — state simply won't persist */
+    }
+  }
+
+  get storageKey() {
+    return `tramway-collapsible-${this.element.dataset.key || 'default'}`
+  }
+}
+
+export { TramwaySelect, UiCheckbox, Tooltip, Navbar, Collapsible }

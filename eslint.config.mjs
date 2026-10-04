@@ -6,6 +6,7 @@ export default [
       globals: {
         window: "readonly",
         document: "readonly",
+        requestAnimationFrame: "readonly",
       },
     },
     ignores: ["config/tailwind.config.js", "spec/dummy/vendor/"],
