@@ -1766,6 +1766,41 @@ Tramway.configure do |config|
 end
 ```
 
+## Plugins
+
+Plugins add optional, ready-made dashboards to your app, mounted and styled with Tramway. Enable one by name and,
+optionally, configure it:
+
+```ruby
+Tramway.configure do |config|
+  config.plugins = [:solid_queue]
+  config.plugins.solid_queue = {
+    path: '/jobs'
+  }
+end
+```
+
+Enabling a plugin also adds a navbar entry for it automatically (see [Tramway
+Navbar](#tramway-navbar)).
+
+### SolidQueue
+
+The `:solid_queue` plugin is a dashboard for inspecting and managing [SolidQueue](https://github.com/rails/solid_queue)
+jobs. It requires the `solid_queue` gem in your Gemfile — if it's missing, Tramway raises a clear error explaining
+how to fix it instead of failing deep inside a controller.
+
+It gives you:
+
+- A paginated, filterable jobs list (by status, queue, class name, or free-text search by class name/active job
+  ID/numeric ID), with per-status counts.
+- A job detail page, including failure details (exception class, message, backtrace) for failed jobs.
+- Retry, discard and destroy for a single job, or in bulk for a selection of jobs.
+- A queues list with size/latency, and pause/resume/clear actions per queue.
+- A recurring tasks list with the ability to enqueue a task immediately.
+
+See [docs/users/tramway_solid_queue_plugin.md](docs/users/tramway_solid_queue_plugin.md) for more on what "discard"
+does and other SolidQueue-specific behavior.
+
 ## Lantern Color Palette
 
   | Type | Color |
