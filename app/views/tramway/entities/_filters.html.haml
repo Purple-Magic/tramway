@@ -10,6 +10,6 @@
     .flex.flex-wrap.gap-2.mt-2
       - @filter_counts.each do |filter_name, count|
         - filter_params = request.query_parameters.except('page').merge(filter: filter_name)
-        - badge_type = filter_name.to_s == current_filter ? :default : :secondary
-        = link_to public_send(custom_path_method, filter_params), class: 'inline-flex' do
-          = tramway_badge(text: "#{filter_name.to_s.upcase} · #{count}", type: badge_type)
+        - button_type = filter_name.to_s == current_filter ? :default : :secondary
+        = tramway_button text: "#{filter_name.to_s.upcase} · #{count}",
+          path: public_send(custom_path_method, filter_params), type: button_type, size: :small
