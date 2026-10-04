@@ -4,6 +4,7 @@ require 'rails/generators'
 require 'fileutils'
 require_relative 'font_awesome_helpers'
 require_relative 'layout_helpers'
+require_relative 'solid_queue_helpers'
 
 module Tramway
   module Generators
@@ -345,6 +346,7 @@ module Tramway
       include InstallGeneratorHelpers
       include InstallGeneratorFontAwesomeHelpers
       include InstallGeneratorLayoutHelpers
+      include InstallGeneratorSolidQueueHelpers
 
       desc 'Installs Tramway dependencies and Tailwind safelist configuration.'
 
@@ -441,6 +443,16 @@ module Tramway
 
       def ensure_navbar_sidebar_offset_in_application_layout
         ensure_navbar_sidebar_offset
+      end
+
+      def ensure_solid_queue_bulk_actions_queue
+        return unless File.exist?(queue_yml_path)
+
+        content = File.read(queue_yml_path)
+        return if content.include?(TRAMWAY_SOLID_QUEUE_BULK_ACTIONS_QUEUE)
+
+        updated = insert_tramway_solid_queue_worker(content)
+        File.write(queue_yml_path, updated) if updated != content
       end
     end
   end

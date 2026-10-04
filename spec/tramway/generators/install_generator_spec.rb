@@ -74,6 +74,33 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     File.join(destination_root, 'app/javascript/controllers/index.js')
   end
 
+  def queue_yml_path
+    File.join(destination_root, 'config/queue.yml')
+  end
+
+  def default_queue_yml_content
+    <<~YAML
+      default: &default
+        dispatchers:
+          - polling_interval: 1
+            batch_size: 500
+        workers:
+          - queues: "*"
+            threads: 3
+            processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
+            polling_interval: 1
+
+      development:
+        <<: *default
+
+      test:
+        <<: *default
+
+      production:
+        <<: *default
+    YAML
+  end
+
   def template_tailwind_config_path
     File.expand_path('../../../config/tailwind.config.js', __dir__)
   end
@@ -563,6 +590,50 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       it 'does not raise an error' do
         expect { run_generator }.not_to raise_error
       end
+    end
+  end
+
+  describe 'solid_queue bulk actions worker queue' do
+    it 'does not create queue.yml when it does not already exist' do
+      run_generator
+
+      expect(File).not_to exist(queue_yml_path)
+    end
+
+    it 'adds a dedicated worker entry when queue.yml exists' do
+      FileUtils.mkdir_p(File.dirname(queue_yml_path))
+      File.write(queue_yml_path, default_queue_yml_content)
+
+      run_generator
+
+      content = File.read(queue_yml_path)
+      expect(content).to include('- queues: tramway_solid_queue_bulk_actions')
+      expect(content).to include('threads: 20')
+      expect(content.index('tramway_solid_queue_bulk_actions')).to be > content.index('queues: "*"')
+      expect(content).to include('<%= ENV.fetch("JOB_CONCURRENCY", 1) %>')
+    end
+
+    it 'is idempotent when run multiple times' do
+      FileUtils.mkdir_p(File.dirname(queue_yml_path))
+      File.write(queue_yml_path, default_queue_yml_content)
+
+      run_generator
+      first_run = File.read(queue_yml_path)
+
+      run_generator
+      second_run = File.read(queue_yml_path)
+
+      expect(second_run).to eq(first_run)
+      expect(second_run.scan('tramway_solid_queue_bulk_actions').count).to eq(1)
+    end
+
+    it 'does not modify queue.yml when it has no workers list' do
+      FileUtils.mkdir_p(File.dirname(queue_yml_path))
+      File.write(queue_yml_path, "default: &default\n  dispatchers:\n    - polling_interval: 1\n")
+
+      run_generator
+
+      expect(File.read(queue_yml_path)).to eq("default: &default\n  dispatchers:\n    - polling_interval: 1\n")
     end
   end
 
