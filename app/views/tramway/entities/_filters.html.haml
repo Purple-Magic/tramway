@@ -4,6 +4,6 @@
   .flex.flex-wrap.gap-2.mt-2
     - @filter_counts.each do |filter_name, count|
       - filter_params = request.query_parameters.except('page').merge(filter: filter_name)
-      - button_type = filter_name.to_s == current_filter ? :primary : :secondary
+      - button_type = filter_name.to_s == current_filter ? :primary : :inverse
       = tramway_button text: "#{filter_name.to_s.upcase} · #{count}",
         path: public_send(custom_path_method, filter_params), type: button_type, size: :small

@@ -51,6 +51,18 @@ describe 'Entities Filters', type: :request do
       expect(with_text_button).to include('bg-blue-900')
       expect(without_text_button).not_to include('bg-blue-900')
     end
+
+    it 'styles the inactive filter buttons and the filters toggle button like pagination buttons' do
+      get '/admin/comments', params: { filter: 'with_text' }
+
+      without_text_button = response.body[%r{<[^>]*>WITHOUT_TEXT[^<]*</[^>]*>}]
+      toggle_button = response.body[/<[^>]*data-action="tramway--collapsible#toggle"[^>]*>/]
+
+      expect(without_text_button).to include('bg-zinc-950')
+      expect(without_text_button).to include('border-zinc-800')
+      expect(toggle_button).to include('bg-zinc-950')
+      expect(toggle_button).to include('border-zinc-800')
+    end
   end
 
   context 'when filters are not configured for the page' do
