@@ -3,7 +3,7 @@
 module Tramway
   module Plugins
     module SolidQueue
-      # View helpers for rendering SolidQueue queue throughput in the plugin dashboard
+      # View helpers for rendering SolidQueue queue throughput and running-job counts in the plugin dashboard
       module QueuesHelper
         THROUGHPUT_WINDOW = 5.minutes
 
@@ -16,6 +16,10 @@ module Tramway
           finished_count = ::SolidQueue::Job.where(queue_name: queue.name, finished_at: THROUGHPUT_WINDOW.ago..).count
 
           (finished_count / THROUGHPUT_WINDOW.in_minutes).round(1)
+        end
+
+        def solid_queue_running_count(queue)
+          ::SolidQueue::Job.where(queue_name: queue.name).joins(:claimed_execution).count
         end
       end
     end

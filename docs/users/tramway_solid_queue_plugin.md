@@ -21,6 +21,14 @@ counters.
 Pausing a queue stops new jobs on it from being picked up for execution; it does not remove or affect jobs already
 in the queue. Resuming un-pauses it.
 
+## Queue "Size" doesn't include jobs that are currently running
+
+The "Size" column on the queues list counts only jobs waiting to run (SolidQueue's "ready" jobs) — not jobs a
+worker has already picked up and is executing. A queue running one long job (for example, a "Destroy all" or bulk
+action matching a large number of records) will show "Size: 0" the whole time that job is running, since there's
+nothing else waiting behind it. Check the "Running" column to see how many jobs on that queue are currently being
+executed — it won't look idle there even while "Size" reads 0.
+
 ## Queue throughput
 
 The "Throughput" column on the queues list shows how many jobs on that queue finished per minute, based on a

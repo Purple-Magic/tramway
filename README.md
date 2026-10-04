@@ -1803,7 +1803,9 @@ It gives you:
   every job matching the currently active filters at once. Bulk actions and "Destroy all" run in the background
   (you'll see a flash message confirming the action was queued, not completed instantly) on their own dedicated
   worker queue, which `tramway:install` sets up for you.
-- A queues list with size/latency/throughput, and pause/resume/clear actions per queue.
+- A queues list with size/running/latency/throughput, and pause/resume/clear actions per queue. "Size" only counts
+  jobs waiting to run — "Running" shows jobs currently executing on that queue, so a queue processing one big job
+  (e.g. a large "Destroy all") doesn't look idle just because nothing is waiting behind it.
 - A recurring tasks list with the ability to enqueue a task immediately.
 - Jobs, queues, and recurring tasks lists (and the job detail page) refresh themselves in the background every few
   seconds, so job status changes show up without reloading the page.

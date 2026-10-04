@@ -35,6 +35,20 @@ describe 'Tramway SolidQueue Plugin Queues', type: :request do
 
       expect(response.body).to include('0.2/min')
     end
+
+    it 'shows jobs currently running (claimed) on the queue, even when its ready size is 0' do
+      job = SolidQueue::Job.create!(queue_name: 'mailers', class_name: 'MailerJob', active_job_id: SecureRandom.uuid)
+      job.ready_execution.destroy!
+      process = SolidQueue::Process.register(kind: 'Worker', pid: 1, name: 'worker-1', hostname: 'test')
+      SolidQueue::ClaimedExecution.create!(job:, process:)
+
+      get '/jobs/queues'
+
+      queue_row = response.parsed_body.css('.div-table-row').find { |row| row.text.include?('mailers') }
+      cells = queue_row.css('.div-table-cell').map { |cell| cell.text.strip }
+      expect(cells[1]).to eq('0')
+      expect(cells[2]).to eq('1')
+    end
   end
 
   describe 'POST /queues/:name/pause' do
