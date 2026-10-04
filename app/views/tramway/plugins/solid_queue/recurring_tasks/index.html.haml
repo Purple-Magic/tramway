@@ -1,0 +1,31 @@
+- content_for :title, t('tramway.plugins.solid_queue.recurring_tasks.title', default: 'Recurring Tasks')
+
+= tramway_container do
+  .flex.justify-between.items-center
+    = tramway_title do
+      = content_for :title
+
+  = render 'tramway/plugins/solid_queue/subnav'
+
+  = tramway_table class: 'mt-4' do
+    = tramway_header headers: [t('tramway.plugins.solid_queue.recurring_tasks.key', default: 'Key'),
+      t('tramway.plugins.solid_queue.recurring_tasks.schedule', default: 'Schedule'),
+      t('tramway.plugins.solid_queue.recurring_tasks.class_name', default: 'Class'),
+      t('tramway.plugins.solid_queue.recurring_tasks.queue_name', default: 'Queue'),
+      t('tramway.plugins.solid_queue.recurring_tasks.next_time', default: 'Next run'),
+      t('tramway.table.actions_header')]
+    - @recurring_tasks.each do |task|
+      = tramway_row do
+        = tramway_cell do
+          = task.key
+        = tramway_cell do
+          = task.schedule
+        = tramway_cell do
+          = task.class_name
+        = tramway_cell do
+          = task.queue_name
+        = tramway_cell do
+          = task.next_time
+        = tramway_cell do
+          = tramway_button text: t('tramway.actions.enqueue_now'), path: enqueue_recurring_task_path(task.key),
+            method: :post, type: :will, size: :small

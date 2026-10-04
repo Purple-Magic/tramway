@@ -282,6 +282,7 @@ module.exports = {
     // === Visibility and typography helpers ===
     'hidden',
     'text-xl',
+    'text-2xl',
     'font-bold',
     'prose',
     'prose-invert',

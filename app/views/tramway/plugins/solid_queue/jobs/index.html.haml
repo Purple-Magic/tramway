@@ -1,0 +1,82 @@
+- content_for :title, t('tramway.plugins.solid_queue.jobs.title', default: 'Background Jobs')
+
+= tramway_container do
+  .flex.justify-between.items-center
+    = tramway_title do
+      = content_for :title
+
+  = render 'tramway/plugins/solid_queue/subnav'
+
+  .flex.flex-wrap.gap-2.mt-2
+    - @status_counts.each do |status, count|
+      - status_params = request.query_parameters.except('page').merge(status:)
+      - button_type = status == params[:status] ? :primary : :inverse
+      = tramway_button text: "#{solid_queue_status_label(status)} · #{count}",
+        path: jobs_path(status_params), type: button_type, size: :small
+
+    - if params[:status].present?
+      - clear_params = request.query_parameters.except('page', 'status')
+      = tramway_button tag: :a, path: jobs_path(clear_params), type: :inverse,
+        size: :small, tooltip: { text: t('tramway.actions.clear_filter'), event: :hover } do
+        %i.fa.fa-times{ 'aria-hidden' => 'true' }
+
+  - all_queues_option = [t('tramway.plugins.solid_queue.jobs.all_queues', default: 'All queues'), '']
+  - queue_name_options = [all_queues_option] + @queue_names.map { |name| [name, name] }
+  - all_classes_option = [t('tramway.plugins.solid_queue.jobs.all_classes', default: 'All classes'), '']
+  - class_name_options = [all_classes_option] + @class_names.map { |name| [name, name] }
+
+  = form_with url: jobs_path, method: :get, local: true, builder: Tramway::Form::Builder, horizontal: true do |f|
+    .flex.flex-wrap.items-center.gap-4.mt-2
+      = f.select :queue_name, queue_name_options, label: false, selected: params[:queue_name].to_s
+      = f.select :class_name, class_name_options, label: false, selected: params[:class_name].to_s
+      = f.text_field :query, label: false, value: params[:query], placeholder: t('tramway.actions.search')
+      = f.submit nil, 'aria-label' => t('tramway.actions.search') do
+        %i.fa.fa-search{ 'aria-hidden' => 'true' }
+
+  = form_with url: bulk_destroy_jobs_path, method: :post, id: 'tramway-solid-queue-bulk-jobs-form', local: true do
+    .flex.justify-end.gap-2.mt-4
+      = tramway_button text: t('tramway.actions.retry'), tag: :button, type: :will, size: :small,
+        formaction: bulk_retry_jobs_path
+      = tramway_button text: t('tramway.actions.discard'), tag: :button, type: :warning, size: :small,
+        formaction: bulk_discard_jobs_path
+      = tramway_button text: t('tramway.actions.destroy'), tag: :button, type: :rage, size: :small,
+        formaction: bulk_destroy_jobs_path
+
+  = tramway_table class: 'mt-4' do
+    = tramway_header headers: ['', 'ID', t('tramway.plugins.solid_queue.jobs.class_name', default: 'Class'),
+      t('tramway.plugins.solid_queue.jobs.queue_name', default: 'Queue'),
+      t('tramway.plugins.solid_queue.jobs.status', default: 'Status'),
+      t('tramway.plugins.solid_queue.jobs.scheduled_at', default: 'Scheduled at'),
+      t('tramway.table.actions_header')]
+    - @jobs.each do |job|
+      = tramway_row do
+        = tramway_cell do
+          = check_box_tag 'job_ids[]', job.id, false, id: "tramway-solid-queue-job-#{job.id}",
+            form: 'tramway-solid-queue-bulk-jobs-form'
+        = tramway_cell do
+          = job.id
+        = tramway_cell do
+          = job.class_name
+        = tramway_cell do
+          = job.queue_name
+        = tramway_cell do
+          = tramway_badge text: solid_queue_status_label(job.status), type: solid_queue_status_badge_type(job.status)
+        = tramway_cell do
+          = job.scheduled_at
+        = tramway_cell do
+          .flex.gap-2
+            = tramway_button tag: :a, path: job_path(job.id), type: :inverse, size: :small do
+              %i.fa.fa-eye{ 'aria-hidden' => 'true' }
+            - if job.status == :failed
+              = tramway_button path: retry_job_path(job.id), method: :post, type: :will, size: :small do
+                %i.fa.fa-redo{ 'aria-hidden' => 'true' }
+            - if job.status != :finished
+              = tramway_button path: discard_job_path(job.id), method: :post, type: :warning, size: :small do
+                %i.fa.fa-ban{ 'aria-hidden' => 'true' }
+            = tramway_button path: job_path(job.id), method: :delete, type: :rage, size: :small do
+              %i.fa.fa-trash{ 'aria-hidden' => 'true' }
+
+  .flex.flex-col.items-center.mt-4.gap-2
+    = paginate @jobs
+    %p.sm:hidden.text-xs.text-zinc-500
+      = page_entries_info @jobs

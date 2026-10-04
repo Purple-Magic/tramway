@@ -51,6 +51,13 @@ Gemspec/RequireMFA:
 Rails/HasManyOrHasOneDependent:
   Enabled: false
 
+# SolidQueue::Queue is a plain Ruby class (not ActiveRecord), so it only exposes its own
+# `find_by_name` method, not the ActiveRecord dynamic finder this cop assumes.
+Rails/DynamicFindBy:
+  Exclude:
+    - app/controllers/tramway/plugins/solid_queue/queues_controller.rb
+    - spec/requests/tramway/plugins/solid_queue/queues_spec.rb
+
 Style/ItBlockParameter:
   Enabled: false
 

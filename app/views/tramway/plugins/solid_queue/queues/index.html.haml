@@ -1,0 +1,38 @@
+- content_for :title, t('tramway.plugins.solid_queue.queues.title', default: 'Queues')
+
+= tramway_container do
+  .flex.justify-between.items-center
+    = tramway_title do
+      = content_for :title
+
+  = render 'tramway/plugins/solid_queue/subnav'
+
+  = tramway_table class: 'mt-4' do
+    = tramway_header headers: [t('tramway.plugins.solid_queue.queues.name', default: 'Name'),
+      t('tramway.plugins.solid_queue.queues.size', default: 'Size'),
+      t('tramway.plugins.solid_queue.queues.latency', default: 'Latency'),
+      t('tramway.plugins.solid_queue.queues.status', default: 'Status'),
+      t('tramway.table.actions_header')]
+    - @queues.each do |queue|
+      = tramway_row do
+        = tramway_cell do
+          = queue.name
+        = tramway_cell do
+          = queue.size
+        = tramway_cell do
+          = queue.human_latency
+        = tramway_cell do
+          - if queue.paused?
+            = tramway_badge text: t('tramway.plugins.solid_queue.queues.paused', default: 'Paused'), type: :warning
+          - else
+            = tramway_badge text: t('tramway.plugins.solid_queue.queues.active', default: 'Active'), type: :will
+        = tramway_cell do
+          .flex.gap-2
+            - if queue.paused?
+              = tramway_button text: t('tramway.actions.resume'), path: resume_queue_path(queue.name),
+                method: :post, type: :will, size: :small
+            - else
+              = tramway_button text: t('tramway.actions.pause'), path: pause_queue_path(queue.name),
+                method: :post, type: :warning, size: :small
+            = tramway_button text: t('tramway.actions.clear'), path: clear_queue_path(queue.name),
+              method: :post, type: :rage, size: :small
