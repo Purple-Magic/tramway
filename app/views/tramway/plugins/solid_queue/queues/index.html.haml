@@ -13,6 +13,7 @@
       = tramway_header headers: [t('tramway.plugins.solid_queue.queues.name', default: 'Name'),
         t('tramway.plugins.solid_queue.queues.size', default: 'Size'),
         t('tramway.plugins.solid_queue.queues.latency', default: 'Latency'),
+        t('tramway.plugins.solid_queue.queues.throughput', default: 'Throughput'),
         t('tramway.plugins.solid_queue.queues.status', default: 'Status'),
         t('tramway.table.actions_header')]
       - @queues.each do |queue|
@@ -23,6 +24,8 @@
             = queue.size
           = tramway_cell do
             = queue.human_latency
+          = tramway_cell do
+            = solid_queue_throughput_label(queue)
           = tramway_cell do
             - if queue.paused?
               = tramway_badge text: t('tramway.plugins.solid_queue.queues.paused', default: 'Paused'), type: :warning

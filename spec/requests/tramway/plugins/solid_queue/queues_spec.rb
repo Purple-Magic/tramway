@@ -26,6 +26,15 @@ describe 'Tramway SolidQueue Plugin Queues', type: :request do
       expect(response.body).to include('id="tramway-solid-queue-queues-table"')
       expect(response.body).to include('data-controller="tramway--auto-refresh"')
     end
+
+    it 'shows the throughput of jobs finished in the last 5 minutes' do
+      job = SolidQueue::Job.create!(queue_name: 'mailers', class_name: 'MailerJob', active_job_id: SecureRandom.uuid)
+      job.update!(finished_at: 1.minute.ago)
+
+      get '/jobs/queues'
+
+      expect(response.body).to include('0.2/min')
+    end
   end
 
   describe 'POST /queues/:name/pause' do

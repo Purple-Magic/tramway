@@ -1800,7 +1800,7 @@ It gives you:
   ID/numeric ID), with per-status counts.
 - A job detail page, including failure details (exception class, message, backtrace) for failed jobs.
 - Retry, discard and destroy for a single job, or in bulk for a selection of jobs.
-- A queues list with size/latency, and pause/resume/clear actions per queue.
+- A queues list with size/latency/throughput, and pause/resume/clear actions per queue.
 - A recurring tasks list with the ability to enqueue a task immediately.
 - Jobs, queues, and recurring tasks lists (and the job detail page) refresh themselves in the background every few
   seconds, so job status changes show up without reloading the page.

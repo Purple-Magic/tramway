@@ -68,6 +68,8 @@ en:
           name: "Name"
           size: "Size"
           latency: "Latency"
+          throughput: "Throughput"
+          throughput_value: "%<rate>s/min"
           status: "Status"
           paused: "Paused"
           active: "Active"

@@ -21,6 +21,12 @@ counters.
 Pausing a queue stops new jobs on it from being picked up for execution; it does not remove or affect jobs already
 in the queue. Resuming un-pauses it.
 
+## Queue throughput
+
+The "Throughput" column on the queues list shows how many jobs on that queue finished per minute, based on a
+rolling 5-minute window. It's a live indicator of how fast a queue is currently draining, not a historical or
+all-time average.
+
 ## Pages update on their own
 
 The jobs list, queues list, recurring tasks list, and job detail page periodically refresh themselves in the
