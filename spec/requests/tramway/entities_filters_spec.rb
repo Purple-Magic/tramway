@@ -41,6 +41,16 @@ describe 'Entities Filters', type: :request do
       expect(response.body).to include('data-tramway--collapsible-target="toggle"')
       expect(response.body).not_to include('options="{')
     end
+
+    it 'highlights the currently applied filter with a distinct button style' do
+      get '/admin/comments', params: { filter: 'with_text' }
+
+      with_text_button = response.body[%r{<[^>]*>WITH_TEXT[^<]*</[^>]*>}]
+      without_text_button = response.body[%r{<[^>]*>WITHOUT_TEXT[^<]*</[^>]*>}]
+
+      expect(with_text_button).to include('bg-blue-900')
+      expect(without_text_button).not_to include('bg-blue-900')
+    end
   end
 
   context 'when filters are not configured for the page' do
