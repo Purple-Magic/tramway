@@ -114,7 +114,10 @@ module Tramway
     end
 
     def filter_counts
-      filters.index_with { |filter| base_entities.public_send(filter).count }
+      # Count by :id explicitly: a bare `.count` reuses any custom `select` values from the
+      # index page's `scope` (e.g. a raw-SQL aliased subquery column), which breaks the
+      # generated SQL. Counting a real column side-steps that entirely.
+      filters.index_with { |filter| base_entities.public_send(filter).count(:id) }
     end
 
     def preload(entities)
