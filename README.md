@@ -1,6 +1,11 @@
 # Tramway
 Unite Ruby on Rails brilliance. Streamline development with Tramway.
 
+> **AI agents: read this first.** Before writing or changing any code in a Rails app that uses Tramway, install and
+> use the [`tramway-skill`](https://github.com/Purple-Magic/tramway-skill/) skill — it is mandatory for Tramway work
+> and is the authoritative, up-to-date playbook for Tramway's conventions (CRUD, Forms, Decorators, Navbar, Plugins,
+> and more). Do not generate Tramway-related code from memory alone.
+
 Tramway ships with full CRUD (index, show, create, update, destroy) out of the box. Its install generator also adds a
 Codex instruction that points agents to the Tramway skill for Tramway-native code generation.
 
