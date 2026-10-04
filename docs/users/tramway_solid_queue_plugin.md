@@ -33,6 +33,16 @@ The "Destroy all" button on the jobs list destroys every job that matches whatev
 applied — status, queue, class name, and/or free-text search — not just the jobs shown on the current page or any
 jobs you've checked. With no filters applied, it destroys every job.
 
+## Bulk actions and "Destroy all" run in the background
+
+Clicking a bulk action (retry/discard/destroy a selection) or "Destroy all" does not run instantly: it enqueues a
+background job and redirects right away, with a flash message telling you the action was queued (e.g. "Destroying
+all matching jobs in the background"). The job processes the matching records in batches of 1,000, and runs on its
+own dedicated worker queue (`tramway_solid_queue_bulk_actions`, with 20 worker threads) so a large bulk action
+doesn't starve your application's other background jobs. `bin/rails g tramway:install` adds this queue to your
+`config/queue.yml` automatically; if you don't run the generator, add it yourself so bulk actions actually get
+picked up by a worker.
+
 ## Pages update on their own
 
 The jobs list, queues list, recurring tasks list, and job detail page periodically refresh themselves in the

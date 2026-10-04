@@ -1800,7 +1800,9 @@ It gives you:
   ID/numeric ID), with per-status counts.
 - A job detail page, including failure details (exception class, message, backtrace) for failed jobs.
 - Retry, discard and destroy for a single job, or in bulk for a selection of jobs — or "Destroy all" to destroy
-  every job matching the currently active filters at once.
+  every job matching the currently active filters at once. Bulk actions and "Destroy all" run in the background
+  (you'll see a flash message confirming the action was queued, not completed instantly) on their own dedicated
+  worker queue, which `tramway:install` sets up for you.
 - A queues list with size/latency/throughput, and pause/resume/clear actions per queue.
 - A recurring tasks list with the ability to enqueue a task immediately.
 - Jobs, queues, and recurring tasks lists (and the job detail page) refresh themselves in the background every few

@@ -35,7 +35,18 @@ describe 'Tramway SolidQueue Plugin Jobs', type: :request do
     "tramway-solid-queue-job-#{job.id}"
   end
 
+  def enqueued_job(class_name)
+    SolidQueue::Job.find_by(class_name:)
+  end
+
   before { SolidQueue::Job.destroy_all }
+
+  around do |example|
+    previous_adapter = ActiveJob::Base.queue_adapter
+    ActiveJob::Base.queue_adapter = :solid_queue
+    example.run
+    ActiveJob::Base.queue_adapter = previous_adapter
+  end
 
   describe 'GET /jobs' do
     it 'lists jobs' do
@@ -170,98 +181,73 @@ describe 'Tramway SolidQueue Plugin Jobs', type: :request do
   end
 
   describe 'POST /jobs/bulk_retry' do
-    it 'retries all selected failed jobs' do
+    it 'enqueues a background job on the dedicated queue, without retrying inline' do
       job = create_failed_job(class_name: 'FailedJob')
 
       post '/jobs/bulk_retry', params: { job_ids: [job.id] }
 
       expect(response).to redirect_to('/jobs')
-      expect(job.reload.status).to eq(:ready)
+      expect(job.reload.status).to eq(:failed)
+
+      enqueued = enqueued_job('Tramway::SolidQueue::BulkRetryJob')
+      expect(enqueued.queue_name).to eq('tramway_solid_queue_bulk_actions')
+      expect(enqueued.arguments['arguments']).to eq([[job.id]])
     end
   end
 
   describe 'POST /jobs/bulk_discard' do
-    it 'discards all selected jobs' do
+    it 'enqueues a background job on the dedicated queue, without discarding inline' do
       job = create_ready_job(class_name: 'ReadyJob')
 
       post '/jobs/bulk_discard', params: { job_ids: [job.id] }
 
       expect(response).to redirect_to('/jobs')
-      expect(SolidQueue::Job.exists?(job.id)).to be(false)
+      expect(SolidQueue::Job.exists?(job.id)).to be(true)
+
+      enqueued = enqueued_job('Tramway::SolidQueue::BulkDiscardJob')
+      expect(enqueued.queue_name).to eq('tramway_solid_queue_bulk_actions')
+      expect(enqueued.arguments['arguments']).to eq([[job.id]])
     end
   end
 
   describe 'POST /jobs/bulk_destroy' do
-    it 'destroys all selected jobs' do
+    it 'enqueues a background job on the dedicated queue, without destroying inline' do
       job = create_ready_job(class_name: 'DestroyableJob')
 
       post '/jobs/bulk_destroy', params: { job_ids: [job.id] }
 
       expect(response).to redirect_to('/jobs')
-      expect(SolidQueue::Job.exists?(job.id)).to be(false)
+      expect(SolidQueue::Job.exists?(job.id)).to be(true)
+
+      enqueued = enqueued_job('Tramway::SolidQueue::BulkDestroyJob')
+      expect(enqueued.queue_name).to eq('tramway_solid_queue_bulk_actions')
+      expect(enqueued.arguments['arguments']).to eq([[job.id]])
     end
   end
 
   describe 'POST /jobs/destroy_all' do
-    it 'destroys every job when no filters are set' do
+    it 'enqueues a background job with the current filters, without destroying inline' do
       first_job = create_ready_job(class_name: 'FirstJob')
-      second_job = create_ready_job(class_name: 'SecondJob')
 
+      post '/jobs/destroy_all', params: { status: 'ready', queue_name: 'default', class_name: 'FirstJob' }
+
+      expect(response).to redirect_to('/jobs')
+      expect(SolidQueue::Job.exists?(first_job.id)).to be(true)
+
+      enqueued = enqueued_job('Tramway::SolidQueue::DestroyAllJob')
+      expect(enqueued.queue_name).to eq('tramway_solid_queue_bulk_actions')
+      expect(enqueued.arguments['arguments'].first).to include(
+        'status' => 'ready', 'queue_name' => 'default', 'class_name' => 'FirstJob'
+      )
+    end
+
+    it 'enqueues a background job with no filters when none are given' do
       post '/jobs/destroy_all'
 
       expect(response).to redirect_to('/jobs')
-      expect(SolidQueue::Job.exists?(first_job.id)).to be(false)
-      expect(SolidQueue::Job.exists?(second_job.id)).to be(false)
-    end
 
-    it 'destroys only the jobs matching the status filter' do
-      failed_job = create_failed_job(class_name: 'FailedJob')
-      ready_job = create_ready_job(class_name: 'ReadyJob')
-
-      post '/jobs/destroy_all', params: { status: 'failed' }
-
-      expect(SolidQueue::Job.exists?(failed_job.id)).to be(false)
-      expect(SolidQueue::Job.exists?(ready_job.id)).to be(true)
-    end
-
-    it 'destroys only the jobs matching the queue_name filter' do
-      mailer_job = create_ready_job(queue_name: 'mailers', class_name: 'MailerJob')
-      default_job = create_ready_job(queue_name: 'default', class_name: 'DefaultJob')
-
-      post '/jobs/destroy_all', params: { queue_name: 'mailers' }
-
-      expect(SolidQueue::Job.exists?(mailer_job.id)).to be(false)
-      expect(SolidQueue::Job.exists?(default_job.id)).to be(true)
-    end
-
-    it 'destroys only the jobs matching the class_name filter' do
-      first_job = create_ready_job(class_name: 'FirstJob')
-      second_job = create_ready_job(class_name: 'SecondJob')
-
-      post '/jobs/destroy_all', params: { class_name: 'FirstJob' }
-
-      expect(SolidQueue::Job.exists?(first_job.id)).to be(false)
-      expect(SolidQueue::Job.exists?(second_job.id)).to be(true)
-    end
-
-    it 'destroys only the jobs matching the search query' do
-      searchable_job = create_ready_job(class_name: 'SearchableJob')
-      other_job = create_ready_job(class_name: 'OtherJob')
-
-      post '/jobs/destroy_all', params: { query: 'Searchable' }
-
-      expect(SolidQueue::Job.exists?(searchable_job.id)).to be(false)
-      expect(SolidQueue::Job.exists?(other_job.id)).to be(true)
-    end
-
-    it 'combines filters when destroying' do
-      matching_job = create_ready_job(queue_name: 'mailers', class_name: 'MailerJob')
-      other_queue_job = create_ready_job(queue_name: 'default', class_name: 'MailerJob')
-
-      post '/jobs/destroy_all', params: { queue_name: 'mailers', class_name: 'MailerJob' }
-
-      expect(SolidQueue::Job.exists?(matching_job.id)).to be(false)
-      expect(SolidQueue::Job.exists?(other_queue_job.id)).to be(true)
+      enqueued = enqueued_job('Tramway::SolidQueue::DestroyAllJob')
+      expect(enqueued.arguments['arguments'].first.except('_aj_hash_with_indifferent_access')).to eq({})
     end
   end
 end

@@ -5,18 +5,9 @@ module Tramway
     module SolidQueue
       # Lists, filters and manages SolidQueue jobs for the plugin dashboard
       class JobsController < ApplicationController
-        STATUS_FILTERS = {
-          'ready' => ->(relation) { relation.joins(:ready_execution) },
-          'claimed' => ->(relation) { relation.joins(:claimed_execution) },
-          'scheduled' => ->(relation) { relation.joins(:scheduled_execution) },
-          'blocked' => ->(relation) { relation.joins(:blocked_execution) },
-          'failed' => ->(relation) { relation.joins(:failed_execution) },
-          'finished' => ->(relation) { relation.finished }
-        }.freeze
-
         def index
-          @jobs = filtered_jobs.order(id: :desc).page(params[:page])
-          @status_counts = status_counts
+          @jobs = jobs_filter.jobs.order(id: :desc).page(params[:page])
+          @status_counts = jobs_filter.status_counts
           @queue_names = ::SolidQueue::Job.distinct.order(:queue_name).pluck(:queue_name)
           @class_names = ::SolidQueue::Job.distinct.order(:class_name).pluck(:class_name)
         end
@@ -44,28 +35,28 @@ module Tramway
         end
 
         def bulk_retry
-          selected_jobs.each(&:retry)
+          Tramway::SolidQueue::BulkRetryJob.perform_later(selected_job_ids)
 
-          redirect_to jobs_path, notice: t('tramway.plugins.solid_queue.notices.retried')
+          redirect_to jobs_path, notice: t('tramway.plugins.solid_queue.notices.bulk_retry_enqueued')
         end
 
         def bulk_discard
-          selected_jobs.each(&:discard)
+          Tramway::SolidQueue::BulkDiscardJob.perform_later(selected_job_ids)
 
-          redirect_to jobs_path, notice: t('tramway.plugins.solid_queue.notices.discarded')
+          redirect_to jobs_path, notice: t('tramway.plugins.solid_queue.notices.bulk_discard_enqueued')
         end
 
         def bulk_destroy
-          selected_jobs.find_each(&:destroy)
+          Tramway::SolidQueue::BulkDestroyJob.perform_later(selected_job_ids)
 
-          redirect_to jobs_path, notice: t('tramway.plugins.solid_queue.notices.destroyed')
+          redirect_to jobs_path, notice: t('tramway.plugins.solid_queue.notices.bulk_destroy_enqueued')
         end
 
         def destroy_all
-          filtered_jobs.find_each(&:destroy)
+          Tramway::SolidQueue::DestroyAllJob.perform_later(filter_params)
 
           redirect_to jobs_path(request.query_parameters.except('page')),
-                      notice: t('tramway.plugins.solid_queue.notices.destroyed')
+                      notice: t('tramway.plugins.solid_queue.notices.destroy_all_enqueued')
         end
 
         private
@@ -74,34 +65,16 @@ module Tramway
           @job ||= ::SolidQueue::Job.find(params.expect(:id))
         end
 
-        def selected_jobs
-          ::SolidQueue::Job.where(id: Array(params[:job_ids]))
+        def jobs_filter
+          @jobs_filter ||= Tramway::SolidQueue::JobsFilter.new(filter_params)
         end
 
-        def filtered_jobs
-          relation = apply_status_filter(::SolidQueue::Job.all)
-          relation = relation.where(queue_name: params[:queue_name]) if params[:queue_name].present?
-          relation = relation.where(class_name: params[:class_name]) if params[:class_name].present?
-
-          apply_search(relation).distinct
+        def filter_params
+          params.permit(:status, :queue_name, :class_name, :query).to_h
         end
 
-        def apply_status_filter(relation)
-          STATUS_FILTERS.fetch(params[:status]) { ->(rel) { rel } }.call(relation)
-        end
-
-        def apply_search(relation)
-          query = params[:query].to_s.strip
-
-          return relation if query.blank?
-
-          return relation.where(id: query) if query.match?(/\A\d+\z/)
-
-          relation.where('class_name LIKE :query OR active_job_id LIKE :query', query: "%#{query}%")
-        end
-
-        def status_counts
-          STATUS_FILTERS.transform_values { |scope| scope.call(::SolidQueue::Job.all).count }
+        def selected_job_ids
+          Array(params[:job_ids]).map(&:to_i)
         end
       end
     end
