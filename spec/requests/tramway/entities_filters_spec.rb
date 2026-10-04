@@ -63,6 +63,17 @@ describe 'Entities Filters', type: :request do
       expect(toggle_button).to include('bg-zinc-950')
       expect(toggle_button).to include('border-zinc-800')
     end
+
+    it 'renders a clear filter button only when a filter is applied, linking back to the unfiltered list' do
+      get '/admin/comments', params: { filter: 'with_text' }
+
+      expect(response.body).to include('fa-times')
+      expect(response.body).to match(%r{href="/admin/comments"[^>]*>\s*<i[^>]*fa-times})
+
+      get '/admin/comments'
+
+      expect(response.body).not_to include('fa-times')
+    end
   end
 
   context 'when filters are not configured for the page' do

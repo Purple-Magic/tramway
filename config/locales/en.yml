@@ -15,6 +15,7 @@ en:
       cancel: "Cancel"
       search: "Search"
       filters: "Filters"
+      clear_filter: "Clear filter"
     notices:
       created: "The record is created"
       updated: "The record is updated"

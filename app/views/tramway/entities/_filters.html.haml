@@ -7,3 +7,9 @@
       - button_type = filter_name.to_s == current_filter ? :primary : :inverse
       = tramway_button text: "#{filter_name.to_s.upcase} · #{count}",
         path: public_send(custom_path_method, filter_params), type: button_type, size: :small
+
+    - if current_filter.present?
+      - clear_params = request.query_parameters.except('page', 'filter')
+      = tramway_button tag: :a, path: public_send(custom_path_method, clear_params), type: :inverse,
+        size: :small, tooltip: { text: t('tramway.actions.clear_filter'), event: :hover } do
+        %i.fa.fa-times{ 'aria-hidden' => 'true' }
