@@ -33,6 +33,14 @@ describe 'Entities Filters', type: :request do
       expect(response.body).to include('WITH_TEXT')
       expect(response.body).to include('WITHOUT_TEXT')
     end
+
+    it 'renders a working toggle button wired to the collapsible controller' do
+      get '/admin/comments'
+
+      expect(response.body).to include('data-action="tramway--collapsible#toggle"')
+      expect(response.body).to include('data-tramway--collapsible-target="toggle"')
+      expect(response.body).not_to include('options="{')
+    end
   end
 
   context 'when filters are not configured for the page' do

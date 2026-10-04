@@ -26,7 +26,7 @@
     .flex.flex-row.items-center.mt-2.gap-4{ class: (@filter_counts.present? ? 'justify-between' : 'justify-end') }
       - if @filter_counts.present?
         = tramway_button tag: :button, type: :secondary,
-          options: { type: 'button', data: { action: 'tramway--collapsible#toggle', 'tramway--collapsible-target': 'toggle' } } do
+          data: { action: 'tramway--collapsible#toggle', 'tramway--collapsible-target': 'toggle' } do
           %i.fa.fa-filter.mr-1{ 'aria-hidden' => 'true' }
           = t('tramway.actions.filters')
           %i.fa.fa-chevron-down.ml-1.transition-transform.duration-200.ease-out-strong.motion-reduce:duration-0{ 'aria-hidden' => 'true', data: { 'tramway--collapsible-target': 'icon' } }
