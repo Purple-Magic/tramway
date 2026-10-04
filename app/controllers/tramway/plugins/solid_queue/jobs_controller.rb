@@ -61,6 +61,13 @@ module Tramway
           redirect_to jobs_path, notice: t('tramway.plugins.solid_queue.notices.destroyed')
         end
 
+        def destroy_all
+          filtered_jobs.find_each(&:destroy)
+
+          redirect_to jobs_path(request.query_parameters.except('page')),
+                      notice: t('tramway.plugins.solid_queue.notices.destroyed')
+        end
+
         private
 
         def job

@@ -40,6 +40,7 @@ module Tramway
               post :bulk_retry, on: :collection
               post :bulk_discard, on: :collection
               post :bulk_destroy, on: :collection
+              post :destroy_all, on: :collection
             end
           end
         end

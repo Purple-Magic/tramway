@@ -34,14 +34,18 @@
         = f.submit nil, 'aria-label' => t('tramway.actions.search') do
           %i.fa.fa-search{ 'aria-hidden' => 'true' }
 
-    = form_with url: bulk_destroy_jobs_path, method: :post, id: 'tramway-solid-queue-bulk-jobs-form', local: true do
-      .flex.justify-end.gap-2.mt-4
-        = tramway_button text: t('tramway.actions.retry'), tag: :button, type: :will, size: :small,
-          formaction: bulk_retry_jobs_path
-        = tramway_button text: t('tramway.actions.discard'), tag: :button, type: :warning, size: :small,
-          formaction: bulk_discard_jobs_path
-        = tramway_button text: t('tramway.actions.destroy'), tag: :button, type: :rage, size: :small,
-          formaction: bulk_destroy_jobs_path
+    .flex.justify-between.gap-2.mt-4
+      = tramway_button text: t('tramway.actions.destroy_all'), path: destroy_all_jobs_path(request.query_parameters.except('page')),
+        method: :post, type: :rage, size: :small
+
+      = form_with url: bulk_destroy_jobs_path, method: :post, id: 'tramway-solid-queue-bulk-jobs-form', local: true do
+        .flex.gap-2
+          = tramway_button text: t('tramway.actions.retry'), tag: :button, type: :will, size: :small,
+            formaction: bulk_retry_jobs_path
+          = tramway_button text: t('tramway.actions.discard'), tag: :button, type: :warning, size: :small,
+            formaction: bulk_discard_jobs_path
+          = tramway_button text: t('tramway.actions.destroy'), tag: :button, type: :rage, size: :small,
+            formaction: bulk_destroy_jobs_path
 
     #tramway-solid-queue-jobs-table{ data: { 'tramway--auto-refresh-target': 'refreshable' } }
       = tramway_table class: 'mt-4' do

@@ -27,6 +27,12 @@ The "Throughput" column on the queues list shows how many jobs on that queue fin
 rolling 5-minute window. It's a live indicator of how fast a queue is currently draining, not a historical or
 all-time average.
 
+## "Destroy all" respects your current filters
+
+The "Destroy all" button on the jobs list destroys every job that matches whatever filters are currently
+applied — status, queue, class name, and/or free-text search — not just the jobs shown on the current page or any
+jobs you've checked. With no filters applied, it destroys every job.
+
 ## Pages update on their own
 
 The jobs list, queues list, recurring tasks list, and job detail page periodically refresh themselves in the

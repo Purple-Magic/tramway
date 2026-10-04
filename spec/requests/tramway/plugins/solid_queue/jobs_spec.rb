@@ -201,4 +201,67 @@ describe 'Tramway SolidQueue Plugin Jobs', type: :request do
       expect(SolidQueue::Job.exists?(job.id)).to be(false)
     end
   end
+
+  describe 'POST /jobs/destroy_all' do
+    it 'destroys every job when no filters are set' do
+      first_job = create_ready_job(class_name: 'FirstJob')
+      second_job = create_ready_job(class_name: 'SecondJob')
+
+      post '/jobs/destroy_all'
+
+      expect(response).to redirect_to('/jobs')
+      expect(SolidQueue::Job.exists?(first_job.id)).to be(false)
+      expect(SolidQueue::Job.exists?(second_job.id)).to be(false)
+    end
+
+    it 'destroys only the jobs matching the status filter' do
+      failed_job = create_failed_job(class_name: 'FailedJob')
+      ready_job = create_ready_job(class_name: 'ReadyJob')
+
+      post '/jobs/destroy_all', params: { status: 'failed' }
+
+      expect(SolidQueue::Job.exists?(failed_job.id)).to be(false)
+      expect(SolidQueue::Job.exists?(ready_job.id)).to be(true)
+    end
+
+    it 'destroys only the jobs matching the queue_name filter' do
+      mailer_job = create_ready_job(queue_name: 'mailers', class_name: 'MailerJob')
+      default_job = create_ready_job(queue_name: 'default', class_name: 'DefaultJob')
+
+      post '/jobs/destroy_all', params: { queue_name: 'mailers' }
+
+      expect(SolidQueue::Job.exists?(mailer_job.id)).to be(false)
+      expect(SolidQueue::Job.exists?(default_job.id)).to be(true)
+    end
+
+    it 'destroys only the jobs matching the class_name filter' do
+      first_job = create_ready_job(class_name: 'FirstJob')
+      second_job = create_ready_job(class_name: 'SecondJob')
+
+      post '/jobs/destroy_all', params: { class_name: 'FirstJob' }
+
+      expect(SolidQueue::Job.exists?(first_job.id)).to be(false)
+      expect(SolidQueue::Job.exists?(second_job.id)).to be(true)
+    end
+
+    it 'destroys only the jobs matching the search query' do
+      searchable_job = create_ready_job(class_name: 'SearchableJob')
+      other_job = create_ready_job(class_name: 'OtherJob')
+
+      post '/jobs/destroy_all', params: { query: 'Searchable' }
+
+      expect(SolidQueue::Job.exists?(searchable_job.id)).to be(false)
+      expect(SolidQueue::Job.exists?(other_job.id)).to be(true)
+    end
+
+    it 'combines filters when destroying' do
+      matching_job = create_ready_job(queue_name: 'mailers', class_name: 'MailerJob')
+      other_queue_job = create_ready_job(queue_name: 'default', class_name: 'MailerJob')
+
+      post '/jobs/destroy_all', params: { queue_name: 'mailers', class_name: 'MailerJob' }
+
+      expect(SolidQueue::Job.exists?(matching_job.id)).to be(false)
+      expect(SolidQueue::Job.exists?(other_queue_job.id)).to be(true)
+    end
+  end
 end
