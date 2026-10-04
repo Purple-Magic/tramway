@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'tramway/plugins'
+
 module Tramway
   # Navbar object provides left and right elements
   class Navbar
@@ -9,6 +11,8 @@ module Tramway
       @context = context
       @items = { left: [], right: [] }
       @filling = nil
+
+      preset_plugins
 
       return unless with_entities
 
@@ -56,6 +60,25 @@ module Tramway
         next if entity.routes.index.blank?
 
         item entity.human_name.plural, Tramway::Engine.routes.url_helpers.public_send(entity.routes.index)
+      end
+
+      reset_filling
+    end
+
+    def preset_plugins
+      plugins = Tramway.config.plugins
+
+      return unless plugins.any?
+
+      filling_side :left
+
+      plugins.each do |name|
+        plugin = Tramway::Plugins.fetch(name)
+        nav_item = plugin.nav_item(plugins.public_send(name))
+
+        next if nav_item.blank?
+
+        item nav_item[:text], nav_item[:path], icon: nav_item[:icon]
       end
 
       reset_filling
