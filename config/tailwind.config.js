@@ -61,6 +61,7 @@ module.exports = {
     'ease-in-out',
     'md:transition-[width]',
     'transition-[padding-left]',
+    'transition-[height,opacity]',
     'ease-in-out-strong',
     'md:ease-in-out-strong',
     'ease-out-strong',
@@ -274,7 +275,6 @@ module.exports = {
     'py-6',
     'font-medium',
     'w-full',
-    '!w-1/2',
 
     // === Title Component ===
     'md:text-4xl',

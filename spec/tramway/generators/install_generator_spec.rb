@@ -264,7 +264,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       <<~JS
         import { Application } from "@hotwired/stimulus"
         import { UserForm } from "./user_form_controller"
-        import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"
+        import { Navbar, TramwaySelect, UiCheckbox, Tooltip, Collapsible } from "@tramway/tramway"
 
         const application = Application.start()
 
@@ -276,6 +276,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
         application.register('tramway-select', TramwaySelect)
         application.register('ui--checkbox', UiCheckbox)
         application.register('tramway-tooltip', Tooltip)
+        application.register('tramway--collapsible', Collapsible)
         export { application }
       JS
     end
@@ -311,7 +312,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
     def legacy_index_content
       <<~JS
         import { Application } from "@hotwired/stimulus"
-        import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"
+        import { Navbar, TramwaySelect, UiCheckbox, Tooltip, Collapsible } from "@tramway/tramway"
 
         const application = Application.start()
 
@@ -319,6 +320,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
         application.register('tramway-select', TramwaySelect)
         application.register('ui--checkbox', UiCheckbox)
         application.register('tramway-tooltip', Tooltip)
+        application.register('tramway--collapsible', Collapsible)
         export { application }
       JS
     end
@@ -395,7 +397,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       content = File.read(controllers_index_path)
 
       expect(content).to include(
-        'import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"'
+        'import { Navbar, TramwaySelect, UiCheckbox, Tooltip, Collapsible } from "@tramway/tramway"'
       )
       expect(content.scan('TramwaySelect').count).to eq(2)
       expect(content.scan('import {').count).to eq(2)
@@ -413,7 +415,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       content = File.read(controllers_index_path)
 
       expect(content).to include(
-        'import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"'
+        'import { Navbar, TramwaySelect, UiCheckbox, Tooltip, Collapsible } from "@tramway/tramway"'
       )
       expect(content.scan('TramwayNavbar').count).to eq(0)
       expect(content.scan('TramwaySelect').count).to eq(2)
@@ -429,7 +431,7 @@ RSpec.describe Tramway::Generators::InstallGenerator do
       content = File.read(controllers_index_path)
 
       expect(content).to include(
-        'import { Navbar, TramwaySelect, UiCheckbox, Tooltip } from "@tramway/tramway"'
+        'import { Navbar, TramwaySelect, UiCheckbox, Tooltip, Collapsible } from "@tramway/tramway"'
       )
       expect(content).not_to match(/TableRowPreview|table-row-preview/)
     end

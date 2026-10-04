@@ -1,8 +1,15 @@
 - current_filter = params[:filter]
+- filters_key = "#{@entity.namespace}-#{@entity.name}-index-filters"
 
-.mt-4
-  = tramway_table(class: 'mt-2 !w-1/2') do
-    - @filter_counts.each do |filter_name, count|
-      - filter_params = request.query_parameters.except('page').merge(filter: filter_name)
-      - badge_type = filter_name.to_s == current_filter ? :default : :secondary
-      = tramway_row(href: public_send(custom_path_method, filter_params), cells: [[:name, tramway_badge(text: filter_name.to_s.upcase, type: badge_type)], [:count, count]])
+.mt-4{ data: { controller: 'tramway--collapsible', key: filters_key } }
+  %button.inline-flex.items-center.gap-1.text-xs.font-medium.text-zinc-400.hover:text-zinc-50.transition-colors.duration-200.ease-out-strong.cursor-pointer{ type: 'button', 'aria-expanded' => 'true', data: { action: 'tramway--collapsible#toggle' } }
+    = t('tramway.actions.filters')
+    %i.fa.fa-chevron-up.transition-transform.duration-200.ease-out-strong.motion-reduce:duration-0{ 'aria-hidden' => 'true', data: { 'tramway--collapsible-target': 'icon' } }
+
+  .overflow-hidden.duration-200.ease-out-strong.motion-reduce:duration-0{ class: 'transition-[height,opacity]', data: { 'tramway--collapsible-target': 'panel' } }
+    .flex.flex-wrap.gap-2.mt-2
+      - @filter_counts.each do |filter_name, count|
+        - filter_params = request.query_parameters.except('page').merge(filter: filter_name)
+        - badge_type = filter_name.to_s == current_filter ? :default : :secondary
+        = link_to public_send(custom_path_method, filter_params), class: 'inline-flex' do
+          = tramway_badge(text: "#{filter_name.to_s.upcase} · #{count}", type: badge_type)
