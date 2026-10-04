@@ -1,7 +1,7 @@
 - current_filter = params[:filter]
 
 .mt-4
-  = tramway_table(class: 'mt-2') do
+  = tramway_table(class: 'mt-2 w-1/2') do
     - @filter_counts.each do |filter_name, count|
       - filter_params = request.query_parameters.except('page').merge(filter: filter_name)
       - badge_type = filter_name.to_s == current_filter ? :default : :secondary

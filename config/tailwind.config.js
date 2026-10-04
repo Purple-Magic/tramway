@@ -274,6 +274,7 @@ module.exports = {
     'py-6',
     'font-medium',
     'w-full',
+    'w-1/2',
 
     // === Title Component ===
     'md:text-4xl',
