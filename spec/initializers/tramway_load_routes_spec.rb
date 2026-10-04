@@ -40,7 +40,9 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
     expect(get: '/admin/comments').to route_to(
       controller: 'tramway/entities',
       action: 'index',
-      entity: build(:entity, name: 'comment', namespace: :admin)
+      entity: build(:entity, name: 'comment', namespace: :admin, pages: [
+                      { action: 'index', filters: %i[with_text without_text] }
+                    ])
     )
   end
 

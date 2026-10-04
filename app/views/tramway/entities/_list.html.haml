@@ -29,6 +29,9 @@
 
     = paginate @entities, custom_path_method:
 
+  - if @filter_counts.present?
+    = render 'tramway/entities/filters', custom_path_method:
+
   - if index_attributes.empty?
     %p.text-center.mt-10
       You should fill class-level method `self.index_attributes` inside your

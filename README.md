@@ -261,6 +261,38 @@ In this example, Tramway calls `Campaign.includes(:user, :comments)` before appl
 `campaign.user` or `campaign.comments` in the decorator's `index_attributes` does not issue an extra query per row.
 Omitting `includes` produces identical behavior to before this option existed.
 
+**filters**
+
+Filters are disabled by default on index pages. Enable them by listing the scope names you want selectable under
+`filters` on the `:index` page entry:
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      namespace: :admin,
+      pages: [
+        {
+          action: :index,
+          filters: [:active, :archived]
+        }
+      ]
+    }
+  ]
+end
+```
+
+When filters are configured, Tramway renders a table of the configured filters above the index listing, each showing
+how many records currently match it (e.g. "ACTIVE 34"). Clicking a row navigates to the index page with that filter
+applied, keeping any existing search query.
+
+Visiting the index page with `?filter=active` calls `Campaign.active` (the scope must already exist on the model) in
+addition to any configured `scope`. If `filter` does not match one of the configured filters, Tramway raises
+`Tramway::Errors::InvalidFilterError` explaining which filters are available. Omitting `filters` (the default) makes
+Tramway ignore `params[:filter]` entirely.
+
 **show page**
 
 To render a show page for an entity, declare a `:show` action inside the `pages` array in

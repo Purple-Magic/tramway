@@ -31,7 +31,8 @@ Tramway.configure do |config|
       namespace: :admin,
       pages: [
         {
-          action: :index
+          action: :index,
+          filters: %i[with_text without_text]
         }
       ]
     },
