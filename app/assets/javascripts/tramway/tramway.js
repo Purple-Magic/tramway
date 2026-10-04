@@ -483,7 +483,7 @@ class Navbar extends Controller {
 }
 
 class Collapsible extends Controller {
-  static targets = ["panel", "icon"]
+  static targets = ["panel", "icon", "toggle"]
 
   connect() {
     this.expanded = true
@@ -510,7 +510,8 @@ class Collapsible extends Controller {
       this.panelTarget.style.opacity = expanded ? '1' : '0'
     }
 
-    this.element.setAttribute('aria-expanded', expanded ? 'true' : 'false')
+    const expandedCarrier = this.hasToggleTarget ? this.toggleTarget : this.element
+    expandedCarrier.setAttribute('aria-expanded', expanded ? 'true' : 'false')
 
     if (this.hasIconTarget) {
       this.iconTarget.classList.toggle('rotate-180', !expanded)

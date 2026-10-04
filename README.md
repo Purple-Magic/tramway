@@ -284,10 +284,11 @@ Tramway.configure do |config|
 end
 ```
 
-When filters are configured, Tramway renders a collapsible list of small buttons above the index listing, each
-showing how many records currently match it (e.g. "ACTIVE · 34"). Clicking a button navigates to the index page with
-that filter applied, keeping any existing search query. The currently applied filter is highlighted. The list can be
-collapsed by clicking the "Filters" toggle above it.
+When filters are configured, Tramway adds a "Filters" toggle to the same row as the search box and pagination, above
+the index listing. Clicking it reveals a list of small buttons, one per configured filter, each showing how many
+records currently match it (e.g. "ACTIVE · 34"). Clicking a button navigates to the index page with that filter
+applied, keeping any existing search query. The currently applied filter is highlighted, and the toggle remembers
+whether the list was last left open or closed.
 
 Visiting the index page with `?filter=active` calls `Campaign.active` (the scope must already exist on the model) in
 addition to any configured `scope`. If `filter` does not match one of the configured filters, Tramway raises

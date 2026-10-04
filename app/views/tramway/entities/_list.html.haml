@@ -20,17 +20,28 @@
     .mt-4
       = decorator.constantize.index_header_content.call(@entities)
 
-  .flex.flex-row.justify-end.mt-2.gap-4
-    - if @entity.page(:index).search
-      = form_with url: public_send(custom_path_method), method: :get, local: true, builder: Tramway::Form::Builder, horizontal: true do |f|
-        = f.text_field :query, label: false, value: params[:query], placeholder: t('tramway.actions.search')
-        = f.submit nil, 'aria-label' => t('tramway.actions.search') do
-          %i.fa.fa-search{ 'aria-hidden' => 'true' }
+  - filters_key = "#{@entity.namespace}-#{@entity.name}-index-filters" if @filter_counts.present?
 
-    = paginate @entities, custom_path_method:
+  %div{ data: (@filter_counts.present? ? { controller: 'tramway--collapsible', key: filters_key } : {}) }
+    .flex.flex-row.items-center.mt-2.gap-4{ class: (@filter_counts.present? ? 'justify-between' : 'justify-end') }
+      - if @filter_counts.present?
+        = tramway_button tag: :button, type: :secondary,
+          options: { type: 'button', data: { action: 'tramway--collapsible#toggle', 'tramway--collapsible-target': 'toggle' } } do
+          %i.fa.fa-filter.mr-1{ 'aria-hidden' => 'true' }
+          = t('tramway.actions.filters')
+          %i.fa.fa-chevron-down.ml-1.transition-transform.duration-200.ease-out-strong.motion-reduce:duration-0{ 'aria-hidden' => 'true', data: { 'tramway--collapsible-target': 'icon' } }
 
-  - if @filter_counts.present?
-    = render 'tramway/entities/filters', custom_path_method:
+      .flex.flex-row.items-center.gap-4
+        - if @entity.page(:index).search
+          = form_with url: public_send(custom_path_method), method: :get, local: true, builder: Tramway::Form::Builder, horizontal: true do |f|
+            = f.text_field :query, label: false, value: params[:query], placeholder: t('tramway.actions.search')
+            = f.submit nil, 'aria-label' => t('tramway.actions.search') do
+              %i.fa.fa-search{ 'aria-hidden' => 'true' }
+
+        = paginate @entities, custom_path_method:
+
+    - if @filter_counts.present?
+      = render 'tramway/entities/filters', custom_path_method:
 
   - if index_attributes.empty?
     %p.text-center.mt-10

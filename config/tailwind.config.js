@@ -469,6 +469,8 @@ module.exports = {
     'whitespace-nowrap',
     'h-fit',
     'gap-1',
+    'mr-1',
+    'ml-1',
     'h-10',
     'px-2.5',
     'py-0.5',
