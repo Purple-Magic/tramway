@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-/* global console */
+/* global console, fetch, setInterval, clearInterval, DOMParser */
 
 class TramwaySelect extends Controller {
   static targets = ["dropdown", "showSelectedArea", "hiddenInput", "caretDown", "caretUp"]
@@ -564,4 +564,60 @@ class Collapsible extends Controller {
   }
 }
 
-export { TramwaySelect, UiCheckbox, Tooltip, Navbar, Collapsible }
+// Periodically re-fetches the current page and swaps the innerHTML of each marked
+// "refreshable" target by id, so pages reflect background changes (e.g. job status moving
+// through SolidQueue) without a full reload. A target is skipped while it has a checked
+// checkbox or focus inside it, so an in-progress bulk selection or form entry isn't clobbered.
+class AutoRefresh extends Controller {
+  static targets = ["refreshable"]
+
+  static values = {
+    interval: { type: Number, default: 4000 }
+  }
+
+  connect() {
+    this.refreshing = false
+    this.timer = setInterval(() => this.refresh(), this.intervalValue)
+  }
+
+  disconnect() {
+    clearInterval(this.timer)
+  }
+
+  async refresh() {
+    if (this.refreshing || document.hidden) return
+
+    this.refreshing = true
+
+    try {
+      const response = await fetch(window.location.href, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+
+      if (!response.ok) return
+
+      const next = new DOMParser().parseFromString(await response.text(), 'text/html')
+
+      this.refreshableTargets.forEach((target) => this.updateTarget(target, next))
+    } finally {
+      this.refreshing = false
+    }
+  }
+
+  updateTarget(target, next) {
+    if (!target.id || this.hasPendingInput(target)) return
+
+    const replacement = next.getElementById(target.id)
+
+    if (replacement) {
+      target.innerHTML = replacement.innerHTML
+    }
+  }
+
+  hasPendingInput(target) {
+    const focused = target.contains(document.activeElement) &&
+      document.activeElement.matches('input, textarea, select')
+
+    return target.querySelector('input:checked') !== null || focused
+  }
+}
+
+export { TramwaySelect, UiCheckbox, Tooltip, Navbar, Collapsible, AutoRefresh }

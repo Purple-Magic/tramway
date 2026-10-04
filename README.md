@@ -1802,6 +1802,8 @@ It gives you:
 - Retry, discard and destroy for a single job, or in bulk for a selection of jobs.
 - A queues list with size/latency, and pause/resume/clear actions per queue.
 - A recurring tasks list with the ability to enqueue a task immediately.
+- Jobs, queues, and recurring tasks lists (and the job detail page) refresh themselves in the background every few
+  seconds, so job status changes show up without reloading the page.
 
 See [docs/users/tramway_solid_queue_plugin.md](docs/users/tramway_solid_queue_plugin.md) for more on what "discard"
 does and other SolidQueue-specific behavior.

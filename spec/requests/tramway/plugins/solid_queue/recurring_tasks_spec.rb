@@ -18,6 +18,18 @@ describe 'Tramway SolidQueue Plugin Recurring Tasks', type: :request do
       expect(response.body).to include('nightly_cleanup')
       expect(response.body).to include('CleanupJob')
     end
+
+    it 'wraps the task table in an auto-refresh target, so the page updates without reload' do
+      stub_const('CleanupJob', Class.new(ApplicationJob) { def perform(*); end })
+      SolidQueue::RecurringTask.create!(
+        key: 'nightly_cleanup', schedule: '0 3 * * *', class_name: 'CleanupJob', queue_name: 'default'
+      )
+
+      get '/jobs/recurring_tasks'
+
+      expect(response.body).to include('id="tramway-solid-queue-recurring-tasks-table"')
+      expect(response.body).to include('data-controller="tramway--auto-refresh"')
+    end
   end
 
   describe 'POST /recurring_tasks/:key/enqueue' do

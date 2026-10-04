@@ -20,3 +20,11 @@ counters.
 
 Pausing a queue stops new jobs on it from being picked up for execution; it does not remove or affect jobs already
 in the queue. Resuming un-pauses it.
+
+## Pages update on their own
+
+The jobs list, queues list, recurring tasks list, and job detail page periodically refresh themselves in the
+background, so you'll see job/queue status changes (e.g. a job moving from "Ready" to "Claimed" to "Finished")
+without reloading the page. A refresh never interrupts you: it skips updating while you have a checkbox checked in
+the jobs list (so your bulk selection isn't lost) or while you're typing/focused in a field inside the refreshed
+area.

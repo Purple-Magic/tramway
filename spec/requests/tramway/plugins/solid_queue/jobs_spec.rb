@@ -47,6 +47,16 @@ describe 'Tramway SolidQueue Plugin Jobs', type: :request do
       expect(response.body).to include('FirstJob')
     end
 
+    it 'wraps the status filters and the job table in auto-refresh targets, so the page updates without reload' do
+      create_ready_job(class_name: 'FirstJob')
+
+      get '/jobs'
+
+      expect(response.body).to include('id="tramway-solid-queue-jobs-status-filters"')
+      expect(response.body).to include('id="tramway-solid-queue-jobs-table"')
+      expect(response.body).to include('data-controller="tramway--auto-refresh"')
+    end
+
     it 'filters by status' do
       ready_job = create_ready_job(class_name: 'ReadyJob')
       failed_job = create_failed_job(class_name: 'FailedJob')
@@ -106,6 +116,15 @@ describe 'Tramway SolidQueue Plugin Jobs', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('ShowableJob')
+    end
+
+    it 'wraps the job details in an auto-refresh target, so the page updates without reload' do
+      job = create_ready_job(class_name: 'ShowableJob')
+
+      get "/jobs/#{job.id}"
+
+      expect(response.body).to include('id="tramway-solid-queue-job-details"')
+      expect(response.body).to include('data-controller="tramway--auto-refresh"')
     end
 
     it 'shows the failure details for a failed job' do

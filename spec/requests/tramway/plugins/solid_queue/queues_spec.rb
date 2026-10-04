@@ -17,6 +17,15 @@ describe 'Tramway SolidQueue Plugin Queues', type: :request do
       expect(response).to have_http_status(:ok)
       expect(response.body).to include('mailers')
     end
+
+    it 'wraps the queue table in an auto-refresh target, so the page updates without reload' do
+      SolidQueue::Job.create!(queue_name: 'mailers', class_name: 'MailerJob', active_job_id: SecureRandom.uuid)
+
+      get '/jobs/queues'
+
+      expect(response.body).to include('id="tramway-solid-queue-queues-table"')
+      expect(response.body).to include('data-controller="tramway--auto-refresh"')
+    end
   end
 
   describe 'POST /queues/:name/pause' do
