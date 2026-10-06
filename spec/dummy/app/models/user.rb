@@ -5,5 +5,5 @@ class User < ApplicationRecord
   has_many :posts
 
   attr_reader :password, :file
-  attr_accessor :permissions, :team
+  attr_accessor :permissions, :team, :departments
 end

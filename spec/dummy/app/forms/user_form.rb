@@ -12,4 +12,8 @@ class UserForm < Tramway::BaseForm
   def team; end
 
   def team=(value); end
+
+  def departments; end
+
+  def departments=(value); end
 end

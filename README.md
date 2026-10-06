@@ -1563,10 +1563,19 @@ Autocomplete select example:
 <% end %>
 ```
 
-`autocomplete: true` renders an autocomplete-enabled select. It cannot be used together with `multiselect: true` in the
-same select field.
+`autocomplete: true` renders an autocomplete-enabled select. It can be combined with `multiple: true` to get a
+searchable multi-select:
 
-When you use `multiselect: true`, make sure any preselected values still exist in the collection you render. Unknown
+```erb
+<%= tramway_form_for @user do |f| %>
+  <%= f.select :departments, [['Engineering', 'engineering'], ['Sales', 'sales']], autocomplete: true, multiple: true %>
+<% end %>
+```
+
+With both options set, the search input stays visible after each selection so you can keep filtering and picking
+more options; selected options still show as removable tags.
+
+When you use `multiple: true`, make sure any preselected values still exist in the collection you render. Unknown
 values are ignored by the widget so the select can still boot safely.
 
 **Examples**

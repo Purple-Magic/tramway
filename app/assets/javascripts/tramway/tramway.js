@@ -59,7 +59,7 @@ class TramwaySelect extends Controller {
 
     let content = allItems;
 
-    if (this.autocomplete() && this.selectedItems.length === 0) {
+    if (this.autocomplete() && (this.multiple() || this.selectedItems.length === 0)) {
       content += this.element.dataset.autocompleteInput;
     }
 
@@ -80,7 +80,14 @@ class TramwaySelect extends Controller {
     }
   }
 
-  toggleDropdown() {
+  toggleDropdown(event) {
+    // Clicking into the autocomplete search input bubbles up to this action. While the dropdown
+    // is already open, that click should keep it open (so the user can keep typing/selecting)
+    // rather than close it on every refocus.
+    if (this.dropdownState === 'open' && event && event.target.tagName === 'INPUT') {
+      return;
+    }
+
     if (this.dropdownState === 'closed') {
       this.openDropdown();
     } else {
@@ -103,6 +110,14 @@ class TramwaySelect extends Controller {
 
     this.caretDownTarget.classList.add('hidden');
     this.caretUpTarget.classList.remove('hidden');
+
+    if (this.autocomplete()) {
+      this.searchInput()?.focus();
+    }
+  }
+
+  searchInput() {
+    return this.showSelectedAreaTarget.querySelector('input');
   }
 
   dropdown() {
