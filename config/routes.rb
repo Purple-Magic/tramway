@@ -13,9 +13,10 @@ Tramway::Engine.routes.draw do
     end => segments
 
     resource_name = segments.pop
+    controller_path = (segments + [resource_name.pluralize]).join('/')
 
     define_resource = proc do
-      entity.pages.reduce([]) do |acc, page|
+      entity.built_in_pages.reduce([]) do |acc, page|
         case page.action
         when 'index'
           acc << :index
@@ -27,15 +28,24 @@ Tramway::Engine.routes.draw do
           acc + %i[edit update]
         when 'destroy'
           acc << :destroy
-        else
-          acc
         end
       end => actions
 
       resources resource_name.pluralize.to_sym,
                 only: actions.map(&:to_sym),
                 controller: '/tramway/entities',
-                defaults: { entity: }
+                defaults: { entity: } do
+        entity.custom_pages.each do |page|
+          path = ([page.action] + page.params.map { |param| ":#{param}" }).join('/')
+          to = "/#{controller_path}##{page.action}"
+
+          if page.member
+            member { match path, to:, via: page.via, defaults: { entity: } }
+          else
+            collection { match path, to:, via: page.via, defaults: { entity: } }
+          end
+        end
+      end
     end
 
     if segments.empty?

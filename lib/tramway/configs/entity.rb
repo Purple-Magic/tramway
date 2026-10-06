@@ -16,6 +16,10 @@ module Tramway
       ACTIONS = %i[index show new create edit update destroy].freeze
       RouteStruct = Struct.new(*ACTIONS)
 
+      # Page#action values handled by Tramway's built-in CRUD controller and routing.
+      # Any other page is a Custom Page, routed to a host app controller instead.
+      BUILT_IN_PAGE_ACTIONS = %w[index show create update destroy].freeze
+
       # HumanName Struct contains human names forms for the entity
       HumanNameStruct = Struct.new(:single, :plural)
 
@@ -37,6 +41,14 @@ module Tramway
 
       def page(name)
         pages.find { |page| page.action == name.to_s }
+      end
+
+      def built_in_pages
+        pages.select { |page| BUILT_IN_PAGE_ACTIONS.include?(page.action) }
+      end
+
+      def custom_pages
+        pages.reject { |page| BUILT_IN_PAGE_ACTIONS.include?(page.action) }
       end
 
       def show_helper_method
