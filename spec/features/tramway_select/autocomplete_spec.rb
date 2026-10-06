@@ -12,4 +12,11 @@ feature 'TramwayAutocompleteComponent', :js, type: :feature do
 
     expect(find("input[name='user[team]']", visible: :all).value).to eq('team1')
   end
+
+  scenario 'does not raise an error when the collection includes an option with a nil label' do
+    tramway_autocomplete 'Team 1', from: 'user_team'
+
+    expect(page).to have_no_selector('div.option', text: /^$/, exact: true)
+    expect(find("input[name='user[team]']", visible: :all).value).to eq('team1')
+  end
 end

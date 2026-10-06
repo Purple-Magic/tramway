@@ -13,3 +13,4 @@ Further topic-specific instructions live under `.agents/`:
 - [.agents/documentation.md](.agents/documentation.md) — keep README.md scoped to user-facing usage; move implementation details to docs/users/.
 - [.agents/infra-dependent-features.md](.agents/infra-dependent-features.md) — infra-dependent features must fail with clear, actionable errors.
 - [.agents/releases.md](.agents/releases.md) — how to create a GitHub release and format its description.
+- [.agents/plugin-fixes.md](.agents/plugin-fixes.md) — Tramway is a Rails plugin; fix bugs reported from a host app inside this gem, not in the consuming app.

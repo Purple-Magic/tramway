@@ -9,3 +9,4 @@
 @.agents/documentation.md
 @.agents/infra-dependent-features.md
 @.agents/releases.md
+@.agents/plugin-fixes.md

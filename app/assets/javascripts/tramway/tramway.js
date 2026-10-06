@@ -26,7 +26,7 @@ class TramwaySelect extends Controller {
     this.items = JSON.parse(this.element.dataset.items).map((item, index) => {
       return {
         index,
-        text: item.text,
+        text: item.text == null ? '' : item.text.toString(),
         value: item.value.toString(),
         selected: false
       }
