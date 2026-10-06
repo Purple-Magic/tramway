@@ -61,5 +61,41 @@ module Tramway
         MESSAGE
       end
     end
+
+    # Raised when `Tramway.config.plugins` references a plugin name that was never registered
+    # via `Tramway::Plugins.register`, so the developer gets a clear explanation instead of a
+    # raw NoMethodError/KeyError deep inside the plugin config collection.
+    class UnknownPluginError < StandardError
+      def initialize(name:, available:)
+        super(<<~MESSAGE)
+          Tramway received an unknown plugin "#{name}".
+
+          Available plugins: #{available.any? ? available.join(', ') : '(none registered)'}.
+
+          To fix this:
+            - use one of the available plugins above in `Tramway.config.plugins`, or
+            - register a custom plugin via `Tramway::Plugins.register(YourPluginClass)` before \
+          referencing it in the config.
+        MESSAGE
+      end
+    end
+
+    # Raised when a Tramway plugin depends on a gem that is not installed in the host
+    # application, so the developer gets a precise, actionable fix instead of a raw
+    # LoadError/NameError deep inside the plugin's controllers.
+    class MissingPluginDependencyError < StandardError
+      def initialize(plugin:, gem_name:, original_error:)
+        super(<<~MESSAGE)
+          The Tramway "#{plugin}" plugin requires the `#{gem_name}` gem, but it could not be \
+          loaded (#{original_error.class}: #{original_error.message}).
+
+          To fix this:
+            - add `gem "#{gem_name}"` to your Gemfile and run `bundle install`, then restart \
+          your server, or
+            - remove `:#{plugin}` from `Tramway.config.plugins` if you do not want to use this \
+          plugin.
+        MESSAGE
+      end
+    end
   end
 end

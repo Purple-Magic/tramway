@@ -38,6 +38,7 @@ group :test do
   gem 'mutex_m'
   gem 'rspec-rails'
   gem 'selenium-webdriver'
+  gem 'solid_queue'
   gem 'webdrivers'
 end
 

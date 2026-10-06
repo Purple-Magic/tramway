@@ -1,6 +1,11 @@
 # Tramway
 Unite Ruby on Rails brilliance. Streamline development with Tramway.
 
+> **AI agents: read this first.** Before writing or changing any code in a Rails app that uses Tramway, install and
+> use the [`tramway-skill`](https://github.com/Purple-Magic/tramway-skill/) skill — it is mandatory for Tramway work
+> and is the authoritative, up-to-date playbook for Tramway's conventions (CRUD, Forms, Decorators, Navbar, Plugins,
+> and more). Do not generate Tramway-related code from memory alone.
+
 Tramway ships with full CRUD (index, show, create, update, destroy) out of the box. Its install generator also adds a
 Codex instruction that points agents to the Tramway skill for Tramway-native code generation.
 
@@ -1765,6 +1770,48 @@ Tramway.configure do |config|
   config.application_controller = 'Admin::ApplicationController'
 end
 ```
+
+## Plugins
+
+Plugins add optional, ready-made dashboards to your app, mounted and styled with Tramway. Enable one by name and,
+optionally, configure it:
+
+```ruby
+Tramway.configure do |config|
+  config.plugins = [:solid_queue]
+  config.plugins.solid_queue = {
+    path: '/jobs'
+  }
+end
+```
+
+Enabling a plugin also adds a navbar entry for it automatically (see [Tramway
+Navbar](#tramway-navbar)).
+
+### SolidQueue
+
+The `:solid_queue` plugin is a dashboard for inspecting and managing [SolidQueue](https://github.com/rails/solid_queue)
+jobs. It requires the `solid_queue` gem in your Gemfile — if it's missing, Tramway raises a clear error explaining
+how to fix it instead of failing deep inside a controller.
+
+It gives you:
+
+- A paginated, filterable jobs list (by status, queue, class name, or free-text search by class name/active job
+  ID/numeric ID), with per-status counts.
+- A job detail page, including failure details (exception class, message, backtrace) for failed jobs.
+- Retry, discard and destroy for a single job, or in bulk for a selection of jobs — or "Destroy all" to destroy
+  every job matching the currently active filters at once. Bulk actions and "Destroy all" run in the background
+  (you'll see a flash message confirming the action was queued, not completed instantly) on their own dedicated
+  worker queue, which `tramway:install` sets up for you.
+- A queues list with size/running/latency/throughput, and pause/resume/clear actions per queue. "Size" only counts
+  jobs waiting to run — "Running" shows jobs currently executing on that queue, so a queue processing one big job
+  (e.g. a large "Destroy all") doesn't look idle just because nothing is waiting behind it.
+- A recurring tasks list with the ability to enqueue a task immediately.
+- Jobs, queues, and recurring tasks lists (and the job detail page) refresh themselves in the background every few
+  seconds, so job status changes show up without reloading the page.
+
+See [docs/users/tramway_solid_queue_plugin.md](docs/users/tramway_solid_queue_plugin.md) for more on what "discard"
+does and other SolidQueue-specific behavior.
 
 ## Lantern Color Palette
 

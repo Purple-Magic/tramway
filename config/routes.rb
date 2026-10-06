@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'tramway/helpers/routes_helper'
+require 'tramway/plugins'
 
 # rubocop:disable-next Metrics/BlockLength
 Tramway::Engine.routes.draw do
@@ -52,6 +53,15 @@ Tramway::Engine.routes.draw do
       end
 
       nest.call(segments)
+    end
+  end
+
+  Tramway.config.plugins.each do |plugin_name|
+    plugin = Tramway::Plugins.fetch(plugin_name)
+    plugin_config = Tramway.config.plugins.public_send(plugin_name)
+
+    scope path: plugin_config.path do
+      plugin.draw_routes(self, plugin_config)
     end
   end
 end

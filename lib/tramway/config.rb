@@ -3,6 +3,7 @@
 require 'anyway'
 require 'singleton'
 require 'tramway/configs/entity'
+require 'tramway/configs/plugins'
 
 module Tramway
   # Basic configuration of Tramway
@@ -13,7 +14,8 @@ module Tramway
     attr_config(
       entities: [],
       application_controller: 'ActionController::Base',
-      theme: :classic
+      theme: :classic,
+      plugins: []
     )
 
     def entities=(collection)
@@ -22,6 +24,10 @@ module Tramway
 
         Tramway::Configs::Entity.new(**entity_options)
       end)
+    end
+
+    def plugins=(names)
+      super(Tramway::Configs::Plugins.new(names))
     end
   end
 end

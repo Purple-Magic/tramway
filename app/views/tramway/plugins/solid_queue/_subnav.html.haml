@@ -1,0 +1,7 @@
+.flex.gap-2.mt-2
+  = tramway_button tag: :a, text: t('tramway.plugins.solid_queue.jobs.title'), path: jobs_path,
+    type: (current_page?(jobs_path) ? :primary : :inverse), size: :small
+  = tramway_button tag: :a, text: t('tramway.plugins.solid_queue.queues.title'), path: queues_path,
+    type: (current_page?(queues_path) ? :primary : :inverse), size: :small
+  = tramway_button tag: :a, text: t('tramway.plugins.solid_queue.recurring_tasks.title'), path: recurring_tasks_path,
+    type: (current_page?(recurring_tasks_path) ? :primary : :inverse), size: :small

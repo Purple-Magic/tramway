@@ -1,0 +1,90 @@
+= tramway_container do
+  .flex.justify-between.items-center
+    = tramway_title do
+      = "#{@job.class_name} ##{@job.id}"
+
+  #tramway-solid-queue-job-details{ data: { controller: 'tramway--auto-refresh',
+    'tramway--auto-refresh-target': 'refreshable' } }
+    = component 'tramway/actions_buttons_container' do
+      = tramway_button tag: :a, text: t('tramway.actions.cancel'), path: jobs_path, type: :inverse
+
+      - if @job.status == :failed
+        = tramway_button text: t('tramway.actions.retry'), path: retry_job_path(@job.id), method: :post,
+          type: :will
+
+      - if @job.status != :finished
+        = tramway_button text: t('tramway.actions.discard'), path: discard_job_path(@job.id), method: :post,
+          type: :warning
+
+      = tramway_button text: t('tramway.actions.destroy'), path: job_path(@job.id), method: :delete, type: :rage
+
+    = tramway_table class: 'mt-4' do
+      = tramway_row do
+        = tramway_cell do
+          = t('tramway.plugins.solid_queue.jobs.status', default: 'Status')
+        = tramway_cell do
+          = tramway_badge text: solid_queue_status_label(@job.status),
+            type: solid_queue_status_badge_type(@job.status)
+
+      = tramway_row do
+        = tramway_cell do
+          = t('tramway.plugins.solid_queue.jobs.queue_name', default: 'Queue')
+        = tramway_cell do
+          = @job.queue_name
+
+      = tramway_row do
+        = tramway_cell do
+          = t('tramway.plugins.solid_queue.jobs.active_job_id', default: 'Active Job ID')
+        = tramway_cell do
+          = @job.active_job_id
+
+      = tramway_row do
+        = tramway_cell do
+          = t('tramway.plugins.solid_queue.jobs.priority', default: 'Priority')
+        = tramway_cell do
+          = @job.priority
+
+      = tramway_row do
+        = tramway_cell do
+          = t('tramway.plugins.solid_queue.jobs.concurrency_key', default: 'Concurrency key')
+        = tramway_cell do
+          = @job.concurrency_key
+
+      = tramway_row do
+        = tramway_cell do
+          = t('tramway.plugins.solid_queue.jobs.scheduled_at', default: 'Scheduled at')
+        = tramway_cell do
+          = @job.scheduled_at
+
+      = tramway_row do
+        = tramway_cell do
+          = t('tramway.plugins.solid_queue.jobs.finished_at', default: 'Finished at')
+        = tramway_cell do
+          = @job.finished_at
+
+      = tramway_row do
+        = tramway_cell do
+          = t('tramway.plugins.solid_queue.jobs.arguments', default: 'Arguments')
+        = tramway_cell do
+          = @job.arguments.inspect
+
+    - if @job.status == :failed
+      .mt-8
+        %h3.text-2xl.font-bold.text-white
+          = t('tramway.plugins.solid_queue.jobs.error', default: 'Error')
+
+        = tramway_table class: 'mt-4' do
+          = tramway_row do
+            = tramway_cell do
+              = t('tramway.plugins.solid_queue.jobs.exception_class', default: 'Exception class')
+            = tramway_cell do
+              = @job.failed_execution.exception_class
+
+          = tramway_row do
+            = tramway_cell do
+              = t('tramway.plugins.solid_queue.jobs.message', default: 'Message')
+            = tramway_cell do
+              = @job.failed_execution.message
+
+        %pre.mt-4.overflow-x-auto.text-sm.text-zinc-400
+          = Array(@job.failed_execution.backtrace).join("\n")

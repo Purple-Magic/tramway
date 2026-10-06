@@ -59,4 +59,9 @@ Tramway.configure do |config|
       ]
     }
   ]
+
+  config.plugins = [:solid_queue]
+  config.plugins.solid_queue = {
+    path: '/jobs'
+  }
 end
