@@ -78,14 +78,16 @@ module Tramway
 
       private
 
+      # Selections round-trip as a comma-joined string; normalize back to an array here so the
+      # stimulus controller's JSON.parse(data-value) doesn't crash on a saved value.
+      def value = Array(super).flat_map { |item| item.is_a?(String) ? item.split(',') : item }.map(&:to_s)
+
       def tramway_select_size_class
         classes = size_class(:tramway_select_input)
         multiple ? classes.gsub(/\bh-/, 'min-h-') : classes
       end
 
-      def action
-        'click->tramway-select#toggleDropdown'
-      end
+      def action = 'click->tramway-select#toggleDropdown'
 
       def items
         collection
