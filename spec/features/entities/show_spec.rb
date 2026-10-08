@@ -28,6 +28,19 @@ feature 'Entities Show Page', :js, type: :feature do
     end
   end
 
+  scenario 'forwards a Hash show attribute entry\'s :options to tramway_cell' do
+    visit "/admin/posts/#{post.id}"
+
+    within '.div-table' do
+      text_row = all('.div-table-row')[1]
+
+      within text_row do
+        expect(page).to have_selector('.div-table-cell', text: 'This is test')
+        expect(page).to have_no_selector('.div-table-cell.truncate', text: 'This is test')
+      end
+    end
+  end
+
   scenario 'renders configured show header content' do
     visit "/admin/posts/#{post.id}"
 

@@ -124,6 +124,48 @@ describe Tramway::BaseDecorator do
     end
   end
 
+  describe '#show_attribute_name' do
+    context 'when the entry is a symbol' do
+      it 'returns the symbol unchanged' do
+        expect(decorated_object.show_attribute_name(:title)).to eq(:title)
+      end
+    end
+
+    context 'when the entry is a Hash with an :attribute key' do
+      it 'returns the :attribute value' do
+        expect(decorated_object.show_attribute_name(attribute: :title, options: { truncate: false })).to eq(:title)
+      end
+    end
+
+    context 'when the entry is a Hash without an :attribute key' do
+      it 'raises an ArgumentError' do
+        expect { decorated_object.show_attribute_name(options: { truncate: false }) }
+          .to raise_error(ArgumentError, /:attribute/)
+      end
+    end
+  end
+
+  describe '#show_attribute_options' do
+    context 'when the entry is a symbol' do
+      it 'returns an empty Hash' do
+        expect(decorated_object.show_attribute_options(:title)).to eq({})
+      end
+    end
+
+    context 'when the entry is a Hash with an :options key' do
+      it 'returns the :options value' do
+        expect(decorated_object.show_attribute_options(attribute: :title, options: { truncate: false }))
+          .to eq(truncate: false)
+      end
+    end
+
+    context 'when the entry is a Hash without an :options key' do
+      it 'returns an empty Hash' do
+        expect(decorated_object.show_attribute_options(attribute: :title)).to eq({})
+      end
+    end
+  end
+
   describe '#to_param' do
     let(:id) { 123 }
 

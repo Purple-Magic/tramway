@@ -331,6 +331,18 @@ end
 With this configuration in place, visiting the show page displays a two-column table where the left column contains the
 localized attribute names and the right column renders their values.
 
+Each entry in `show_attributes` can also be a Hash instead of a plain symbol, to pass options to the `tramway_cell`
+rendering that attribute's value. The Hash requires an `attribute:` key (the method to display) and accepts an
+`options:` key (a Hash forwarded as-is to `tramway_cell`, e.g. `truncate: false`):
+
+```ruby
+class CampaignDecorator < Tramway::BaseDecorator
+  def show_attributes
+    [:name, { attribute: :status, options: { truncate: false } }, :starts_at]
+  end
+end
+```
+
 **create page**
 
 To render a create page for an entity, declare a `:create` action inside the `pages` array in

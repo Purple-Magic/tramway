@@ -92,6 +92,20 @@ module Tramway
       []
     end
 
+    def show_attribute_name(attribute)
+      return attribute unless attribute.is_a?(Hash)
+
+      attribute.fetch(:attribute) do
+        raise ArgumentError, 'Each show_attributes Hash entry must include an :attribute key'
+      end
+    end
+
+    def show_attribute_options(attribute)
+      return {} unless attribute.is_a?(Hash)
+
+      attribute.fetch(:options, {})
+    end
+
     def show_associations
       []
     end
