@@ -23,6 +23,15 @@ Tramway.configure do |config|
         },
         {
           action: :destroy
+        },
+        {
+          action: :stats
+        },
+        {
+          action: :export,
+          member: true,
+          via: %i[get post],
+          params: [:kind]
         }
       ]
     },

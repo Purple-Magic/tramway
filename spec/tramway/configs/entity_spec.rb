@@ -118,6 +118,17 @@ describe Tramway::Configs::Entity do
     end
   end
 
+  describe '#built_in_pages and #custom_pages' do
+    subject do
+      described_class.new(name: :post, pages: [{ action: :index }, { action: :stats }, { action: :export }])
+    end
+
+    it 'splits pages into Tramway built-in CRUD pages and host app Custom Pages' do
+      expect(subject.built_in_pages.map(&:action)).to eq(['index'])
+      expect(subject.custom_pages.map(&:action)).to eq(%w[stats export])
+    end
+  end
+
   context 'without page index' do
     context 'with entity name and route contains namespace and route_method' do
       subject { described_class.new(name:, namespace:, route:) }

@@ -10,7 +10,9 @@
   - roles = [['Admin', 'admin'], ['User', 'user'], ['Manager', 'manager'], ['Auditor', 'auditor'], ['Operator', 'operator'], ['Editor', 'editor'], ['Reviewer', 'reviewer'], ['Support', 'support']]
   - selected_roles = params[:stale_role].present? ? ['admin', 'missing-role'] : nil
   = f.select :role, roles, label: false, data: { controller: 'user-form', action: 'change->user-form#updateForm' }, multiple: true, selected: selected_roles
-  = f.select :team, [[nil, ''], ['Team 1', 'team1'], ['Team 2', 'team2']], autocomplete: true
-  = f.select :departments, [['Engineering', 'engineering'], ['Sales', 'sales'], ['Support', 'support']], autocomplete: true, multiple: true
+  - saved_team = params[:saved_team].present? ? 'team1' : nil
+  = f.select :team, [[nil, ''], ['Team 1', 'team1'], ['Team 2', 'team2']], autocomplete: true, selected: saved_team
+  - saved_departments = params[:saved_departments].present? ? 'engineering,support' : nil
+  = f.select :departments, [['Engineering', 'engineering'], ['Sales', 'sales'], ['Support', 'support']], autocomplete: true, multiple: true, selected: saved_departments
 
   = f.submit 'Create user'

@@ -50,4 +50,21 @@ describe Tramway::Table::CellComponent, type: :component do
 
     expect(page).to have_css('.div-table-cell.bg-transparent', text: 'Cell')
   end
+
+  it 'truncates content by default' do
+    render_inline(described_class.new) do
+      'Cell'
+    end
+
+    expect(page).to have_css('.div-table-cell.truncate', text: 'Cell')
+  end
+
+  it 'does not truncate content when truncate: false is passed' do
+    render_inline(described_class.new(truncate: false)) do
+      'Cell'
+    end
+
+    expect(page).to have_css('.div-table-cell', text: 'Cell')
+    expect(page).to have_no_css('.div-table-cell.truncate')
+  end
 end

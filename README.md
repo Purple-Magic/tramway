@@ -331,6 +331,18 @@ end
 With this configuration in place, visiting the show page displays a two-column table where the left column contains the
 localized attribute names and the right column renders their values.
 
+Each entry in `show_attributes` can also be a Hash instead of a plain symbol, to pass options to the `tramway_cell`
+rendering that attribute's value. The Hash requires an `attribute:` key (the method to display) and accepts an
+`options:` key (a Hash forwarded as-is to `tramway_cell`, e.g. `truncate: false`):
+
+```ruby
+class CampaignDecorator < Tramway::BaseDecorator
+  def show_attributes
+    [:name, { attribute: :status, options: { truncate: false } }, :starts_at]
+  end
+end
+```
+
 **create page**
 
 To render a create page for an entity, declare a `:create` action inside the `pages` array in
@@ -429,6 +441,62 @@ Tramway.configure do |config|
   ]
 end
 ```
+
+**custom page**
+
+Besides the built-in `index`, `show`, `create`, `update`, and `destroy` pages, an entity can declare **Custom Pages**:
+your own controller action and view, loaded through the same routing, layout, and navbar as the rest of the entity's
+pages. Use a Custom Page for anything that doesn't fit the built-in CRUD actions — a report, a bulk tool, an
+"impersonate" button's target page, and so on.
+
+Declare it by adding a page whose `action` is not one of the built-in ones:
+
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :user,
+      namespace: :admin,
+      pages: [
+        { action: :index },
+        {
+          action: :impersonate,
+          member: true,       # nests the route under /:id (default: false, an entity-level route)
+          via: :post,         # HTTP method(s) the route accepts (default: :get); also accepts an array, e.g. %i[get post]
+          params: [:redirect_to] # extra required path segments, e.g. /admin/users/:id/impersonate/:redirect_to
+        }
+      ]
+    }
+  ]
+end
+```
+
+Then implement the action yourself, by Rails naming convention, in the controller Tramway would otherwise generate
+for that namespace/entity (here, `Admin::UsersController`), inheriting from `Tramway::EntitiesController` so it gets
+the same layout, navbar, and `entity`/`model_class` lookups as the built-in pages:
+
+```ruby
+# app/controllers/admin/users_controller.rb
+module Admin
+  class UsersController < Tramway::EntitiesController
+    def impersonate
+      @user = model_class.find(params[:id])
+      # ...
+    end
+  end
+end
+```
+
+And add its view at the conventional Rails path for that controller/action:
+
+```haml
+-# app/views/admin/users/impersonate.html.haml
+= tramway_container do
+  %p Impersonating #{@user.email}
+```
+
+See [docs/users/tramway_custom_pages.md](docs/users/tramway_custom_pages.md) for how the routing/controller/view
+resolution works under the hood.
 
 **route_helper**
 
@@ -1318,6 +1386,15 @@ interactivity.
 
 Cell content that does not fit its column is truncated with an ellipsis. This is a pure CSS behavior (`truncate` +
 `min-w-0` on each cell) — no JavaScript is involved, and no configuration is needed to enable it.
+
+Pass `truncate: false` to `tramway_cell` to opt a specific cell out of this behavior and let its content wrap/overflow
+normally:
+
+```erb
+<%= tramway_cell truncate: false do %>
+  <%= user.bio %>
+<% end %>
+```
 
 On narrow screens all columns always render, and the table scrolls horizontally within itself (the page never
 stretches past the viewport width) so every column stays reachable. See

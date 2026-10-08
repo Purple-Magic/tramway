@@ -35,11 +35,13 @@
           = association[:record].title
 
     - @record.show_attributes.each do |attribute|
+      - attribute_name = @record.show_attribute_name(attribute)
+      - attribute_options = @record.show_attribute_options(attribute)
       = tramway_row do
         = tramway_cell do
-          = @model_class.human_attribute_name(attribute)
-        = tramway_cell do
-          = @record.public_send(attribute)
+          = @model_class.human_attribute_name(attribute_name)
+        = tramway_cell(**attribute_options) do
+          = @record.public_send(attribute_name)
 
   - @associations.select { _1[:association_type] == :has_many }.each do |association|
     .flex.flex-row.justify-between.mt-8.text-white

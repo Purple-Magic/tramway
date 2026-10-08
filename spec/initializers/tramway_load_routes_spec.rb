@@ -25,6 +25,15 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
         },
         {
           action: :destroy
+        },
+        {
+          action: :stats
+        },
+        {
+          action: :export,
+          member: true,
+          via: %i[get post],
+          params: [:kind]
         }
       ]
     }

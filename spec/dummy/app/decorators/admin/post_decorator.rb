@@ -12,7 +12,7 @@ module Admin
     end
 
     def show_attributes
-      %i[title text aasm_state user_email]
+      [:title, { attribute: :text, options: { truncate: false } }, :aasm_state, :user_email]
     end
 
     def show_associations

@@ -11,6 +11,9 @@ module Tramway
         attribute? :search, Types::Bool
         attribute? :includes, Types::Array.default([].freeze)
         attribute? :filters, Types::Array.default([].freeze)
+        attribute? :member, Types::Bool.default(false)
+        attribute? :via, (Types::Coercible::Symbol | Types::Array.of(Types::Coercible::Symbol)).default(:get)
+        attribute? :params, Types::Array.of(Types::Coercible::Symbol).default([].freeze)
       end
     end
   end
