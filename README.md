@@ -1375,6 +1375,15 @@ interactivity.
 Cell content that does not fit its column is truncated with an ellipsis. This is a pure CSS behavior (`truncate` +
 `min-w-0` on each cell) — no JavaScript is involved, and no configuration is needed to enable it.
 
+Pass `truncate: false` to `tramway_cell` to opt a specific cell out of this behavior and let its content wrap/overflow
+normally:
+
+```erb
+<%= tramway_cell truncate: false do %>
+  <%= user.bio %>
+<% end %>
+```
+
 On narrow screens all columns always render, and the table scrolls horizontally within itself (the page never
 stretches past the viewport width) so every column stays reachable. See
 [docs/users/tramway_table.md](docs/users/tramway_table.md) for the full details of the mobile scroll behavior.

@@ -14,12 +14,23 @@ RSpec.describe Tramway::Helpers::ViewsHelper, type: :view do
     let(:cell_block) { proc {} }
 
     it 'delegates to tramway cell component with options' do
-      expect(view).to receive(:component).with('tramway/table/cell', options: { class: 'cell' }) do |&received_block|
-        expect(received_block).to be cell_block
-        :cell_output
-      end
+      expect(view).to receive(:component)
+        .with('tramway/table/cell', truncate: true, options: { class: 'cell' }) do |&received_block|
+          expect(received_block).to be cell_block
+          :cell_output
+        end
 
       expect(view.tramway_cell(class: 'cell', &cell_block)).to eq :cell_output
+    end
+
+    it 'passes truncate: false through to the cell component' do
+      expect(view).to receive(:component)
+        .with('tramway/table/cell', truncate: false, options: { class: 'cell' }) do |&received_block|
+          expect(received_block).to be cell_block
+          :cell_output
+        end
+
+      expect(view.tramway_cell(class: 'cell', truncate: false, &cell_block)).to eq :cell_output
     end
   end
 end

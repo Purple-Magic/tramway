@@ -50,8 +50,8 @@ module Tramway
                   &
       end
 
-      def tramway_cell(**options, &)
-        component 'tramway/table/cell', options:, &
+      def tramway_cell(truncate: true, **options, &)
+        component 'tramway/table/cell', truncate:, options:, &
       end
 
       def tramway_button(path: nil, text: nil, method: :get, form_options: {}, **options, &)
