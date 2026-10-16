@@ -18,6 +18,12 @@ feature 'Entities Index Page', :js, type: :feature do
         end
       end
     end
+
+    scenario 'renders the navbar entity link with its configured icon' do
+      visit '/admin/posts'
+
+      expect(page).to have_css "a[href='/admin/posts'] i.fa-solid.fa-newspaper", visible: :all
+    end
   end
 
   context 'with several posts' do

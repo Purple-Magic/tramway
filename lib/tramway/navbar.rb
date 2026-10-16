@@ -59,7 +59,8 @@ module Tramway
       entities.each do |entity|
         next if entity.routes.index.blank?
 
-        item entity.human_name.plural, Tramway::Engine.routes.url_helpers.public_send(entity.routes.index)
+        item entity.human_name.plural, Tramway::Engine.routes.url_helpers.public_send(entity.routes.index),
+             icon: entity.icon
       end
 
       reset_filling
