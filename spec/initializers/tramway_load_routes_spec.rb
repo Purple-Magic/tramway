@@ -7,6 +7,7 @@ describe 'Tramway::Engine load_routes initializer', type: :routing do
     {
       name: 'post',
       namespace: :admin,
+      icon: 'fa-solid fa-newspaper',
       pages: [
         {
           action: 'index',

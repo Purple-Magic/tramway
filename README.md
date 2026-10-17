@@ -177,6 +177,30 @@ Tramway.configure do |config|
 end
 ```
 
+**icon**
+
+Set `icon` on an entity to render a Font Awesome class string before its auto-generated link in the Tramway Navbar
+(the entity-based items rendered when `tramway_navbar` is called with `with_entities: true`, the default — see
+[Icons on navbar items](#icons-on-navbar-items)):
+
+*config/initializers/tramway.rb*
+```ruby
+Tramway.configure do |config|
+  config.entities = [
+    {
+      name: :campaign,
+      namespace: :admin,
+      icon: 'fa-solid fa-bullhorn',
+      pages: [
+        { action: :index }
+      ]
+    }
+  ]
+end
+```
+
+Entities without an `icon` keep rendering as plain text links.
+
 **scope**
 
 By default, Tramway lists all records for an entity on the index page. You can narrow the records displayed by providing a
@@ -1058,7 +1082,9 @@ will render [this](https://play.tailwindcss.com/UZPTCudFw5)
 
 #### Icons on navbar items
 
-`nav.item` accepts an optional `icon:` option with a Font Awesome class string, rendered before the item's label:
+`nav.item` accepts an optional `icon:` option with a Font Awesome class string, rendered before the item's label.
+This also applies to the auto-generated entity links described in [Define entities with options](#define-entities-with-options) —
+set `icon` on an entity in `config/initializers/tramway.rb` to add an icon to its link without writing a custom `nav.item` call.
 
 ```ruby
 nav.left do

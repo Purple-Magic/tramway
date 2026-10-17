@@ -5,6 +5,7 @@ Tramway.configure do |config|
     {
       name: :post,
       namespace: :admin,
+      icon: 'fa-solid fa-newspaper',
       pages: [
         {
           action: :index,

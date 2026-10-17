@@ -11,6 +11,7 @@ module Tramway
       attribute? :pages, Types::Array.of(Tramway::Configs::Entities::Page).default([].freeze)
       attribute? :route, Tramway::Configs::Entities::Route
       attribute? :namespace, Types::Coercible::String
+      attribute? :icon, Types::Coercible::String
 
       # Route Struct contains implemented in Tramway CRUD and helpful routes for the entity
       ACTIONS = %i[index show new create edit update destroy].freeze

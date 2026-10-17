@@ -118,6 +118,24 @@ describe Tramway::Configs::Entity do
     end
   end
 
+  describe '#icon' do
+    context 'with icon provided' do
+      subject { described_class.new(name: :post, icon: 'fa-solid fa-newspaper') }
+
+      it 'exposes the configured icon' do
+        expect(subject.icon).to eq('fa-solid fa-newspaper')
+      end
+    end
+
+    context 'without icon provided' do
+      subject { described_class.new(name: :post) }
+
+      it 'returns nil' do
+        expect(subject.icon).to be_nil
+      end
+    end
+  end
+
   describe '#built_in_pages and #custom_pages' do
     subject do
       described_class.new(name: :post, pages: [{ action: :index }, { action: :stats }, { action: :export }])
