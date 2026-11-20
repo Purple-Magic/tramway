@@ -45,6 +45,10 @@ module Tramway
       classes.join(' ')
     end
 
+    def brand_initial
+      @title[:text].to_s.strip[0].to_s.upcase
+    end
+
     def title_classes
       'tramway-navbar__title'
     end

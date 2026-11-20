@@ -2,7 +2,7 @@
 
 @layer components {
   .tramway-navbar {
-    background-color: var(--tramway-color-bg);
+    background-color: var(--tramway-color-surface);
     color: var(--tramway-color-text-primary);
     font-family: var(--tramway-font-sans);
   }
@@ -12,10 +12,36 @@
     box-shadow: var(--tramway-shadow-card);
   }
 
+  .tramway-navbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-width: 0;
+    padding: 0.625rem 0;
+    border-radius: var(--tramway-radius-sm);
+    color: var(--tramway-color-text-primary);
+    text-decoration: none;
+  }
+
+  .tramway-navbar__brand-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: var(--tramway-radius-sm);
+    background-color: var(--tramway-color-accent);
+    color: var(--tramway-color-on-accent);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
   .tramway-navbar__title {
     color: var(--tramway-color-text-primary);
-    font-size: var(--tramway-text-section-title-size);
-    font-weight: var(--tramway-text-section-title-weight);
+    font-size: var(--tramway-text-card-title-size);
+    font-weight: var(--tramway-text-card-title-weight);
+    white-space: nowrap;
   }
 
   .tramway-navbar__toggle {
@@ -25,8 +51,9 @@
     min-width: 2.5rem;
     min-height: 2.5rem;
     padding: 0.5rem 1rem;
+    border: 1px solid var(--tramway-color-border);
     border-radius: var(--tramway-radius-md);
-    color: var(--tramway-color-text-secondary);
+    color: var(--tramway-color-text-muted);
     transition:
       background-color var(--tramway-duration-fast) var(--tramway-ease-standard),
       color var(--tramway-duration-fast) var(--tramway-ease-standard);
@@ -34,14 +61,14 @@
 
   @media (hover: hover) {
     .tramway-navbar__toggle:hover {
-      background-color: var(--tramway-color-surface-raised);
+      border-color: var(--tramway-color-border-strong);
       color: var(--tramway-color-text-primary);
     }
   }
 
   .tramway-navbar__mobile-menu {
     border-color: var(--tramway-color-border);
-    background-color: var(--tramway-color-bg);
+    background-color: var(--tramway-color-surface);
     box-shadow: var(--tramway-shadow-raised);
   }
 
@@ -49,7 +76,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.875rem;
-    min-height: 2.75rem;
+    min-height: 2.625rem;
     padding-inline: 0.75rem;
     border-radius: var(--tramway-radius-md);
     background: transparent;

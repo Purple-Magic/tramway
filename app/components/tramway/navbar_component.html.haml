@@ -64,7 +64,9 @@
       - if @title[:text].present? || @left_items.present? || @right_items.present?
         #desktop-navbar-header{ class: desktop_vertical_header_classes }
           - if @title[:text].present?
-            = link_to @title[:link] do
+            = link_to @title[:link], class: 'tramway-navbar__brand' do
+              %span.tramway-navbar__brand-icon{ aria: { hidden: true } }
+                = brand_initial
               .truncate{ class: title_classes }
                 = @title[:text]
 

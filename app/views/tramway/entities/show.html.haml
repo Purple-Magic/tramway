@@ -1,5 +1,5 @@
 = tramway_container do
-  .flex.justify-between.items-center
+  .tramway-page-header__top
     = tramway_title do
       = @record.title
 
@@ -7,12 +7,12 @@
     - if @entity.page(:update).present?
       = tramway_button text: t('tramway.actions.edit'),
         path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.edit, @record.id),
-        type: :will
+        type: :secondary
 
     - if @entity.page(:destroy).present?
       = tramway_button text: t('tramway.actions.destroy'),
         path: Tramway::Engine.routes.url_helpers.public_send(@entity.routes.destroy, @record.id),
-        type: :rage,
+        type: :danger,
         method: :delete
 
   .flex.justify-end.mt-2
@@ -57,7 +57,7 @@
       - if association[:new_record_path].present?
         = tramway_button text: t('tramway.actions.new'),
           path: association[:new_record_path],
-          type: :will
+          type: :primary
 
     - if association[:records].any?
       = tramway_table class: 'mt-4' do 

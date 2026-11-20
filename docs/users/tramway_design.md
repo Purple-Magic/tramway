@@ -48,6 +48,16 @@ check-input|file-button|actions|rich-text`), `tramway-select__*`, `tramway-data-
 `tramway-navbar*`, `tramway-nav-item*`, `tramway-tooltip*`, `tramway-chat__*`, `tramway-progress`,
 `tramway-empty-state`, `tramway-disclosure`, `tramway-breadcrumb`.
 
+## Buttons, navbar and page header (TimeMagic conventions)
+
+- Scaffolded pages use the TimeMagic button roles: **New** is `primary` (solid accent), **Edit** is `secondary`,
+  **Destroy** is `danger`, filters and toggles are `ghost`/`primary`. The form's **Save** is the solid green `submit`.
+- The navbar is a sidebar on the `surface` color with a right border, a brand tile (accent square with the title's
+  initial) next to the title, 42px nav items with an icon, label and accent-tinted active state, and a bordered collapse
+  button.
+- `.tramway-page-header__top` puts the page title (`tramway-title`, 22px on phones) on the left and the actions on the
+  right; it stacks on small screens.
+
 ## Notes for contributors
 
 - **Checkbox.** The box, accent fill and white check are styled from `data-state` by `.tramway-form__check-input`. The

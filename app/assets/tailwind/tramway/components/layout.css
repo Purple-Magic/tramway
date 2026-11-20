@@ -54,11 +54,34 @@
     border-color: var(--tramway-color-danger-border);
   }
 
+  /* Page header: title on the left, primary actions on the right. */
+  .tramway-page-header__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    margin-bottom: var(--tramway-space-stack);
+  }
+
+  @media (max-width: 767.98px) {
+    .tramway-page-header__top {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.625rem;
+    }
+  }
+
   .tramway-actions {
     display: flex;
     justify-content: flex-end;
     gap: var(--tramway-space-cluster);
     margin-top: var(--tramway-space-cluster);
+  }
+
+  .tramway-data-table__cell .tramway-actions,
+  .tramway-page-header__top .tramway-actions {
+    margin-top: 0;
   }
 
   /* --- Dashboard grid --- */
