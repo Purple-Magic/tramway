@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Tramway::ButtonComponent, type: :component do
-  shared_examples 'button theme classes' do |theme_classes|
+  shared_examples 'button classes' do |expected_classes|
     context 'when text is provided' do
       let(:component) { described_class.new(path: '/projects', text: 'View projects') }
 
@@ -11,7 +11,7 @@ describe Tramway::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "a.#{class_selector(theme_classes.fetch(:default))}[href='/projects']",
+          "a.#{class_selector(expected_classes.fetch(:default))}[href='/projects']",
           text: 'View projects'
         )
       end
@@ -33,7 +33,7 @@ describe Tramway::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "form[action='/projects/1'] button.#{class_selector(theme_classes.fetch(:non_get))}" \
+          "form[action='/projects/1'] button.#{class_selector(expected_classes.fetch(:non_get))}" \
           ".extra-class[data-turbo-confirm='Are you sure?']",
           text: 'Delete'
         )
@@ -55,7 +55,7 @@ describe Tramway::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "a[href='/projects'].#{class_selector(theme_classes.fetch(:link))}",
+          "a[href='/projects'].#{class_selector(expected_classes.fetch(:link))}",
           text: 'View projects'
         )
       end
@@ -68,7 +68,7 @@ describe Tramway::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "a[href='#'].#{class_selector(theme_classes.fetch(:link))}",
+          "a[href='#'].#{class_selector(expected_classes.fetch(:link))}",
           text: 'View projects'
         )
       end
@@ -81,7 +81,7 @@ describe Tramway::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "a.#{class_selector(theme_classes.fetch(:semantic))}[href='/projects']",
+          "a.#{class_selector(expected_classes.fetch(:semantic))}[href='/projects']",
           text: 'Celebrate'
         )
       end
@@ -94,7 +94,7 @@ describe Tramway::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "a.#{class_selector(theme_classes.fetch(:inverse))}[href='/projects']",
+          "a.#{class_selector(expected_classes.fetch(:inverse))}[href='/projects']",
           text: 'Invert'
         )
       end
@@ -109,7 +109,7 @@ describe Tramway::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "a[href='/projects'][disabled='disabled'].#{class_selector(theme_classes.fetch(:disabled))}",
+          "a[href='/projects'][disabled='disabled'].#{class_selector(expected_classes.fetch(:disabled))}",
           text: 'Celebrate'
         )
       end
@@ -123,7 +123,7 @@ describe Tramway::ButtonComponent, type: :component do
         render_inline(component)
 
         expect(page).to have_css(
-          "a[href='#{path}'].#{class_selector(theme_classes.fetch(:link))}",
+          "a[href='#{path}'].#{class_selector(expected_classes.fetch(:link))}",
           text: 'View projects'
         )
       end
@@ -144,7 +144,7 @@ describe Tramway::ButtonComponent, type: :component do
         expect(page).to have_css('div.relative.inline-flex.w-fit')
         expect(page).to have_css('div.peer.inline-flex.w-fit')
         expect(page).to have_css(
-          "a.#{class_selector(theme_classes.fetch(:default))}[href='/projects']",
+          "a.#{class_selector(expected_classes.fetch(:default))}[href='/projects']",
           text: 'View projects'
         )
         expect(page).to have_css("span[role='tooltip']", text: 'Open projects', visible: :all)
@@ -180,10 +180,8 @@ describe Tramway::ButtonComponent, type: :component do
     end
   end
 
-  context 'with classic theme' do
-    around { |example| with_theme(:classic) { example.run } }
-
-    it_behaves_like 'button theme classes',
+  context 'with the default classes' do
+    it_behaves_like 'button classes',
                     default: %w[
                       inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium
                       ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2

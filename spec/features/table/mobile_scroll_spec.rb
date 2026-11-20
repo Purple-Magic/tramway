@@ -5,10 +5,6 @@ require 'rails_helper'
 feature 'Table Mobile Scroll Spec', :js, type: :feature do
   let(:row_selector) { ".div-table-row[role='row']:not([aria-label='Table Header'])" }
 
-  around do |example|
-    with_theme(:classic) { example.run }
-  end
-
   before do
     Capybara.javascript_driver = :headless_chrome_mobile
 

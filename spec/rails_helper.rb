@@ -16,7 +16,7 @@ require 'factory_bot_rails'
 require 'webdrivers/chromedriver'
 require 'database_cleaner/active_record'
 require 'support/web_driver_helper'
-require 'support/theme_helper'
+require 'support/class_selector_helper'
 require 'support/tramway_select_helpers'
 require 'support/turbo_stream_from_helper'
 require 'fileutils'
@@ -37,7 +37,7 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :controller
   config.include Capybara::RSpecMatchers, type: :decorator
   config.include FactoryBot::Syntax::Methods
-  config.include ThemeHelper
+  config.include ClassSelectorHelper
   config.include TramwaySelectHelpers
 
   config.use_transactional_fixtures = false

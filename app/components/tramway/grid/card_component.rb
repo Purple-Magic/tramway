@@ -8,13 +8,11 @@ module Tramway
       option :options, optional: true, default: -> { {} }
 
       def card_classes
-        theme_classes(
-          classic: [
-            'h-full w-full overflow-hidden rounded-2xl border border-zinc-800',
-            'bg-zinc-900/80 p-3 shadow-sm backdrop-blur',
-            options[:class]
-          ].compact.join(' ')
-        )
+        [
+          'h-full w-full overflow-hidden rounded-2xl border border-zinc-800',
+          'bg-zinc-900/80 p-3 shadow-sm backdrop-blur',
+          options[:class]
+        ].compact.join(' ')
       end
 
       def card_style

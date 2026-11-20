@@ -90,10 +90,6 @@ module Tramway
     end
 
     def color_classes
-      theme_classes classic: color_classes_collection
-    end
-
-    def color_classes_collection
       return %w[bg-gray-800 text-gray-500 shadow-inner] if disabled?
 
       case normalized_type

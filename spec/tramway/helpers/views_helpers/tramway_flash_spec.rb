@@ -24,12 +24,10 @@ describe Tramway::Helpers::ViewsHelper, type: :view do
       )
     end
 
-    it 'renders dark default flash classes without depending on theme' do
-      with_theme(:unknown) do
-        fragment = view.tramway_flash text: 'Saved!', type: :default
+    it 'renders dark default flash classes' do
+      fragment = view.tramway_flash text: 'Saved!', type: :default
 
-        expect(fragment).to have_css('.flash.bg-zinc-950.border-zinc-800.text-zinc-50', text: 'Saved!')
-      end
+      expect(fragment).to have_css('.flash.bg-zinc-950.border-zinc-800.text-zinc-50', text: 'Saved!')
     end
 
     it 'applies custom HTML options to the container' do

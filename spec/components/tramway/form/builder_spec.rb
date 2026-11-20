@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'support/view_helpers'
 
-CLASSIC_FORM_CLASSES = {
+EXPECTED_FORM_CLASSES = {
   label: %w[
     block text-sm font-medium leading-none mb-2 text-zinc-200 peer-disabled:cursor-not-allowed
     peer-disabled:opacity-70
@@ -55,50 +55,50 @@ describe Tramway::Form::Builder, type: :view do
   let(:form_options) { {} }
   let(:builder) { described_class.new :user, resource, view, form_options }
 
-  shared_examples 'form label and text input classes' do |theme_classes|
+  shared_examples 'form label and text input classes' do |expected_classes|
     it 'gets default value' do
-      expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
-      expect(output).to have_selector "input.text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:text_input))}"
+      expect(output).to have_selector "label.#{class_selector(expected_classes.fetch(:label))}"
+      expect(output).to have_selector "input.text-base.px-3.py-2.#{class_selector(expected_classes.fetch(:text_input))}"
     end
   end
 
-  shared_examples 'form label and text input type classes' do |theme_classes|
+  shared_examples 'form label and text input type classes' do |expected_classes|
     it 'renders input with tailwind classes' do
-      expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
+      expect(output).to have_selector "label.#{class_selector(expected_classes.fetch(:label))}"
       expect(output).to have_selector(
-        "input[type=\"#{theme_classes.fetch(:type)}\"].text-base.px-3.py-2." \
-        "#{class_selector(theme_classes.fetch(:input))}"
+        "input[type=\"#{expected_classes.fetch(:type)}\"].text-base.px-3.py-2." \
+        "#{class_selector(expected_classes.fetch(:input))}"
       )
     end
   end
 
-  shared_examples 'file field classes' do |theme_classes|
+  shared_examples 'file field classes' do |expected_classes|
     it 'renders file label classes' do
-      expect(output).to have_selector "label.inline-flex.text-base.px-4.py-2.#{class_selector(theme_classes)}"
+      expect(output).to have_selector "label.inline-flex.text-base.px-4.py-2.#{class_selector(expected_classes)}"
     end
   end
 
-  shared_examples 'submit button classes' do |theme_classes|
+  shared_examples 'submit button classes' do |expected_classes|
     it 'renders submit button classes' do
-      expect(output).to have_selector "button.#{class_selector(theme_classes)}"
+      expect(output).to have_selector "button.#{class_selector(expected_classes)}"
     end
   end
 
-  shared_examples 'select field classes' do |theme_classes|
+  shared_examples 'select field classes' do |expected_classes|
     it 'has the label' do
-      expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
+      expect(output).to have_selector "label.#{class_selector(expected_classes.fetch(:label))}"
     end
 
     it 'has the select' do
-      expect(output).to have_selector "select.text-base.#{class_selector(theme_classes.fetch(:select))}"
+      expect(output).to have_selector "select.text-base.#{class_selector(expected_classes.fetch(:select))}"
       expect(output).to have_selector 'option[value="admin"]'
       expect(output).to have_selector 'option[value="user"]'
     end
   end
 
-  shared_examples 'checkbox field classes' do |theme_classes|
+  shared_examples 'checkbox field classes' do |expected_classes|
     it 'renders checkbox with label and hidden input' do
-      expect(output).to have_selector "label.#{class_selector(theme_classes.fetch(:label))}"
+      expect(output).to have_selector "label.#{class_selector(expected_classes.fetch(:label))}"
       expect(output).to have_selector 'input[type="checkbox"].hidden[data-ui--checkbox-target="input"]',
                                       visible: false
       expect(output).to have_selector '.flex.items-center.gap-2 > button + label.mb-0.leading-6',
@@ -133,7 +133,7 @@ describe Tramway::Form::Builder, type: :view do
     it 'renders checkbox button styling and indicator' do
       button = Capybara.string(output).find('button[role="checkbox"]')
 
-      expect(button[:class].split).to include(*theme_classes.fetch(:checkbox_input))
+      expect(button[:class].split).to include(*expected_classes.fetch(:checkbox_input))
       expect(output).to have_selector 'button span.flex.hidden.h-4.w-4 svg.h-4.w-4'
     end
   end
@@ -142,10 +142,8 @@ describe Tramway::Form::Builder, type: :view do
     context 'with default behaviour' do
       let(:output) { builder.text_field :email }
 
-      context 'with classic theme' do
-        around { |example| with_theme(:classic) { example.run } }
-
-        it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
+      context 'with the default classes' do
+        it_behaves_like 'form label and text input classes', EXPECTED_FORM_CLASSES
       end
     end
 
@@ -215,39 +213,33 @@ describe Tramway::Form::Builder, type: :view do
   describe '#email_field' do
     let(:output) { builder.email_field :email }
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
+    context 'with the default classes' do
       it_behaves_like 'form label and text input type classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
+                      label: EXPECTED_FORM_CLASSES[:label],
                       type: 'email',
-                      input: CLASSIC_FORM_CLASSES[:text_input]
+                      input: EXPECTED_FORM_CLASSES[:text_input]
     end
   end
 
   describe '#number_field' do
     let(:output) { builder.number_field :id }
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
+    context 'with the default classes' do
       it_behaves_like 'form label and text input type classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
+                      label: EXPECTED_FORM_CLASSES[:label],
                       type: 'number',
-                      input: CLASSIC_FORM_CLASSES[:text_input]
+                      input: EXPECTED_FORM_CLASSES[:text_input]
     end
   end
 
   describe '#date_field' do
     let(:output) { builder.date_field :remember_created_at }
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
+    context 'with the default classes' do
       it_behaves_like 'form label and text input type classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
+                      label: EXPECTED_FORM_CLASSES[:label],
                       type: 'date',
-                      input: CLASSIC_FORM_CLASSES[:text_input]
+                      input: EXPECTED_FORM_CLASSES[:text_input]
     end
 
     context 'with value from object' do
@@ -277,13 +269,11 @@ describe Tramway::Form::Builder, type: :view do
   describe '#datetime_field' do
     let(:output) { builder.datetime_field :remember_created_at }
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
+    context 'with the default classes' do
       it_behaves_like 'form label and text input type classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
+                      label: EXPECTED_FORM_CLASSES[:label],
                       type: 'datetime-local',
-                      input: CLASSIC_FORM_CLASSES[:text_input]
+                      input: EXPECTED_FORM_CLASSES[:text_input]
     end
 
     context 'with value from options' do
@@ -303,13 +293,11 @@ describe Tramway::Form::Builder, type: :view do
   describe '#time_field' do
     let(:output) { builder.time_field :remember_created_at }
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
+    context 'with the default classes' do
       it_behaves_like 'form label and text input type classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
+                      label: EXPECTED_FORM_CLASSES[:label],
                       type: 'time',
-                      input: CLASSIC_FORM_CLASSES[:text_input]
+                      input: EXPECTED_FORM_CLASSES[:text_input]
     end
 
     context 'with value from options' do
@@ -327,10 +315,8 @@ describe Tramway::Form::Builder, type: :view do
       builder.password_field :password
     end
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
-      it_behaves_like 'form label and text input classes', CLASSIC_FORM_CLASSES
+    context 'with the default classes' do
+      it_behaves_like 'form label and text input classes', EXPECTED_FORM_CLASSES
     end
   end
 
@@ -415,10 +401,8 @@ describe Tramway::Form::Builder, type: :view do
       builder.file_field :file
     end
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
-      it_behaves_like 'file field classes', CLASSIC_FORM_CLASSES[:file_button]
+    context 'with the default classes' do
+      it_behaves_like 'file field classes', EXPECTED_FORM_CLASSES[:file_button]
     end
 
     context 'with small size' do
@@ -434,12 +418,10 @@ describe Tramway::Form::Builder, type: :view do
   describe '#check_box' do
     let(:output) { builder.check_box :permissions }
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
+    context 'with the default classes' do
       it_behaves_like 'checkbox field classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
-                      checkbox_input: CLASSIC_FORM_CLASSES[:checkbox_input]
+                      label: EXPECTED_FORM_CLASSES[:label],
+                      checkbox_input: EXPECTED_FORM_CLASSES[:checkbox_input]
     end
 
     context 'with small size' do
@@ -479,12 +461,10 @@ describe Tramway::Form::Builder, type: :view do
   describe '#checkbox' do
     let(:output) { builder.checkbox :permissions }
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
+    context 'with the default classes' do
       it_behaves_like 'checkbox field classes',
-                      label: CLASSIC_FORM_CLASSES[:label],
-                      checkbox_input: CLASSIC_FORM_CLASSES[:checkbox_input]
+                      label: EXPECTED_FORM_CLASSES[:label],
+                      checkbox_input: EXPECTED_FORM_CLASSES[:checkbox_input]
     end
   end
 
@@ -493,10 +473,8 @@ describe Tramway::Form::Builder, type: :view do
       builder.submit 'Create'
     end
 
-    context 'with classic theme' do
-      around { |example| with_theme(:classic) { example.run } }
-
-      it_behaves_like 'submit button classes', CLASSIC_FORM_CLASSES[:submit_button]
+    context 'with the default classes' do
+      it_behaves_like 'submit button classes', EXPECTED_FORM_CLASSES[:submit_button]
     end
 
     context 'with attributes checks' do
@@ -521,12 +499,10 @@ describe Tramway::Form::Builder, type: :view do
     context 'with default behaviour' do
       let(:output) { builder.select :role, %i[admin user] }
 
-      context 'with classic theme' do
-        around { |example| with_theme(:classic) { example.run } }
-
+      context 'with the default classes' do
         it_behaves_like 'select field classes',
-                        label: CLASSIC_FORM_CLASSES[:label],
-                        select: CLASSIC_FORM_CLASSES[:select_input]
+                        label: EXPECTED_FORM_CLASSES[:label],
+                        select: EXPECTED_FORM_CLASSES[:select_input]
       end
     end
 

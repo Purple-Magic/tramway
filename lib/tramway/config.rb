@@ -14,7 +14,6 @@ module Tramway
     attr_config(
       entities: [],
       application_controller: 'ActionController::Base',
-      theme: :classic,
       plugins: []
     )
 

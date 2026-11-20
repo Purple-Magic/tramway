@@ -12,12 +12,10 @@ module Tramway
     option :options, optional: true, default: -> { {} }
 
     def grid_classes
-      theme_classes(
-        classic: [
-          'relative overflow-auto rounded-xl bg-zinc-950 shadow-inner',
-          options[:class]
-        ].compact.join(' ')
-      )
+      [
+        'relative overflow-auto rounded-xl bg-zinc-950 shadow-inner',
+        options[:class]
+      ].compact.join(' ')
     end
 
     def grid_shell_style

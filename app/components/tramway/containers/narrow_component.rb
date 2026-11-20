@@ -8,13 +8,11 @@ module Tramway
       option :options, optional: true, default: proc { {} }
 
       def container_classes
-        theme_classes(
-          classic: [
-            'container p-4 flex align-center justify-center w-full max-w-full min-w-0 mx-auto',
-            'shadow-inner rounded-xl bg-zinc-950 text-zinc-50',
-            options[:class]
-          ].compact.join(' ')
-        )
+        [
+          'container p-4 flex align-center justify-center w-full max-w-full min-w-0 mx-auto',
+          'shadow-inner rounded-xl bg-zinc-950 text-zinc-50',
+          options[:class]
+        ].compact.join(' ')
       end
     end
   end

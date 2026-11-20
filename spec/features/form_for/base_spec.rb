@@ -3,29 +3,29 @@
 require 'rails_helper'
 
 feature 'Form For Base Test', :js, type: :feature do
-  shared_examples 'form for theme classes' do |theme_classes|
+  shared_examples 'form for classes' do |expected_classes|
     scenario 'check text_field' do
       expect(page).to have_selector(
-        "input.text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:text_input))}"
+        "input.text-base.px-3.py-2.#{class_selector(expected_classes.fetch(:text_input))}"
       )
     end
 
     scenario 'check file_field' do
       expect(page).to have_selector("input[type='file']", visible: false)
       expect(page).to have_selector(
-        "label.inline-flex.text-base.px-4.py-2.#{class_selector(theme_classes.fetch(:file_button))}"
+        "label.inline-flex.text-base.px-4.py-2.#{class_selector(expected_classes.fetch(:file_button))}"
       )
     end
 
     scenario 'check select' do
       expect(page).to have_selector(
-        "select.text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:select))}"
+        "select.text-base.px-3.py-2.#{class_selector(expected_classes.fetch(:select))}"
       )
     end
 
     scenario 'check text_area' do
       expect(page).to have_selector(
-        "textarea.text-base.px-3.py-2.#{class_selector(theme_classes.fetch(:text_input))}"
+        "textarea.text-base.px-3.py-2.#{class_selector(expected_classes.fetch(:text_input))}"
       )
     end
 
@@ -38,7 +38,7 @@ feature 'Form For Base Test', :js, type: :feature do
         "button[type='button'][role='checkbox'][aria-checked='false'][data-state='unchecked']"
       )
       button = find("button[role='checkbox']")
-      expect(button[:class].split).to include(*theme_classes.fetch(:checkbox_input))
+      expect(button[:class].split).to include(*expected_classes.fetch(:checkbox_input))
     end
 
     scenario 'keeps unchecked checkbox visible' do
@@ -60,12 +60,10 @@ feature 'Form For Base Test', :js, type: :feature do
     end
   end
 
-  context 'with classic theme' do
-    around { |example| with_theme(:classic) { example.run } }
-
+  context 'with the default classes' do
     before { visit new_user_path }
 
-    it_behaves_like 'form for theme classes',
+    it_behaves_like 'form for classes',
                     text_input: %w[
                       w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm
                       transition-colors placeholder:text-zinc-500 focus-visible:outline-none

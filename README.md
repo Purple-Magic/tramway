@@ -1220,7 +1220,7 @@ end
 
 `tramway_flash` renders the dark shadcn-style flash component that Tramway uses in its layouts. Pass the flash text and type,
 and the helper will resolve the proper dark semantic accent (for example `:success` -> green, `:warning` -> orange). Tramway
-does not render a separate light flash theme. You can also provide custom HTML options directly (e.g., `class:`, `data:`) and
+renders the dark design only. You can also provide custom HTML options directly (e.g., `class:`, `data:`) and
 they will be merged into the flash container.
 
 ```haml
@@ -1362,7 +1362,7 @@ tramway_chat_prepend_messages(
 
 ### Tramway Table Component
 
-Tramway provides a responsive, tailwind-styled table with light and dark themes. Use the `tramway_table`, `tramway_row`, and
+Tramway provides a responsive, tailwind-styled table with a dark design. Use the `tramway_table`, `tramway_row`, and
 `tramway_cell` helpers to build tables with readable ERB templates while still leveraging the underlying ViewComponent
 implementations.
 
@@ -1598,7 +1598,7 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 #### tramway_form_for
 
 Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default. Form inputs use hardcoded
-dark shadcn-style classes; Tramway does not render a separate light form theme.
+dark shadcn-style classes; Tramway renders the dark design only.
 Checkboxes render with the same dark border and focus highlight treatment as other inputs, then use the light primary checked state.
 Checkbox controls, checkmarks, and vertically centered label line heights scale together with the form-level `size:` option.
 
