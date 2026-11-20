@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-GRID_SHELL_SELECTOR = 'div.relative.overflow-auto.rounded-xl.bg-zinc-950.shadow-inner.dashboard-grid' \
+GRID_SHELL_SELECTOR = 'div.tramway-grid.dashboard-grid' \
                       '[role="grid"][aria-label="Dashboard grid"][aria-rowcount="8"][aria-colcount="8"]'
 GRID_TRACK_SELECTOR = 'div.relative.z-10.grid.gap-1[role="presentation"]'
 GRID_WIDTH_STYLE_SELECTOR = 'div[style*="min-width: calc(8 * 20em + 7 * 0.25rem)"]'
@@ -10,8 +10,8 @@ GRID_HEIGHT_STYLE_SELECTOR = 'div[style*="min-height: calc(8 * 20em + 7 * 0.25re
 GRID_COLUMNS_SELECTOR = 'div[aria-hidden="true"] .grid[style*="grid-template-columns: repeat(8, 20em)"]'
 GRID_ROWS_SELECTOR = 'div[aria-hidden="true"] .grid[style*="grid-template-rows: repeat(8, 20em)"]'
 GRID_CELL_SELECTOR = 'div[aria-hidden="true"] .grid > div[style*="width: 20em; height: 20em;"]'
-OUTLINE_HORIZONTAL_SELECTOR = 'div[aria-hidden="true"] > div.absolute.left-0.right-0.h-px.bg-zinc-800'
-OUTLINE_VERTICAL_SELECTOR = 'div[aria-hidden="true"] > div.absolute.top-0.bottom-0.w-px.bg-zinc-800'
+OUTLINE_HORIZONTAL_SELECTOR = 'div[aria-hidden="true"] > div.tramway-grid__separator--horizontal'
+OUTLINE_VERTICAL_SELECTOR = 'div[aria-hidden="true"] > div.tramway-grid__separator--vertical'
 
 describe Tramway::GridComponent, type: :component do
   it 'renders a dark dashboard grid with the requested rows and columns' do

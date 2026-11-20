@@ -9,8 +9,7 @@ module Tramway
 
       def card_classes
         [
-          'h-full w-full overflow-hidden rounded-2xl border border-zinc-800',
-          'bg-zinc-900/80 p-3 shadow-sm backdrop-blur',
+          'tramway-grid-card',
           options[:class]
         ].compact.join(' ')
       end

@@ -9,14 +9,7 @@ module Tramway
     MAX_URL_LENGTH = 41
     HEADER_REGEX = /\A(#{Regexp.escape('#')}{1,6})\s+(.+)\z/
     LIST_ITEM_REGEX = /\A[-*]\s+(.+)\z/
-    HEADER_CLASSES = {
-      1 => 'text-4xl font-bold leading-tight mt-4 mb-2',
-      2 => 'text-3xl font-bold leading-tight mt-4 mb-2',
-      3 => 'text-2xl font-semibold leading-snug mt-3 mb-2',
-      4 => 'text-xl font-semibold leading-snug mt-3 mb-2',
-      5 => 'text-lg font-semibold leading-snug mt-2 mb-1',
-      6 => 'text-base font-semibold leading-snug mt-2 mb-1'
-    }.freeze
+    HEADER_CLASSES = (1..6).index_with { |level| "tramway-prose__heading tramway-prose__heading--#{level}" }.freeze
 
     option :text
     option :size, optional: true, default: -> { :middle }
@@ -63,12 +56,13 @@ module Tramway
         list_match = stripped_line.match(LIST_ITEM_REGEX)
         if list_match
           list_items << helpers.content_tag(:li, render_inline_markdown(list_match[1]),
-                                            class: "#{text_class} marker:hidden")
+                                            class: "#{text_class} tramway-prose__item")
           next
         end
 
         flush_list_items(blocks, list_items)
-        blocks << helpers.content_tag(:p, render_inline_markdown(stripped_line), class: "#{text_class} my-1")
+        blocks << helpers.content_tag(:p, render_inline_markdown(stripped_line),
+                                      class: "#{text_class} tramway-prose__paragraph")
       end
 
       flush_list_items(blocks, list_items)
@@ -80,7 +74,7 @@ module Tramway
     def flush_list_items(blocks, list_items)
       return if list_items.empty?
 
-      blocks << helpers.content_tag(:ul, helpers.safe_join(list_items), class: "list-none pl-5 my-2 #{klass}")
+      blocks << helpers.content_tag(:ul, helpers.safe_join(list_items), class: "tramway-prose__list #{klass}".strip)
       list_items.clear
     end
 
@@ -117,7 +111,7 @@ module Tramway
           url,
           target: '_blank',
           rel: 'noopener noreferrer',
-          class: 'text-blue-400 hover:underline'
+          class: 'tramway-link'
         )
         # Safe because `trailing` can only contain stripped URL punctuation (.,!?;:).
         fragments << trailing.html_safe if trailing.present? # rubocop:disable Rails/OutputSafety

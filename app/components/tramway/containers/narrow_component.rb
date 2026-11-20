@@ -9,8 +9,7 @@ module Tramway
 
       def container_classes
         [
-          'container p-4 flex align-center justify-center w-full max-w-full min-w-0 mx-auto',
-          'shadow-inner rounded-xl bg-zinc-950 text-zinc-50',
+          'tramway-container',
           options[:class]
         ].compact.join(' ')
       end

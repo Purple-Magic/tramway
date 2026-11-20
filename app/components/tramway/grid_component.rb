@@ -13,7 +13,7 @@ module Tramway
 
     def grid_classes
       [
-        'relative overflow-auto rounded-xl bg-zinc-950 shadow-inner',
+        'tramway-grid',
         options[:class]
       ].compact.join(' ')
     end
@@ -49,8 +49,7 @@ module Tramway
     end
 
     def grid_separator_classes(axis)
-      base = axis == :horizontal ? 'absolute left-0 right-0 h-px' : 'absolute top-0 bottom-0 w-px'
-      "#{base} bg-zinc-800"
+      "tramway-grid__separator tramway-grid__separator--#{axis}"
     end
 
     def grid_separator_style(axis, index)

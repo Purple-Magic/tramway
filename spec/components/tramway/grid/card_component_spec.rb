@@ -4,14 +4,13 @@ require 'rails_helper'
 
 describe Tramway::Grid::CardComponent, type: :component do
   let(:requested_span_selector) do
-    'article.h-full.w-full.overflow-hidden.rounded-2xl.border.border-zinc-800.' \
-      'bg-zinc-900\\/80.p-3.shadow-sm.backdrop-blur.card-highlight[role="gridcell"]' \
+    'article.tramway-grid-card.card-highlight[role="gridcell"]' \
       '[aria-label="Dashboard card"][aria-rowspan="1"][aria-colspan="2"]' \
       '[style*="grid-column: span 2"][style*="grid-row: span 1"]'
   end
 
   let(:single_cell_selector) do
-    'article.overflow-hidden[aria-rowspan="1"][aria-colspan="1"]' \
+    'article.tramway-grid-card[aria-rowspan="1"][aria-colspan="1"]' \
       '[style*="grid-column: span 1"][style*="grid-row: span 1"]'
   end
 

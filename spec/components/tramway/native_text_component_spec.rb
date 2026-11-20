@@ -6,16 +6,16 @@ describe Tramway::NativeTextComponent, type: :component do
   it 'wraps long content within the available width without breaking every word' do
     render_inline(described_class.new(text: 'averylongtokenwithoutspaces'))
 
-    expect(page).to have_css('div.max-w-full.min-w-0.break-words')
+    expect(page).to have_css('div.tramway-prose')
     expect(page).to have_no_css('div.break-all')
   end
 
   it 'renders markdown headers as tailwind styled heading tags' do
     render_inline(described_class.new(text: "# Heading 1\n## Heading 2\n### Heading 3"))
 
-    expect(page).to have_css('h1.text-4xl.font-bold', text: 'Heading 1')
-    expect(page).to have_css('h2.text-3xl.font-bold', text: 'Heading 2')
-    expect(page).to have_css('h3.text-2xl.font-semibold', text: 'Heading 3')
+    expect(page).to have_css('h1.tramway-prose__heading--1', text: 'Heading 1')
+    expect(page).to have_css('h2.tramway-prose__heading--2', text: 'Heading 2')
+    expect(page).to have_css('h3.tramway-prose__heading--3', text: 'Heading 3')
   end
 
   it 'renders bold and italic markdown in paragraph text' do
@@ -29,9 +29,9 @@ describe Tramway::NativeTextComponent, type: :component do
   it 'renders markdown unordered lists' do
     render_inline(described_class.new(text: "- First\n- Second"))
 
-    expect(page).to have_css('ul.list-none.pl-5')
-    expect(page).to have_css('ul li.text-base.marker\\:hidden', text: 'First')
-    expect(page).to have_css('ul li.text-base.marker\\:hidden', text: 'Second')
+    expect(page).to have_css('ul.tramway-prose__list')
+    expect(page).to have_css('ul li.text-base.tramway-prose__item', text: 'First')
+    expect(page).to have_css('ul li.text-base.tramway-prose__item', text: 'Second')
   end
 
   it 'renders markdown and auto-links urls together' do
