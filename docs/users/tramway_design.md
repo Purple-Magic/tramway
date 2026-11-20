@@ -52,9 +52,12 @@ check-input|file-button|actions|rich-text`), `tramway-select__*`, `tramway-data-
 
 - Scaffolded pages use the TimeMagic button roles: **New** is `primary` (solid accent), **Edit** is `secondary`,
   **Destroy** is `danger`, filters and toggles are `ghost`/`primary`. The form's **Save** is the solid green `submit`.
-- The navbar is a sidebar on the `surface` color with a right border, a brand tile (accent square with the title's
-  initial) next to the title, 42px nav items with an icon, label and accent-tinted active state, and a bordered collapse
-  button.
+- The navbar is the TimeMagic sidebar: 220px wide (72px collapsed) on the `surface` color with a right border; a brand
+  row with an accent tile (the title's initial) and the title on the left and the bordered collapse button on the right;
+  42px nav items with an icon, label and accent-tinted active state, 24px between the two item lists. Collapsed, only the
+  brand tile and the icons stay; the tile expands the sidebar again. Collapsed items get a `title` tooltip with their
+  label. The sizes are the `--tramway-shell-sidebar-width(-collapsed)` tokens and are applied by unlayered CSS, so the
+  `md:w-72` / `md:pl-72` classes in older host layouts no longer matter.
 - `.tramway-page-header__top` puts the page title (`tramway-title`, 22px on phones) on the left and the actions on the
   right; it stacks on small screens.
 

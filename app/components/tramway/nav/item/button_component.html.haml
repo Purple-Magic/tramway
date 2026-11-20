@@ -1,5 +1,6 @@
 %li.whitespace-nowrap
-  = button_to @href, method: @method, class: style, **@options do
+  - item_title = @options[:title] || strip_tags(content.to_s).squish.presence
+  = button_to @href, method: @method, class: style, **@options, title: item_title do
     - if icon?
       %i{ class: icon_classes, aria: { hidden: true } }
     %span.tramway-navbar-item-label.tramway-nav-item__label

@@ -43,10 +43,10 @@ describe Tramway::NavbarComponent, type: :component do
       expect(page).to have_css '#mobile-menu-button'
     end
 
-    it 'adds extra top spacing before the vertical items list' do
+    it 'renders the vertical items list inside the padded nav area' do
       render_inline(described_class.new(title: 'Purple Magic', left_items: ["<a href='/test'>Test</a>".html_safe]))
 
-      expect(page).to have_css '#desktop-navbar-content ul.tramway-navbar-desktop-vertical-list.mt-8'
+      expect(page).to have_css '#desktop-navbar-content ul.tramway-navbar-desktop-vertical-list'
     end
 
     it 'uses a left chevron icon when expanded' do

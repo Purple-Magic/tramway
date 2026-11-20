@@ -131,8 +131,8 @@
   --tramway-shadow-raised: 0 8px 24px rgb(0 0 0 / 0.45);
 
   /* --- Navigation shell --- */
-  --tramway-shell-sidebar-width: 18rem;
-  --tramway-shell-sidebar-width-collapsed: 6rem;
+  --tramway-shell-sidebar-width: 13.75rem;
+  --tramway-shell-sidebar-width-collapsed: 4.5rem;
   --tramway-shell-mobile-header-height: 3.5rem;
 
   /* --- Z-index layers --- */

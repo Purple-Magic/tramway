@@ -66,6 +66,35 @@
     }
   }
 
+  .tramway-navbar__collapse {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-sm);
+    background: transparent;
+    color: var(--tramway-color-text-muted);
+    cursor: pointer;
+    transition:
+      border-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      color var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  .tramway-navbar__collapse:focus-visible {
+    outline: 2px solid var(--tramway-color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) {
+    .tramway-navbar__collapse:hover {
+      border-color: var(--tramway-color-border-strong);
+    }
+  }
+
   .tramway-navbar__mobile-menu {
     border-color: var(--tramway-color-border);
     background-color: var(--tramway-color-surface);
@@ -117,5 +146,96 @@
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+}
+
+/*
+ * Vertical (sidebar) navbar shell. Intentionally outside any @layer so it also wins over the
+ * `md:w-72` / `md:pl-72` / `md:px-4` utilities the `tramway-navbar` Stimulus controller toggles
+ * and that host layouts carry. Sizes come from the `--tramway-shell-*` tokens (TimeMagic: 220px / 72px).
+ */
+@media (min-width: 768px) {
+  #desktop-navbar[data-direction='vertical'] {
+    width: var(--tramway-shell-sidebar-width);
+    padding: 0;
+    border-right: 1px solid var(--tramway-color-border);
+    box-shadow: none;
+  }
+
+  html[data-tramway-navbar-expanded='false'] #desktop-navbar[data-direction='vertical'] {
+    width: var(--tramway-shell-sidebar-width-collapsed);
+  }
+
+  #tramway-main-container {
+    padding-left: var(--tramway-shell-sidebar-width);
+  }
+
+  html[data-tramway-navbar-expanded='false'] #tramway-main-container {
+    padding-left: var(--tramway-shell-sidebar-width-collapsed);
+  }
+
+  /* Brand row: tile + name on the left, collapse button on the right */
+  #desktop-navbar-header {
+    flex: none;
+    padding: 1.125rem 1rem;
+  }
+
+  html[data-tramway-navbar-expanded='false'] #desktop-navbar-header {
+    justify-content: center;
+    padding-inline: 0;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  html[data-tramway-navbar-expanded='false'] #desktop-navbar-header .tramway-navbar__title {
+    display: none;
+  }
+
+  .tramway-navbar__brand {
+    padding: 0;
+  }
+
+  /* Nav groups: 16px/12px padding, 24px between the two lists, 4px between items */
+  #desktop-navbar-content {
+    padding: 1rem 0.75rem;
+    gap: 1.5rem;
+  }
+
+  .tramway-navbar-desktop-vertical-list {
+    margin-top: 0;
+    gap: 0.25rem;
+  }
+
+  .tramway-navbar-desktop-vertical-list > li {
+    width: 100%;
+  }
+
+  html[data-tramway-navbar-expanded='false'] #desktop-navbar-content .tramway-navbar-item {
+    width: 2.625rem;
+    margin-inline: auto;
+    gap: 0;
+  }
+
+  /* Collapse button sits in the brand row; when collapsed it is an invisible overlay on the brand tile */
+  #desktop-navbar-toggle-wrapper {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+    width: auto;
+    margin: 0;
+  }
+
+  html[data-tramway-navbar-expanded='false'] #desktop-navbar-toggle-wrapper {
+    right: auto;
+    left: calc((var(--tramway-shell-sidebar-width-collapsed) - 1.75rem) / 2);
+    top: 1.125rem;
+  }
+
+  html[data-tramway-navbar-expanded='false'] .tramway-navbar__collapse {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-color: transparent;
+    color: transparent;
   }
 }

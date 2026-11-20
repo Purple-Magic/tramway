@@ -96,7 +96,7 @@ module Tramway
     end
 
     def desktop_vertical_item_list_classes
-      'tramway-navbar-desktop-vertical-list mt-8 flex w-full flex-col gap-1'
+      'tramway-navbar-desktop-vertical-list flex w-full flex-col gap-1'
     end
 
     def desktop_vertical_toggle_wrapper_classes(expanded: true)
@@ -105,7 +105,7 @@ module Tramway
     end
 
     def desktop_vertical_toggle_button_classes
-      'tramway-navbar__toggle w-fit'
+      'tramway-navbar__collapse'
     end
 
     def desktop_vertical_toggle_button_label(expanded:)
