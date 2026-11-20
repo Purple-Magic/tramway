@@ -267,6 +267,15 @@
     display: none;
   }
 
+  .tramway-form__check-icon {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tramway-form__check.tramway-form__field--horizontal {
+    margin-bottom: 0;
+  }
+
   .tramway-form__check-label {
     margin-bottom: 0;
     color: var(--tramway-color-text-secondary);

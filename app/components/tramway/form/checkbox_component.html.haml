@@ -1,5 +1,5 @@
-%div{ class: default_container_classes, data: { controller: 'ui--checkbox' } }
-  .flex.items-center.gap-2
+%div{ class: container_classes, data: { controller: 'ui--checkbox' } }
+  .tramway-form__check-row
     - checkbox_checked = checked?
     = @input.call @attribute, **hidden_checkbox_options
     %button{ type: 'button',
@@ -10,23 +10,22 @@
       'data-ui--checkbox-target' => 'button',
       value: 'on',
       class: checkbox_button_classes,
-      style: checkbox_button_style,
       for: @for,
       id: @for }
-      %span{ class: checkbox_indicator_classes, style: 'pointer-events: none', data: { 'ui--checkbox-target' => 'indicator' } }
+      %span.tramway-form__check-indicator{ hidden: !checkbox_checked, data: { 'ui--checkbox-target' => 'indicator' } }
         %svg{ xmlns: 'http://www.w3.org/2000/svg',
           width: '24',
           height: '24',
           viewBox: '0 0 24 24',
           fill: 'none',
           stroke: 'currentColor',
-          'stroke-width' => '2',
+          'stroke-width' => '3',
           'stroke-linecap' => 'round',
           'stroke-linejoin' => 'round',
-          class: size_class(:checkbox_indicator) }
+          class: 'tramway-form__check-icon' }
           %polyline{ points: '20 6 9 17 4 12' }
     - if @label
-      = component('tramway/form/label', for: @for, options: { class: label_classes, style: label_style, data: { action: 'click->ui--checkbox#toggle' } }) do
+      = component('tramway/form/label', for: @for, options: { class: label_classes, data: { action: 'click->ui--checkbox#toggle' } }) do
         = @label
   - if @hint.present?
     %p{ class: form_hint_classes }= @hint

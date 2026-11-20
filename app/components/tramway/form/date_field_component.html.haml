@@ -2,7 +2,7 @@
   - if @label
     = component('tramway/form/label', for: @for, class: 'mb-0') do
       = @label
-  - classes = "#{size_class(:text_input)} #{text_input_base_classes}"
+  - classes = text_input_classes
   = @input.call @attribute, **picker_options(classes), value: @value
   - if @hint.present?
     %p{ class: form_hint_classes }= @hint

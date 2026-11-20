@@ -7,14 +7,8 @@ module Tramway
       class ItemContainerComponent < Tramway::BaseComponent
         option :size
 
-        SIZE_CLASSES = {
-          small: 'p-1',
-          medium: 'p-2',
-          large: 'p-3'
-        }.freeze
-
         def item_classes
-          "cursor-pointer rounded-sm text-zinc-50 hover:bg-zinc-900 option #{SIZE_CLASSES[size]}"
+          'tramway-select__option option'
         end
       end
     end

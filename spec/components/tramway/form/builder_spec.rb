@@ -4,33 +4,12 @@ require 'rails_helper'
 require 'support/view_helpers'
 
 EXPECTED_FORM_CLASSES = {
-  label: %w[
-    block text-sm font-medium leading-none mb-2 text-zinc-200 peer-disabled:cursor-not-allowed
-    peer-disabled:opacity-70
-  ],
-  text_input: %w[
-    w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm transition-colors
-    placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
-    focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-50
-  ],
-  select_input: %w[
-    w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm transition-colors
-    appearance-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
-    focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-50
-  ],
-  file_button: %w[
-    inline-flex items-center justify-center rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50
-    font-medium shadow-sm transition-colors hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2
-    focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950
-    disabled:pointer-events-none disabled:opacity-50 cursor-pointer mt-4
-  ],
+  label: %w[tramway-form__label],
+  text_input: %w[tramway-form__input],
+  select_input: %w[tramway-form__select],
+  file_button: %w[tramway-form__file-button],
   submit_button: %w[tramway-button tramway-button--submit],
-  checkbox_input: %w[
-    peer h-5 w-5 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm
-    transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
-    focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:border-zinc-50
-    data-[state=checked]:bg-zinc-50 data-[state=checked]:text-zinc-950
-  ]
+  checkbox_input: %w[tramway-form__check-input]
 }.freeze
 
 RICH_TEXT_AREA_CLASSES = Tramway::Form::RichTextAreaComponent::RICH_TEXT_AREA_CLASSES
@@ -53,7 +32,7 @@ describe Tramway::Form::Builder, type: :view do
   shared_examples 'form label and text input classes' do |expected_classes|
     it 'gets default value' do
       expect(output).to have_selector "label.#{class_selector(expected_classes.fetch(:label))}"
-      expect(output).to have_selector "input.text-base.px-3.py-2.#{class_selector(expected_classes.fetch(:text_input))}"
+      expect(output).to have_selector "input.#{class_selector(expected_classes.fetch(:text_input))}"
     end
   end
 
@@ -61,7 +40,7 @@ describe Tramway::Form::Builder, type: :view do
     it 'renders input with tailwind classes' do
       expect(output).to have_selector "label.#{class_selector(expected_classes.fetch(:label))}"
       expect(output).to have_selector(
-        "input[type=\"#{expected_classes.fetch(:type)}\"].text-base.px-3.py-2." \
+        "input[type=\"#{expected_classes.fetch(:type)}\"]." \
         "#{class_selector(expected_classes.fetch(:input))}"
       )
     end
@@ -69,7 +48,7 @@ describe Tramway::Form::Builder, type: :view do
 
   shared_examples 'file field classes' do |expected_classes|
     it 'renders file label classes' do
-      expect(output).to have_selector "label.inline-flex.text-base.px-4.py-2.#{class_selector(expected_classes)}"
+      expect(output).to have_selector "label.#{class_selector(expected_classes)}"
     end
   end
 
@@ -85,7 +64,7 @@ describe Tramway::Form::Builder, type: :view do
     end
 
     it 'has the select' do
-      expect(output).to have_selector "select.text-base.#{class_selector(expected_classes.fetch(:select))}"
+      expect(output).to have_selector "select.#{class_selector(expected_classes.fetch(:select))}"
       expect(output).to have_selector 'option[value="admin"]'
       expect(output).to have_selector 'option[value="user"]'
     end
@@ -96,17 +75,16 @@ describe Tramway::Form::Builder, type: :view do
       expect(output).to have_selector "label.#{class_selector(expected_classes.fetch(:label))}"
       expect(output).to have_selector 'input[type="checkbox"].hidden[data-ui--checkbox-target="input"]',
                                       visible: false
-      expect(output).to have_selector '.flex.items-center.gap-2 > button + label.mb-0.leading-6',
+      expect(output).to have_selector '.tramway-form__check-row > button + label.tramway-form__check-label',
                                       text: 'Permissions'
       expect(output).to have_selector 'label[data-action="click->ui--checkbox#toggle"]'
     end
 
-    it 'renders checkbox label alignment style' do
+    it 'renders the checkbox label with the shared check label class and no inline styles' do
       label = Capybara.string(output).find('button + label')
 
-      expect(label[:style]).to include('align-self: center')
-      expect(label[:style]).to include('line-height: 1.25rem')
-      expect(label[:style]).to include('margin-bottom: 0')
+      expect(label[:class].split).to include('tramway-form__label', 'tramway-form__check-label')
+      expect(label[:style]).to be_nil
     end
 
     it 'renders shadcn-style checkbox button' do
@@ -117,19 +95,19 @@ describe Tramway::Form::Builder, type: :view do
       expect(button['data-state']).to eq 'unchecked'
     end
 
-    it 'renders checkbox button fixed inline sizing' do
+    it 'renders the checkbox button without inline styles, sized and colored by the primitive class' do
       button = Capybara.string(output).find('button[role="checkbox"]')
 
-      expect(button[:style]).to include('width: 1.25rem')
-      expect(button[:style]).to include('height: 1.25rem')
-      expect(button[:style]).to include('background-color: #09090b')
+      expect(button[:style]).to be_nil
+      expect(button[:class].split).to include('tramway-form__check-input')
     end
 
     it 'renders checkbox button styling and indicator' do
       button = Capybara.string(output).find('button[role="checkbox"]')
 
       expect(button[:class].split).to include(*expected_classes.fetch(:checkbox_input))
-      expect(output).to have_selector 'button span.flex.hidden.h-4.w-4 svg.h-4.w-4'
+      expect(output).to have_selector 'button span.tramway-form__check-indicator[hidden] svg.tramway-form__check-icon',
+                                      visible: :all
     end
   end
 
@@ -147,7 +125,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.text_field :email }
 
       it 'applies small spacing' do
-        expect(output).to have_selector 'input.text-sm.px-2.py-1'
+        expect(output).to have_selector 'input.tramway-form__input.tramway-form__input--sm'
       end
     end
 
@@ -156,7 +134,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.text_field :email }
 
       it 'applies large spacing' do
-        expect(output).to have_selector 'input.text-xl.px-4.py-3'
+        expect(output).to have_selector 'input.tramway-form__input.tramway-form__input--lg'
       end
     end
 
@@ -164,7 +142,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.text_field :email, size: :large }
 
       it 'keeps the form size classes' do
-        expect(output).to have_selector 'input.text-base.px-3.py-2'
+        expect(output).to have_selector 'input.tramway-form__input'
       end
 
       it 'does not render a size attribute' do
@@ -196,7 +174,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.text_field :email, hint: 'Use your work email address.' }
 
       it 'renders hint text below the input' do
-        expect(output).to have_selector 'input + p.mt-1.text-sm.text-zinc-400', text: 'Use your work email address.'
+        expect(output).to have_selector 'input + p.tramway-form__hint', text: 'Use your work email address.'
       end
 
       it 'does not forward hint as an input attribute' do
@@ -365,7 +343,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.rich_text_area :personal_info, hint: 'Formatting is supported.' }
 
       it 'renders hint text below the editor' do
-        expect(output).to have_selector 'trix-editor + p.mt-1.text-sm.text-zinc-400',
+        expect(output).to have_selector 'trix-editor + p.tramway-form__hint',
                                         text: 'Formatting is supported.'
       end
 
@@ -405,7 +383,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.file_field :file }
 
       it 'applies small spacing' do
-        expect(output).to have_selector 'label.text-sm.px-3.py-1'
+        expect(output).to have_selector 'label.tramway-form__file-button--sm'
       end
     end
   end
@@ -423,9 +401,8 @@ describe Tramway::Form::Builder, type: :view do
       let(:form_options) { { size: :small } }
 
       it 'aligns a compact checkbox and label' do
-        expect(output).to have_selector 'button.h-4.w-4 span.h-3.w-3 svg.h-3.w-3'
-        expect(Capybara.string(output).find('button[role="checkbox"]')[:style]).to include('width: 1rem')
-        expect(output).to have_selector 'button + label.text-sm.leading-5[style*="line-height: 1rem"]'
+        expect(output).to have_selector 'button.tramway-form__check-input.tramway-form__check-input--sm'
+        expect(output).to have_selector 'button + label.tramway-form__check-label'
       end
     end
 
@@ -433,9 +410,8 @@ describe Tramway::Form::Builder, type: :view do
       let(:form_options) { { size: :large } }
 
       it 'aligns a large checkbox and label' do
-        expect(output).to have_selector 'button.h-6.w-6 span.h-5.w-5 svg.h-5.w-5'
-        expect(Capybara.string(output).find('button[role="checkbox"]')[:style]).to include('width: 1.5rem')
-        expect(output).to have_selector 'button + label.text-lg.leading-7[style*="line-height: 1.5rem"]'
+        expect(output).to have_selector 'button.tramway-form__check-input.tramway-form__check-input--lg'
+        expect(output).to have_selector 'button + label.tramway-form__check-label'
       end
     end
 
@@ -443,7 +419,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.check_box :permissions, hint: 'Allow access to admin actions.' }
 
       it 'renders hint text below the checkbox row' do
-        expect(output).to have_selector '.flex.items-center.gap-2 + p.mt-1.text-sm.text-zinc-400',
+        expect(output).to have_selector '.tramway-form__check-row + p.tramway-form__hint',
                                         text: 'Allow access to admin actions.'
       end
 
@@ -506,7 +482,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.select :role, %i[admin user] }
 
       it 'applies small spacing' do
-        expect(output).to have_selector 'select.text-sm.px-2.py-1'
+        expect(output).to have_selector 'select.tramway-form__select.tramway-form__select--sm'
       end
     end
 
@@ -533,7 +509,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.select :role, %i[admin user], hint: 'Choose the account role.' }
 
       it 'renders hint text below the select' do
-        expect(output).to have_selector 'select + p.mt-1.text-sm.text-zinc-400', text: 'Choose the account role.'
+        expect(output).to have_selector 'select + p.tramway-form__hint', text: 'Choose the account role.'
       end
 
       it 'does not forward hint as a select attribute' do

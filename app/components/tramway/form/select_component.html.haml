@@ -2,7 +2,7 @@
   - if @label
     = component('tramway/form/label', for: @for, class: 'mb-2') do
       = @label
-  - classes = "#{size_class(:select_input)} #{select_base_classes}"
+  - classes = select_classes
   = @input.call(@attribute, @collection, { selected: @value }, @options.merge(class: classes))
   - if @hint.present?
     %p{ class: form_hint_classes }= @hint

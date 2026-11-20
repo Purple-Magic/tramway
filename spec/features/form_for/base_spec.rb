@@ -6,26 +6,26 @@ feature 'Form For Base Test', :js, type: :feature do
   shared_examples 'form for classes' do |expected_classes|
     scenario 'check text_field' do
       expect(page).to have_selector(
-        "input.text-base.px-3.py-2.#{class_selector(expected_classes.fetch(:text_input))}"
+        "input.#{class_selector(expected_classes.fetch(:text_input))}"
       )
     end
 
     scenario 'check file_field' do
       expect(page).to have_selector("input[type='file']", visible: false)
       expect(page).to have_selector(
-        "label.inline-flex.text-base.px-4.py-2.#{class_selector(expected_classes.fetch(:file_button))}"
+        "label.#{class_selector(expected_classes.fetch(:file_button))}"
       )
     end
 
     scenario 'check select' do
       expect(page).to have_selector(
-        "select.text-base.px-3.py-2.#{class_selector(expected_classes.fetch(:select))}"
+        "select.#{class_selector(expected_classes.fetch(:select))}"
       )
     end
 
     scenario 'check text_area' do
       expect(page).to have_selector(
-        "textarea.text-base.px-3.py-2.#{class_selector(expected_classes.fetch(:text_input))}"
+        'textarea.tramway-form__textarea'
       )
     end
 
@@ -44,19 +44,19 @@ feature 'Form For Base Test', :js, type: :feature do
     scenario 'keeps unchecked checkbox visible' do
       button = find("button[role='checkbox']")
 
-      expect(button[:style]).to include('width: 1.25rem')
-      expect(button[:style]).to include('height: 1.25rem')
-      expect(button[:style]).to include('background-color: rgb(9, 9, 11)')
+      expect(button.native.css_value('width')).to eq('18px')
+      expect(button.native.css_value('height')).to eq('18px')
+      expect(page).to have_selector("button[role='checkbox'] span.tramway-form__check-indicator[hidden]", visible: :all)
     end
 
     scenario 'toggle checkbox' do
       find("button[role='checkbox']").click
 
       expect(page).to have_selector(
-        "button[role='checkbox'][aria-checked='true'][data-state='checked'].bg-zinc-50.text-zinc-950"
+        "button[role='checkbox'][aria-checked='true'][data-state='checked'].tramway-form__check-input"
       )
       expect(page).to have_selector("input[type='checkbox'][data-ui--checkbox-target='input']:checked", visible: false)
-      expect(page).to have_selector("button[role='checkbox'] span.flex:not(.hidden).h-4.w-4 svg.h-4.w-4")
+      expect(page).to have_selector("button[role='checkbox'] span.tramway-form__check-indicator:not([hidden]) svg")
     end
   end
 
@@ -64,32 +64,9 @@ feature 'Form For Base Test', :js, type: :feature do
     before { visit new_user_path }
 
     it_behaves_like 'form for classes',
-                    text_input: %w[
-                      w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm
-                      transition-colors placeholder:text-zinc-500 focus-visible:outline-none
-                      focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2
-                      focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed disabled:opacity-50
-                    ],
-                    file_button: %w[
-                      inline-flex items-center justify-center rounded-md border border-zinc-800 bg-zinc-950
-                      text-zinc-50 font-medium shadow-sm transition-colors hover:bg-zinc-900
-                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
-                      focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:pointer-events-none
-                      disabled:opacity-50 cursor-pointer mt-4
-                    ],
-                    select: %w[
-                      w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm
-                      transition-colors appearance-none focus-visible:outline-none focus-visible:ring-2
-                      focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950
-                      disabled:cursor-not-allowed disabled:opacity-50
-                    ],
-                    checkbox_input: %w[
-                      peer h-5 w-5 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50
-                      shadow-sm transition-colors
-                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
-                      focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50
-                      data-[state=checked]:border-zinc-50 data-[state=checked]:bg-zinc-50
-                      data-[state=checked]:text-zinc-950
-                    ]
+                    text_input: %w[tramway-form__input],
+                    file_button: %w[tramway-form__file-button],
+                    select: %w[tramway-form__select],
+                    checkbox_input: %w[tramway-form__check-input]
   end
 end

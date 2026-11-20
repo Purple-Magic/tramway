@@ -7,9 +7,9 @@
     .flex.flex-end.justify-between.gap-1{ data: dropdown_data, **dropdown_options }
       %div{ class: selected_items_classes, data: { "tramway-select-target" => "showSelectedArea" } }
       .flex.flex-col.justify-center.shrink-0
-        .caret-down{ data: { "tramway-select-target" => "caretDown" } }
+        .caret-down.tramway-select__caret{ data: { "tramway-select-target" => "caretDown" } }
           = component 'tramway/form/tramway_select/caret', size:, direction: :down
-        .caret-up.hidden{ data: { "tramway-select-target" => "caretUp" } }
+        .caret-up.tramway-select__caret.hidden{ data: { "tramway-select-target" => "caretUp" } }
           = component 'tramway/form/tramway_select/caret', size:, direction: :up
   - if @hint.present?
     %p{ class: form_hint_classes }= @hint

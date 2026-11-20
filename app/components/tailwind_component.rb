@@ -2,7 +2,8 @@
 
 require 'view_component'
 
-# Base TailwindComponent. Contains base features for all tailwind components
+# Base TailwindComponent. Contains base features for all form components.
+# Every control type renders exactly one `tramway-form__*` primitive class plus a size modifier.
 class TailwindComponent < Tramway::BaseComponent
   option :input
   option :attribute
@@ -13,89 +14,53 @@ class TailwindComponent < Tramway::BaseComponent
   option :hint, optional: true, default: -> {}
   option :size, default: -> { :medium }
 
-  SIZE_CLASSES = {
-    small: {
-      text_input: 'text-sm px-2 py-1',
-      select_input: 'text-sm px-2 py-1',
-      file_button: 'text-sm px-3 py-1',
-      submit_button: 'text-sm px-3 py-1',
-      tramway_select_input: 'text-sm px-2 py-1 h-10',
-      checkbox_input: 'h-4 w-4',
-      checkbox_indicator: 'h-3 w-3'
-    },
-    medium: {
-      text_input: 'text-base px-3 py-2',
-      select_input: 'text-base px-3 py-2',
-      file_button: 'text-base px-4 py-2',
-      submit_button: 'text-base px-4 py-2',
-      tramway_select_input: 'text-base px-2 py-1 h-12',
-      checkbox_input: 'h-5 w-5',
-      checkbox_indicator: 'h-4 w-4'
-    },
-    large: {
-      text_input: 'text-xl px-4 py-3',
-      select_input: 'text-xl px-4 py-3',
-      file_button: 'text-xl px-5 py-3',
-      submit_button: 'text-xl px-5 py-3',
-      tramway_select_input: 'text-xl px-3 py-2 h-15',
-      checkbox_input: 'h-6 w-6',
-      checkbox_indicator: 'h-5 w-5'
-    }
+  SIZE_MODIFIERS = {
+    small: 'sm',
+    medium: nil,
+    large: 'lg'
   }.freeze
 
   private
 
-  def text_input_base_classes
-    'w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm transition-colors ' \
-      'placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 ' \
-      'focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed ' \
-      'disabled:opacity-50'
+  def text_input_classes
+    primitive_classes('tramway-form__input')
   end
 
-  def select_base_classes
-    'w-full rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm transition-colors ' \
-      'appearance-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 ' \
-      'focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed ' \
-      'disabled:opacity-50'
+  def text_area_classes
+    'tramway-form__textarea'
   end
 
-  def file_button_base_classes
-    'inline-flex items-center justify-center rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 ' \
-      'font-medium shadow-sm transition-colors hover:bg-zinc-900 focus-visible:outline-none ' \
-      'focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 ' \
-      'focus-visible:ring-offset-zinc-950 disabled:pointer-events-none disabled:opacity-50 cursor-pointer mt-4'
+  def select_classes
+    primitive_classes('tramway-form__select')
   end
 
-  def submit_button_base_classes
-    'font-medium rounded-md border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm transition-colors ' \
-      'hover:bg-zinc-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 ' \
-      'focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 cursor-pointer'
+  def file_button_classes
+    primitive_classes('tramway-form__file-button')
   end
 
-  def checkbox_base_classes
-    'shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm transition-colors ' \
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 ' \
-      'focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:cursor-not-allowed ' \
-      'disabled:opacity-50'
+  def checkbox_classes
+    primitive_classes('tramway-form__check-input')
   end
 
-  def form_label_classes
-    'block text-sm font-medium leading-none mb-2 text-zinc-200 peer-disabled:cursor-not-allowed ' \
-      'peer-disabled:opacity-70'
+  def tramway_select_trigger_classes
+    primitive_classes('tramway-select__trigger')
   end
 
   def form_hint_classes
-    'mt-1 text-sm text-zinc-400'
+    'tramway-form__hint'
   end
 
   def default_container_classes
-    return if options[:horizontal]
+    return 'tramway-form__field tramway-form__field--horizontal' if options[:horizontal]
 
-    'mb-4'
+    'tramway-form__field'
   end
 
-  def size_class(key)
-    size_classes = SIZE_CLASSES.fetch(size) { SIZE_CLASSES[:medium] }
-    size_classes.fetch(key) { SIZE_CLASSES[:medium].fetch(key) }
+  def primitive_classes(base)
+    [base, (size_modifier ? "#{base}--#{size_modifier}" : nil)].compact.join(' ')
+  end
+
+  def size_modifier
+    SIZE_MODIFIERS.fetch(size) { SIZE_MODIFIERS[:medium] }
   end
 end

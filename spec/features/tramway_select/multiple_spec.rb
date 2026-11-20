@@ -50,8 +50,8 @@ feature 'TramwaySelectComponent', :js, type: :feature do
     input = find("#user_role_tramway_select [data-tramway-select-target='dropdown']")
     selected_area = find("#user_role_tramway_select [data-tramway-select-target='showSelectedArea']")
 
-    expect(input[:class]).to include('min-h-12')
-    expect(input[:class]).not_to include(' h-12')
+    expect(input[:class]).to include('tramway-select__trigger')
+    expect(input.native.css_value('height').to_f).to be > input.native.css_value('min-height').to_f
     expect(selected_area[:class]).to include('flex-wrap')
     expect(selected_area[:class]).not_to include('overflow-x-auto')
   end

@@ -1,3 +1,2 @@
 .flex-1
-- classes = "#{@size_class} #{base_classes}"
-= @input.call(@attribute, @options.merge(placeholder: "{{placeholder}}", class: classes, data: { 'tramway-select-target' => 'hiddenInput' }))
+= @input.call(@attribute, @options.merge(placeholder: "{{placeholder}}", class: base_classes, data: { 'tramway-select-target' => 'hiddenInput' }))

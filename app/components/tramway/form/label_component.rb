@@ -8,8 +8,7 @@ module Tramway
       option :options, optional: true, default: -> { {} }
 
       def form_label_classes
-        'block text-sm font-medium leading-none mb-2 text-zinc-200 peer-disabled:cursor-not-allowed ' \
-          'peer-disabled:opacity-70'
+        'tramway-form__label'
       end
     end
   end
