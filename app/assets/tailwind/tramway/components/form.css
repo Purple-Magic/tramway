@@ -307,69 +307,12 @@
     }
   }
 
-  /* --- Actions: submit and cancel share one box model; only the color differs --- */
+  /* --- Actions: the submit and cancel buttons are `tramway_button`s sharing one box model --- */
   .tramway-form__actions {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     margin-top: 1.5rem;
-  }
-
-  .tramway-form__submit,
-  .tramway-form__cancel {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    height: var(--tramway-control-height-lg);
-    padding-inline: 1.25rem;
-    border: 1px solid transparent;
-    border-radius: var(--tramway-radius-md);
-    font-size: var(--tramway-text-label-size);
-    font-weight: var(--tramway-text-label-weight);
-    line-height: 1;
-    white-space: nowrap;
-    text-decoration: none;
-    transition:
-      background-color var(--tramway-duration-fast) var(--tramway-ease-standard),
-      border-color var(--tramway-duration-fast) var(--tramway-ease-standard),
-      transform var(--tramway-duration-fast) var(--tramway-ease-standard);
-  }
-
-  .tramway-form__submit--sm {
-    height: var(--tramway-control-height-sm);
-    padding-inline: 0.75rem;
-  }
-
-  .tramway-form__submit--md {
-    height: var(--tramway-control-height-md);
-    padding-inline: 1rem;
-  }
-
-  .tramway-form__submit {
-    background-color: var(--tramway-color-success-solid);
-    color: var(--tramway-color-on-accent);
-  }
-
-  .tramway-form__submit:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  .tramway-form__cancel {
-    border-color: var(--tramway-color-border-strong);
-    background-color: var(--tramway-color-surface-raised);
-    color: var(--tramway-color-text-primary);
-  }
-
-  @media (hover: hover) {
-    .tramway-form__submit:hover {
-      background-color: var(--tramway-color-success-solid-hover);
-    }
-
-    .tramway-form__cancel:hover {
-      background-color: var(--tramway-color-border-strong);
-    }
   }
 
   /* --- Rich text (Action Text / Trix): match the textarea surface --- */

@@ -35,7 +35,8 @@
     color: var(--tramway-color-text-secondary);
   }
 
-  .tramway-badge--success {
+  .tramway-badge--success,
+  .tramway-badge--submit {
     background-color: var(--tramway-color-success-bg);
     border-color: var(--tramway-color-success-border);
     color: var(--tramway-color-success);

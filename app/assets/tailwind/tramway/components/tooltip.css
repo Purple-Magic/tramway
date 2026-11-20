@@ -41,7 +41,12 @@
     opacity: 1;
   }
 
-  .tramway-tooltip__panel[hidden] {
-    display: none;
+  .tramway-tooltip__trigger {
+    display: inline-flex;
+    width: fit-content;
+  }
+
+  .tramway-tooltip__trigger--click {
+    cursor: pointer;
   }
 }

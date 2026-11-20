@@ -38,6 +38,7 @@
   }
 
   .tramway-flash--success,
+  .tramway-flash--submit,
   .tramway-alert--success {
     border-color: var(--tramway-color-success-border);
     color: var(--tramway-color-success);

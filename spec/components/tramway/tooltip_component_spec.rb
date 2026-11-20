@@ -8,14 +8,10 @@ describe Tramway::TooltipComponent, type: :component do
       'Help'
     end
 
-    expect(page).to have_css('div.relative.inline-flex.w-fit', text: 'Help')
-    expect(page).to have_css('div.peer.inline-flex.w-fit', text: 'Help')
+    expect(page).to have_css('div.tramway-tooltip', text: 'Help')
+    expect(page).to have_css('div.tramway-tooltip__trigger.tramway-tooltip__trigger--hover', text: 'Help')
     expect(page.find("span[role='tooltip']", text: 'More details', visible: :all)[:class].split).to include(
-      *%w[
-        absolute bottom-full left-1/2 z-50 mb-2 w-max min-w-40 max-w-sm -translate-x-1/2 rounded-md border
-        border-zinc-800 bg-zinc-950 px-2.5 py-1.5 text-xs font-medium leading-5 text-zinc-50 shadow-lg
-        pointer-events-none invisible opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100
-      ]
+      *%w[tramway-tooltip__panel tramway-tooltip__panel--hover]
     )
   end
 
@@ -25,11 +21,11 @@ describe Tramway::TooltipComponent, type: :component do
     end
 
     expect(page).to have_css(
-      "div.relative.inline-flex.w-fit[data-controller='tramway-tooltip']" \
+      "div.tramway-tooltip[data-controller='tramway-tooltip']" \
       "[data-action='click@window->tramway-tooltip#closeOnClickOutside']"
     )
     expect(page).to have_css(
-      "div.inline-flex.w-fit.cursor-pointer[data-action='click->tramway-tooltip#toggle']",
+      "div.tramway-tooltip__trigger--click[data-action='click->tramway-tooltip#toggle']",
       text: 'Toggle'
     )
   end

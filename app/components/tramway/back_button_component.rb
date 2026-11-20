@@ -4,8 +4,7 @@ module Tramway
   # Backbutton component
   class BackButtonComponent < BaseComponent
     def back_button_classes
-      'btn btn-delete bg-orange-400 hover:bg-orange-200 text-white font-semibold py-2 px-4 ' \
-        'rounded-xl ml-2 shadow-md'
+      'tramway-button tramway-button--secondary ml-2'
     end
   end
 end

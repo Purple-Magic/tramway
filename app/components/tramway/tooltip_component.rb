@@ -16,8 +16,8 @@ module Tramway
 
     def trigger_classes
       {
-        hover: %w[peer inline-flex w-fit],
-        onclick: %w[inline-flex w-fit cursor-pointer]
+        hover: %w[tramway-tooltip__trigger tramway-tooltip__trigger--hover],
+        onclick: %w[tramway-tooltip__trigger tramway-tooltip__trigger--click]
       }[normalized_event].join(' ')
     end
 
@@ -63,21 +63,15 @@ module Tramway
     end
 
     def base_wrapper_classes
-      %w[relative inline-flex w-fit]
+      %w[tramway-tooltip]
     end
 
     def base_tooltip_classes
-      %w[
-        absolute bottom-full left-1/2 z-50 mb-2 w-max min-w-40 max-w-sm -translate-x-1/2 rounded-md border
-        border-zinc-800 bg-zinc-950 px-2.5 py-1.5 text-xs font-medium leading-5 text-zinc-50 shadow-lg
-      ]
+      %w[tramway-tooltip__panel]
     end
 
     def event_tooltip_classes
-      if normalized_event == :hover
-        return %w[pointer-events-none invisible opacity-0 transition-opacity peer-hover:visible
-                  peer-hover:opacity-100]
-      end
+      return %w[tramway-tooltip__panel--hover] if normalized_event == :hover
 
       %w[hidden]
     end

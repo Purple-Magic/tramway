@@ -42,26 +42,24 @@ describe 'Entities Filters', type: :request do
       expect(response.body).not_to include('options="{')
     end
 
-    it 'highlights the currently applied filter with a distinct button style' do
+    it 'highlights the currently applied filter with a distinct button variant' do
       get '/admin/comments', params: { filter: 'with_text' }
 
       with_text_button = response.body[%r{<[^>]*>WITH_TEXT[^<]*</[^>]*>}]
       without_text_button = response.body[%r{<[^>]*>WITHOUT_TEXT[^<]*</[^>]*>}]
 
-      expect(with_text_button).to include('bg-blue-900')
-      expect(without_text_button).not_to include('bg-blue-900')
+      expect(with_text_button).to include('tramway-button--primary')
+      expect(without_text_button).not_to include('tramway-button--primary')
     end
 
-    it 'styles the inactive filter buttons and the filters toggle button like pagination buttons' do
+    it 'styles the inactive filter buttons and the filters toggle button with the ghost button variant' do
       get '/admin/comments', params: { filter: 'with_text' }
 
       without_text_button = response.body[%r{<[^>]*>WITHOUT_TEXT[^<]*</[^>]*>}]
       toggle_button = response.body[/<[^>]*data-action="tramway--collapsible#toggle"[^>]*>/]
 
-      expect(without_text_button).to include('bg-zinc-950')
-      expect(without_text_button).to include('border-zinc-800')
-      expect(toggle_button).to include('bg-zinc-950')
-      expect(toggle_button).to include('border-zinc-800')
+      expect(without_text_button).to include('tramway-button--ghost')
+      expect(toggle_button).to include('tramway-button--ghost')
     end
 
     it 'renders a clear filter button only when a filter is applied, linking back to the unfiltered list' do

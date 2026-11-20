@@ -11,7 +11,7 @@ module Tramway
     include Tramway::ColorsMethods
 
     def container_classes
-      'fixed top-4 right-4 z-50 flex w-fit max-w-sm flex-col gap-2 pointer-events-none'
+      'tramway-flash-container'
     end
 
     def flash_classes
@@ -19,29 +19,17 @@ module Tramway
     end
 
     def title_classes
-      'text-sm font-medium leading-6'
+      'tramway-flash__text'
     end
 
     private
 
     def base_flash_classes
-      %w[
-        flash pointer-events-auto opacity-100 rounded-md border bg-zinc-950 px-4 py-3 text-sm text-zinc-50
-        shadow-lg
-      ]
+      %w[flash tramway-flash]
     end
 
     def semantic_flash_classes
-      {
-        green: %w[border-green-800 text-green-400],
-        blue: %w[border-blue-800 text-blue-400],
-        orange: %w[border-orange-800 text-orange-400],
-        red: %w[border-red-800 text-red-400],
-        violet: %w[border-violet-800 text-violet-400],
-        indigo: %w[border-indigo-800 text-indigo-400],
-        yellow: %w[border-yellow-800 text-yellow-400],
-        zinc: %w[border-zinc-800 text-zinc-50]
-      }.fetch(resolved_color.to_sym, %w[border-zinc-800 text-zinc-50])
+      variant_classes('tramway-flash')
     end
   end
 end

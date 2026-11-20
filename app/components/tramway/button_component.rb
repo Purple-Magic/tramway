@@ -31,12 +31,7 @@ module Tramway
   # Default Tramway button
   #
   class ButtonComponent < BaseComponent
-    DEFAULT_BUTTON_CLASSES = %w[
-      inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium
-      ring-offset-background transition-colors
-      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-      disabled:pointer-events-none disabled:opacity-50
-    ].freeze
+    DEFAULT_BUTTON_CLASSES = %w[tramway-button].freeze
 
     option :text, optional: true, default: -> {}
     option :path, optional: true, default: -> { '#' }
@@ -70,11 +65,7 @@ module Tramway
         raise ArgumentError, "Invalid size: #{size}. Valid sizes are :small, :medium, :large."
       end
 
-      {
-        small: 'text-sm py-1 px-2 rounded',
-        medium: 'text-sm py-2 px-4 h-10',
-        large: 'text-xl px-5 py-3 h-12'
-      }[normalized_size]
+      { small: 'tramway-button--sm', medium: '', large: 'tramway-button--lg' }[normalized_size]
     end
 
     def default_button_classes
@@ -85,21 +76,11 @@ module Tramway
       (default_button_classes +
         size_classes.split +
         color_classes +
-        (@tag == :a ? [] : [cursor_class]) +
         options[:class].to_s.split).compact.join(' ')
     end
 
     def color_classes
-      return %w[bg-gray-800 text-gray-500 shadow-inner] if disabled?
-
-      case normalized_type
-      when :default, :life, :secondary
-        ['hover:bg-zinc-200', 'bg-zinc-50', 'text-zinc-950']
-      when :inverse
-        ['hover:bg-zinc-800', 'bg-zinc-950', 'text-zinc-50', 'border', 'border-zinc-800']
-      else
-        ["hover:bg-#{resolved_color}-900 bg-#{resolved_color}-900/30 text-#{resolved_color}-400"]
-      end
+      variant_classes('tramway-button')
     end
 
     def disabled?
@@ -123,14 +104,6 @@ module Tramway
       return 'event.stopPropagation();' if existing_onclick.blank?
 
       "#{existing_onclick}; event.stopPropagation();"
-    end
-
-    def cursor_class
-      if @tag != :a && !disabled?
-        'cursor-pointer'
-      else
-        'cursor-not-allowed'
-      end
     end
 
     def normalized_size

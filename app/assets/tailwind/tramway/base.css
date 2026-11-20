@@ -9,8 +9,6 @@
   .tramway-button,
   .tramway-nav-item,
   .tramway-pagination__link,
-  .tramway-form__submit,
-  .tramway-form__cancel,
   .tramway-form__check-input,
   .tramway-form__file-button,
   .tramway-select__option,
@@ -21,7 +19,6 @@
   .tramway-button:disabled,
   .tramway-button[disabled],
   .tramway-button[aria-disabled='true'],
-  .tramway-form__submit:disabled,
   .tramway-form__check-input:disabled,
   .tramway-form__check-input[disabled] {
     cursor: not-allowed;
@@ -31,8 +28,6 @@
   .tramway-button:focus-visible,
   .tramway-nav-item:focus-visible,
   .tramway-pagination__link:focus-visible,
-  .tramway-form__submit:focus-visible,
-  .tramway-form__cancel:focus-visible,
   .tramway-form__check-input:focus-visible,
   .tramway-form__file-button:focus-within,
   .tramway-navbar__toggle:focus-visible {
@@ -42,16 +37,12 @@
 
   /* --- Press feedback --- */
   .tramway-button:active,
-  .tramway-form__submit:active,
-  .tramway-form__cancel:active,
   .tramway-pagination__link:active {
     transform: scale(0.97);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .tramway-button:active,
-    .tramway-form__submit:active,
-    .tramway-form__cancel:active,
     .tramway-pagination__link:active {
       transform: none;
     }
@@ -60,8 +51,6 @@
     .tramway-form__input,
     .tramway-form__textarea,
     .tramway-form__select,
-    .tramway-form__submit,
-    .tramway-form__cancel,
     .tramway-nav-item,
     .tramway-pagination__link,
     .tramway-select__option,

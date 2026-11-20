@@ -52,6 +52,12 @@
     color: var(--tramway-color-on-accent);
   }
 
+  /* The one focal action of a form: solid green. */
+  .tramway-button--submit {
+    background-color: var(--tramway-color-success-solid);
+    color: var(--tramway-color-on-accent);
+  }
+
   .tramway-button--secondary {
     background-color: var(--tramway-color-surface-raised);
     border-color: var(--tramway-color-border-strong);
@@ -91,6 +97,10 @@
   @media (hover: hover) {
     .tramway-button--primary:hover {
       background-color: var(--tramway-color-accent-hover);
+    }
+
+    .tramway-button--submit:hover {
+      background-color: var(--tramway-color-success-solid-hover);
     }
 
     .tramway-button--secondary:hover {

@@ -24,12 +24,7 @@ EXPECTED_FORM_CLASSES = {
     focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950
     disabled:pointer-events-none disabled:opacity-50 cursor-pointer mt-4
   ],
-  submit_button: %w[
-    inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors
-    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-    disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 hover:bg-green-900 bg-green-900/30
-    text-green-400 cursor-pointer
-  ],
+  submit_button: %w[tramway-button tramway-button--submit],
   checkbox_input: %w[
     peer h-5 w-5 shrink-0 rounded-sm border border-zinc-800 bg-zinc-950 text-zinc-50 shadow-sm
     transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300
@@ -490,7 +485,7 @@ describe Tramway::Form::Builder, type: :view do
       let(:output) { builder.submit 'Create' }
 
       it 'renders the configured button size' do
-        expect(output).to have_selector 'button.h-12.px-5.py-3.text-xl'
+        expect(output).to have_selector 'button.tramway-button.tramway-button--lg'
       end
     end
   end

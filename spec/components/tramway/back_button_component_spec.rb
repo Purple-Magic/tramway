@@ -21,10 +21,6 @@ describe Tramway::BackButtonComponent, type: :component do
   end
 
   context 'with the default classes' do
-    it_behaves_like 'back button classes',
-                    %w[
-                      btn btn-delete bg-orange-400 hover:bg-orange-200 text-white font-semibold py-2 px-4 rounded-xl
-                      ml-2 shadow-md
-                    ]
+    it_behaves_like 'back button classes', %w[tramway-button tramway-button--secondary ml-2]
   end
 end

@@ -141,8 +141,8 @@ describe Tramway::ButtonComponent, type: :component do
       it 'wraps button with a hover tooltip' do
         render_inline(component)
 
-        expect(page).to have_css('div.relative.inline-flex.w-fit')
-        expect(page).to have_css('div.peer.inline-flex.w-fit')
+        expect(page).to have_css('div.tramway-tooltip')
+        expect(page).to have_css('div.tramway-tooltip__trigger--hover')
         expect(page).to have_css(
           "a.#{class_selector(expected_classes.fetch(:default))}[href='/projects']",
           text: 'View projects'
@@ -182,34 +182,44 @@ describe Tramway::ButtonComponent, type: :component do
 
   context 'with the default classes' do
     it_behaves_like 'button classes',
-                    default: %w[
-                      inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium
-                      ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2
-                      focus-visible:ring-ring
-                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
-                      hover:bg-zinc-200 bg-zinc-50 text-zinc-950
-                    ],
-                    non_get: %w[
-                      inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium
-                      ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2
-                      focus-visible:ring-ring
-                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 py-1 px-2 rounded
-                      hover:bg-zinc-200 bg-zinc-50 text-zinc-950 cursor-pointer
-                    ],
-                    link: %w[
-                      inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium
-                      ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2
-                      focus-visible:ring-ring
-                      focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2
-                      hover:bg-zinc-200 bg-zinc-50 text-zinc-950
-                    ],
-                    semantic: %w[
-                      bg-violet-900/30 hover:bg-violet-900 text-violet-400
-                    ],
-                    inverse: %w[
-                      bg-zinc-950 hover:bg-zinc-800 text-zinc-50 border border-zinc-800
-                    ],
-                    disabled: %w[bg-gray-800 text-gray-500 shadow-inner]
+                    default: %w[tramway-button tramway-button--secondary],
+                    non_get: %w[tramway-button tramway-button--sm tramway-button--tint tramway-tint--red],
+                    link: %w[tramway-button tramway-button--secondary],
+                    semantic: %w[tramway-button tramway-button--primary],
+                    inverse: %w[tramway-button tramway-button--ghost],
+                    disabled: %w[tramway-button tramway-button--primary]
+  end
+
+  describe 'variants' do
+    {
+      default: :secondary, life: :secondary, secondary: :secondary, primary: :primary, hope: :primary,
+      success: :success, will: :success, submit: :submit, warning: :warning, greed: :warning,
+      danger: :danger, rage: :danger, inverse: :ghost, love: :primary, compassion: :secondary, fear: :warning
+    }.each do |type, variant|
+      it "renders the #{variant} variant for type #{type}" do
+        render_inline(described_class.new(path: '/projects', text: 'Go', type:))
+
+        expect(page).to have_css("a.tramway-button.tramway-button--#{variant}")
+      end
+    end
+
+    it 'falls back to a tinted variant for an explicit Tailwind color' do
+      render_inline(described_class.new(path: '/projects', text: 'Go', color: :teal))
+
+      expect(page).to have_css('a.tramway-button.tramway-button--tint.tramway-tint--teal')
+    end
+
+    it 'uses the variant of an explicit color that is a Tramway type' do
+      render_inline(described_class.new(path: '/projects', text: 'Go', color: :danger))
+
+      expect(page).to have_css('a.tramway-button.tramway-button--danger')
+    end
+
+    it 'renders the large size modifier' do
+      render_inline(described_class.new(path: '/projects', text: 'Go', size: :large))
+
+      expect(page).to have_css('a.tramway-button.tramway-button--lg')
+    end
   end
 
   context 'when rendering outside of a table cell' do
