@@ -11,39 +11,10 @@ module Tramway
     # nodoc
     # rubocop:disable-next Metrics/ModuleLength
     module InstallGeneratorHelpers
-      TAILWIND_SCROLLBAR_UTILITY = <<~CSS.chomp
-        @layer utilities {
-          .tramway-scrollbar {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(82, 82, 91, 0.9) rgba(9, 9, 11, 0.92);
-          }
-
-          .tramway-scrollbar::-webkit-scrollbar {
-            width: 0.5rem;
-            height: 0.5rem;
-          }
-
-          .tramway-scrollbar::-webkit-scrollbar-track {
-            background: rgba(9, 9, 11, 0.92);
-          }
-
-          .tramway-scrollbar::-webkit-scrollbar-thumb {
-            border-radius: 9999px;
-            background: rgba(82, 82, 91, 0.9);
-          }
-
-          .tramway-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(113, 113, 122, 0.95);
-          }
-
-          .tramway-scrollbar::-webkit-scrollbar-corner {
-            background: transparent;
-          }
-        }
-      CSS
+      TAILWIND_TRAMWAY_IMPORT = '@import "../builds/tailwind/tramway";'
 
       TAILWIND_APPLICATION_STYLESHEET_CONTENT =
-        "@import \"tailwindcss\";\n\n#{TAILWIND_SCROLLBAR_UTILITY}\n".freeze
+        "@import \"tailwindcss\";\n#{TAILWIND_TRAMWAY_IMPORT}\n".freeze
 
       private
 
@@ -83,6 +54,18 @@ module Tramway
 
       def tailwind_css_import_line
         '@import "tailwindcss";'
+      end
+
+      # Keeps the host's own CSS untouched and only makes sure the Tailwind import is followed by the
+      # Tramway engine stylesheet (tokens and `tramway-*` primitives).
+      def with_tramway_stylesheet_import(content)
+        return content if content.include?(TAILWIND_TRAMWAY_IMPORT)
+
+        unless content.include?(tailwind_css_import_line)
+          return "#{content}\n#{TAILWIND_APPLICATION_STYLESHEET_CONTENT}"
+        end
+
+        content.sub(tailwind_css_import_line, "#{tailwind_css_import_line}\n#{TAILWIND_TRAMWAY_IMPORT}")
       end
 
       def importmap_path
@@ -399,11 +382,8 @@ module Tramway
         return create_file(path, TAILWIND_APPLICATION_STYLESHEET_CONTENT) unless File.exist?(path)
 
         content = File.read(path)
-        return if content.include?(tailwind_css_import_line) && content.include?(TAILWIND_SCROLLBAR_UTILITY)
-
-        updated = content.include?(tailwind_css_import_line) ? content : "#{content}\n#{tailwind_css_import_line}\n"
-        updated = "#{updated}\n#{TAILWIND_SCROLLBAR_UTILITY}\n" unless updated.include?(TAILWIND_SCROLLBAR_UTILITY)
-        File.write(path, updated)
+        updated = with_tramway_stylesheet_import(content)
+        File.write(path, updated) if updated != content
       end
 
       def ensure_importmap_pin

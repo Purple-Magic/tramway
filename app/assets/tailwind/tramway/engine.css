@@ -1,0 +1,16 @@
+/*
+ * Tramway stylesheet entry point.
+ *
+ * `tailwindcss-rails` picks this file up automatically: `bin/rails tailwindcss:build`
+ * generates `app/assets/builds/tailwind/tramway.css` that imports it, and the
+ * host's `app/assets/tailwind/application.css` imports that generated file
+ * (`rails g tramway:install` adds the line).
+ */
+
+@import "./tokens.css";
+@import "./base.css";
+
+/* Let Tailwind find the utility classes still used by Tramway's own templates. */
+@source "../../../components";
+@source "../../../views";
+@source "../../javascripts";

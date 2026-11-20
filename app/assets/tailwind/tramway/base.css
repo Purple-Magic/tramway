@@ -1,0 +1,105 @@
+/*
+ * Tramway base rules shared by every primitive: cursor affordance, visible
+ * focus ring, press feedback and reduced motion. They are scoped to
+ * `tramway-*` classes so they never leak into the host application's own UI.
+ */
+
+@layer components {
+  /* --- Cursor affordance --- */
+  .tramway-button,
+  .tramway-nav-item,
+  .tramway-pagination__link,
+  .tramway-form__submit,
+  .tramway-form__cancel,
+  .tramway-form__check-input,
+  .tramway-form__file-button,
+  .tramway-select__option,
+  .tramway-select__trigger {
+    cursor: pointer;
+  }
+
+  .tramway-button:disabled,
+  .tramway-button[disabled],
+  .tramway-button[aria-disabled='true'],
+  .tramway-form__submit:disabled,
+  .tramway-form__check-input:disabled,
+  .tramway-form__check-input[disabled] {
+    cursor: not-allowed;
+  }
+
+  /* --- Visible focus ring --- */
+  .tramway-button:focus-visible,
+  .tramway-nav-item:focus-visible,
+  .tramway-pagination__link:focus-visible,
+  .tramway-form__submit:focus-visible,
+  .tramway-form__cancel:focus-visible,
+  .tramway-form__check-input:focus-visible,
+  .tramway-form__file-button:focus-within,
+  .tramway-navbar__toggle:focus-visible {
+    outline: 2px solid var(--tramway-color-accent);
+    outline-offset: 2px;
+  }
+
+  /* --- Press feedback --- */
+  .tramway-button:active,
+  .tramway-form__submit:active,
+  .tramway-form__cancel:active,
+  .tramway-pagination__link:active {
+    transform: scale(0.97);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tramway-button:active,
+    .tramway-form__submit:active,
+    .tramway-form__cancel:active,
+    .tramway-pagination__link:active {
+      transform: none;
+    }
+
+    .tramway-button,
+    .tramway-form__input,
+    .tramway-form__textarea,
+    .tramway-form__select,
+    .tramway-form__submit,
+    .tramway-form__cancel,
+    .tramway-nav-item,
+    .tramway-pagination__link,
+    .tramway-select__option,
+    .tramway-tooltip__panel {
+      transition-duration: 0.01ms;
+    }
+
+    .tramway-flash {
+      animation-duration: 0.01ms;
+    }
+  }
+}
+
+@layer utilities {
+  .tramway-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--tramway-color-border-strong) var(--tramway-color-bg);
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar-track {
+    background: var(--tramway-color-bg);
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: var(--tramway-radius-full);
+    background: var(--tramway-color-border-strong);
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--tramway-color-text-muted);
+  }
+
+  .tramway-scrollbar::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}

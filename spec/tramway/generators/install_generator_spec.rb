@@ -6,38 +6,8 @@ require 'fileutils'
 require 'stringio'
 require 'generators/tramway/install/install_generator'
 
-TAILWIND_SCROLLBAR_UTILITY = <<~CSS.chomp
-  @layer utilities {
-    .tramway-scrollbar {
-      scrollbar-width: thin;
-      scrollbar-color: rgba(82, 82, 91, 0.9) rgba(9, 9, 11, 0.92);
-    }
-
-    .tramway-scrollbar::-webkit-scrollbar {
-      width: 0.5rem;
-      height: 0.5rem;
-    }
-
-    .tramway-scrollbar::-webkit-scrollbar-track {
-      background: rgba(9, 9, 11, 0.92);
-    }
-
-    .tramway-scrollbar::-webkit-scrollbar-thumb {
-      border-radius: 9999px;
-      background: rgba(82, 82, 91, 0.9);
-    }
-
-    .tramway-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: rgba(113, 113, 122, 0.95);
-    }
-
-    .tramway-scrollbar::-webkit-scrollbar-corner {
-      background: transparent;
-    }
-  }
-CSS
-
-TAILWIND_APPLICATION_STYLESHEET_CONTENT = "@import \"tailwindcss\";\n\n#{TAILWIND_SCROLLBAR_UTILITY}\n".freeze
+TAILWIND_TRAMWAY_IMPORT = '@import "../builds/tailwind/tramway";'
+TAILWIND_APPLICATION_STYLESHEET_CONTENT = "@import \"tailwindcss\";\n#{TAILWIND_TRAMWAY_IMPORT}\n".freeze
 
 RSpec.describe Tramway::Generators::InstallGenerator do
   let(:destination_root) { Dir.mktmpdir }
@@ -203,6 +173,17 @@ RSpec.describe Tramway::Generators::InstallGenerator do
 
       content = File.read(tailwind_application_path)
       expect(content).to eq("body { color: black; }\n#{TAILWIND_APPLICATION_STYLESHEET_CONTENT}")
+    end
+
+    it 'adds the tramway import after an existing tailwind import and keeps the rest untouched' do
+      FileUtils.mkdir_p(File.dirname(tailwind_application_path))
+      File.write(tailwind_application_path, "@import \"tailwindcss\";\n\nbody { color: black; }\n")
+
+      run_generator
+
+      expect(File.read(tailwind_application_path)).to eq(
+        "@import \"tailwindcss\";\n#{TAILWIND_TRAMWAY_IMPORT}\n\nbody { color: black; }\n"
+      )
     end
 
     it 'does not duplicate the import line' do

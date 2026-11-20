@@ -1,0 +1,147 @@
+/*
+ * Tramway design tokens.
+ *
+ * Single source of truth for the colors, spacing, radii, typography, motion
+ * and layering used by every `tramway-*` primitive. They mirror the TimeMagic
+ * design system one-to-one (dark is the only theme).
+ *
+ * Host applications can override any token in their own CSS, after the
+ * Tramway import:
+ *
+ *   :root { --tramway-color-accent: var(--color-violet-500); }
+ */
+
+:root {
+  /* --- Color: backgrounds & surfaces --- */
+  --tramway-color-bg: var(--color-zinc-950);
+  --tramway-color-bg-raised: var(--color-zinc-900);
+  --tramway-color-surface: var(--color-zinc-900);
+  --tramway-color-surface-raised: var(--color-zinc-800);
+  --tramway-color-overlay: rgb(9 9 11 / 0.72);
+
+  /* --- Color: borders --- */
+  --tramway-color-border: var(--color-zinc-800);
+  --tramway-color-border-strong: var(--color-zinc-700);
+
+  /* --- Color: text --- */
+  --tramway-color-text-primary: var(--color-zinc-50);
+  --tramway-color-text-secondary: var(--color-zinc-300);
+  --tramway-color-text-muted: var(--color-zinc-500);
+  --tramway-color-text-inverse: var(--color-zinc-950);
+
+  /* --- Color: accent (interactive / brand) --- */
+  --tramway-color-accent: var(--color-blue-500);
+  --tramway-color-accent-hover: var(--color-blue-400);
+  --tramway-color-accent-active: var(--color-blue-600);
+  --tramway-color-accent-text: var(--color-blue-400);
+  --tramway-color-on-accent: var(--color-white);
+
+  /* --- Color: semantic status --- */
+  --tramway-color-success: var(--color-emerald-400);
+  --tramway-color-success-bg: var(--color-emerald-950);
+  --tramway-color-success-border: var(--color-emerald-700);
+  /* Solid fill for the one primary call to action of a form (submit). */
+  --tramway-color-success-solid: var(--color-emerald-600);
+  --tramway-color-success-solid-hover: var(--color-emerald-500);
+
+  --tramway-color-warning: var(--color-amber-400);
+  --tramway-color-warning-bg: var(--color-amber-950);
+  --tramway-color-warning-border: var(--color-amber-700);
+
+  --tramway-color-danger: var(--color-red-400);
+  --tramway-color-danger-bg: var(--color-red-950);
+  --tramway-color-danger-border: var(--color-red-700);
+
+  /* --- Color: restrained selected/active tint --- */
+  --tramway-color-accent-surface: color-mix(in srgb, var(--tramway-color-accent) 12%, transparent);
+  --tramway-color-accent-surface-hover: color-mix(in srgb, var(--tramway-color-accent) 17%, transparent);
+
+  /* --- Spacing (page/section/stack rhythm) --- */
+  --tramway-space-page-x: 1rem;
+  --tramway-space-page-x-lg: 2rem;
+  --tramway-space-page-y: 1.5rem;
+  --tramway-space-section: 2rem;
+  --tramway-space-stack: 1rem;
+  --tramway-space-cluster: 0.5rem;
+  --tramway-space-card-padding: 1.25rem;
+
+  /* --- Radius --- */
+  --tramway-radius-sm: 0.375rem;
+  --tramway-radius-md: 0.625rem;
+  --tramway-radius-card: 0.875rem;
+  --tramway-radius-full: 9999px;
+
+  /* --- Typography --- */
+  --tramway-font-sans: var(--font-sans);
+
+  --tramway-text-display-size: 1.875rem;
+  --tramway-text-display-weight: 600;
+  --tramway-text-display-line: 2.25rem;
+
+  --tramway-text-page-title-size: 1.75rem;
+  --tramway-text-page-title-weight: 600;
+  --tramway-text-page-title-line: 2.25rem;
+
+  --tramway-text-section-title-size: 1.125rem;
+  --tramway-text-section-title-weight: 600;
+  --tramway-text-section-title-line: 1.5rem;
+
+  --tramway-text-card-title-size: 1rem;
+  --tramway-text-card-title-weight: 600;
+  --tramway-text-card-title-line: 1.375rem;
+
+  --tramway-text-body-size: 0.9375rem;
+  --tramway-text-body-weight: 400;
+  --tramway-text-body-line: 1.5rem;
+
+  --tramway-text-body-sm-size: 0.875rem;
+  --tramway-text-body-sm-weight: 400;
+  --tramway-text-body-sm-line: 1.375rem;
+
+  --tramway-text-label-size: 0.875rem;
+  --tramway-text-label-weight: 500;
+  --tramway-text-label-line: 1.25rem;
+
+  --tramway-text-metadata-size: 0.8125rem;
+  --tramway-text-metadata-weight: 500;
+  --tramway-text-metadata-line: 1.125rem;
+
+  --tramway-text-caption-size: 0.75rem;
+  --tramway-text-caption-weight: 500;
+  --tramway-text-caption-line: 1rem;
+
+  /* --- Control heights --- */
+  --tramway-control-height-sm: 2rem;
+  --tramway-control-height-md: 2.5rem;
+  --tramway-control-height-lg: 2.75rem;
+
+  /* --- Content widths --- */
+  --tramway-content-width-md: 42rem;
+  --tramway-content-width-lg: 64rem;
+  --tramway-content-width-xl: 80rem;
+
+  /* --- Motion --- */
+  --tramway-duration-fast: 120ms;
+  --tramway-duration-base: 200ms;
+  --tramway-duration-slow: 320ms;
+  --tramway-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- Shadows --- */
+  --tramway-shadow-card: 0 1px 2px rgb(0 0 0 / 0.4);
+  --tramway-shadow-raised: 0 8px 24px rgb(0 0 0 / 0.45);
+
+  /* --- Navigation shell --- */
+  --tramway-shell-sidebar-width: 18rem;
+  --tramway-shell-sidebar-width-collapsed: 6rem;
+  --tramway-shell-mobile-header-height: 3.5rem;
+
+  /* --- Z-index layers --- */
+  --tramway-z-dropdown: 30;
+  --tramway-z-sticky: 40;
+  --tramway-z-overlay: 50;
+  --tramway-z-modal: 60;
+  --tramway-z-toast: 70;
+
+  /* --- Icons (data URIs cannot read tokens, so their colors live here) --- */
+  --tramway-icon-select-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%239ca3af' stroke-width='1.5'%3E%3Cpath d='m6 8 4 4 4-4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
