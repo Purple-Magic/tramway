@@ -9,7 +9,7 @@ module Tramway
         option :multiple
 
         def selected_item_classes
-          classes = 'tramway-select__chip selected-option'
+          classes = 'tramway-select__chip selected-option cursor-pointer'
           classes += ' tramway-select__chip--bordered' if multiple
           classes
         end

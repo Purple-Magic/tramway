@@ -4,13 +4,13 @@ require 'rails_helper'
 require 'tramway/helpers/views_helper'
 require 'support/view_helpers'
 
-TABLE_HELPER_SMALL_HEADER_ROW_CLASSES = 'div-table-row tramway-data-table__head tramway-data-table__head--sm'
+TABLE_HELPER_SMALL_HEADER_ROW_CLASSES = 'div-table-row grid tramway-data-table__head tramway-data-table__head--sm'
 TABLE_HELPER_SMALL_HEADER_ROW_STYLE =
   'grid-template-columns: repeat(2, minmax(8rem, 1fr)); min-width: 16.5rem'
 TABLE_HELPER_SMALL_HEADER_CELL_CLASSES = 'div-table-cell tramway-data-table__head-cell'
 TABLE_HELPER_SMALL_CELL_CLASSES =
   'div-table-cell tramway-data-table__cell tramway-data-table__cell--sm tramway-data-table__cell--truncate'
-TABLE_HELPER_MEDIUM_HEADER_ROW_CLASSES = 'div-table-row tramway-data-table__head'
+TABLE_HELPER_MEDIUM_HEADER_ROW_CLASSES = 'div-table-row grid tramway-data-table__head'
 TABLE_HELPER_MEDIUM_HEADER_ROW_STYLE =
   'grid-template-columns: repeat(2, minmax(10rem, 1fr)); min-width: 21.0rem'
 TABLE_HELPER_MEDIUM_HEADER_CELL_CLASSES = 'div-table-cell tramway-data-table__head-cell'

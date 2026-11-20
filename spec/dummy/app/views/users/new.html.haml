@@ -1,4 +1,5 @@
 %script{ src: "https://cdn.tailwindcss.com" }
+= stylesheet_link_tag 'tailwind'
 
 = javascript_importmap_tags
 = tramway_form_for @user_form, url: { controller: :users, action: :create } do |f|

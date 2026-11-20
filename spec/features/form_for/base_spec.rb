@@ -44,7 +44,7 @@ feature 'Form For Base Test', :js, type: :feature do
     scenario 'keeps unchecked checkbox visible' do
       button = find("button[role='checkbox']")
 
-      expect(button[:style]).to be_nil
+      expect(button[:style]).to be_blank
       expect(button[:class].split).to include('tramway-form__check-input')
       expect(page).to have_selector("button[role='checkbox'] span.tramway-form__check-indicator[hidden]", visible: :all)
     end

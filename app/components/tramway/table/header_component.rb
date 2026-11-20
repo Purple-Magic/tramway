@@ -9,15 +9,15 @@ module Tramway
 
       SIZE_CLASSES = {
         small: {
-          row: 'div-table-row tramway-data-table__head tramway-data-table__head--sm',
+          row: 'div-table-row grid tramway-data-table__head tramway-data-table__head--sm',
           cell: 'div-table-cell tramway-data-table__head-cell'
         },
         medium: {
-          row: 'div-table-row tramway-data-table__head',
+          row: 'div-table-row grid tramway-data-table__head',
           cell: 'div-table-cell tramway-data-table__head-cell'
         },
         large: {
-          row: 'div-table-row tramway-data-table__head tramway-data-table__head--lg',
+          row: 'div-table-row grid tramway-data-table__head tramway-data-table__head--lg',
           cell: 'div-table-cell tramway-data-table__head-cell'
         }
       }.freeze

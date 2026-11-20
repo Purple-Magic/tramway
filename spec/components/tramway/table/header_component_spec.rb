@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-MEDIUM_HEADER_ROW_CLASSES = %w[div-table-row tramway-data-table__head].freeze
+MEDIUM_HEADER_ROW_CLASSES = %w[div-table-row grid tramway-data-table__head].freeze
 MEDIUM_HEADER_CELL_CLASSES = %w[div-table-cell tramway-data-table__head-cell].freeze
-SMALL_HEADER_ROW_CLASSES = %w[div-table-row tramway-data-table__head tramway-data-table__head--sm].freeze
+SMALL_HEADER_ROW_CLASSES = %w[div-table-row grid tramway-data-table__head tramway-data-table__head--sm].freeze
 SMALL_HEADER_CELL_CLASSES = %w[div-table-cell tramway-data-table__head-cell].freeze
-LARGE_HEADER_ROW_CLASSES = %w[div-table-row tramway-data-table__head tramway-data-table__head--lg].freeze
+LARGE_HEADER_ROW_CLASSES = %w[div-table-row grid tramway-data-table__head tramway-data-table__head--lg].freeze
 LARGE_HEADER_CELL_CLASSES = %w[div-table-cell tramway-data-table__head-cell].freeze
 
 describe Tramway::Table::HeaderComponent, type: :component do
