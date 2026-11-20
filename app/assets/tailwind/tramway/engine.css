@@ -9,6 +9,19 @@
 
 @import "./tokens.css";
 @import "./base.css";
+@import "./components/typography.css";
+@import "./components/layout.css";
+@import "./components/button.css";
+@import "./components/badge.css";
+@import "./components/flash.css";
+@import "./components/form.css";
+@import "./components/select.css";
+@import "./components/table.css";
+@import "./components/pagination.css";
+@import "./components/navigation.css";
+@import "./components/tooltip.css";
+@import "./components/chat.css";
+@import "./components/content.css";
 
 /* Let Tailwind find the utility classes still used by Tramway's own templates. */
 @source "../../../components";

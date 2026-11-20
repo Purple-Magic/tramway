@@ -1,0 +1,411 @@
+/*
+ * Form vocabulary. One class per control type, so every input of the same type
+ * looks identical wherever it renders: field, label, control, hint, error,
+ * error summary, actions with a matched submit/cancel pair.
+ */
+
+@layer components {
+  .tramway-form {
+    background-color: var(--tramway-color-surface);
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-card);
+    box-shadow: var(--tramway-shadow-card);
+    padding: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .tramway-form {
+      padding: 1.5rem 1.75rem;
+    }
+  }
+
+  .tramway-form__error-summary {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--tramway-color-danger-border);
+    border-radius: var(--tramway-radius-md);
+    background-color: var(--tramway-color-danger-bg);
+    color: var(--tramway-color-danger);
+    font-size: var(--tramway-text-body-sm-size);
+  }
+
+  .tramway-form__error-summary-title {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+
+  .tramway-form__error-summary-list {
+    padding-left: 1.125rem;
+    list-style: disc;
+  }
+
+  .tramway-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin-bottom: 1rem;
+  }
+
+  .tramway-form__field--horizontal {
+    margin-bottom: 0;
+  }
+
+  .tramway-form__label {
+    display: block;
+    margin-bottom: 0.125rem;
+    color: var(--tramway-color-text-secondary);
+    font-size: var(--tramway-text-label-size);
+    font-weight: var(--tramway-text-label-weight);
+    line-height: var(--tramway-text-label-line);
+  }
+
+  .tramway-form__required {
+    margin-left: 0.125rem;
+    color: var(--tramway-color-danger);
+  }
+
+  .tramway-form__control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    min-width: 0;
+  }
+
+  .tramway-form__hint {
+    color: var(--tramway-color-text-muted);
+    font-size: var(--tramway-text-caption-size);
+    font-weight: 400;
+  }
+
+  .tramway-form__error {
+    color: var(--tramway-color-danger);
+    font-size: var(--tramway-text-caption-size);
+    font-weight: 500;
+  }
+
+  /* --- Text-like inputs, textarea, select --- */
+  .tramway-form__input,
+  .tramway-form__textarea,
+  .tramway-form__select {
+    display: block;
+    width: 100%;
+    appearance: none;
+    padding-inline: 0.75rem;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-md);
+    background-color: var(--tramway-color-bg);
+    color: var(--tramway-color-text-primary);
+    color-scheme: dark;
+    font-family: inherit;
+    font-size: var(--tramway-text-body-sm-size);
+    transition:
+      border-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      box-shadow var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  .tramway-form__input,
+  .tramway-form__select {
+    height: var(--tramway-control-height-md);
+  }
+
+  .tramway-form__input--sm,
+  .tramway-form__select--sm {
+    height: var(--tramway-control-height-sm);
+    padding-inline: 0.5rem;
+  }
+
+  .tramway-form__input--lg,
+  .tramway-form__select--lg {
+    height: var(--tramway-control-height-lg);
+    padding-inline: 1rem;
+    font-size: var(--tramway-text-body-size);
+  }
+
+  .tramway-form__select {
+    padding-right: 2.25rem;
+    background-image: var(--tramway-icon-select-caret);
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+  }
+
+  .tramway-form__select[multiple] {
+    height: auto;
+    min-height: 8rem;
+    padding-block: 0.375rem;
+    background-image: none;
+  }
+
+  .tramway-form__select[multiple] option:checked {
+    background-color: var(--tramway-color-accent-surface);
+    color: var(--tramway-color-text-primary);
+  }
+
+  .tramway-form__textarea {
+    min-height: 6.5rem;
+    padding-block: 0.625rem;
+    line-height: var(--tramway-text-body-sm-line);
+    resize: vertical;
+  }
+
+  .tramway-form__input::placeholder,
+  .tramway-form__textarea::placeholder {
+    color: var(--tramway-color-text-muted);
+  }
+
+  /* Native date/time pickers: keep the control, recolor the picker icon. */
+  .tramway-form__input::-webkit-calendar-picker-indicator {
+    opacity: 0.7;
+    cursor: pointer;
+  }
+
+  @media (hover: hover) {
+    .tramway-form__input:hover,
+    .tramway-form__textarea:hover,
+    .tramway-form__select:hover {
+      border-color: var(--tramway-color-border-strong);
+    }
+  }
+
+  .tramway-form__input:focus-visible,
+  .tramway-form__textarea:focus-visible,
+  .tramway-form__select:focus-visible {
+    border-color: var(--tramway-color-accent);
+    outline: 2px solid var(--tramway-color-accent);
+    outline-offset: 1px;
+  }
+
+  .tramway-form__input[aria-invalid='true'],
+  .tramway-form__textarea[aria-invalid='true'],
+  .tramway-form__select[aria-invalid='true'] {
+    border-color: var(--tramway-color-danger-border);
+  }
+
+  .tramway-form__input[aria-invalid='true']:focus-visible,
+  .tramway-form__textarea[aria-invalid='true']:focus-visible,
+  .tramway-form__select[aria-invalid='true']:focus-visible {
+    outline-color: var(--tramway-color-danger);
+  }
+
+  .tramway-form__input:disabled,
+  .tramway-form__textarea:disabled,
+  .tramway-form__select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* --- Checkbox: native-looking box, accent fill and white check when checked --- */
+  .tramway-form__check {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin-bottom: 1rem;
+  }
+
+  .tramway-form__check-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tramway-form__check-input {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    box-sizing: border-box;
+    width: 1.125rem;
+    height: 1.125rem;
+    min-width: 1.125rem;
+    min-height: 1.125rem;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--tramway-color-border-strong);
+    border-radius: var(--tramway-radius-sm);
+    background-color: var(--tramway-color-bg);
+    color: var(--tramway-color-on-accent);
+    line-height: 1;
+    transition:
+      border-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      background-color var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  .tramway-form__check-input--sm {
+    width: 1rem;
+    height: 1rem;
+    min-width: 1rem;
+    min-height: 1rem;
+  }
+
+  .tramway-form__check-input--lg {
+    width: 1.5rem;
+    height: 1.5rem;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+  }
+
+  .tramway-form__check-input[data-state='checked'] {
+    border-color: var(--tramway-color-accent);
+    background-color: var(--tramway-color-accent);
+  }
+
+  .tramway-form__check-input:disabled,
+  .tramway-form__check-input[disabled] {
+    opacity: 0.6;
+  }
+
+  .tramway-form__check-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.75rem;
+    height: 0.75rem;
+    pointer-events: none;
+  }
+
+  .tramway-form__check-indicator[hidden] {
+    display: none;
+  }
+
+  .tramway-form__check-label {
+    margin-bottom: 0;
+    color: var(--tramway-color-text-secondary);
+    font-size: var(--tramway-text-body-sm-size);
+    cursor: pointer;
+  }
+
+  /* --- File input: the visible label acts as the button --- */
+  .tramway-form__file-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    height: var(--tramway-control-height-md);
+    padding-inline: 1rem;
+    border: 1px solid var(--tramway-color-border-strong);
+    border-radius: var(--tramway-radius-md);
+    background-color: var(--tramway-color-surface-raised);
+    color: var(--tramway-color-text-primary);
+    font-size: var(--tramway-text-label-size);
+    font-weight: var(--tramway-text-label-weight);
+    transition: background-color var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  .tramway-form__file-button--sm {
+    height: var(--tramway-control-height-sm);
+    padding-inline: 0.75rem;
+  }
+
+  .tramway-form__file-button--lg {
+    height: var(--tramway-control-height-lg);
+    padding-inline: 1.25rem;
+  }
+
+  @media (hover: hover) {
+    .tramway-form__file-button:hover {
+      background-color: var(--tramway-color-border-strong);
+    }
+  }
+
+  /* --- Actions: submit and cancel share one box model; only the color differs --- */
+  .tramway-form__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .tramway-form__submit,
+  .tramway-form__cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: var(--tramway-control-height-lg);
+    padding-inline: 1.25rem;
+    border: 1px solid transparent;
+    border-radius: var(--tramway-radius-md);
+    font-size: var(--tramway-text-label-size);
+    font-weight: var(--tramway-text-label-weight);
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    transition:
+      background-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      border-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      transform var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  .tramway-form__submit--sm {
+    height: var(--tramway-control-height-sm);
+    padding-inline: 0.75rem;
+  }
+
+  .tramway-form__submit--md {
+    height: var(--tramway-control-height-md);
+    padding-inline: 1rem;
+  }
+
+  .tramway-form__submit {
+    background-color: var(--tramway-color-success-solid);
+    color: var(--tramway-color-on-accent);
+  }
+
+  .tramway-form__submit:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .tramway-form__cancel {
+    border-color: var(--tramway-color-border-strong);
+    background-color: var(--tramway-color-surface-raised);
+    color: var(--tramway-color-text-primary);
+  }
+
+  @media (hover: hover) {
+    .tramway-form__submit:hover {
+      background-color: var(--tramway-color-success-solid-hover);
+    }
+
+    .tramway-form__cancel:hover {
+      background-color: var(--tramway-color-border-strong);
+    }
+  }
+
+  /* --- Rich text (Action Text / Trix): match the textarea surface --- */
+  .tramway-form__rich-text {
+    width: 100%;
+    min-height: 10rem;
+    max-width: none;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-md);
+    background-color: var(--tramway-color-bg);
+    color: var(--tramway-color-text-primary);
+    font-size: var(--tramway-text-body-sm-size);
+  }
+
+  .tramway-form__rich-text:focus-visible {
+    border-color: var(--tramway-color-accent);
+    outline: 2px solid var(--tramway-color-accent);
+    outline-offset: 1px;
+  }
+
+  trix-toolbar .trix-button-group {
+    border-color: var(--tramway-color-border-strong);
+    border-radius: var(--tramway-radius-sm);
+  }
+
+  trix-toolbar .trix-button {
+    border-color: var(--tramway-color-border-strong);
+    background-color: var(--tramway-color-surface);
+  }
+
+  trix-toolbar .trix-button:not(.trix-active)::before {
+    filter: invert(1);
+  }
+
+  trix-toolbar .trix-button.trix-active {
+    background-color: var(--tramway-color-accent-surface);
+  }
+}

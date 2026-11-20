@@ -1,0 +1,91 @@
+/* Chat: message bubbles, message list and input row (visual only). */
+
+@layer components {
+  .tramway-chat__messages {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.5rem;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0.5rem;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-card) var(--tramway-radius-card) 0 0;
+    background-color: var(--tramway-color-bg);
+    color: var(--tramway-color-text-primary);
+  }
+
+  @media (min-width: 768px) {
+    .tramway-chat__messages {
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+  }
+
+  .tramway-chat__form {
+    flex-shrink: 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--tramway-color-border);
+  }
+
+  .tramway-chat__input {
+    flex: 1;
+    height: var(--tramway-control-height-md);
+    padding-inline: 1rem;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-md);
+    background-color: var(--tramway-color-surface);
+    color: var(--tramway-color-text-primary);
+    font-size: var(--tramway-text-body-sm-size);
+  }
+
+  .tramway-chat__input::placeholder {
+    color: var(--tramway-color-text-muted);
+  }
+
+  .tramway-chat__input:focus-visible {
+    border-color: var(--tramway-color-accent);
+    outline: 2px solid var(--tramway-color-accent);
+    outline-offset: 1px;
+  }
+
+  .tramway-chat__input:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .tramway-chat__bubble {
+    max-width: 32rem;
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    box-shadow: var(--tramway-shadow-card);
+    color: var(--tramway-color-text-primary);
+    font-size: var(--tramway-text-body-sm-size);
+  }
+
+  .tramway-chat__bubble--received {
+    border-top-left-radius: var(--tramway-radius-sm);
+    background-color: var(--tramway-color-surface);
+  }
+
+  .tramway-chat__bubble--sent {
+    border-top-right-radius: var(--tramway-radius-sm);
+    background-color: var(--tramway-color-surface-raised);
+  }
+
+  .tramway-chat__sent-at {
+    margin-top: 0.5rem;
+    text-align: right;
+    color: var(--tramway-color-text-muted);
+    font-size: var(--tramway-text-caption-size);
+  }
+
+  .tramway-chat__table {
+    margin-top: 0.75rem;
+    overflow: hidden;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-card);
+    background-color: var(--tramway-color-bg);
+  }
+}

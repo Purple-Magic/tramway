@@ -1,0 +1,114 @@
+/*
+ * Data table. Rows are CSS grids whose columns come from an inline style, so the
+ * table keeps its horizontal scroll container on narrow screens instead of
+ * hiding columns (see docs/users/tramway_table.md).
+ */
+
+@layer components {
+  .tramway-data-table {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-card);
+    background-color: var(--tramway-color-surface);
+    color: var(--tramway-color-text-secondary);
+    text-align: left;
+  }
+
+  .tramway-data-table__head,
+  .tramway-data-table__row {
+    display: grid;
+    align-items: center;
+    gap: 0.75rem;
+    padding-inline: 0.5rem;
+  }
+
+  .tramway-data-table__head--sm,
+  .tramway-data-table__row--sm {
+    gap: 0.5rem;
+  }
+
+  .tramway-data-table__head--lg,
+  .tramway-data-table__row--lg {
+    gap: 1.5rem;
+  }
+
+  .tramway-data-table__head {
+    border-bottom: 1px solid var(--tramway-color-border);
+    background-color: var(--tramway-color-surface-raised);
+    color: var(--tramway-color-text-muted);
+  }
+
+  .tramway-data-table__head-cell {
+    min-width: 0;
+    overflow: hidden;
+    padding: 0.625rem 0.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--tramway-text-caption-size);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .tramway-data-table__row {
+    position: relative;
+    min-height: 3.5rem;
+    border-bottom: 1px solid var(--tramway-color-border);
+    background-color: var(--tramway-color-surface);
+    color: inherit;
+    text-decoration: none;
+    transition: background-color var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  .tramway-data-table__row:last-child {
+    border-bottom: none;
+  }
+
+  /* Only rows that link somewhere get a hover state. */
+  @media (hover: hover) {
+    .tramway-data-table__row--clickable:hover {
+      background-color: var(--tramway-color-surface-raised);
+    }
+  }
+
+  .tramway-data-table__row--clickable {
+    cursor: pointer;
+  }
+
+  .tramway-data-table__cell {
+    min-width: 0;
+    padding: 0.75rem 0.5rem;
+    color: var(--tramway-color-text-secondary);
+    font-size: var(--tramway-text-body-sm-size);
+    font-weight: 500;
+  }
+
+  .tramway-data-table__cell--truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tramway-data-table__cell--sm {
+    padding-block: 0.5rem;
+  }
+
+  .tramway-data-table__cell--lg {
+    padding-block: 1.5rem;
+    font-size: var(--tramway-text-body-size);
+  }
+
+  @media (max-width: 767.98px) {
+    .tramway-data-table__row,
+    .tramway-data-table__head {
+      padding-inline: 0.25rem;
+    }
+
+    .tramway-data-table__cell {
+      padding-inline: 0.375rem;
+    }
+  }
+}

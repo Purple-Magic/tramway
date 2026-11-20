@@ -1,0 +1,117 @@
+/* Typography roles (display, page-title, section-title, card-title, body, body-sm, label, metadata, caption). */
+
+@layer components {
+  .tramway-text-display {
+    font-size: var(--tramway-text-display-size);
+    font-weight: var(--tramway-text-display-weight);
+    line-height: var(--tramway-text-display-line);
+    color: var(--tramway-color-text-primary);
+  }
+
+  .tramway-text-page-title,
+  .tramway-title {
+    font-size: var(--tramway-text-page-title-size);
+    font-weight: var(--tramway-text-page-title-weight);
+    line-height: var(--tramway-text-page-title-line);
+    color: var(--tramway-color-text-primary);
+  }
+
+  .tramway-text-section-title {
+    font-size: var(--tramway-text-section-title-size);
+    font-weight: var(--tramway-text-section-title-weight);
+    line-height: var(--tramway-text-section-title-line);
+    color: var(--tramway-color-text-primary);
+  }
+
+  .tramway-text-card-title {
+    font-size: var(--tramway-text-card-title-size);
+    font-weight: var(--tramway-text-card-title-weight);
+    line-height: var(--tramway-text-card-title-line);
+    color: var(--tramway-color-text-primary);
+  }
+
+  .tramway-text-body {
+    font-size: var(--tramway-text-body-size);
+    font-weight: var(--tramway-text-body-weight);
+    line-height: var(--tramway-text-body-line);
+  }
+
+  .tramway-text-body-sm {
+    font-size: var(--tramway-text-body-sm-size);
+    font-weight: var(--tramway-text-body-sm-weight);
+    line-height: var(--tramway-text-body-sm-line);
+  }
+
+  .tramway-text-label {
+    font-size: var(--tramway-text-label-size);
+    font-weight: var(--tramway-text-label-weight);
+    line-height: var(--tramway-text-label-line);
+  }
+
+  .tramway-text-metadata {
+    font-size: var(--tramway-text-metadata-size);
+    font-weight: var(--tramway-text-metadata-weight);
+    line-height: var(--tramway-text-metadata-line);
+    color: var(--tramway-color-text-muted);
+  }
+
+  .tramway-text-caption {
+    font-size: var(--tramway-text-caption-size);
+    font-weight: var(--tramway-text-caption-weight);
+    line-height: var(--tramway-text-caption-line);
+    color: var(--tramway-color-text-muted);
+  }
+
+  .tramway-text-muted {
+    color: var(--tramway-color-text-muted);
+  }
+
+  .tramway-text-danger {
+    color: var(--tramway-color-danger);
+  }
+
+  .tramway-link {
+    color: var(--tramway-color-accent-text);
+  }
+
+  .tramway-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Rendered markdown-ish text (tramway_native_text) */
+  .tramway-prose {
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
+    color: var(--tramway-color-text-primary);
+  }
+
+  .tramway-prose__list {
+    list-style: none;
+    margin-block: 0.5rem;
+    padding-left: 1.25rem;
+  }
+
+  .tramway-prose__item::marker {
+    content: none;
+  }
+
+  .tramway-prose__paragraph {
+    margin-block: 0.25rem;
+  }
+
+  .tramway-prose__heading {
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--tramway-color-text-primary);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .tramway-prose__heading--1 { font-size: 2.25rem; font-weight: 700; }
+  .tramway-prose__heading--2 { font-size: 1.875rem; font-weight: 700; }
+  .tramway-prose__heading--3 { font-size: 1.5rem; }
+  .tramway-prose__heading--4 { font-size: 1.25rem; }
+  .tramway-prose__heading--5 { font-size: 1.125rem; }
+  .tramway-prose__heading--6 { font-size: 1rem; }
+}

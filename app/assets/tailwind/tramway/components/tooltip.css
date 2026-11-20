@@ -1,0 +1,47 @@
+/* Tooltip (hover or click) shown above its trigger. */
+
+@layer components {
+  .tramway-tooltip {
+    position: relative;
+    display: inline-flex;
+    width: fit-content;
+  }
+
+  .tramway-tooltip__panel {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    z-index: var(--tramway-z-overlay);
+    width: max-content;
+    min-width: 10rem;
+    max-width: 24rem;
+    margin-bottom: 0.5rem;
+    padding: 0.375rem 0.625rem;
+    border: 1px solid var(--tramway-color-border-strong);
+    border-radius: var(--tramway-radius-sm);
+    background-color: var(--tramway-color-surface-raised);
+    box-shadow: var(--tramway-shadow-raised);
+    color: var(--tramway-color-text-primary);
+    font-size: var(--tramway-text-caption-size);
+    font-weight: 500;
+    line-height: 1.25rem;
+    transform: translateX(-50%);
+  }
+
+  .tramway-tooltip__panel--hover {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  .tramway-tooltip__trigger--hover:hover + .tramway-tooltip__panel--hover,
+  .tramway-tooltip__trigger--hover:focus-within + .tramway-tooltip__panel--hover {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .tramway-tooltip__panel[hidden] {
+    display: none;
+  }
+}

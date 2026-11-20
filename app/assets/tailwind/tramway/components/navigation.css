@@ -1,0 +1,93 @@
+/* Navbar / sidebar: item with icon, active state, collapsed tooltip, mobile menu. */
+
+@layer components {
+  .tramway-navbar {
+    background-color: var(--tramway-color-bg);
+    color: var(--tramway-color-text-primary);
+    font-family: var(--tramway-font-sans);
+  }
+
+  .tramway-navbar--fixed {
+    border-color: var(--tramway-color-border);
+    box-shadow: var(--tramway-shadow-card);
+  }
+
+  .tramway-navbar__title {
+    color: var(--tramway-color-text-primary);
+    font-size: var(--tramway-text-section-title-size);
+    font-weight: var(--tramway-text-section-title-weight);
+  }
+
+  .tramway-navbar__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--tramway-radius-md);
+    color: var(--tramway-color-text-secondary);
+    transition:
+      background-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      color var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  @media (hover: hover) {
+    .tramway-navbar__toggle:hover {
+      background-color: var(--tramway-color-surface-raised);
+      color: var(--tramway-color-text-primary);
+    }
+  }
+
+  .tramway-navbar__mobile-menu {
+    border-color: var(--tramway-color-border);
+    background-color: var(--tramway-color-bg);
+    box-shadow: var(--tramway-shadow-raised);
+  }
+
+  .tramway-nav-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.875rem;
+    min-height: 2.75rem;
+    padding-inline: 0.75rem;
+    border-radius: var(--tramway-radius-md);
+    background: transparent;
+    color: var(--tramway-color-text-secondary);
+    font-size: var(--tramway-text-body-sm-size);
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+      background-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      color var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  @media (hover: hover) {
+    .tramway-nav-item:hover {
+      background-color: var(--tramway-color-surface-raised);
+      color: var(--tramway-color-text-primary);
+    }
+  }
+
+  .tramway-nav-item--active {
+    background-color: var(--tramway-color-accent-surface);
+    color: var(--tramway-color-accent-text);
+  }
+
+  .tramway-nav-item__icon {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 1.0625rem;
+  }
+
+  .tramway-nav-item__label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

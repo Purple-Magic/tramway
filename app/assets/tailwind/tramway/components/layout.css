@@ -1,0 +1,104 @@
+/* Page containers, cards and the dashboard grid. */
+
+@layer components {
+  .tramway-main {
+    width: 100%;
+    min-height: 100dvh;
+    background-color: var(--tramway-color-bg);
+    color: var(--tramway-color-text-primary);
+    font-family: var(--tramway-font-sans);
+  }
+
+  .tramway-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-inline: auto;
+    padding: var(--tramway-space-page-x);
+    border-radius: var(--tramway-radius-card);
+    background-color: var(--tramway-color-bg);
+    color: var(--tramway-color-text-primary);
+  }
+
+  @media (min-width: 768px) {
+    .tramway-container {
+      padding-inline: var(--tramway-space-page-x-lg);
+    }
+  }
+
+  .tramway-page {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: var(--tramway-space-page-y) var(--tramway-space-page-x);
+  }
+
+  .tramway-card {
+    background-color: var(--tramway-color-surface);
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-card);
+    padding: var(--tramway-space-card-padding);
+    box-shadow: var(--tramway-shadow-card);
+  }
+
+  .tramway-card--danger {
+    background-color: var(--tramway-color-danger-bg);
+    border-color: var(--tramway-color-danger-border);
+  }
+
+  .tramway-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--tramway-space-cluster);
+    margin-top: var(--tramway-space-cluster);
+  }
+
+  /* --- Dashboard grid --- */
+  .tramway-grid {
+    position: relative;
+    overflow: auto;
+    border-radius: var(--tramway-radius-card);
+    background-color: var(--tramway-color-bg);
+  }
+
+  .tramway-grid__lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: var(--tramway-radius-card);
+  }
+
+  .tramway-grid__separator {
+    position: absolute;
+    background-color: var(--tramway-color-border);
+  }
+
+  .tramway-grid__separator--horizontal {
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+
+  .tramway-grid__separator--vertical {
+    top: 0;
+    bottom: 0;
+    width: 1px;
+  }
+
+  .tramway-grid__cell {
+    box-sizing: border-box;
+  }
+
+  .tramway-grid-card {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 0.75rem;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-card);
+    background-color: var(--tramway-color-surface);
+    box-shadow: var(--tramway-shadow-card);
+  }
+}

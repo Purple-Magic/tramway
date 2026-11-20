@@ -1,0 +1,155 @@
+/* Buttons: primary / secondary / ghost / danger / success / warning, plus a tinted fallback. */
+
+@layer components {
+  .tramway-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    height: var(--tramway-control-height-md);
+    padding-inline: 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--tramway-radius-md);
+    font-size: var(--tramway-text-label-size);
+    font-weight: var(--tramway-text-label-weight);
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    transition:
+      background-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      border-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      transform var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  .tramway-button--sm {
+    height: var(--tramway-control-height-sm);
+    padding-inline: 0.75rem;
+  }
+
+  .tramway-button--lg {
+    height: var(--tramway-control-height-lg);
+    padding-inline: 1.25rem;
+  }
+
+  /* Square icon-only button */
+  .tramway-button--icon {
+    width: var(--tramway-control-height-md);
+    padding-inline: 0;
+  }
+
+  .tramway-button--icon.tramway-button--sm {
+    width: var(--tramway-control-height-sm);
+  }
+
+  .tramway-button--icon.tramway-button--lg {
+    width: var(--tramway-control-height-lg);
+  }
+
+  .tramway-button--primary {
+    background-color: var(--tramway-color-accent);
+    color: var(--tramway-color-on-accent);
+  }
+
+  .tramway-button--secondary {
+    background-color: var(--tramway-color-surface-raised);
+    border-color: var(--tramway-color-border-strong);
+    color: var(--tramway-color-text-primary);
+  }
+
+  .tramway-button--ghost {
+    background-color: transparent;
+    color: var(--tramway-color-text-secondary);
+  }
+
+  .tramway-button--danger {
+    background-color: var(--tramway-color-danger-bg);
+    border-color: var(--tramway-color-danger-border);
+    color: var(--tramway-color-danger);
+  }
+
+  .tramway-button--success {
+    background-color: var(--tramway-color-success-bg);
+    border-color: var(--tramway-color-success-border);
+    color: var(--tramway-color-success);
+  }
+
+  .tramway-button--warning {
+    background-color: var(--tramway-color-warning-bg);
+    border-color: var(--tramway-color-warning-border);
+    color: var(--tramway-color-warning);
+  }
+
+  /* Any Tailwind color name that is not a Tramway type (see `.tramway-tint--*`). */
+  .tramway-button--tint {
+    background-color: color-mix(in srgb, var(--tramway-tint, currentColor) 12%, transparent);
+    border-color: color-mix(in srgb, var(--tramway-tint, currentColor) 40%, transparent);
+    color: var(--tramway-tint, currentColor);
+  }
+
+  @media (hover: hover) {
+    .tramway-button--primary:hover {
+      background-color: var(--tramway-color-accent-hover);
+    }
+
+    .tramway-button--secondary:hover {
+      background-color: var(--tramway-color-border-strong);
+    }
+
+    .tramway-button--ghost:hover {
+      background-color: var(--tramway-color-surface-raised);
+      color: var(--tramway-color-text-primary);
+    }
+
+    .tramway-button--danger:hover {
+      background-color: var(--tramway-color-danger-border);
+      color: var(--tramway-color-text-primary);
+    }
+
+    .tramway-button--success:hover {
+      background-color: var(--tramway-color-success-border);
+      color: var(--tramway-color-text-primary);
+    }
+
+    .tramway-button--warning:hover {
+      background-color: var(--tramway-color-warning-border);
+      color: var(--tramway-color-text-primary);
+    }
+
+    .tramway-button--tint:hover {
+      background-color: color-mix(in srgb, var(--tramway-tint, currentColor) 22%, transparent);
+    }
+  }
+
+  .tramway-button:disabled,
+  .tramway-button[disabled],
+  .tramway-button[aria-disabled='true'] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Tailwind color names usable as `color:` on buttons, badges and flashes. */
+  .tramway-tint--red { --tramway-tint: var(--color-red-400); }
+  .tramway-tint--orange { --tramway-tint: var(--color-orange-400); }
+  .tramway-tint--amber { --tramway-tint: var(--color-amber-400); }
+  .tramway-tint--yellow { --tramway-tint: var(--color-yellow-400); }
+  .tramway-tint--lime { --tramway-tint: var(--color-lime-400); }
+  .tramway-tint--green { --tramway-tint: var(--color-green-400); }
+  .tramway-tint--emerald { --tramway-tint: var(--color-emerald-400); }
+  .tramway-tint--teal { --tramway-tint: var(--color-teal-400); }
+  .tramway-tint--cyan { --tramway-tint: var(--color-cyan-400); }
+  .tramway-tint--sky { --tramway-tint: var(--color-sky-400); }
+  .tramway-tint--blue { --tramway-tint: var(--color-blue-400); }
+  .tramway-tint--indigo { --tramway-tint: var(--color-indigo-400); }
+  .tramway-tint--violet { --tramway-tint: var(--color-violet-400); }
+  .tramway-tint--purple { --tramway-tint: var(--color-purple-400); }
+  .tramway-tint--fuchsia { --tramway-tint: var(--color-fuchsia-400); }
+  .tramway-tint--pink { --tramway-tint: var(--color-pink-400); }
+  .tramway-tint--rose { --tramway-tint: var(--color-rose-400); }
+  .tramway-tint--slate { --tramway-tint: var(--color-slate-400); }
+  .tramway-tint--gray { --tramway-tint: var(--color-gray-400); }
+  .tramway-tint--zinc { --tramway-tint: var(--color-zinc-400); }
+  .tramway-tint--neutral { --tramway-tint: var(--color-neutral-400); }
+  .tramway-tint--stone { --tramway-tint: var(--color-stone-400); }
+}

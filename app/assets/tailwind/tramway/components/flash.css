@@ -1,0 +1,83 @@
+/* Flash toast and alert. */
+
+@layer components {
+  .tramway-flash-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: var(--tramway-z-toast);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: fit-content;
+    max-width: 24rem;
+    pointer-events: none;
+  }
+
+  .tramway-flash {
+    pointer-events: auto;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-md);
+    background-color: var(--tramway-color-bg);
+    box-shadow: var(--tramway-shadow-raised);
+    color: var(--tramway-color-text-primary);
+    font-size: var(--tramway-text-body-sm-size);
+  }
+
+  .tramway-flash__text {
+    font-size: var(--tramway-text-label-size);
+    font-weight: var(--tramway-text-label-weight);
+    line-height: 1.5rem;
+  }
+
+  .tramway-flash--primary,
+  .tramway-alert--primary {
+    border-color: var(--tramway-color-accent);
+    color: var(--tramway-color-accent-text);
+  }
+
+  .tramway-flash--success,
+  .tramway-alert--success {
+    border-color: var(--tramway-color-success-border);
+    color: var(--tramway-color-success);
+  }
+
+  .tramway-flash--warning,
+  .tramway-alert--warning {
+    border-color: var(--tramway-color-warning-border);
+    color: var(--tramway-color-warning);
+  }
+
+  .tramway-flash--danger,
+  .tramway-alert--danger {
+    border-color: var(--tramway-color-danger-border);
+    color: var(--tramway-color-danger);
+  }
+
+  .tramway-flash--tint {
+    border-color: color-mix(in srgb, var(--tramway-tint, currentColor) 40%, transparent);
+    color: var(--tramway-tint, currentColor);
+  }
+
+  .tramway-alert {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-md);
+    background-color: var(--tramway-color-surface);
+    color: var(--tramway-color-text-secondary);
+    font-size: var(--tramway-text-body-sm-size);
+  }
+
+  .tramway-alert--danger {
+    background-color: var(--tramway-color-danger-bg);
+  }
+
+  .tramway-alert--success {
+    background-color: var(--tramway-color-success-bg);
+  }
+
+  .tramway-alert--warning {
+    background-color: var(--tramway-color-warning-bg);
+  }
+}

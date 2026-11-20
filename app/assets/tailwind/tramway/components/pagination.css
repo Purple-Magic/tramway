@@ -1,0 +1,83 @@
+/* Windowed pagination: first/prev/next/last links, page numbers and a gap marker. */
+
+@layer components {
+  .tramway-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .tramway-pagination__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--tramway-control-height-md);
+    min-width: var(--tramway-control-height-md);
+    padding-inline: 0.75rem;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-md);
+    background-color: var(--tramway-color-bg);
+    color: var(--tramway-color-text-secondary);
+    font-size: var(--tramway-text-label-size);
+    font-weight: var(--tramway-text-label-weight);
+    text-decoration: none;
+    transition:
+      background-color var(--tramway-duration-fast) var(--tramway-ease-standard),
+      transform var(--tramway-duration-fast) var(--tramway-ease-standard);
+  }
+
+  @media (hover: hover) {
+    .tramway-pagination__link:hover {
+      background-color: var(--tramway-color-surface-raised);
+      color: var(--tramway-color-text-primary);
+    }
+  }
+
+  .tramway-pagination__link--current {
+    border-color: var(--tramway-color-accent);
+    background-color: var(--tramway-color-accent);
+    color: var(--tramway-color-on-accent);
+    cursor: default;
+  }
+
+  .tramway-pagination__link--arrow {
+    font-weight: 700;
+  }
+
+  /* Page numbers and the long First/Prev/Next/Last labels are hidden on phones;
+     the compact arrows take their place. */
+  .tramway-pagination__link--wide {
+    display: none;
+  }
+
+  .tramway-pagination__link--compact {
+    display: inline-flex;
+  }
+
+  @media (min-width: 640px) {
+    .tramway-pagination__link--wide {
+      display: inline-flex;
+    }
+
+    .tramway-pagination__link--compact {
+      display: none;
+    }
+  }
+
+  .tramway-pagination__gap {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: var(--tramway-control-height-md);
+    min-width: var(--tramway-control-height-sm);
+    color: var(--tramway-color-text-muted);
+    font-size: var(--tramway-text-body-sm-size);
+  }
+
+  @media (min-width: 640px) {
+    .tramway-pagination__gap {
+      display: inline-flex;
+    }
+  }
+}
