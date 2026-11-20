@@ -62,6 +62,10 @@
     color: var(--tramway-color-text-muted);
   }
 
+  .tramway-text-primary {
+    color: var(--tramway-color-text-primary);
+  }
+
   .tramway-text-muted {
     color: var(--tramway-color-text-muted);
   }

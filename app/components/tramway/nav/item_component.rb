@@ -6,10 +6,7 @@ module Tramway
     #
     class ItemComponent < TailwindComponent
       def style
-        @style ||= [
-          'tramway-navbar-item inline-flex items-center gap-2 rounded-md px-4 py-3 text-base font-medium',
-          'text-zinc-100 transition-colors hover:bg-zinc-800 hover:text-zinc-50 sm:px-3 sm:py-2 sm:text-sm'
-        ].join(' ')
+        @style ||= 'tramway-navbar-item tramway-nav-item'
       end
 
       def icon?
@@ -17,7 +14,7 @@ module Tramway
       end
 
       def icon_classes
-        [@icon, 'tramway-navbar-item-icon w-5 shrink-0 text-center'].join(' ')
+        [@icon, 'tramway-navbar-item-icon tramway-nav-item__icon'].join(' ')
       end
     end
   end

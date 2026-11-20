@@ -1,6 +1,6 @@
 %li.whitespace-nowrap
-  = button_to @href, method: @method, class: "#{style} cursor-pointer", **@options do
+  = button_to @href, method: @method, class: style, **@options do
     - if icon?
       %i{ class: icon_classes, aria: { hidden: true } }
-    %span.tramway-navbar-item-label
+    %span.tramway-navbar-item-label.tramway-nav-item__label
       = content

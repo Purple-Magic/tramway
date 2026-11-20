@@ -1,19 +1,19 @@
 = helpers.turbo_stream_from chat_id, 'messages'
 
 #chat.flex.flex-1.h-full.w-full.min-h-0.min-w-0.flex-col
-  #messages.flex.flex-col.flex-1.min-h-0.overflow-y-auto.overflow-x-hidden.rounded-xl.rounded-b-none.border.border-zinc-800.p-2.text-zinc-50.space-y-2.md:p-6.md:space-y-4{ data: { scroll_to_bottom_on_update: scroll_to_bottom_on_update }, class: 'bg-zinc-950/80 tramway-scrollbar' }
+  #messages.tramway-chat__messages.tramway-scrollbar{ data: { scroll_to_bottom_on_update: scroll_to_bottom_on_update } }
     - messages.each do |message|
       = component "tramway/chats/message", **message
     - if disabled?
-      = inline_svg 'icons/dots.svg', class: 'mx-auto my-4 h-8 w-8 text-zinc-500'
+      = inline_svg 'icons/dots.svg', class: 'tramway-text-muted mx-auto my-4 h-8 w-8'
 
   - if message_form.present?
-    .shrink-0.border-t.border-zinc-800.pt-2
+    .tramway-chat__form
       = form_for message_form, url: send_message_path, as: :message, method: :post, html: { class: 'flex items-center gap-2 md:gap-1' } do |f|
         - waiting_placeholder = t('tramway.chat.placeholders.waiting')
         - typing_placeholder = t('tramway.chat.placeholders.type')
         = f.text_field :text,
-          class: 'flex-1 appearance-none rounded-md border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-zinc-50 shadow-sm outline-none placeholder:text-zinc-500 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 disabled:cursor-not-allowed',
+          class: 'tramway-chat__input',
           placeholder: send_messages_enabled ? typing_placeholder : waiting_placeholder,
           disabled: !send_messages_enabled
 
@@ -23,7 +23,7 @@
           = f.hidden_field key, value: value
 
         = f.submit '🡩',
-          class: 'inline-flex items-center justify-center rounded-md bg-zinc-50 px-4 py-2 text-sm font-medium text-zinc-950 shadow-sm transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 disabled:pointer-events-none disabled:opacity-50'
+          class: 'tramway-button tramway-button--primary'
 
 :javascript
   (() => {

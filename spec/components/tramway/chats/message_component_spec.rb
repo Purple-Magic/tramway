@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe Tramway::Chats::MessageComponent, type: :component do
-  # rubocop:disable RSpec/ExampleLength
   it 'renders common styling for left aligned messages' do
     message_text = 'Hello'
 
@@ -18,20 +17,7 @@ describe Tramway::Chats::MessageComponent, type: :component do
                          ])}"
     )
 
-    expect(page).to have_css(
-      ".#{class_selector(%w[
-                           max-w-lg
-                           rounded-2xl
-                           rounded-tl-md
-                           bg-zinc-900
-                           px-4
-                           py-3
-                           text-sm
-                           shadow-sm
-                           text-zinc-50
-                         ])}",
-      text: 'Hello'
-    )
+    expect(page).to have_css('.tramway-chat__bubble.tramway-chat__bubble--received', text: 'Hello')
   end
 
   it 'renders common styling for right aligned messages' do
@@ -48,20 +34,7 @@ describe Tramway::Chats::MessageComponent, type: :component do
                          ])}"
     )
 
-    expect(page).to have_css(
-      ".#{class_selector(%w[
-                           max-w-lg
-                           rounded-2xl
-                           rounded-tr-md
-                           bg-zinc-800
-                           px-4
-                           py-3
-                           text-sm
-                           text-zinc-50
-                           shadow-sm
-                         ])}",
-      text: 'Hi there'
-    )
+    expect(page).to have_css('.tramway-chat__bubble.tramway-chat__bubble--sent', text: 'Hi there')
   end
 
   it 'renders links as shortened clickable anchors in message text' do
@@ -76,5 +49,4 @@ describe Tramway::Chats::MessageComponent, type: :component do
 
     expect(page).to have_css('a.tramway-link')
   end
-  # rubocop:enable RSpec/ExampleLength
 end

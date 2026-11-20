@@ -38,7 +38,6 @@ describe Tramway::ChatComponent, type: :component do
     end
   end
 
-  # rubocop:disable-next RSpec/ExampleLength
   it 'renders common chat container styles' do
     rendered_component
 
@@ -53,27 +52,7 @@ describe Tramway::ChatComponent, type: :component do
                                 flex-col
                               ])}"
     )
-    expect(page).to have_css(
-      "#messages.#{class_selector(%w[
-                                    flex
-                                    flex-col
-                                    flex-1
-                                    min-h-0
-                                    overflow-y-auto
-                                    overflow-x-hidden
-                                    p-2
-                                    md:p-6
-                                    space-y-2
-                                    md:space-y-4
-                                    rounded-xl
-                                    rounded-b-none
-                                    border
-                                    border-zinc-800
-                                    text-zinc-50
-                                    bg-zinc-950/80
-                                    tramway-scrollbar
-                                  ])}"
-    )
+    expect(page).to have_css('#messages.tramway-chat__messages.tramway-scrollbar')
   end
 
   context 'when messages are provided' do

@@ -16,9 +16,9 @@ module Tramway
         def color_classes
           case position.to_sym
           when :left
-            'rounded-tl-md bg-zinc-900 text-zinc-50'
+            'tramway-chat__bubble--received'
           when :right
-            'rounded-tr-md bg-zinc-800 text-zinc-50'
+            'tramway-chat__bubble--sent'
           end
         end
       end

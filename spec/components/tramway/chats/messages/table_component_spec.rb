@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 describe Tramway::Chats::Messages::TableComponent, type: :component do
-  # rubocop:disable-next RSpec/ExampleLength
   it 'wraps the table in a styled container' do
     data = [
       %w[Name Value],
@@ -12,16 +11,6 @@ describe Tramway::Chats::Messages::TableComponent, type: :component do
 
     render_inline(described_class.new(data:))
 
-    expect(page).to have_css(
-      ".#{class_selector(%w[
-                           mt-3
-                           overflow-hidden
-                           rounded-xl
-                           border
-                           border-zinc-800
-                           bg-zinc-950
-                           shadow-sm
-                         ])}"
-    )
+    expect(page).to have_css('.tramway-chat__table')
   end
 end

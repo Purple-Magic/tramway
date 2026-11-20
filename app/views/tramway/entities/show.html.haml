@@ -20,7 +20,7 @@
       = @record.show_header_content
 
   - if @record.show_attributes.empty?
-    %p.text-center.mt-10.text-white
+    %p.tramway-empty-state.mt-10
       You should fill object-level method `show_attributes` inside your
       = @record.class.name
 
@@ -44,8 +44,8 @@
           = @record.public_send(attribute_name)
 
   - @associations.select { _1[:association_type] == :has_many }.each do |association|
-    .flex.flex-row.justify-between.mt-8.text-white
-      %h3.text-2xl.font-bold
+    .flex.flex-row.justify-between.mt-8
+      %h3.tramway-text-section-title
         = @model_class.human_attribute_name(association[:name])
 
       - if association[:records].any?
@@ -68,7 +68,7 @@
             = component 'tramway/comments/show_path', decorator_class: association[:decorator].name
           = tramway_row href: record.show_path do
             - if association[:decorator].index_attributes.empty?
-              .text-white
+              .tramway-text-muted
                 You should set `index_attributes` method in #{association[:decorator].name} to display the table of associated records.
             - association[:decorator].index_attributes.each do |column|
               = tramway_cell do

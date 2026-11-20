@@ -44,7 +44,7 @@
       = render 'tramway/entities/filters', custom_path_method:
 
   - if index_attributes.empty?
-    %p.text-center.mt-10
+    %p.tramway-empty-state.mt-10
       You should fill class-level method `self.index_attributes` inside your
       = decorator
   - else
@@ -55,5 +55,5 @@
 
     .flex.flex-col.items-center.mt-4.gap-2
       = paginate @entities, custom_path_method:
-      %p.sm:hidden.text-xs.text-zinc-500
+      %p.sm:hidden.tramway-text-caption
         = page_entries_info @entities

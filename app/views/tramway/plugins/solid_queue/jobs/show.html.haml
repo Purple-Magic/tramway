@@ -70,7 +70,7 @@
 
     - if @job.status == :failed
       .mt-8
-        %h3.text-2xl.font-bold.text-white
+        %h3.tramway-text-section-title
           = t('tramway.plugins.solid_queue.jobs.error', default: 'Error')
 
         = tramway_table class: 'mt-4' do
@@ -86,5 +86,5 @@
             = tramway_cell do
               = @job.failed_execution.message
 
-        %pre.mt-4.overflow-x-auto.text-sm.text-zinc-400
+        %pre.tramway-text-muted.mt-4.overflow-x-auto.text-sm
           = Array(@job.failed_execution.backtrace).join("\n")

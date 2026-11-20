@@ -1,6 +1,12 @@
 /* Page containers, cards and the dashboard grid. */
 
 @layer components {
+  .tramway-body {
+    background-color: var(--tramway-color-bg);
+    color: var(--tramway-color-text-primary);
+    font-family: var(--tramway-font-sans);
+  }
+
   .tramway-main {
     width: 100%;
     min-height: 100dvh;

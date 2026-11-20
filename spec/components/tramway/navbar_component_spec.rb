@@ -25,7 +25,7 @@ describe Tramway::NavbarComponent, type: :component do
       render_inline(described_class.new(title: 'Purple Magic', left_items: ["<a href='/test'>Test</a>".html_safe]))
 
       desktop_navbar_css = [
-        '#desktop-navbar.flex.flex-col.border-zinc-800.px-4.py-3.shadow-sm.backdrop-blur.sm\\:px-6',
+        '#desktop-navbar.tramway-navbar.tramway-navbar--bar.flex.flex-col.px-4.py-3.sm\\:px-6',
         '#desktop-navbar.md\\:fixed.md\\:left-0.md\\:top-0.md\\:z-40.md\\:w-72',
         '[data-expanded="true"]'
       ].join

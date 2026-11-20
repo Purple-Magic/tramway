@@ -3,36 +3,30 @@
 module Tramway
   # Navbar component
   class NavbarComponent < TailwindComponent
-    NAVBAR_BASE_CLASSES = %w[
-      bg-zinc-950 text-zinc-50
-    ].freeze
+    NAVBAR_BASE_CLASSES = %w[tramway-navbar].freeze
 
     NAVBAR_FIXED_CLASSES = %w[
       fixed top-0 left-0 z-40 w-screen
     ].freeze
 
     HORIZONTAL_NAVBAR_CLASSES = %w[
-      flex items-center justify-between border-zinc-800 px-4 py-3 shadow-sm backdrop-blur sm:px-6
+      tramway-navbar--bar flex items-center justify-between px-4 py-3 sm:px-6
     ].freeze
 
     VERTICAL_NAVBAR_CLASSES = %w[
-      flex flex-col border-zinc-800 px-4 py-3 shadow-sm backdrop-blur sm:px-6
+      tramway-navbar--bar flex flex-col px-4 py-3 sm:px-6
     ].freeze
 
+    # The width / padding utilities below are toggled by the `tramway-navbar` Stimulus controller.
     VERTICAL_DESKTOP_NAVBAR_CLASSES = %w[
-      md:fixed md:left-0 md:top-0 md:z-40 md:h-dvh md:w-72 md:flex-col md:border-r md:border-zinc-800
-      md:bg-zinc-950 md:px-4 md:py-3 md:shadow-sm md:backdrop-blur md:overflow-hidden md:transition-[width]
-      md:duration-300 md:ease-in-out-strong md:motion-reduce:duration-0
+      md:fixed md:left-0 md:top-0 md:z-40 md:h-dvh md:w-72 md:flex-col md:border-r md:px-4 md:py-3
+      md:overflow-hidden md:transition-[width] md:duration-300 md:ease-in-out-strong md:motion-reduce:duration-0
     ].freeze
 
-    MOBILE_BUTTON_CLASSES = %w[
-      inline-flex items-center justify-center rounded-md p-2 transition-colors hover:bg-zinc-800 hover:text-zinc-50
-      focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2
-      focus-visible:ring-offset-zinc-950
-    ].freeze
+    MOBILE_BUTTON_CLASSES = %w[tramway-navbar__toggle].freeze
 
     MOBILE_MENU_CLASSES = %w[
-      fixed inset-0 z-50 hidden h-screen w-screen flex flex-col border-r border-zinc-800 bg-zinc-950 px-4 py-6 shadow-lg
+      tramway-navbar__mobile-menu fixed inset-0 z-50 hidden h-screen w-screen flex flex-col border-r px-4 py-6
       transition-transform transform -translate-x-full duration-300 ease-in-out pt-16 justify-between
     ].freeze
 
@@ -52,7 +46,7 @@ module Tramway
     end
 
     def title_classes
-      'text-base font-semibold text-zinc-50'
+      'tramway-navbar__title'
     end
 
     def mobile_button_classes
@@ -107,12 +101,7 @@ module Tramway
     end
 
     def desktop_vertical_toggle_button_classes
-      [
-        'inline-flex cursor-pointer items-center justify-center rounded-md px-4 py-3 transition-colors',
-        'hover:bg-zinc-800 hover:text-zinc-50',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2',
-        'focus-visible:ring-offset-zinc-950 w-fit'
-      ].join(' ')
+      'tramway-navbar__toggle w-fit'
     end
 
     def desktop_vertical_toggle_button_label(expanded:)

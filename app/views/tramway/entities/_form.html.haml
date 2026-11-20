@@ -2,23 +2,24 @@
 - method = @record.new_record? ? :post : :patch
 
 = tramway_form_for @record, local: true, url:, method: do |f|
-  - if @record.errors.any?
-    .w-full.mb-4.p-4.border.border-red-600.bg-red-100.text-red-800.rounded-xl
-      %h2.font-bold.mb-2
-        = "#{pluralize(@record.errors.count, 'error')} prohibited this record from being saved:"
-      %ul.list-disc.list-inside.pl-6
-        - @record.errors.full_messages.each do |message|
-          %li= message
+  .tramway-form
+    - if @record.errors.any?
+      .tramway-form__error-summary{ role: 'alert' }
+        %h2.tramway-form__error-summary-title
+          = "#{pluralize(@record.errors.count, 'error')} prohibited this record from being saved:"
+        %ul.tramway-form__error-summary-list
+          - @record.errors.full_messages.each do |message|
+            %li= message
 
-  - prepolulated_values = params[@entity.name.to_param]&.compact || {}
+    - prepolulated_values = params[@entity.name.to_param]&.compact || {}
 
-  - @record.class.fields.each do |(attribute, field_type)|
-    = f.tramway_field field_type, attribute,
-      value: prepolulated_values&.dig(attribute),
-      label: @model_class.human_attribute_name(attribute)
+    - @record.class.fields.each do |(attribute, field_type)|
+      = f.tramway_field field_type, attribute,
+        value: prepolulated_values&.dig(attribute),
+        label: @model_class.human_attribute_name(attribute)
 
-  .flex.flex-row.space-x-2
-    = f.submit t('tramway.actions.save')
-    = tramway_button text: t('tramway.actions.cancel'),
-      path: public_send(@entity.index_helper_method),
-      type: :compassion
+    .tramway-form__actions
+      = f.submit t('tramway.actions.save')
+      = tramway_button text: t('tramway.actions.cancel'),
+        path: public_send(@entity.index_helper_method),
+        type: :compassion

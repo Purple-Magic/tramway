@@ -7,7 +7,7 @@
     font-family: var(--tramway-font-sans);
   }
 
-  .tramway-navbar--fixed {
+  .tramway-navbar--bar {
     border-color: var(--tramway-color-border);
     box-shadow: var(--tramway-shadow-card);
   }
@@ -69,7 +69,8 @@
     }
   }
 
-  .tramway-nav-item--active {
+  .tramway-nav-item--active,
+  .tramway-nav-item[aria-current='page'] {
     background-color: var(--tramway-color-accent-surface);
     color: var(--tramway-color-accent-text);
   }
