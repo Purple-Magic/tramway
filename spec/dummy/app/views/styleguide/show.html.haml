@@ -1,0 +1,198 @@
+- types = %i[default primary success warning danger inverse love compassion fear]
+- sections = %w[typography buttons badges flash form-fields form-states select table pagination grid chat tooltip content]
+
+= tramway_main_container id: 'tramway-main-container' do
+  .tramway-page
+    .w-full.min-w-0.max-w-5xl.flex.flex-col.gap-10
+      %header.flex.flex-col.gap-2
+        = tramway_title text: 'Tramway styleguide'
+        %p.tramway-text-body.tramway-text-muted
+          Every component in every state. Resize to 390px wide to check the mobile layout.
+        %nav.tramway-breadcrumb
+          - sections.each do |section|
+            %a.tramway-link{ href: "##{section}" }= section.tr('-', ' ')
+
+      %section#typography.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Typography
+        .tramway-card.flex.flex-col.gap-2
+          .tramway-text-display Display
+          .tramway-text-page-title Page title
+          .tramway-text-section-title Section title
+          .tramway-text-card-title Card title
+          .tramway-text-body Body text
+          .tramway-text-body-sm Body small text
+          .tramway-text-label Label
+          .tramway-text-metadata Metadata
+          .tramway-text-caption Caption
+          = component 'tramway/native_text', text: "# Heading 1\n## Heading 2\nParagraph with **bold**, *italic* and https://example.com/a/very/long/link/that/gets/shortened/nicely\n- first item\n- second item"
+
+      %section#buttons.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Buttons
+        .tramway-card.flex.flex-col.gap-4
+          .flex.flex-wrap.gap-2
+            - types.each do |type|
+              = tramway_button text: type.to_s, path: '#', type:
+          .flex.flex-wrap.items-center.gap-2
+            = tramway_button text: 'Small', path: '#', size: :small, type: :primary
+            = tramway_button text: 'Medium', path: '#', type: :primary
+            = tramway_button text: 'Large', path: '#', size: :large, type: :primary
+          .flex.flex-wrap.items-center.gap-2
+            = tramway_button text: 'Disabled', path: '#', type: :primary, disabled: true
+            = tramway_button text: 'Tinted teal', path: '#', color: :teal
+            = tramway_button text: 'Tinted pink', path: '#', color: :pink
+            = tramway_button text: 'Submit', path: '#', type: :submit
+            = tramway_back_button
+          .flex.flex-wrap.items-center.gap-2
+            = tramway_button path: '#', type: :secondary, tooltip: { text: 'Icon only with tooltip', event: :hover } do
+              %i.fa.fa-cog{ 'aria-hidden' => 'true' }
+            = tramway_button text: 'A very long button label that should not break the layout on small screens', path: '#', type: :primary
+
+      %section#badges.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Badges
+        .tramway-card.flex.flex-wrap.gap-2
+          - types.each do |type|
+            = tramway_badge text: type.to_s, type:
+          = tramway_badge text: 'violet', color: :violet
+          = tramway_badge text: 'A longer badge label', type: :success
+
+      %section#flash.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Flash and alerts
+        .tramway-card.flex.flex-col.gap-3
+          - %i[default primary success warning danger].each do |type|
+            .tramway-flash{ class: "tramway-flash--#{{ default: :secondary }.fetch(type, type)}" }
+              .tramway-flash__text= "Flash #{type}"
+          - %w[primary success warning danger].each do |variant|
+            .tramway-alert{ class: "tramway-alert--#{variant}", role: 'alert' }= "Alert #{variant}"
+
+      %section#form-fields.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Form fields
+        = tramway_form_for @user_form, url: '#', size: :medium do |f|
+          .tramway-form
+            = f.text_field :email, label: 'Email', hint: 'We never share it.', placeholder: 'name@example.com'
+            = f.text_area :personal_info, label: 'Personal info'
+            = f.select :country, [['Velmora', 'vm'], ['Dravara', 'dv']], label: 'Country'
+            = f.file_field :avatar, label: 'Avatar', hint: 'PNG or JPG'
+            = f.check_box :permissions, label: 'Permissions', hint: 'Allow access to admin actions.'
+            .tramway-form__actions
+              = f.submit 'Save'
+              = tramway_button text: 'Cancel', path: '#', type: :compassion
+
+      %section#form-states.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Form states
+        .tramway-form
+          .tramway-form__error-summary{ role: 'alert' }
+            %p.tramway-form__error-summary-title 2 errors prohibited this record from being saved:
+            %ul.tramway-form__error-summary-list
+              %li Email is invalid
+              %li Name can't be blank
+          .tramway-form__field
+            %label.tramway-form__label{ for: 'sg_required' }
+              Required field
+              %span.tramway-form__required *
+            %input#sg_required.tramway-form__input{ type: 'text', 'aria-invalid' => 'true', 'aria-describedby' => 'sg_required_error', value: 'not an email' }
+            %p#sg_required_error.tramway-form__error Email is invalid
+          .tramway-form__field
+            %label.tramway-form__label{ for: 'sg_disabled' } Disabled
+            %input#sg_disabled.tramway-form__input{ type: 'text', disabled: true, value: 'Cannot edit' }
+          .tramway-form__field
+            %label.tramway-form__label{ for: 'sg_small' } Small
+            %input#sg_small.tramway-form__input.tramway-form__input--sm{ type: 'text', placeholder: 'Small control' }
+          .tramway-form__field
+            %label.tramway-form__label{ for: 'sg_large' } Large
+            %input#sg_large.tramway-form__input.tramway-form__input--lg{ type: 'text', placeholder: 'Large control' }
+          .tramway-form__field
+            %label.tramway-form__label{ for: 'sg_date' } Date
+            %input#sg_date.tramway-form__input{ type: 'date' }
+          .tramway-form__field
+            %label.tramway-form__label{ for: 'sg_datetime' } Datetime
+            %input#sg_datetime.tramway-form__input{ type: 'datetime-local' }
+          .tramway-form__field
+            %label.tramway-form__label{ for: 'sg_time' } Time
+            %input#sg_time.tramway-form__input{ type: 'time' }
+          .tramway-form__field
+            %label.tramway-form__label{ for: 'sg_long' } Long value
+            %input#sg_long.tramway-form__input{ type: 'text', value: 'A very long value that goes on and on and on and on and on and on and on and on and on' }
+
+      %section#select.flex.flex-col.gap-3
+        %h2.tramway-text-section-title tramway_select
+        = tramway_form_for @user_form, url: '#' do |f|
+          .tramway-form
+            - roles = [['Admin', 'admin'], ['User', 'user'], ['Manager', 'manager'], ['Auditor', 'auditor']]
+            = f.select :role, roles, label: 'Roles (multiple)', multiple: true, selected: %w[admin user]
+            = f.select :team, [[nil, ''], ['Team 1', 'team1'], ['Team 2', 'team2']], label: 'Team (autocomplete)', autocomplete: true
+            = f.select :departments, [['Engineering', 'engineering'], ['Sales', 'sales']], label: 'Departments', autocomplete: true, multiple: true
+
+      %section#table.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Table
+        = tramway_table do
+          = tramway_header headers: %w[Name Email Role]
+          = tramway_row href: '#' do
+            = tramway_cell { 'Clickable row' }
+            = tramway_cell { 'alice@example.com' }
+            = tramway_cell { 'Admin' }
+          = tramway_row do
+            = tramway_cell { 'Plain row' }
+            = tramway_cell { 'bob@example.com' }
+            = tramway_cell { 'User' }
+          = tramway_row do
+            = tramway_cell { 'A row with a very long name that should truncate nicely' }
+            = tramway_cell { 'long.email.address.that.truncates@example.com' }
+            = tramway_cell { 'Manager' }
+        %p.tramway-empty-state No records yet
+
+      %section#pagination.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Pagination
+        .tramway-card
+          %nav.pagination.tramway-pagination
+            %a.tramway-pagination__link.tramway-pagination__link--wide{ href: '#' } First
+            %a.tramway-pagination__link.tramway-pagination__link--wide{ href: '#' } Previous
+            %a.tramway-pagination__link.tramway-pagination__link--compact.tramway-pagination__link--arrow{ href: '#' } 🠔
+            %a.tramway-pagination__link.tramway-pagination__link--wide{ href: '#' } 1
+            %span.tramway-pagination__gap …
+            %a.tramway-pagination__link.tramway-pagination__link--wide{ href: '#' } 4
+            %span.tramway-pagination__link.tramway-pagination__link--current 5
+            %a.tramway-pagination__link.tramway-pagination__link--wide{ href: '#' } 6
+            %span.tramway-pagination__gap …
+            %a.tramway-pagination__link.tramway-pagination__link--wide{ href: '#' } 20
+            %a.tramway-pagination__link.tramway-pagination__link--compact.tramway-pagination__link--arrow{ href: '#' } 🠖
+            %a.tramway-pagination__link.tramway-pagination__link--wide{ href: '#' } Next
+            %a.tramway-pagination__link.tramway-pagination__link--wide{ href: '#' } Last
+
+      %section#grid.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Grid and cards
+        .overflow-x-auto
+          = tramway_grid rows: 1, columns: 2, outline: true do
+            = tramway_card size: [1, 1] do
+              .tramway-text-card-title Card one
+              %p.tramway-text-body-sm.tramway-text-muted Dashboard-style card
+            = tramway_card size: [1, 1] do
+              .tramway-text-card-title Card two
+              = tramway_badge text: 'live', type: :success
+
+      %section#chat.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Chat
+        .tramway-chat__messages
+          = component 'tramway/chats/message', type: :received, text: 'Hello! How can I help?', sent_at: '10:41'
+          = component 'tramway/chats/message', type: :sent, text: 'Show me **the report** at https://example.com/reports/2026'
+          = component 'tramway/chats/message', type: :received, text: 'Sure.', data: [%w[Name Value], %w[Latency 42ms]]
+        .tramway-chat__form.flex.items-center.gap-2
+          %input.tramway-chat__input{ type: 'text', placeholder: 'Type a message' }
+          %button.tramway-button.tramway-button--primary{ type: 'button' } 🡩
+
+      %section#tooltip.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Tooltip
+        .tramway-card.flex.flex-wrap.items-center.gap-4
+          = tramway_tooltip text: 'Hover tooltip', event: :hover do
+            = tramway_button text: 'Hover me', path: '#', type: :secondary
+          = tramway_tooltip text: 'Click tooltip', event: :onclick do
+            = tramway_button text: 'Click me', path: '#', type: :secondary
+
+      %section#content.flex.flex-col.gap-3
+        %h2.tramway-text-section-title Progress, disclosure, empty state
+        .tramway-card.flex.flex-col.gap-4
+          .tramway-progress
+            .tramway-progress__bar{ style: 'width: 60%' }
+          %details.tramway-disclosure
+            %summary.tramway-disclosure__summary Disclosure
+            .tramway-disclosure__body Hidden content revealed on click.
+          .tramway-empty-state Nothing here yet

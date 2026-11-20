@@ -1,0 +1,11 @@
+!!!
+%html{ lang: 'en' }
+  %head
+    %title Tramway styleguide
+    %meta{ name: 'viewport', content: 'width=device-width,initial-scale=1' }
+    = csrf_meta_tags
+    = stylesheet_link_tag 'tailwind'
+    = stylesheet_link_tag 'font-awesome'
+    = javascript_importmap_tags
+  %body.tramway-body
+    = yield

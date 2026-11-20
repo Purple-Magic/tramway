@@ -286,6 +286,7 @@
   /* --- File input: the visible label acts as the button --- */
   .tramway-form__file-button {
     display: inline-flex;
+    align-self: flex-start;
     align-items: center;
     justify-content: center;
     margin-top: 1rem;

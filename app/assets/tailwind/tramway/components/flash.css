@@ -31,6 +31,16 @@
     line-height: 1.5rem;
   }
 
+  .tramway-alert {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--tramway-color-border);
+    border-radius: var(--tramway-radius-md);
+    background-color: var(--tramway-color-surface);
+    color: var(--tramway-color-text-secondary);
+    font-size: var(--tramway-text-body-sm-size);
+  }
+
+  /* Variants (declared after the bases so they win the cascade). */
   .tramway-flash--primary,
   .tramway-alert--primary {
     border-color: var(--tramway-color-accent);
@@ -61,17 +71,8 @@
     color: var(--tramway-tint, currentColor);
   }
 
-  .tramway-alert {
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--tramway-color-border);
-    border-radius: var(--tramway-radius-md);
-    background-color: var(--tramway-color-surface);
-    color: var(--tramway-color-text-secondary);
-    font-size: var(--tramway-text-body-sm-size);
-  }
-
-  .tramway-alert--danger {
-    background-color: var(--tramway-color-danger-bg);
+  .tramway-alert--primary {
+    background-color: var(--tramway-color-accent-surface);
   }
 
   .tramway-alert--success {
@@ -80,5 +81,9 @@
 
   .tramway-alert--warning {
     background-color: var(--tramway-color-warning-bg);
+  }
+
+  .tramway-alert--danger {
+    background-color: var(--tramway-color-danger-bg);
   }
 }

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :articles, only: :show
 
   get :chat_feature, to: 'chats#show'
+  get :styleguide, to: 'styleguide#show'
 
   namespace :episodes do
     resources :parts
