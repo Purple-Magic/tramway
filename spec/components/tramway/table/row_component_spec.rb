@@ -2,23 +2,15 @@
 
 require 'rails_helper'
 
-ROW_MEDIUM_ROW_CLASSES = %w[
-  div-table-row grid gap-4 border-b border-zinc-800 bg-transparent last:border-b-0
-].freeze
-ROW_MEDIUM_CELL_CLASSES = %w[
-  div-table-cell truncate min-w-0 bg-transparent px-6 py-4 text-xs font-medium text-zinc-100 sm:text-base
-].freeze
-ROW_SMALL_ROW_CLASSES = %w[
-  div-table-row grid gap-2 border-b border-zinc-800 bg-transparent last:border-b-0
-].freeze
+ROW_MEDIUM_ROW_CLASSES = %w[div-table-row tramway-data-table__row].freeze
+ROW_MEDIUM_CELL_CLASSES = %w[div-table-cell tramway-data-table__cell tramway-data-table__cell--truncate].freeze
+ROW_SMALL_ROW_CLASSES = %w[div-table-row tramway-data-table__row tramway-data-table__row--sm].freeze
 ROW_SMALL_CELL_CLASSES = %w[
-  div-table-cell truncate min-w-0 bg-transparent px-4 py-2 text-sm font-medium text-zinc-100 sm:text-sm
+  div-table-cell tramway-data-table__cell tramway-data-table__cell--truncate tramway-data-table__cell--sm
 ].freeze
-ROW_LARGE_ROW_CLASSES = %w[
-  div-table-row grid gap-6 border-b border-zinc-800 bg-transparent last:border-b-0
-].freeze
+ROW_LARGE_ROW_CLASSES = %w[div-table-row tramway-data-table__row tramway-data-table__row--lg].freeze
 ROW_LARGE_CELL_CLASSES = %w[
-  div-table-cell truncate min-w-0 bg-transparent px-6 py-6 text-lg font-medium text-zinc-100
+  div-table-cell tramway-data-table__cell tramway-data-table__cell--truncate tramway-data-table__cell--lg
 ].freeze
 
 describe Tramway::Table::RowComponent, type: :component do
@@ -43,7 +35,7 @@ describe Tramway::Table::RowComponent, type: :component do
 
     render_inline(component)
 
-    expect(page).to have_css('.div-table-row.bg-transparent')
+    expect(page).to have_css('.div-table-row.tramway-data-table__row')
   end
 
   it 'keeps the current medium row and cell classes' do

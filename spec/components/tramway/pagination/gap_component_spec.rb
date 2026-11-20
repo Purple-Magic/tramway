@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 describe Tramway::Pagination::GapComponent, type: :component do
-  it 'uses hardcoded dark pagination classes' do
+  it 'uses the pagination gap primitive' do
     component = described_class.new
 
     expect(component.gap_classes).to eq(
-      'page gap hidden items-center justify-center px-3 py-2 text-sm font-medium text-zinc-500 sm:flex'
+      'page gap tramway-pagination__gap'
     )
   end
 end

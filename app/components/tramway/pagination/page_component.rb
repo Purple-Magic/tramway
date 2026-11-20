@@ -7,8 +7,7 @@ module Tramway
       option :page
 
       def current_page_classes
-        'inline-flex h-10 items-center justify-center rounded-md border border-zinc-800 bg-zinc-800 px-3 py-2 ' \
-          'text-sm font-medium text-zinc-50 shadow-inner'
+        'tramway-pagination__link tramway-pagination__link--current'
       end
     end
   end

@@ -1,7 +1,7 @@
 - if cells.any?
   = row_tag class: row_grid_classes, style: grid_template_style(cells.count), **options.except(:class, :style) do
     - cells.each do |(_, value)|
-      %div.border-b.border-zinc-800{ class: cell_classes }
+      %div{ class: cell_classes }
         = value
 
 - else

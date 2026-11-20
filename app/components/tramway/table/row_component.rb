@@ -9,18 +9,18 @@ module Tramway
 
       SIZE_CLASSES = {
         small: {
-          row: 'div-table-row grid gap-2 border-b border-zinc-800 bg-transparent last:border-b-0',
-          cell: 'div-table-cell truncate min-w-0 bg-transparent px-4 py-2 text-sm font-medium ' \
-                'text-zinc-100 sm:text-sm'
+          row: 'div-table-row tramway-data-table__row tramway-data-table__row--sm',
+          cell: 'div-table-cell tramway-data-table__cell tramway-data-table__cell--truncate ' \
+                'tramway-data-table__cell--sm'
         },
         medium: {
-          row: 'div-table-row grid gap-4 border-b border-zinc-800 bg-transparent last:border-b-0',
-          cell: 'div-table-cell truncate min-w-0 bg-transparent px-6 py-4 text-xs ' \
-                'font-medium text-zinc-100 sm:text-base'
+          row: 'div-table-row tramway-data-table__row',
+          cell: 'div-table-cell tramway-data-table__cell tramway-data-table__cell--truncate'
         },
         large: {
-          row: 'div-table-row grid gap-6 border-b border-zinc-800 bg-transparent last:border-b-0',
-          cell: 'div-table-cell truncate min-w-0 bg-transparent px-6 py-6 text-lg font-medium text-zinc-100'
+          row: 'div-table-row tramway-data-table__row tramway-data-table__row--lg',
+          cell: 'div-table-cell tramway-data-table__cell tramway-data-table__cell--truncate ' \
+                'tramway-data-table__cell--lg'
         }
       }.freeze
 
@@ -49,7 +49,7 @@ module Tramway
       end
 
       def link_row_classes
-        'cursor-pointer hover:bg-zinc-900'
+        'tramway-data-table__row--clickable'
       end
 
       def cell_classes

@@ -2,18 +2,12 @@
 
 require 'rails_helper'
 
-MEDIUM_HEADER_ROW_CLASSES = %w[
-  div-table-row grid gap-4 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400
-].freeze
-MEDIUM_HEADER_CELL_CLASSES = %w[div-table-cell border-b border-zinc-800 truncate min-w-0 px-6 py-4].freeze
-SMALL_HEADER_ROW_CLASSES = %w[
-  div-table-row grid gap-2 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400
-].freeze
-SMALL_HEADER_CELL_CLASSES = %w[div-table-cell border-b border-zinc-800 truncate min-w-0 px-4 py-2].freeze
-LARGE_HEADER_ROW_CLASSES = %w[
-  div-table-row grid gap-6 rounded-t-xl border-b border-zinc-800 bg-zinc-900 text-zinc-400
-].freeze
-LARGE_HEADER_CELL_CLASSES = %w[div-table-cell border-b border-zinc-800 truncate min-w-0 px-6 py-6].freeze
+MEDIUM_HEADER_ROW_CLASSES = %w[div-table-row tramway-data-table__head].freeze
+MEDIUM_HEADER_CELL_CLASSES = %w[div-table-cell tramway-data-table__head-cell].freeze
+SMALL_HEADER_ROW_CLASSES = %w[div-table-row tramway-data-table__head tramway-data-table__head--sm].freeze
+SMALL_HEADER_CELL_CLASSES = %w[div-table-cell tramway-data-table__head-cell].freeze
+LARGE_HEADER_ROW_CLASSES = %w[div-table-row tramway-data-table__head tramway-data-table__head--lg].freeze
+LARGE_HEADER_CELL_CLASSES = %w[div-table-cell tramway-data-table__head-cell].freeze
 
 describe Tramway::Table::HeaderComponent, type: :component do
   it 'uses headers argument to set grid columns' do

@@ -21,8 +21,7 @@
   .tramway-data-table__row {
     display: grid;
     align-items: center;
-    gap: 0.75rem;
-    padding-inline: 0.5rem;
+    gap: 1rem;
   }
 
   .tramway-data-table__head--sm,
@@ -102,11 +101,6 @@
   }
 
   @media (max-width: 767.98px) {
-    .tramway-data-table__row,
-    .tramway-data-table__head {
-      padding-inline: 0.25rem;
-    }
-
     .tramway-data-table__cell {
       padding-inline: 0.375rem;
     }

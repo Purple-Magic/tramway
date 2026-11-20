@@ -2,12 +2,9 @@
 
 require 'rails_helper'
 
-CELL_MEDIUM_SELECTOR = '.div-table-cell.truncate.min-w-0.bg-transparent.px-6.py-4.' \
-                       'text-base.font-medium.text-zinc-100'
-CELL_SMALL_SELECTOR = '.div-table-cell.truncate.min-w-0.bg-transparent.px-4.py-2.' \
-                      'text-sm.font-medium.text-zinc-100'
-CELL_LARGE_SELECTOR = '.div-table-cell.truncate.min-w-0.bg-transparent.px-6.py-6.' \
-                      'text-lg.font-medium.text-zinc-100'
+CELL_MEDIUM_SELECTOR = '.div-table-cell.tramway-data-table__cell.tramway-data-table__cell--truncate'
+CELL_SMALL_SELECTOR = '.div-table-cell.tramway-data-table__cell--sm.tramway-data-table__cell--truncate'
+CELL_LARGE_SELECTOR = '.div-table-cell.tramway-data-table__cell--lg.tramway-data-table__cell--truncate'
 
 describe Tramway::Table::CellComponent, type: :component do
   it 'keeps the current medium cell classes' do
@@ -43,12 +40,12 @@ describe Tramway::Table::CellComponent, type: :component do
     expect(page).to have_css(CELL_LARGE_SELECTOR, text: 'Cell')
   end
 
-  it 'keeps the cell background transparent' do
+  it 'renders the shared data table cell primitive' do
     render_inline(described_class.new) do
       'Cell'
     end
 
-    expect(page).to have_css('.div-table-cell.bg-transparent', text: 'Cell')
+    expect(page).to have_css('.div-table-cell.tramway-data-table__cell', text: 'Cell')
   end
 
   it 'truncates content by default' do
@@ -56,7 +53,7 @@ describe Tramway::Table::CellComponent, type: :component do
       'Cell'
     end
 
-    expect(page).to have_css('.div-table-cell.truncate', text: 'Cell')
+    expect(page).to have_css('.div-table-cell.tramway-data-table__cell--truncate', text: 'Cell')
   end
 
   it 'does not truncate content when truncate: false is passed' do
@@ -65,6 +62,6 @@ describe Tramway::Table::CellComponent, type: :component do
     end
 
     expect(page).to have_css('.div-table-cell', text: 'Cell')
-    expect(page).to have_no_css('.div-table-cell.truncate')
+    expect(page).to have_no_css('.div-table-cell.tramway-data-table__cell--truncate')
   end
 end

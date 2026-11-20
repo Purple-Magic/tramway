@@ -21,7 +21,7 @@ feature 'Table Mobile Scroll Spec', :js, type: :feature do
   scenario 'renders the full table on mobile with a horizontal scroll container' do
     table = find('.div-table')
 
-    expect(table[:class].to_s.split).to include('overflow-x-auto')
+    expect(table.native.css_value('overflow-x')).to eq('auto')
     expect(page).to have_selector(row_selector, minimum: 1)
   end
 
