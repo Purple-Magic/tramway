@@ -76,7 +76,9 @@ describe 'Tramway SolidQueue Plugin Queues', type: :request do
 
   describe 'POST /queues/:name/clear' do
     it 'clears all jobs from the queue' do
-      SolidQueue::Job.create!(queue_name: 'mailers', class_name: 'MailerJob', active_job_id: SecureRandom.uuid)
+      SolidQueue::Job.create!(
+        queue_name: 'mailers', class_name: 'MailerJob', active_job_id: SecureRandom.uuid, arguments: {}
+      )
 
       post '/jobs/queues/mailers/clear'
 

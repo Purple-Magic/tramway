@@ -39,7 +39,6 @@ group :test do
   gem 'rspec-rails'
   gem 'selenium-webdriver'
   gem 'solid_queue'
-  gem 'webdrivers'
 end
 
 group :development, :test do
