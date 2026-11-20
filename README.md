@@ -26,6 +26,7 @@ Codex instruction that points agents to the Tramway skill for Tramway-native cod
   * [Tramway Chat](https://github.com/Purple-Magic/tramway#tramway-chat)
   * [Tramway Table Component](https://github.com/Purple-Magic/tramway#tramway-table-component)
   * [Tramway Grid](https://github.com/Purple-Magic/tramway#tramway-grid)
+  * [Styling and design tokens](https://github.com/Purple-Magic/tramway#styling-and-design-tokens)
   * [Tailwind-styled forms](https://github.com/Purple-Magic/tramway#tailwind-styled-forms)
     * [Stimulus-based inputs](https://github.com/Purple-Magic/tramway#stimulus-based-inputs)
   * [Tailwind-styled pagination](https://github.com/Purple-Magic/tramway?tab=readme-ov-file#tailwind-styled-pagination-for-kaminari)
@@ -59,7 +60,8 @@ bin/rails g tramway:install
 ```
 
 The install generator adds the required gems (`haml-rails`, `kaminari`, `view_component`, `dry-initializer`, and `dry-monads`) to your
-application's Gemfile—if they are not present—appends the Tailwind safelist configuration Tramway ships with, and injects the
+application's Gemfile—if they are not present—appends the Tailwind safelist configuration Tramway ships with, adds the Tramway
+stylesheet import (`@import "../builds/tailwind/tramway";`) to `app/assets/tailwind/application.css`, and injects the
 Trix stylesheet and JavaScript tags into your application layout (required for `rich_text_area`).
 
 ## Getting Started
@@ -109,7 +111,9 @@ end
 **Step 4**
 
 If you ran `bin/rails g tramway:install`, the install generator already copied the Tailwind safelist to
-`config/tailwind.config.js`.
+`config/tailwind.config.js` and added the Tramway stylesheet import to `app/assets/tailwind/application.css`.
+Without the generator, add `@import "../builds/tailwind/tramway";` after `@import "tailwindcss";` in
+`app/assets/tailwind/application.css`.
 Otherwise, copy this file from the gem:
 `config/tailwind.config.js`.
 
@@ -1216,10 +1220,36 @@ tramway_navbar title: 'Purple Magic' do |nav|
 end
 ```
 
+### Styling and design tokens
+
+Tramway renders every component with the Tramway design system (dark, based on the TimeMagic design system). There is
+nothing to configure: after `rails g tramway:install` (or the one-line import described in *Getting Started*), buttons,
+badges, flash messages, forms, tables, pagination, the navbar, grid cards, tooltips and chat use the shared
+`tramway-*` classes. Dark is the only look.
+
+Every color, spacing, radius, font size, control height, motion and shadow value is a CSS custom property prefixed with
+`--tramway-`. Override any of them in your own CSS, after the Tramway import:
+
+```css
+@import "tailwindcss";
+@import "../builds/tailwind/tramway";
+
+:root {
+  --tramway-color-accent: var(--color-violet-500);
+  --tramway-radius-md: 0.375rem;
+  --tramway-font-sans: "Inter", sans-serif;
+}
+```
+
+Buttons, badges and flash messages keep accepting `type:` (`:default`, `:primary`, `:success`, `:warning`, `:danger`,
+`:inverse`, `:hope`, `:greed`, `:rage`, `:love`, ...) and `color:` (a Tailwind color name such as `:teal`).
+See [docs/users/tramway_design.md](docs/users/tramway_design.md) for the full type/variant mapping, the available
+`tramway-*` classes and the implementation notes.
+
 ### Tramway Flash
 
-`tramway_flash` renders the dark shadcn-style flash component that Tramway uses in its layouts. Pass the flash text and type,
-and the helper will resolve the proper dark semantic accent (for example `:success` -> green, `:warning` -> orange). Tramway
+`tramway_flash` renders the flash toast that Tramway uses in its layouts. Pass the flash text and type,
+and the helper will resolve the matching design system variant (for example `:success` -> green, `:warning` -> amber). Tramway
 renders the dark design only. You can also provide custom HTML options directly (e.g., `class:`, `data:`) and
 they will be merged into the flash container.
 
@@ -1240,7 +1270,7 @@ the semantic accent explicitly.
 
 ### Tramway Tooltip
 
-`tramway_tooltip` renders a dark tooltip around block content with a default minimum width of `min-w-40` and maximum width of `max-w-sm`. Pass `text:` for the tooltip body and `event:` to
+`tramway_tooltip` renders a tooltip around block content above its trigger. Pass `text:` for the tooltip body and `event:` to
 choose when it appears. Supported events are `:hover` and `:onclick`; hover is the default.
 
 ```haml
@@ -1362,7 +1392,7 @@ tramway_chat_prepend_messages(
 
 ### Tramway Table Component
 
-Tramway provides a responsive, tailwind-styled table with a dark design. Use the `tramway_table`, `tramway_row`, and
+Tramway provides a responsive table with the Tramway design system. Use the `tramway_table`, `tramway_row`, and
 `tramway_cell` helpers to build tables with readable ERB templates while still leveraging the underlying ViewComponent
 implementations.
 
@@ -1384,7 +1414,7 @@ implementations.
 `tramway_table` accepts an optional `size:` argument plus the same `options` hash as `Tramway::TableComponent`. Supported
 sizes are `:small`, `:medium`, and `:large`. The default is `:medium`, and it renders exactly like the current table
 implementation. The `options` hash is forwarded as HTML attributes, so you can pass things like `id`, `data` attributes, or
-additional classes. The table itself carries the default dark background (`bg-zinc-950`), so you can override it directly
+additional classes. The table itself carries the `tramway-data-table` surface, so you can override it directly
 with a utility like `class: '!bg-red-500'`. If you do not supply your own width utility (e.g. a class that starts with `w-`),
 the component automatically appends `w-full` to keep the table responsive.
 
@@ -1429,7 +1459,7 @@ stretches past the viewport width) so every column stays reachable. See
 ### Tramway Grid
 
 Use `tramway_grid` when you want dashboard-style layouts with cards that span multiple rows and columns while keeping the
-existing Tramway dark zinc styling. The grid accepts `rows:` and `columns:`, and it also accepts `outline: true` when you
+Tramway design system styling. The grid accepts `rows:` and `columns:`, and it also accepts `outline: true` when you
 want to show separators between cells. Those separators are drawn in the gap between grid cells, so they stay centered
 when cards have content. Cards use `size: [rows, columns]`, with responsive spans on desktop and stacked cards on smaller
 screens. Each grid cell is rendered as a real `20em x 20em` box, and the grid always builds the exact `rows x columns`
@@ -1597,8 +1627,8 @@ Tramway uses [Tailwind](https://tailwindcss.com/) by default. All UI helpers are
 
 #### tramway_form_for
 
-Tramway provides `tramway_form_for` helper that renders Tailwind-styled forms by default. Form inputs use hardcoded
-dark shadcn-style classes; Tramway renders the dark design only.
+Tramway provides `tramway_form_for` helper that renders styled forms by default. Every control type renders one
+`tramway-form__*` class, so inputs of the same type look identical everywhere; Tramway renders the dark design only.
 Checkboxes render with the same dark border and focus highlight treatment as other inputs, then use the light primary checked state.
 Checkbox controls, checkmarks, and vertically centered label line heights scale together with the form-level `size:` option.
 
